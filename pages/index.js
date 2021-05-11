@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
-
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -59,7 +58,6 @@ export default function Home() {
 						className={styles.card}
 					>
 						<h2>Deploy &rarr;</h2>
-						<p>{JSON.stringify(state, undefined, 2)}</p>
 					</a>
 				</div>
 			</main>
