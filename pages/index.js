@@ -20,7 +20,7 @@ export default function Home() {
 					Welcome to <a href='https://nextjs.org'>Next.js!</a>
 				</h1>
 
-				<p className={styles.description}>
+				<p className={'text-gray-900'}>
 					Get started by editing{' '}
 					<code className={styles.code}>pages/index.js</code>
 				</p>
