@@ -13,6 +13,7 @@
     "@tailwindcss/postcss7-compat": "^2.1.2",
     "@zeit/next-sass": "^1.0.1",
     "autoprefixer": "^9",
+    "formik": "^2.2.6",
     "next": "10.2.0",
     "nextjs-fonts": "^0.22.0",
     "postcss": "^7",
@@ -25,7 +26,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
     "sass": "^1.32.12",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "html-webpack-plugin": "^5.3.1",

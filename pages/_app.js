@@ -2,17 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { useStore } from '../redux/store';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import 'tailwindcss/tailwind.css';
 import '../styles/globals.scss';
 
 // MUI Setup
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { theme } from './shared/theme';
+import { theme } from '../shared/theme';
+import { login } from '../redux/actions/userActions';
+import { LOGOUT } from '../redux/actionTypes/userActionTypes';
 
 function MyApp({ Component, pageProps }) {
 	const store = useStore(pageProps.initialReduxState);
+
 	React.useEffect(() => {
 		// Remove the server-side injected CSS.
 		const jssStyles = document.querySelector('#jss-server-side');
@@ -20,6 +23,7 @@ function MyApp({ Component, pageProps }) {
 			jssStyles.parentElement.removeChild(jssStyles);
 		}
 	}, []);
+
 	return (
 		<Provider store={store}>
 			<ThemeProvider theme={theme}>
