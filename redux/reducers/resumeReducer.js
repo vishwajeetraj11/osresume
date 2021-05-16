@@ -1,4 +1,5 @@
 import {
+	ADD_EDUCATION_DATA,
 	ADD_EXPERIENCE_DATA,
 	ADD_PERSONAL_DATA,
 } from '../actionTypes/resumeActionTypes';
@@ -186,6 +187,13 @@ export const resumeReducer = (state = { data: initialState }, action) => {
 				data: {
 					...state.data,
 					experiences: action.payload,
+				},
+			};
+		case ADD_EDUCATION_DATA:
+			return {
+				data: {
+					...state.data,
+					education: action.payload,
 				},
 			};
 	}
