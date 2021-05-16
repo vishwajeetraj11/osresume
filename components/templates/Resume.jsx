@@ -46,10 +46,10 @@ class Resume extends React.Component {
 				<div className='left w-8/12 bg-yellow-4000'>
 					<div className='header-left'>
 						<div className='h-32 flex justify-center flex-col'>
-							<h1 className='font-semibold text-t1-xl text-t1-black'>
+							<h1 className='font-semibold text-t1-xl text-t1-black capitalize'>
 								{data.personalData.name}
 							</h1>
-							<h2 className='font-normal text-t1-lg text-t1-black'>
+							<h2 className='font-normal text-t1-lg text-t1-black capitalize'>
 								{data.personalData.designation}
 							</h2>
 						</div>
@@ -60,10 +60,10 @@ class Resume extends React.Component {
 						</p>
 						{data.experiences.map((exp, index) => (
 							<div key={index} className='mb-4'>
-								<h4 className='text-t1-md mb-1 font-medium text-t1-black'>
+								<h4 className='capitalize text-t1-md mb-1 font-medium text-t1-black'>
 									{exp.designation}
 								</h4>
-								<h5 className='text-t1-sm mb-1 font-normal text-t1-black'>
+								<h5 className='capitalize text-t1-sm mb-1 font-normal text-t1-black'>
 									{exp.company}
 								</h5>
 								<p className='text-t1-xs text-t1-gray  mb-1 font-normal'>
@@ -83,14 +83,17 @@ class Resume extends React.Component {
 						</p>
 						{data.education.map((edu, index) => (
 							<div key={index} className='mb-4'>
-								<h4 className='text-t1-md mb-1 font-medium text-t1-black'>
+								<h4 className='capitalize text-t1-md mb-1 font-medium text-t1-black'>
 									{edu.major}
 								</h4>
-								<h5 className='text-t1-sm mb-1 font-normal text-t1-black'>
+								<h5 className='capitalize text-t1-sm mb-1 font-normal text-t1-black'>
 									{edu.institution}
 								</h5>
 								<p className='text-t1-xs text-t1-gray  mb-1 font-normal'>
-									{edu.start} - {edu.end} - {edu.country}
+									{edu.start} - {edu.end} -{' '}
+									<span className='capitalize'>
+										{edu.country}
+									</span>
 								</p>
 							</div>
 						))}
@@ -115,20 +118,20 @@ class Resume extends React.Component {
 					</div>
 					{data.extras.map((item, index) => (
 						<div key={index} className='mb-2'>
-							<p className='text-t1-gray font-medium text-t1-sm'>
+							<p className='text-t1-gray capitalize font-medium text-t1-sm'>
 								{item.title}
 							</p>
 							{item.type === 'NEW_LINE' ? (
 								item.items.map((e, index) => (
 									<p
-										className='text-t1-gray font-light text-t1-sm leading-6'
+										className='capitalize text-t1-gray font-light text-t1-sm leading-6'
 										key={index}
 									>
 										{e.text}
 									</p>
 								))
 							) : (
-								<p className='text-t1-gray font-light text-t1-sm leading-6'>
+								<p className='capitalize text-t1-gray font-light text-t1-sm leading-6'>
 									{item.items.map((e, i) => `${e.text}, `)}
 								</p>
 							)}
