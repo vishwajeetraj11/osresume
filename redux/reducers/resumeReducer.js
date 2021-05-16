@@ -1,5 +1,9 @@
-import { ADD_PERSONAL_DATA } from '../actionTypes/resumeActionTypes';
+import {
+	ADD_EXPERIENCE_DATA,
+	ADD_PERSONAL_DATA,
+} from '../actionTypes/resumeActionTypes';
 
+// new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
 const initialState = {
 	personalData: {
 		name: 'Your Name',
@@ -24,14 +28,14 @@ const initialState = {
 			country: 'Bagnolet',
 		},
 	],
-	experience: [
+	experiences: [
 		{
 			designation: 'Senior UI/UX Product Designer',
 			company: 'Google',
 			description:
 				'Directly collaborated with CEO and Product team to prototype, design and deliver the UI and UX experience with a lean design process: research, design, test, and iterate.',
-			start: 'Aug 2018',
-			end: 'Present',
+			start: 'Aug 2019',
+			end: 'Aug 2019',
 			years: '1',
 			country: 'Paris',
 		},
@@ -40,8 +44,8 @@ const initialState = {
 			company: 'Paypal',
 			description:
 				'Lead the UI design with the accountability of the design system, collaborated with product and development teams on core projects to improve product interfaces and experiences.',
-			start: 'Aug 2013',
-			end: 'Aug 2018',
+			start: 'Aug 2019',
+			end: 'Aug 2019',
 			years: '5',
 			country: 'Paris',
 		},
@@ -50,8 +54,8 @@ const initialState = {
 			company: 'Paypal',
 			description:
 				'Lead the UI design with the accountability of the design system, collaborated with product and development teams on core projects to improve product interfaces and experiences.',
-			start: 'Aug 2013',
-			end: 'Aug 2018',
+			start: 'Aug 2019',
+			end: 'Aug 2019',
 			years: '5',
 			country: 'Paris',
 		},
@@ -60,8 +64,8 @@ const initialState = {
 			company: 'Google',
 			description:
 				'Directly collaborated with CEO and Product team to prototype, design and deliver the UI and UX experience with a lean design process: research, design, test, and iterate.',
-			start: 'Aug 2018',
-			end: 'Present',
+			start: 'Aug 2019',
+			end: 'Aug 2019',
 			years: '1',
 			country: 'Paris',
 		},
@@ -175,6 +179,13 @@ export const resumeReducer = (state = { data: initialState }, action) => {
 				data: {
 					...state.data,
 					personalData: action.payload,
+				},
+			};
+		case ADD_EXPERIENCE_DATA:
+			return {
+				data: {
+					...state.data,
+					experiences: action.payload,
 				},
 			};
 	}

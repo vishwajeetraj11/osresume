@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import PersonalDataForm from './forms/PersonalData';
+import WorkExperienceForm from './forms/Experience';
 
 const useStyles = makeStyles({
 	list: {
@@ -59,6 +60,12 @@ const LeftSideBar = () => {
 				</Button>
 				{anchor === 'personal-data' && (
 					<PersonalDataForm
+						closeDrawer={toggleDrawer(anchor, false)}
+						anchor={anchor}
+					/>
+				)}
+				{anchor === 'work-experience' && (
+					<WorkExperienceForm
 						closeDrawer={toggleDrawer(anchor, false)}
 						anchor={anchor}
 					/>

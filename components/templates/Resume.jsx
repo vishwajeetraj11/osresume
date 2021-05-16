@@ -9,6 +9,35 @@ class Resume extends React.Component {
 
 	render() {
 		const { data } = this.props;
+		// const experiences = data?.experiences.map((experience) => {
+		// 	if (!experience.end) {
+		// 		experience.end = new Date(2021, 5);
+		// 	}
+		// 	if (!experience.start) {
+		// 		experience.start = new Date(2021, 1);
+		// 	}
+		// 	const currentMonth = new Date().toLocaleDateString('default', {
+		// 		month: 'long',
+		// 	});
+		// 	const currentYear = new Date().getFullYear();
+
+		// 	const startMonth = experience.start.toLocaleString('default', {
+		// 		month: 'long',
+		// 	});
+		// 	const startYear = experience.start.getFullYear();
+		// 	experience.start = `${startMonth} ${startYear}`;
+
+		// 	const endMonth = experience.end.toLocaleString('default', {
+		// 		month: 'long',
+		// 	});
+		// 	const endYear = experience.end.getFullYear();
+		// 	if (endMonth === currentMonth && endYear === currentYear) {
+		// 		experience.end = 'Present';
+		// 	} else {
+		// 		experience.end = `${endMonth} ${endYear}`;
+		// 	}
+		// 	return experience;
+		// });
 		return (
 			<div
 				id='t1'
@@ -29,7 +58,7 @@ class Resume extends React.Component {
 						<p className='tracking-widest uppercase text-t1-md text-t1-black'>
 							Experience
 						</p>
-						{data.experience.map((exp, index) => (
+						{data.experiences.map((exp, index) => (
 							<div key={index} className='mb-4'>
 								<h4 className='text-t1-md mb-1 font-medium text-t1-black'>
 									{exp.designation}
