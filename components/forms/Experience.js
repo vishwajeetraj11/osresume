@@ -217,7 +217,7 @@ const WorkExperienceForm = ({ closeDrawer, anchor }) => {
                                                                 id={`experiences.${index}.start`}
                                                                 label='Enter Start Date'
                                                                 views={["year", "month"]}
-                                                                format='dd/MM/yyyy'
+                                                                // format='dd/MM/yyyy'
                                                                 value={values.experiences[index].start}
                                                                 onChange={(date) => {
                                                                     const month = date.toLocaleString('default', { month: 'long' });
@@ -235,7 +235,7 @@ const WorkExperienceForm = ({ closeDrawer, anchor }) => {
                                                                 id={`experiences.${index}.end`}
                                                                 label='Enter End Date'
                                                                 views={["year", "month"]}
-                                                                format='dd/MM/yyyy'
+                                                                // format='dd/MM/yyyy'
                                                                 value={values.experiences[index].end}
                                                                 onChange={(date) => {
                                                                     const month = date.toLocaleString('default', { month: 'long' });

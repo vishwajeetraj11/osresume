@@ -119,7 +119,7 @@ const EducationForm = ({ closeDrawer, anchor }) => {
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
                                                         label={
-                                                            'Enter institution'
+                                                            'Enter Institution'
                                                         }
                                                         value={
                                                             values.education[
@@ -151,7 +151,7 @@ const EducationForm = ({ closeDrawer, anchor }) => {
                                                         fullWidth
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        label={'Enter major'}
+                                                        label={'Enter Major'}
                                                         value={
                                                             values.education[
                                                                 index
@@ -212,12 +212,10 @@ const EducationForm = ({ closeDrawer, anchor }) => {
                                                             <KeyboardDatePicker
                                                                 margin='normal'
                                                                 id={`education.${index}.start`}
-                                                                label='Enter Start Date'
+                                                                label='Enter Start Year'
                                                                 views={[
                                                                     'year',
-                                                                    'month',
                                                                 ]}
-                                                                format='dd/MM/yyyy'
                                                                 value={
                                                                     values
                                                                         .education[
@@ -238,7 +236,7 @@ const EducationForm = ({ closeDrawer, anchor }) => {
                                                                         date.getUTCFullYear();
                                                                     setFieldValue(
                                                                         `education[${index}].start`,
-                                                                        `${month} ${year}`
+                                                                        `${year}`
                                                                     );
                                                                 }}
                                                                 error={
@@ -265,12 +263,10 @@ const EducationForm = ({ closeDrawer, anchor }) => {
                                                             <KeyboardDatePicker
                                                                 margin='normal'
                                                                 id={`education.${index}.end`}
-                                                                label='Enter End Date'
+                                                                label='Enter End Year'
                                                                 views={[
                                                                     'year',
-                                                                    'month',
                                                                 ]}
-                                                                format='dd/MM/yyyy'
                                                                 value={
                                                                     values
                                                                         .education[
@@ -291,7 +287,7 @@ const EducationForm = ({ closeDrawer, anchor }) => {
                                                                         date.getUTCFullYear();
                                                                     setFieldValue(
                                                                         `education[${index}].end`,
-                                                                        `${month} ${year}`
+                                                                        `${year}`
                                                                     );
                                                                 }}
                                                                 error={
