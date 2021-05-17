@@ -185,7 +185,6 @@ const ExtrasForm = ({ closeDrawer, anchor }) => {
                                                         }}
                                                         onDelete={(chip, indexChip) => {
                                                             const items = values.extras[index].items.filter((_,i) => {
-                                                                console.log(i !== indexChip)
                                                                 return i !== indexChip
                                                             })
                                                             setFieldValue(`extras[${index}].items`, items)
@@ -207,7 +206,6 @@ const ExtrasForm = ({ closeDrawer, anchor }) => {
                                                         }}
                                                         onDelete={(chip, indexChip) => {
                                                             const items = values.extras[index].items.filter((_,i) => {
-                                                                console.log(i !== indexChip)
                                                                 return i !== indexChip
                                                             })
                                                             setFieldValue(`extras[${index}].items`, items)

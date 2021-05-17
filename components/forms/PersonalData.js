@@ -23,9 +23,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 	// Remove +91 from phoneNumber
 	let phoneNumber = personalData.phoneNumber;
 	phoneNumber = phoneNumber.replace('+91', '');
-	console.log({ phoneNumber });
 	personalData = { ...personalData, phoneNumber };
-	console.log(personalData);
 
 	// Validation Schema for PersonalData form
 	const ValidationSchema = Yup.object().shape({
