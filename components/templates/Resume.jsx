@@ -127,12 +127,12 @@ class Resume extends React.Component {
 										className='capitalize text-t1-gray font-light text-t1-sm leading-6'
 										key={index}
 									>
-										{e.text}
+										{e}
 									</p>
 								))
 							) : (
 								<p className='capitalize text-t1-gray font-light text-t1-sm leading-6'>
-									{item.items.map((e, i) => `${e.text}, `)}
+									{item.items.map((e, i) => `${e}, `)}
 								</p>
 							)}
 						</div>

@@ -1,6 +1,7 @@
 import {
 	ADD_EDUCATION_DATA,
 	ADD_EXPERIENCE_DATA,
+	ADD_EXTRAS_DATA,
 	ADD_PERSONAL_DATA,
 } from '../actionTypes/resumeActionTypes';
 
@@ -76,96 +77,44 @@ const initialState = {
 			title: 'Industry Knowledge',
 			type: 'NEW_LINE',
 			items: [
-				{
-					text: 'Product Design',
-				},
-				{
-					text: 'User Interface',
-				},
-				{
-					text: 'User Experience',
-				},
-				{
-					text: 'Interaction Design',
-				},
-				{
-					text: 'Wireframing',
-				},
-				{
-					text: 'Rapid Prototyping',
-				},
-				{
-					text: 'Design Research',
-				},
+				'Product Design',
+				'User Interface',
+				'User Experience',
+				'Interaction Design',
+				'Wireframing',
+				'Rapid Prototyping',
+				'Design Research',
 			],
 		},
 		{
 			title: 'Tools and Technologies',
 			type: 'COMMA',
 			items: [
-				{
-					text: 'Figma',
-				},
-				{
-					text: 'Sketch',
-				},
-				{
-					text: 'Protopie',
-				},
-				{
-					text: 'Framer',
-				},
-				{
-					text: 'Invision',
-				},
-				{
-					text: 'Abstract',
-				},
-				{
-					text: 'Zeplin',
-				},
-				{
-					text: 'Google Analytics',
-				},
-				{
-					text: 'Amplitude',
-				},
-				{
-					text: 'Fullstory',
-				},
-				{
-					text: 'Figma',
-				},
+				'Figma',
+				'Sketch',
+				'Protopie',
+				'Framer',
+				'Invision',
+				'Abstract',
+				'Zeplin',
+				'Google Analytics',
+				'Amplitude',
+				'Fullstory',
+				'Figma',
 			],
 		},
 		{
 			title: 'Other Skills',
 			type: 'COMMA',
-			items: [
-				{
-					text: 'HTML',
-				},
-				{
-					text: 'CSS',
-				},
-				{
-					text: 'jQuery',
-				},
-			],
+			items: ['HTML', 'CSS', 'jQuery'],
 		},
 		{
 			title: 'Social',
 			type: 'NEW_LINE',
 			items: [
-				{
-					text: 'yoursite.com',
-				},
-				{
-					text: 'linkedin.com/in/yourname',
-				},
-				{
-					text: 'dribbble.com/yourname',
-				},
+				'yoursite.com',
+				'linkedin.com/in/yourname',
+				'dribbble.com/yourname',
 			],
 		},
 	],
@@ -194,6 +143,13 @@ export const resumeReducer = (state = { data: initialState }, action) => {
 				data: {
 					...state.data,
 					education: action.payload,
+				},
+			};
+		case ADD_EXTRAS_DATA:
+			return {
+				data: {
+					...state.data,
+					extras: action.payload,
 				},
 			};
 	}

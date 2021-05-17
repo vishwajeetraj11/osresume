@@ -1,6 +1,7 @@
 import {
 	ADD_EDUCATION_DATA,
 	ADD_EXPERIENCE_DATA,
+	ADD_EXTRAS_DATA,
 	ADD_PERSONAL_DATA,
 } from '../actionTypes/resumeActionTypes';
 
@@ -22,5 +23,13 @@ export const addEducationData = (education) => (dispatch) => {
 	dispatch({
 		type: ADD_EDUCATION_DATA,
 		payload: education,
+	});
+};
+
+export const addExtrasData = (extras) => (dispatch) => {
+
+	dispatch({
+		type: ADD_EXTRAS_DATA,
+		payload: extras,
 	});
 };

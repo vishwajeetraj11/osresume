@@ -11,6 +11,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import PersonalDataForm from './forms/PersonalData';
 import WorkExperienceForm from './forms/Experience';
 import EducationForm from './forms/Education';
+import ExtrasForm from './forms/ExtrasForm';
 
 const useStyles = makeStyles({
 	list: {
@@ -73,6 +74,12 @@ const LeftSideBar = () => {
 				)}
 				{anchor === 'education' && (
 					<EducationForm
+						closeDrawer={toggleDrawer(anchor, false)}
+						anchor={anchor}
+					/>
+				)}
+				{anchor === 'extras' && (
+					<ExtrasForm
 						closeDrawer={toggleDrawer(anchor, false)}
 						anchor={anchor}
 					/>
