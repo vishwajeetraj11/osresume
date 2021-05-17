@@ -3,6 +3,7 @@ import {
 	ADD_EXPERIENCE_DATA,
 	ADD_EXTRAS_DATA,
 	ADD_PERSONAL_DATA,
+	ADD_PHOTO_DATA,
 } from '../actionTypes/resumeActionTypes';
 
 // new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
@@ -13,6 +14,9 @@ const initialState = {
 		email: 'youremail@gmail.com',
 		phoneNumber: '+91 1234567890',
 		country: 'Your Country',
+	},
+	photo: {
+		src: '/images/avatar.png'
 	},
 	education: [
 		{
@@ -150,6 +154,13 @@ export const resumeReducer = (state = { data: initialState }, action) => {
 				data: {
 					...state.data,
 					extras: action.payload,
+				},
+			};
+		case ADD_PHOTO_DATA:
+			return {
+				data: {
+					...state.data,
+					photo: action.payload,
 				},
 			};
 	}

@@ -44,3 +44,12 @@ img {
 	width: 100%;
 	object-fit: cover;
 }
+
+.ReactCrop-opt {
+	position: relative;
+    display: inline-block;
+    cursor: crosshair;
+    overflow: hidden;
+    max-height: 500px;
+    margin-right: 2.5rem;
+}

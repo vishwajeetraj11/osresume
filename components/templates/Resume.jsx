@@ -102,7 +102,7 @@ class Resume extends React.Component {
 				<div className='right w-3/12 bg-green-4000'>
 					<div className='header-right h-32 flex items-center'>
 						<div className={t1.profile_image_container}>
-							<img src='/images/avatar.png' />
+							<img src={data.photo.src} />
 						</div>
 					</div>
 					<div className='mb-6'>
