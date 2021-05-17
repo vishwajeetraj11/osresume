@@ -56,7 +56,7 @@ class Resume extends React.Component {
 					</div>
 					<div className=''>
 						<p className='tracking-widest uppercase text-t1-md text-t1-black'>
-							Experience
+							{data.experiences.length > 0 && 'Experience'}
 						</p>
 						{data.experiences.map((exp, index) => (
 							<div key={index} className='mb-4'>
@@ -79,7 +79,7 @@ class Resume extends React.Component {
 					</div>
 					<div className=''>
 						<p className='tracking-widest uppercase text-t1-md text-t1-black'>
-							Education
+						{data.education.length > 0 && 'Education'}
 						</p>
 						{data.education.map((edu, index) => (
 							<div key={index} className='mb-4'>
@@ -102,7 +102,7 @@ class Resume extends React.Component {
 				<div className='right w-3/12 bg-green-4000'>
 					<div className='header-right h-32 flex items-center'>
 						<div className={t1.profile_image_container}>
-							<img draggable={false} src={data.photo.src} />
+							{data?.photo?.src && <img draggable={false} src={data.photo.src} />}
 						</div>
 					</div>
 					<div className='mb-6'>

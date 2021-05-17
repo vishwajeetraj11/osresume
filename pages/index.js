@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FloatingPrint from '../components/floatingPrint';
 import Resume from '../components/templates/Resume';
 import { useReactToPrint } from 'react-to-print';
-import React, { useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 
 import { LOGOUT } from '../redux/actionTypes/userActionTypes';
 import { login } from '../redux/actions/userActions';
@@ -12,6 +12,7 @@ import LeftSideBar from '../components/LeftSideBar';
 
 export default function Home() {
 	const resumeData = useSelector((state) => state.resume.data);
+	const username = resumeData.personalData.name;
 	const resumeRef = useRef();
 	const handlePrint = useReactToPrint({
 		content: () => resumeRef.current,
@@ -30,10 +31,17 @@ export default function Home() {
 	}, []);
 
 	return (
+		<Fragment>
+		<Head>
+        <title>{username ? username : ''} | Resume Editor</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+		<meta property="og:title" content={`${username} Resume`} key="title" />
+      </Head>
 		<div className='flex justify-around'>
 			<LeftSideBar />
 			<FloatingPrint onClick={handlePrint} />
 			<Resume ref={resumeRef} data={resumeData} />
 		</div>
+		</Fragment>
 	);
 }

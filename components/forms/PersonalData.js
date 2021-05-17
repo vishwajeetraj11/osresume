@@ -21,8 +21,8 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 	let personalData = useSelector((state) => state.resume.data.personalData);
 
 	// Remove +91 from phoneNumber
-	let phoneNumber = personalData.phoneNumber;
-	phoneNumber = phoneNumber.replace('+91', '');
+	let phoneNumber = personalData?.phoneNumber;
+	phoneNumber = phoneNumber?.replace('+91', '');
 	personalData = { ...personalData, phoneNumber };
 
 	// Validation Schema for PersonalData form
@@ -31,7 +31,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 		email: Yup.string().email(),
 		designation: Yup.string(),
 		country: Yup.string().required(),
-		phoneNumber: Yup.string().min(10),
+		phoneNumber: Yup.string().min(10).required('Required'),
 	});
 
 	return (

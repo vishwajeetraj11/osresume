@@ -124,6 +124,14 @@ const initialState = {
 	],
 };
 
+// const emptyInitialState = {
+// 	personalData: {},
+// 	photo: {},
+// 	education: [],
+// 	experiences: [],
+// 	extras: [],
+// };
+
 export const resumeReducer = (state = { data: initialState }, action) => {
 	switch (action.type) {
 		default:
