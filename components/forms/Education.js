@@ -54,6 +54,9 @@ const EducationForm = ({ closeDrawer, anchor }) => {
 			initialValues={{
 				education: education,
 			}}
+			validateOnChange={false}
+            validateOnBlur={false}
+            validateOnMount={false}
 			validationSchema={ValidationSchema}
 			onSubmit={(values, { setSubmitting, resetForm }) => {
 				setTimeout(() => {
@@ -261,13 +264,13 @@ const EducationForm = ({ closeDrawer, anchor }) => {
 															onChange={(
 																date
 															) => {
-																const month =
-																	date.toLocaleString(
-																		'default',
-																		{
-																			month: 'long',
-																		}
-																	);
+																// const month =
+																// 	date.toLocaleString(
+																// 		'default',
+																// 		{
+																// 			month: 'long',
+																// 		}
+																// 	);
 																const year =
 																	date.getUTCFullYear();
 																setFieldValue(

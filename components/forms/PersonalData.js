@@ -39,6 +39,9 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 			initialValues={{
 				...personalData,
 			}}
+			validateOnChange={false}
+            validateOnBlur={false}
+            validateOnMount={false}
 			validationSchema={ValidationSchema}
 			onSubmit={(values, { setSubmitting, resetForm }) => {
 				setTimeout(() => {

@@ -58,6 +58,9 @@ const WorkExperienceForm = ({ closeDrawer, anchor }) => {
             initialValues={{
                 experiences: experience
             }}
+            validateOnChange={false}
+            validateOnBlur={false}
+            validateOnMount={false}
             validationSchema={ValidationSchema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
                 setTimeout(() => {

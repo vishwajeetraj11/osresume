@@ -62,6 +62,9 @@ const ExtrasForm = ({ closeDrawer, anchor }) => {
                 extras: extras
             }}
             validateOnChange={false}
+            validateOnBlur={false}
+            validateOnMount={false}
+            validateOnChange={false}
             validationSchema={ValidationSchema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
                 setTimeout(() => {
