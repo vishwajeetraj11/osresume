@@ -5,41 +5,45 @@ import 'react-image-crop/dist/ReactCrop.css';
 import { useDispatch } from 'react-redux';
 import { addPhoto } from '../../redux/actions/resumeActions';
 
-const UploadPhoto = () => {
-    const dispatch = useDispatch();
-    function generateDownload(canvas, crop) {
-        if (!crop || !canvas) {
-            return;
-        }
-    
-        canvas.toBlob(
-            (blob) => {
-                // const previewUrl = window.URL.createObjectURL(blob);
-                const previewUrl = URL.createObjectURL(blob);
-                dispatch(addPhoto({
-                    src: previewUrl
-                }));
-                const anchor = document.createElement('a');
-                anchor.download = 'cropPreview.png';
-                anchor.href = URL.createObjectURL(blob);
-                // anchor.click();
-                
-                // window.URL.revokeObjectURL(previewUrl);
-            },
-            'image/png',
-            1
-        );
-    }
+// import Cropper from "react-cropper";
+
+const UploadPhoto = ({ closeDrawer }) => {
+	const dispatch = useDispatch();
+	function generateDownload(canvas, crop) {
+		if (!crop || !canvas) {
+			return;
+		}
+
+		canvas.toBlob(
+			(blob) => {
+				// const previewUrl = window.URL.createObjectURL(blob);
+				const previewUrl = URL.createObjectURL(blob);
+				dispatch(
+					addPhoto({
+						src: previewUrl,
+					})
+				);
+				const anchor = document.createElement('a');
+				anchor.download = 'cropPreview.png';
+				anchor.href = URL.createObjectURL(blob);
+				// anchor.click();
+				closeDrawer();
+				// window.URL.revokeObjectURL(previewUrl);
+			},
+			'image/png',
+			1
+		);
+	}
 
 	const [upImg, setUpImg] = useState();
 	const imgRef = useRef(null);
-    const uploadRef=useRef(null);
+	const uploadRef = useRef(null);
 	const previewCanvasRef = useRef(null);
 	const [crop, setCrop] = useState({
 		unit: 'px',
 		width: 300,
 		height: 300,
-        aspect: 1/1
+		aspect: 1 / 1,
 	});
 	const [completedCrop, setCompletedCrop] = useState(null);
 
@@ -86,31 +90,54 @@ const UploadPhoto = () => {
 			crop.width,
 			crop.height
 		);
+		// ctx.drawImage(
+		// 	image,
+		// 	0,
+		// 	0,
+		// 	image.width,
+		// 	image.height,
+		// 	0,
+		// 	0,
+		// 	canvas.width,
+		// 	canvas.height
+		// );
 	}, [completedCrop]);
 
-    const onUpload = () => {
-        uploadRef.current.click();
-    }
+	const onUpload = () => {
+		uploadRef.current.click();
+	};
 
 	return (
-		<div className='App'>
+		<div className='mb-10'>
 			<div className='mt-6 mb-6'>
-				<input ref={uploadRef} type='file' hidden accept='image/*' onChange={onSelectFile} />
-                <Button
-                onClick={onUpload}
-                variant='outlined'
-				type='button'
-                >Upload Image</Button>
+				<input
+					ref={uploadRef}
+					type='file'
+					hidden
+					accept='image/*'
+					onChange={onSelectFile}
+				/>
+				<Button onClick={onUpload} variant='outlined' type='button'>
+					Upload Image
+				</Button>
 			</div>
 			<ReactCrop
-                className='ReactCrop-opt'
+				// keepSelection
+                circularCrop
+				imageStyle={{ objectFit: 'contain' }}
+				style={{
+					// height: 500,
+				}}
+                ruleOfThirds
+				className='ReactCrop-opt'
 				src={upImg}
 				onImageLoaded={onLoad}
 				crop={crop}
 				onChange={(c) => setCrop(c)}
 				onComplete={(c) => setCompletedCrop(c)}
 			/>
-			<div>
+			<div className='mb-8'>
+                <h3 className='my-6 text-xl font-semibold'>Preview</h3>
 				<canvas
 					ref={previewCanvasRef}
 					// Rounding is important so the canvas width and height matches/is a multiple for sharpness.
@@ -122,7 +149,7 @@ const UploadPhoto = () => {
 			</div>
 
 			<Button
-                variant='outlined'
+				variant='outlined'
 				type='button'
 				disabled={!completedCrop?.width || !completedCrop?.height}
 				onClick={() =>

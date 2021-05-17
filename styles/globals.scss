@@ -50,6 +50,11 @@ img {
     display: inline-block;
     cursor: crosshair;
     overflow: hidden;
-    max-height: 500px;
+    // max-height: 500px;
     margin-right: 2.5rem;
+
+	// img {
+	// 	object-fit: contain;
+	// 	height: 500px;
+	// }
 }

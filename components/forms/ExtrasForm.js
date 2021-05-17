@@ -61,6 +61,7 @@ const ExtrasForm = ({ closeDrawer, anchor }) => {
             initialValues={{
                 extras: extras
             }}
+            validateOnChange={false}
             validationSchema={ValidationSchema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
                 setTimeout(() => {
@@ -94,7 +95,7 @@ const ExtrasForm = ({ closeDrawer, anchor }) => {
                                         <div className='mr-10' key={index}>
                                             <div className='flex align-center justify-between'>
                                                 <h3 className='text-t1-lg font-medium mt-6'>
-                                                    Extras Block {index + 1}
+                                                    {values.extras[index].title ? values.extras[index].title : `Extras Block ${index+1}` }
                                                 </h3>
 
                                                 <Button
@@ -179,21 +180,38 @@ const ExtrasForm = ({ closeDrawer, anchor }) => {
                                                         allowDuplicates={false}
                                                         alwaysShowPlaceholder={true}
                                                         value={values.extras[index].items}
-                                                        onAdd={(chip) => values.extras[index].items.push(chip)}
-                                                        onDelete={(chip, indexChip) => values.extras[index].items.filter((_, i) => i !== indexChip)}
+                                                        onAdd={(chip) => {
+                                                            setFieldValue(`extras[index].items`, values.extras[index].items.push(chip))
+                                                        }}
+                                                        onDelete={(chip, indexChip) => {
+                                                            const items = values.extras[index].items.filter((_,i) => {
+                                                                console.log(i !== indexChip)
+                                                                return i !== indexChip
+                                                            })
+                                                            setFieldValue(`extras[${index}].items`, items)
+                                                        }}
                                                     />
                                                 )}
                                                 {values.extras[index].type === 'COMMA' && (
                                                     <ChipInput
                                                         label='Items'
+                                                        InputLabelProps={{shrink: true}}
                                                         fullWidth
                                                         className='mt-4 mr-10'
                                                         placeholder='Enter items and hit ENTER'
                                                         allowDuplicates={false}
                                                         alwaysShowPlaceholder={true}
                                                         value={values.extras[index].items}
-                                                        onAdd={(chip) => values.extras[index].items.push(chip)}
-                                                        onDelete={(chip, indexChip) => values.extras[index].items.filter((_, i) => i !== indexChip)}
+                                                        onAdd={(chip) => {
+                                                            setFieldValue(`extras[index].items`, values.extras[index].items.push(chip))
+                                                        }}
+                                                        onDelete={(chip, indexChip) => {
+                                                            const items = values.extras[index].items.filter((_,i) => {
+                                                                console.log(i !== indexChip)
+                                                                return i !== indexChip
+                                                            })
+                                                            setFieldValue(`extras[${index}].items`, items)
+                                                        }}
                                                     />
                                                 )}
 

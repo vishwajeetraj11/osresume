@@ -85,13 +85,12 @@ const LeftSideBar = () => {
 						anchor={anchor}
 					/>
 				)}
-				{anchor === 'extras' && (
-					<ExtrasForm
+				{anchor === 'upload-photo' && (
+					<UploadPhoto
 						closeDrawer={toggleDrawer(anchor, false)}
 						anchor={anchor}
 					/>
 				)}
-				{anchor === 'upload-photo' && <UploadPhoto />}
 			</div>
 			{/*<Divider />*/}
 		</div>
