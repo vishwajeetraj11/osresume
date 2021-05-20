@@ -20,7 +20,7 @@
 // }
 
 div{
-	word-break: break-all;
+	word-break: break-word;
 }
 
 html,
@@ -50,6 +50,10 @@ a {
 	height: 286.2mm;
 	max-width: 210mm;
 	margin: 20px auto;
+	margin-bottom: 40px;
+	@media only screen and (min-width: 1024px)  {
+		margin-bottom: 20px;
+	}
 }
 
 .left-sidebar {

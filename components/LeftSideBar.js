@@ -158,7 +158,8 @@ const LeftSideBar = () => {
 	);
 
 	return (
-		<div className='bg-green-400 lg:pt-16 px-4 flex lg:block justify-center overflow-scroll left-sidebar'>
+		<div className='bg-primary lg:pt-16 px-4 flex lg:block justify-center left-sidebar'>
+		{/* add overflow-scroll ||^^ if section are needed to scroll */}
 			{sections.data.map(({ title, Icon, id, label }) => (
 				<div key={id} className='inline-block lg:block my-4 lg:my-8'>
 					<Tooltip title={title} placement={matches ? 'right' : 'bottom'} arrow>

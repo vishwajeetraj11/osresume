@@ -1,7 +1,5 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
-import FloatingPrint from '../components/floatingPrint';
 import Resume from '../components/templates/Resume';
 import { useReactToPrint } from 'react-to-print';
 import React, { Fragment, useRef } from 'react';
@@ -9,6 +7,7 @@ import React, { Fragment, useRef } from 'react';
 import { LOGOUT } from '../redux/actionTypes/userActionTypes';
 import { login } from '../redux/actions/userActions';
 import LeftSideBar from '../components/LeftSideBar';
+import RightSideBar from '../components/RightSideBar';
 
 export default function Home() {
 	const resumeData = useSelector((state) => state.resume.data);
@@ -39,8 +38,8 @@ export default function Home() {
       </Head>
 		<div className='flex flex-col lg:flex-row'>
 			<LeftSideBar />
-			<FloatingPrint onClick={handlePrint} />
 			<Resume ref={resumeRef} data={resumeData} />
+			<RightSideBar handlePrint={handlePrint} />
 		</div>
 		</Fragment>
 	);

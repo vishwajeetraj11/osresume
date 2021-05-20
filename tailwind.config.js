@@ -58,6 +58,7 @@ module.exports = {
 			...colors,
 			't1-gray': '#73808D',
 			't1-black': '#101214',
+			'primary': '#1abc9c'
 		},
 	},
 	variants: {
