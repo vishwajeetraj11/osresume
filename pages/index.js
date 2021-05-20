@@ -37,7 +37,7 @@ export default function Home() {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 		<meta property="og:title" content={`${username} Resume`} key="title" />
       </Head>
-		<div className='flex justify-around'>
+		<div className='flex flex-col lg:flex-row'>
 			<LeftSideBar />
 			<FloatingPrint onClick={handlePrint} />
 			<Resume ref={resumeRef} data={resumeData} />

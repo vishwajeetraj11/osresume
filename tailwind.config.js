@@ -1,4 +1,4 @@
-const colors = require('tailwindcss/colors')
+const colors = require('tailwindcss/colors');
 module.exports = {
 	purge: [
 		'./pages/**/*.{js,ts,jsx,tsx}',
@@ -6,6 +6,22 @@ module.exports = {
 	],
 	darkMode: false, // or 'media' or 'class'
 	theme: {
+		screens: {
+			sm: '640px',
+			// => @media (min-width: 640px) { ... }
+
+			md: '768px',
+			// => @media (min-width: 768px) { ... }
+
+			lg: '1024px',
+			// => @media (min-width: 1024px) { ... }
+
+			xl: '1280px',
+			// => @media (min-width: 1280px) { ... }
+
+			'2xl': '1536px',
+			// => @media (min-width: 1536px) { ... }
+		},
 		opacity: {
 			0: '0',
 			20: '0.2',
@@ -40,9 +56,9 @@ module.exports = {
 		},
 		colors: {
 			...colors,
-			't1-gray': '#73808D', 
-			't1-black': '#101214'
-		}
+			't1-gray': '#73808D',
+			't1-black': '#101214',
+		},
 	},
 	variants: {
 		extend: {},

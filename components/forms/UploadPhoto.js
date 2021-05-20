@@ -108,7 +108,7 @@ const UploadPhoto = ({ closeDrawer }) => {
 	};
 
 	return (
-		<div className='mb-10'>
+		<div className='mb-10 w-screen'>
 			<div className='mt-6 mb-6'>
 				<input
 					ref={uploadRef}

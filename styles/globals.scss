@@ -6,6 +6,23 @@
 	box-sizing: border-box;
 }
 
+// html {
+// 	// font-size: 62.5%;
+// 	// @media only screen and (max-width: 75em) {
+// 	// 	font-size: 56.25%;
+// 	// }
+// 	// @media only screen and (max-width: 56.25em) {
+// 	// 	font-size: 50%;
+// 	// }
+// 	// @media only screen and (min-width: 112.5em) {
+// 	// 	font-size: 75%;
+// 	// }
+// }
+
+div{
+	word-break: break-all;
+}
+
 html,
 body {
 	padding: 0;
@@ -31,12 +48,14 @@ a {
 	// width: 596px;
 	// height: 842px;
 	height: 286.2mm;
-	width: 210mm;
+	max-width: 210mm;
 	margin: 20px auto;
 }
 
 .left-sidebar {
-	height: 297mm;
+	@media only screen and (min-width: 1024px)  {
+		height: 297mm;
+	}
 }
 
 img {
@@ -47,14 +66,22 @@ img {
 
 .ReactCrop-opt {
 	position: relative;
-    display: inline-block;
-    cursor: crosshair;
-    overflow: hidden;
-    // max-height: 500px;
-    margin-right: 2.5rem;
+	display: inline-block;
+	cursor: crosshair;
+	overflow: hidden;
+	// max-height: 500px;
+	margin-right: 2.5rem;
 
 	// img {
 	// 	object-fit: contain;
 	// 	height: 500px;
 	// }
+}
+
+.MuiDrawer-paperAnchorTop {
+	width: 100vw;
+	height: 100vh;
+	@media only screen and (min-width: 1024px)  {
+		width: 50vw;	
+	}
 }
