@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText';
 import FormatColorFillIcon from '@material-ui/icons/FormatColorFill';
 import PrintIcon from '@material-ui/icons/Print';
@@ -23,6 +23,9 @@ const RightSideBar = ({handlePrint}) => {
     const sectionTitles = sections.map((e) => e.label);
 	const sectionDrawerStates = {};
 	sectionTitles.map((section) => (sectionDrawerStates[section] = false));
+
+	const [fontsAdded, setFontsAdded]=useState([])
+	const [fontLoading, setFontLoading]=useState(false)
 
     const useStyles = makeStyles({
 		list: {
@@ -64,6 +67,7 @@ const RightSideBar = ({handlePrint}) => {
 			<div className='pt-10 pl-10 w-screen'>
 				<div className='flex align-center'>
 				<Button
+					disabled={fontLoading}
 					className='px-4 py-2'
 					onClick={toggleRightDrawer(anchor, false)}
 					color='default'
@@ -82,22 +86,37 @@ const RightSideBar = ({handlePrint}) => {
 							const resume = document.getElementById('t1');
 
 							document.fonts.ready.then(() => {
-								console.log('llb')
+							setFontLoading(true)
+							// Check if the font is in the system
 							 fontAvailable = document.fonts.check(`16px ${fontFamily}`);
-							 
-							if(fontAvailable) {
+
+							// Check if font is already added via web to avoid refetching of same font 
+							 if(fontsAdded.length > 4) {
+								const fontID = fontsAdded[fontsAdded.length - 1];
+								setFontsAdded(p => p.filter((_,i) => i !== fontsAdded.length - 1));
+								const fontNode = document.getElementById(fontID)
+								fontNode.remove();
+							} 
+
+							// Check if the font is already available in users system to avoid fetching
+							if(fontAvailable || fontsAdded.includes(fontID)) {
 								resume.style['fontFamily'] = fontFamily
-							} else {
+							} 
+							// Fetch fonts
+							else {
 								const head = document.getElementsByTagName('head')[0];
 								const link = document.createElement('link');
 								link.id = fontID;
 								link.rel = 'stylesheet';
 								link.type = 'text/css';
-								link.href = 'http://fonts.googleapis.com/css?family='+fontID;
+								link.href = `http://fonts.googleapis.com/css?family=${fontID}:wght@100;300;400;500;600;700;900`;
 								link.media = 'all';
 								head.appendChild(link);
+								setFontsAdded(p => p.concat(fontID))
 								resume.style['fontFamily'] = fontFamily
 							}
+							setFontLoading(false)
+
 							}).catch(e => console.log(e));
 							
 						}
@@ -173,6 +192,36 @@ const fonts = [
 		id: '6',
 		fontFamily: 'Pattaya',
 		fontId: 'Pattaya',
+	},
+	{
+		id: '7',
+		fontFamily: 'KoHo',
+		fontId: 'KoHo',
+	},
+	{
+		id: '8',
+		fontFamily: 'Open Sans',
+		fontId: 'Open+Sans',
+	},
+	{
+		id: '9',
+		fontFamily: 'Quicksand',
+		fontId: 'Quicksand',
+	},
+	{
+		id: '10',
+		fontFamily: 'Dancing Script',
+		fontId: 'Dancing+Script',
+	},
+	{
+		id: '11',
+		fontFamily: 'Josefin Slab',
+		fontId: 'Josefin+Slab',
+	},
+	{
+		id: '12',
+		fontFamily: 'Cormorant',
+		fontId: 'Cormorant',
 	},
 ]
 
