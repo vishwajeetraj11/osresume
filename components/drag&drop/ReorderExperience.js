@@ -39,7 +39,7 @@ const ReorderExperience = () => {
 				{(provided,snapshot) => (
 					<div
 						style={getListStyle(snapshot.isDraggingOver)}
-						className='mt-10 pr-10'
+						className='mt-10 mr-10'
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 					>
@@ -51,16 +51,19 @@ const ReorderExperience = () => {
 							>
 								{(provided,snapshot) => (
 									<div
-										className='p-6 text-white text-lg bg-primary'
+										onClick={() => null}
+										className='p-6 text-white text-lg bg-primary text-gray-100 flex justify-between items-center'
 										{...provided.draggableProps}
 										{...provided.dragHandleProps}
 										ref={provided.innerRef}
-                                        style={getItemStyle(
+                                        style={{...getItemStyle(
                                             snapshot.isDragging,
                                             provided.draggableProps.style
-                                          )}
+                                          ),
+										}}
 									>
-										{e.designation}
+										<p>{e.designation}</p>
+										<p className='text-sm'>{e.start} &mdash; {e.end}</p>
 									</div>
 								)}
 							</Draggable>
