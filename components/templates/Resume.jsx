@@ -41,7 +41,7 @@ class Resume extends React.Component {
 		return (
 			<div
 				id='t1'
-				className={`resume-a4 bg-white flex justify-between ${t1.container}`}
+				className={`resume-a4 bg-white flex justify-between ${t1.container} order-2`}
 			>
 				<div className='left w-8/12 bg-yellow-4000'>
 					<div className='header-left'>

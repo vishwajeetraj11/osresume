@@ -163,7 +163,7 @@ const LeftSideBar = () => {
 	);
 
 	return (
-		<div className='bg-primary lg:pt-16 px-4 flex lg:block justify-center left-sidebar'>
+		<div className='bg-primary lg:pt-16 px-4 flex lg:block fixed lg:static bottom-0 w-screen lg:w-auto justify-center left-sidebar order-3 lg:order-1'>
 		{/* add overflow-scroll ||^^ if section are needed to scroll */}
 			{sections.data.map(({ title, Icon, id, label }) => (
 				<div key={id} className='inline-block lg:block my-4 lg:my-8'>

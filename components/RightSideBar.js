@@ -134,7 +134,7 @@ const RightSideBar = ({handlePrint}) => {
 	);
 
     return (
-        <div className='bg-primary lg:pt-16 px-4 fixed lg:static bottom-0 w-screen lg:w-auto flex lg:block justify-center left-sidebar'>
+        <div className='bg-primary lg:pt-16 px-4 w-screen lg:w-auto flex lg:block justify-center left-sidebar order-1 lg:order-3'>
         {sections.map(({ title, Icon, id, label }) => (
             <div key={id} className='inline-block lg:block my-4 lg:my-8'>
                 <Tooltip title={title} placement={matches ? 'right' : 'bottom'} arrow>
