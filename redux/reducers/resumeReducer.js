@@ -36,6 +36,7 @@ const initialState = {
 	],
 	experiences: [
 		{
+			id: '12',
 			designation: 'Senior UI/UX Product Designer',
 			company: 'Google',
 			description:
@@ -46,7 +47,8 @@ const initialState = {
 			country: 'Paris',
 		},
 		{
-			designation: 'UI/UX Product Designer',
+			id: '13',
+			designation: 'Full Stack Developer',
 			company: 'Paypal',
 			description:
 				'Lead the UI design with the accountability of the design system, collaborated with product and development teams on core projects to improve product interfaces and experiences.',
@@ -56,7 +58,8 @@ const initialState = {
 			country: 'Paris',
 		},
 		{
-			designation: 'UI/UX Product Designer',
+			id: '14',
+			designation: 'Cloud Developer',
 			company: 'Paypal',
 			description:
 				'Lead the UI design with the accountability of the design system, collaborated with product and development teams on core projects to improve product interfaces and experiences.',
@@ -66,7 +69,8 @@ const initialState = {
 			country: 'Paris',
 		},
 		{
-			designation: 'Senior UI/UX Product Designer',
+			id: '15',
+			designation: 'DevOps Developer',
 			company: 'Google',
 			description:
 				'Directly collaborated with CEO and Product team to prototype, design and deliver the UI and UX experience with a lean design process: research, design, test, and iterate.',

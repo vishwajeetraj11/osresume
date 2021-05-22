@@ -14,6 +14,7 @@ import EducationForm from './forms/Education';
 import ExtrasForm from './forms/ExtrasForm';
 import UploadPhoto from './forms/UploadPhoto';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import ReorderExperience from './drag&drop/ReorderExperience';
 
 
 
@@ -113,14 +114,14 @@ const LeftSideBar = () => {
 					{' '}
 					<ArrowBackIosIcon /> <p className='ml-2'>Back</p>
 				</Button>
-				<Button
+				{!(anchor === 'personal-data') && <Button
 					variant='outlined'
 					className='px-4 py-2 ml-10'
 					onClick={toggleTopDrawer(anchor, true)}
 					color='primary'
 					variant='contained'
 				> Reorder
-				</Button>
+				</Button>}
 				</div>
 				{anchor === 'personal-data' && (
 					<PersonalDataForm
@@ -128,11 +129,15 @@ const LeftSideBar = () => {
 						anchor={anchor}
 					/>
 				)}
-				{anchor === 'work-experience' && (
+
+				{/* {anchor === 'work-experience' && (
 					<WorkExperienceForm
 						closeDrawer={toggleLeftDrawer(anchor, false)}
 						anchor={anchor}
 					/>
+				)} */}
+				{anchor === 'work-experience' && (
+				<ReorderExperience />
 				)}
 				{anchor === 'education' && (
 					<EducationForm

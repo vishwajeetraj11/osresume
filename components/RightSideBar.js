@@ -109,7 +109,7 @@ const RightSideBar = ({handlePrint}) => {
 								link.id = fontID;
 								link.rel = 'stylesheet';
 								link.type = 'text/css';
-								link.href = `http://fonts.googleapis.com/css?family=${fontID}:wght@100;300;400;500;600;700;900`;
+								link.href = `https://fonts.googleapis.com/css?family=${fontID}:wght@100;300;400;500;600;700;900`;
 								link.media = 'all';
 								head.appendChild(link);
 								setFontsAdded(p => p.concat(fontID))
