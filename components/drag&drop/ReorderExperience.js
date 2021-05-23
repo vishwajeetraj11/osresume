@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Fragment } from 'react';
+import AddIcon from '@material-ui/icons/Add';
+import SaveIcon from '@material-ui/icons/Save';
+import { addExperienceData } from '../../redux/actions/resumeActions';
 
-const ReorderExperience = () => {
+const ReorderExperience = ({closeDrawer, anchor}) => {
+	const dispatch = useDispatch();
 	const experiences = useSelector((state) => state.resume.data.experiences);
 	const [exp, setExp] = useState(experiences);
 
@@ -22,7 +28,6 @@ const ReorderExperience = () => {
 	};
 
 	const grid = 10;
-
 	const getItemStyle = (isDragging, draggableStyle) =>  ({
 			// some basic styles to make the items look a bit nicer
 			userSelect: 'none',
@@ -98,7 +103,40 @@ const ReorderExperience = () => {
 		})
 	}
 
+	const save = () => {
+		dispatch(addExperienceData(exp));
+		closeDrawer(anchor, false);
+	}
+
 	return (
+		<Fragment>
+		<div className='flex items-center justify-start'>
+		<Button
+			className='px-4 py-2 mr-4'
+			onClick={() => closeDrawer(anchor, false)}
+			color='default'
+			variant='text'
+			>
+			{' '}
+			<ArrowBackIcon /><p className='ml-2'>Back</p>
+		</Button>
+		<Button
+			className='px-4 py-2 mr-4'
+			onClick={() => closeDrawer(anchor, false)}
+			color='primary'
+			variant='outlined'
+			>
+			<AddIcon /><p className='ml-2'>Add Experience</p>
+		</Button>
+		<Button
+			className='px-4 py-2'
+			onClick={save}
+			color='primary'
+			variant='contained'
+			>
+			<SaveIcon /><p className='ml-2'>Save Order</p>
+		</Button>
+		</div>
 		<DragDropContext onDragEnd={onDragEnd}>
 			<Droppable droppableId={'experiences'}>
 				{(provided,snapshot) =>  (
@@ -162,7 +200,8 @@ const ReorderExperience = () => {
 				)}
 			</Droppable>
 		</DragDropContext>
-	);
+		</Fragment>
+		);
 };
 
 export default ReorderExperience;

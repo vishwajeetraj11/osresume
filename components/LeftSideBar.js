@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from '@material-ui/core';
 
 import clsx from 'clsx';
@@ -9,13 +9,12 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import PersonalDataForm from './forms/PersonalData';
 import WorkExperienceForm from './forms/Experience';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import EducationForm from './forms/Education';
 import ExtrasForm from './forms/ExtrasForm';
 import UploadPhoto from './forms/UploadPhoto';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ReorderExperience from './drag&drop/ReorderExperience';
-
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 
 const LeftSideBar = () => {
@@ -93,67 +92,67 @@ const LeftSideBar = () => {
 		</div>
 	)
 
-	const leftList = (anchor) => (
-		<div
-			// className={clsx(classes.list, {
-			// 	[classes.fullList]: anchor === 'top' || anchor === 'bottom',
-			// })}
-			className={`${matches ? clsx(classes.list) : clsx(classes.fullList)} h-full`}
-			// style={{backgroundColor: '#16a085'}}
-			role='presentation'
-			// onClick={toggleDrawer(anchor, false)}
-			// onKeyDown={toggleDrawer(anchor, false)}
-		>
-			<div className='pt-10 pl-10 pr-10'>
-				<div className='flex align-center'>
-				<Button
-					className='px-4 py-2'
-					onClick={toggleLeftDrawer(anchor, false)}
-					color='default'
-					variant='text'
-				>
-					{' '}
-					<ArrowBackIcon /> <p className='ml-2'>Back</p>
-				</Button>
-				</div>
-				{anchor === 'personal-data' && (
-					<PersonalDataForm
-						closeDrawer={toggleLeftDrawer(anchor, false)}
-						anchor={anchor}
-					/>
-				)}
+	const leftList = (anchor) => {
+		const resume = useSelector(state => state.resume.data)
+		const experiences = resume.experiences;
+		const dispatch = useDispatch();
 
-				{/* {anchor === 'work-experience' && (
-					<WorkExperienceForm
+		return (
+			<div
+				// className={clsx(classes.list, {
+				// 	[classes.fullList]: anchor === 'top' || anchor === 'bottom',
+				// })}
+				className={`${matches ? clsx(classes.list) : clsx(classes.fullList)} h-full`}
+				// style={{backgroundColor: '#16a085'}}
+				role='presentation'
+				// onClick={toggleDrawer(anchor, false)}
+				// onKeyDown={toggleDrawer(anchor, false)}
+			>
+				<div className='pt-10 pl-10 pr-10'>
+					<div className='flex align-center'>
+					</div>
+					{anchor === 'personal-data' && (
+						<PersonalDataForm
+							closeDrawer={toggleLeftDrawer(anchor, false)}
+							anchor={anchor}
+						/>
+					)}
+	
+					{/* {anchor === 'work-experience' && (
+						<WorkExperienceForm
+							closeDrawer={toggleLeftDrawer(anchor, false)}
+							anchor={anchor}
+						/>
+					)} */}
+					{anchor === 'work-experience' && (
+					<ReorderExperience
 						closeDrawer={toggleLeftDrawer(anchor, false)}
 						anchor={anchor}
 					/>
-				)} */}
-				{anchor === 'work-experience' && (
-				<ReorderExperience />
-				)}
-				{anchor === 'education' && (
-					<EducationForm
-						closeDrawer={toggleLeftDrawer(anchor, false)}
-						anchor={anchor}
-					/>
-				)}
-				{anchor === 'extras' && (
-					<ExtrasForm
-						closeDrawer={toggleLeftDrawer(anchor, false)}
-						anchor={anchor}
-					/>
-				)}
-				{anchor === 'upload-photo' && (
-					<UploadPhoto
-						closeDrawer={toggleLeftDrawer(anchor, false)}
-						anchor={anchor}
-					/>
-				)}
+					)}
+					{anchor === 'education' && (
+						<EducationForm
+							closeDrawer={toggleLeftDrawer(anchor, false)}
+							anchor={anchor}
+						/>
+					)}
+					{anchor === 'extras' && (
+						<ExtrasForm
+							closeDrawer={toggleLeftDrawer(anchor, false)}
+							anchor={anchor}
+						/>
+					)}
+					{anchor === 'upload-photo' && (
+						<UploadPhoto
+							closeDrawer={toggleLeftDrawer(anchor, false)}
+							anchor={anchor}
+						/>
+					)}
+				</div>
+				{/*<Divider />*/}
 			</div>
-			{/*<Divider />*/}
-		</div>
-	);
+		)
+	};
 
 	return (
 		<div className='bg-primary lg:pt-16 lg:px-4 flex lg:block fixed lg:static bottom-0 w-screen lg:w-auto justify-center left-sidebar order-3 lg:order-1'>
