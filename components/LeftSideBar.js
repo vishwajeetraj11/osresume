@@ -7,9 +7,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import PersonalDataForm from './forms/PersonalData';
 import WorkExperienceForm from './forms/Experience';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import EducationForm from './forms/Education';
 import ExtrasForm from './forms/ExtrasForm';
 import UploadPhoto from './forms/UploadPhoto';
@@ -41,10 +41,10 @@ const LeftSideBar = () => {
 	// Left Drawer States
 	const [leftDrawerState, setLeftDrawerState] = React.useState({ ...sectionDrawerStates });
 
-	// Top Drawer States
-	const [topDrawerState, setTopDrawerState] = React.useState({ ...sectionDrawerStates });
+	// Nested Drawer States
+	const [nestedDrawerStates, setNestedDrawerStates] = React.useState({ ...sectionDrawerStates });
 
-	const toggleTopDrawer = (anchor, open) => (event) => {
+	const toggleNestedDrawer = (anchor, open) => (event) => {
 		// if (
 		// 	event.type === 'keydown' &&
 		// 	(event.key === 'Tab' || event.key === 'Shift')
@@ -52,7 +52,7 @@ const LeftSideBar = () => {
 		// 	return;
 		// }
 
-		setTopDrawerState({ ...leftDrawerState, [anchor]: open });
+		setNestedDrawerStates({ ...nestedDrawerStates, [anchor]: open });
 	};
 	const toggleLeftDrawer = (anchor, open) => (event) => {
 		// if (
@@ -65,7 +65,7 @@ const LeftSideBar = () => {
 		setLeftDrawerState({ ...leftDrawerState, [anchor]: open });
 	};
 
-	const topList = (anchor) => (
+	const nestedLeft = (anchor) => (
 		<div
 			// className={clsx(classes.list, {
 			// 	[classes.fullList]: anchor === 'top' || anchor === 'bottom',
@@ -79,12 +79,12 @@ const LeftSideBar = () => {
 				<div className='flex align-center'>
 				<Button
 					className='px-4 py-2'
-					onClick={toggleTopDrawer(anchor, false)}
+					onClick={toggleNestedDrawer(anchor, false)}
 					color='default'
 					variant='outlined'
 				>
 					{' '}
-					<ArrowBackIosIcon /> <p className='ml-2'>Back</p>
+					<ArrowBackIcon /> <p className='ml-2'>Back</p>
 				</Button>
 				</div>
 
@@ -98,30 +98,23 @@ const LeftSideBar = () => {
 			// className={clsx(classes.list, {
 			// 	[classes.fullList]: anchor === 'top' || anchor === 'bottom',
 			// })}
-			className={matches ? clsx(classes.list) : clsx(classes.fullList)}
+			className={`${matches ? clsx(classes.list) : clsx(classes.fullList)} h-full`}
+			// style={{backgroundColor: '#16a085'}}
 			role='presentation'
 			// onClick={toggleDrawer(anchor, false)}
 			// onKeyDown={toggleDrawer(anchor, false)}
 		>
-			<div className='pt-10 pl-10'>
+			<div className='pt-10 pl-10 pr-10'>
 				<div className='flex align-center'>
 				<Button
 					className='px-4 py-2'
 					onClick={toggleLeftDrawer(anchor, false)}
 					color='default'
-					variant='outlined'
+					variant='text'
 				>
 					{' '}
-					<ArrowBackIosIcon /> <p className='ml-2'>Back</p>
+					<ArrowBackIcon /> <p className='ml-2'>Back</p>
 				</Button>
-				{!(anchor === 'personal-data') && <Button
-					variant='outlined'
-					className='px-4 py-2 ml-10'
-					onClick={toggleTopDrawer(anchor, true)}
-					color='primary'
-					variant='contained'
-				> Reorder
-				</Button>}
 				</div>
 				{anchor === 'personal-data' && (
 					<PersonalDataForm
@@ -163,7 +156,7 @@ const LeftSideBar = () => {
 	);
 
 	return (
-		<div className='bg-primary lg:pt-16 px-4 flex lg:block fixed lg:static bottom-0 w-screen lg:w-auto justify-center left-sidebar order-3 lg:order-1'>
+		<div className='bg-primary lg:pt-16 lg:px-4 flex lg:block fixed lg:static bottom-0 w-screen lg:w-auto justify-center left-sidebar order-3 lg:order-1'>
 		{/* add overflow-scroll ||^^ if section are needed to scroll */}
 			{sections.data.map(({ title, Icon, id, label }) => (
 				<div key={id} className='inline-block lg:block my-4 lg:my-8'>
@@ -180,11 +173,11 @@ const LeftSideBar = () => {
 						{leftList(label)}
 					</Drawer>
 					<Drawer
-						anchor={'top'}
-						open={topDrawerState[label]}
-						onClose={toggleTopDrawer(label, false)}
+						anchor={'left'}
+						open={nestedDrawerStates[label]}
+						onClose={toggleNestedDrawer(label, false)}
 					>
-						{topList(label)}
+						{nestedLeft(label)}
 					</Drawer>
 				</div>
 			))}

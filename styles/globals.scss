@@ -49,6 +49,8 @@ a {
 	// height: 842px;
 	height: 286.2mm;
 	max-width: 210mm;
+
+	// Margin is causing messing up of the printing process (an extra page is coming (blank))
 	margin: 20px auto;
 	margin-bottom: 93px;
 	@media only screen and (min-width: 1024px)  {

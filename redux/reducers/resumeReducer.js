@@ -41,10 +41,10 @@ const initialState = {
 			company: 'Google',
 			description:
 				'Directly collaborated with CEO and Product team to prototype, design and deliver the UI and UX experience with a lean design process: research, design, test, and iterate.',
-			start: 'Aug 2019',
-			end: 'Aug 2019',
-			years: '1',
-			country: 'Paris',
+			start: 'Aug 2000',
+			end: 'July 2004',
+			years: '4',
+			country: 'London',
 		},
 		{
 			id: '13',
@@ -52,9 +52,9 @@ const initialState = {
 			company: 'Paypal',
 			description:
 				'Lead the UI design with the accountability of the design system, collaborated with product and development teams on core projects to improve product interfaces and experiences.',
-			start: 'Aug 2019',
-			end: 'Aug 2019',
-			years: '5',
+			start: 'July 2004',
+			end: 'Jan 2010',
+			years: '6',
 			country: 'Paris',
 		},
 		{
@@ -63,21 +63,21 @@ const initialState = {
 			company: 'Paypal',
 			description:
 				'Lead the UI design with the accountability of the design system, collaborated with product and development teams on core projects to improve product interfaces and experiences.',
-			start: 'Aug 2019',
-			end: 'Aug 2019',
-			years: '5',
-			country: 'Paris',
+			start: 'Jan 2010',
+			end: 'May 2017',
+			years: '7',
+			country: 'San Francisco',
 		},
 		{
 			id: '15',
 			designation: 'DevOps Developer',
 			company: 'Google',
 			description:
-				'Directly collaborated with CEO and Product team to prototype, design and deliver the UI and UX experience with a lean design process: research, design, test, and iterate.',
-			start: 'Aug 2019',
-			end: 'Aug 2019',
-			years: '1',
-			country: 'Paris',
+				'Directly collaborated with CEO and Product team to prototype, design and deliver the UI and UX experience with a lean design process: research, design, test, and iterate. with a lean design process: research, design, test, and iterate.',
+			start: 'May 2017',
+			end: 'Jan 2020',
+			years: '3',
+			country: 'United States Of America',
 		},
 	],
 	extras: [

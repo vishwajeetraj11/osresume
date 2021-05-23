@@ -9,35 +9,6 @@ class Resume extends React.Component {
 
 	render() {
 		const { data } = this.props;
-		// const experiences = data?.experiences.map((experience) => {
-		// 	if (!experience.end) {
-		// 		experience.end = new Date(2021, 5);
-		// 	}
-		// 	if (!experience.start) {
-		// 		experience.start = new Date(2021, 1);
-		// 	}
-		// 	const currentMonth = new Date().toLocaleDateString('default', {
-		// 		month: 'long',
-		// 	});
-		// 	const currentYear = new Date().getFullYear();
-
-		// 	const startMonth = experience.start.toLocaleString('default', {
-		// 		month: 'long',
-		// 	});
-		// 	const startYear = experience.start.getFullYear();
-		// 	experience.start = `${startMonth} ${startYear}`;
-
-		// 	const endMonth = experience.end.toLocaleString('default', {
-		// 		month: 'long',
-		// 	});
-		// 	const endYear = experience.end.getFullYear();
-		// 	if (endMonth === currentMonth && endYear === currentYear) {
-		// 		experience.end = 'Present';
-		// 	} else {
-		// 		experience.end = `${endMonth} ${endYear}`;
-		// 	}
-		// 	return experience;
-		// });
 		return (
 			<div
 				id='t1'
@@ -118,7 +89,7 @@ class Resume extends React.Component {
 					</div>
 					{data.extras.map((item, index) => (
 						<div key={index} className='mb-2'>
-							<p className='text-t1-gray capitalize font-medium text-t1-sm'>
+							<p className='text-t1-gray capitalize font-semibold text-t1-sm'>
 								{item.title}
 							</p>
 							{item.type === 'NEW_LINE' ? (
