@@ -3,7 +3,8 @@ import {
 	ADD_EXPERIENCE_DATA,
 	ADD_EXTRAS_DATA,
 	ADD_PERSONAL_DATA,
-	ADD_PHOTO_DATA
+	ADD_PHOTO_DATA,
+	ADD_SINGLE_EDUCATION_DATA
 } from '../actionTypes/resumeActionTypes';
 
 export const addPersonalData = (personalData) => (dispatch) => {
@@ -17,6 +18,13 @@ export const addExperienceData = (experiences) => (dispatch) => {
 	dispatch({
 		type: ADD_EXPERIENCE_DATA,
 		payload: experiences,
+	});
+};
+
+export const addSingleExperienceData = (experience) => (dispatch) => {
+	dispatch({
+		type: ADD_SINGLE_EDUCATION_DATA,
+		payload: experience,
 	});
 };
 

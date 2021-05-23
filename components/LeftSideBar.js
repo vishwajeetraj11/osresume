@@ -15,6 +15,7 @@ import UploadPhoto from './forms/UploadPhoto';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ReorderExperience from './drag&drop/ReorderExperience';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import EditSingleExperience from "./forms/EditSingleExperience"
 
 
 const LeftSideBar = () => {
@@ -86,7 +87,11 @@ const LeftSideBar = () => {
 					<ArrowBackIcon /> <p className='ml-2'>Back</p>
 				</Button>
 				</div>
-
+				<EditSingleExperience
+				anchor={anchor}
+				// experience={}
+				closeDrawer={toggleNestedDrawer(anchor, false)}
+				/>
 			</div>
 			{/*<Divider />*/}
 		</div>
@@ -128,6 +133,7 @@ const LeftSideBar = () => {
 					<ReorderExperience
 						closeDrawer={toggleLeftDrawer(anchor, false)}
 						anchor={anchor}
+						openForm={toggleNestedDrawer(anchor, true)}
 					/>
 					)}
 					{anchor === 'education' && (

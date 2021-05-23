@@ -4,6 +4,7 @@ import {
 	ADD_EXTRAS_DATA,
 	ADD_PERSONAL_DATA,
 	ADD_PHOTO_DATA,
+	ADD_SINGLE_EDUCATION_DATA,
 } from '../actionTypes/resumeActionTypes';
 
 // new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
@@ -173,6 +174,13 @@ export const resumeReducer = (state = { data: initialState }, action) => {
 				data: {
 					...state.data,
 					photo: action.payload,
+				},
+			};
+		case ADD_SINGLE_EDUCATION_DATA:
+			return {
+				data: {
+					...state.data,
+					experiences: [...state.data.experiences,action.payload],
 				},
 			};
 	}

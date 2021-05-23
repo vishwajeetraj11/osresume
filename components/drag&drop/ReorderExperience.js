@@ -10,11 +10,10 @@ import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
 import { addExperienceData } from '../../redux/actions/resumeActions';
 
-const ReorderExperience = ({closeDrawer, anchor}) => {
+const ReorderExperience = ({closeDrawer, anchor, openForm}) => {
 	const dispatch = useDispatch();
 	const experiences = useSelector((state) => state.resume.data.experiences);
-	const [exp, setExp] = useState(experiences);
-
+	const [exp, setExp] = useState(useSelector((state) => state.resume.data.experiences));
 	const experienceStates = {};
 	experiences.forEach((exp) => (experienceStates[exp.id] = false));
 	const [experienceActive, setExperienceActive] = useState({...experienceStates});
@@ -26,6 +25,10 @@ const ReorderExperience = ({closeDrawer, anchor}) => {
 		items.splice(result.destination.index, 0, reorderItem);
 		setExp(items);
 	};
+
+	useEffect(() => {
+		setExp(experiences)
+	},[experiences])
 
 	const grid = 10;
 	const getItemStyle = (isDragging, draggableStyle) =>  ({
@@ -122,7 +125,7 @@ const ReorderExperience = ({closeDrawer, anchor}) => {
 		</Button>
 		<Button
 			className='px-4 py-2 mr-4'
-			onClick={() => closeDrawer(anchor, false)}
+			onClick={() => openForm(anchor, true)}
 			color='primary'
 			variant='outlined'
 			>
@@ -139,7 +142,7 @@ const ReorderExperience = ({closeDrawer, anchor}) => {
 		</div>
 		<DragDropContext onDragEnd={onDragEnd}>
 			<Droppable droppableId={'experiences'}>
-				{(provided,snapshot) =>  (
+				{(provided,snapshot) => (
 					<div
 						style={getListStyle(snapshot.isDraggingOver)}
 						className='py-10 rounded'
