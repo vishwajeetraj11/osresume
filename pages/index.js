@@ -33,7 +33,11 @@ export default function Home() {
 		<Fragment>
 		<Head>
         <title>{username ? username : ''} | Resume Editor</title>
-		<meta property="og:title" content={`${username} Resume`} key="title" />
+		<meta property="og:title" content="OS Resume: Online Resume Builder – Free Download"></meta>
+		<meta property="og:description" content="The best free online resume builder that’ll land you interviews. Create a professional resume in minutes. Download or print your resume for free."></meta>
+		<meta property="og:type" content="website"></meta>
+		<meta property="og:site_name" content="OS Resume"></meta>
+		<meta property="og:url" content="https://osresume.vercel.com/"></meta>
       </Head>
 		<div className='flex flex-col lg:flex-row'>
 			<LeftSideBar />

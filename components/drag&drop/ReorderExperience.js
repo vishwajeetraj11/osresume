@@ -104,7 +104,7 @@ const ReorderExperience = () => {
 				{(provided,snapshot) =>  (
 					<div
 						style={getListStyle(snapshot.isDraggingOver)}
-						className='pt-10 rounded'
+						className='py-10 rounded'
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 						onClick={() => {
