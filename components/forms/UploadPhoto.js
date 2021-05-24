@@ -4,6 +4,7 @@ import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { useDispatch } from 'react-redux';
 import { addPhoto } from '../../redux/actions/resumeActions';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 // import Cropper from "react-cropper";
 
@@ -109,6 +110,15 @@ const UploadPhoto = ({ closeDrawer }) => {
 
 	return (
 		<div className='mb-10 w-screen'>
+		<Button
+		className='px-4 py-2 mr-4'
+		onClick={() => closeDrawer()}
+		color='default'
+		variant='text'
+		>
+		{' '}
+		<ArrowBackIcon /><p className='ml-2 capitalize'>Back</p>
+	</Button>
 			<div className='mt-6 mb-6'>
 				<input
 					ref={uploadRef}

@@ -9,9 +9,11 @@ import {
 } from '@material-ui/core';
 import { Formik } from 'formik';
 import React from 'react';
+import { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { addPersonalData } from '../../redux/actions/resumeActions';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const PersonalDataForm = ({ closeDrawer, anchor }) => {
 	// Dispatch
@@ -35,6 +37,16 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 	});
 
 	return (
+		<Fragment>
+		<Button
+		className='px-4 py-2 mr-4'
+		onClick={() => closeDrawer(anchor, false)}
+		color='default'
+		variant='text'
+		>
+		{' '}
+		<ArrowBackIcon /><p className='ml-2 capitalize'>Back</p>
+	</Button>
 		<Formik
 			initialValues={{
 				...personalData,
@@ -168,6 +180,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 				</form>
 			)}
 		</Formik>
+		</Fragment>
 	);
 };
 

@@ -208,31 +208,33 @@ const ReorderExperience = ({closeDrawer, anchor}) => {
 
 	return (
 		<Fragment>
-		<div className='flex items-center justify-start'>
+		<div className='flex items-center justify-start flex-wrap lg:flex-nowrap'>
+		<div className='w-full md:w-auto mb-4 md:mb-0'>
 		<Button
-			className='px-4 py-2 mr-4'
+			className='lg:px-4 lg:py-2 mr-4'
 			onClick={() => closeDrawer(anchor, false)}
 			color='default'
 			variant='text'
 			>
 			{' '}
-			<ArrowBackIcon /><p className='ml-2'>Back</p>
+			<ArrowBackIcon /><p className='ml-2 capitalize'>Back</p>
 		</Button>
+		</div>
 		<Button
-			className='px-4 py-2 mr-4'
+			className='lg:px-4 lg:py-2 mr-4'
 			onClick={onAdd}
 			color='primary'
 			variant='outlined'
 			>
-			<AddIcon /><p className='ml-2'>Add Experience</p>
+			<AddIcon /><p className='ml-2 capitalize'>Add Experience</p>
 		</Button>
 		<Button
-			className='px-4 py-2'
+			className='lg:px-4 lg:py-2'
 			onClick={save}
 			color='primary'
 			variant='contained'
 			>
-			<SaveIcon /><p className='ml-2'>Save Order</p>
+			<SaveIcon /><p className='ml-2 capitalize'>Save Order</p>
 		</Button>
 		</div>
 		<DragDropContext onDragEnd={onDragEnd}>
@@ -240,7 +242,7 @@ const ReorderExperience = ({closeDrawer, anchor}) => {
 				{(provided,snapshot) => (
 					<div
 						style={getListStyle(snapshot.isDraggingOver)}
-						className='py-10 rounded'
+						className='pb-10 pt-8 rounded'
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 						onClick={() => {
@@ -325,7 +327,7 @@ const ReorderExperience = ({closeDrawer, anchor}) => {
 					color='default'
 					variant='outlined'
 				>
-					<ArrowBackIcon /><p className='ml-2'>Back</p>
+					<ArrowBackIcon /><p className='ml-2 capitalize'>Back</p>
 				</Button>
 				</div>
 				<EditSingleExperience

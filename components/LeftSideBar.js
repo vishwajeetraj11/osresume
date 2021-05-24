@@ -68,7 +68,7 @@ const LeftSideBar = () => {
 				// onClick={toggleDrawer(anchor, false)}
 				// onKeyDown={toggleDrawer(anchor, false)}
 			>
-				<div className='pt-10 pl-10 pr-10'>
+				<div className='pt-10 pr-6 pl-6 lg:pt-10 lg:pl-10 lg:pr-10'>
 					<div className='flex align-center'>
 					</div>
 					{anchor === 'personal-data' && (

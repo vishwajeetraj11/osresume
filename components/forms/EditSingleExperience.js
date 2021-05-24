@@ -169,8 +169,10 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
                     />
 
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <div className='flex justify-between pr-10 mt-6'>
+                        <div className='flex justify-between pr-10 mt-6 flex-wrap'>
                             <KeyboardDatePicker
+                                className='w-full lg:w-auto'
+                                InputProps={{readOnly: true}}
                                 margin='normal'
                                 id={`start`}
                                 label='Enter Start Date'
@@ -189,8 +191,10 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
                                 }}
                             />
                             <KeyboardDatePicker
+                                className='w-full lg:w-auto'
                                 margin='normal'
                                 id={`end`}
+                                InputProps={{readOnly: true}}
                                 label='Enter End Date'
                                 views={["year", "month"]}
                                 // format='MM/yyyy'

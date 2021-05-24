@@ -43,11 +43,11 @@ module.exports = {
 			'5xl': '3rem',
 			'6xl': '4rem',
 			'7xl': '5rem',
-			't1-xl': '32px',
-			't1-lg': '22px',
-			't1-md': '15px',
-			't1-sm': '13px',
-			't1-xs': '12px',
+			't1-xl': '2rem', // 32
+			't1-lg': '1.375rem', // 22
+			't1-md': '0.9375rem', // 15
+			't1-sm': '0.8125rem',// 13
+			't1-xs': '0.75rem',
 			// 't1-xl': '28px',
 			// 't1-lg': '18px',
 			// 't1-md': '11px',
