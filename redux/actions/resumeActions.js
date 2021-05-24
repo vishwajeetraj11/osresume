@@ -4,7 +4,9 @@ import {
 	ADD_EXTRAS_DATA,
 	ADD_PERSONAL_DATA,
 	ADD_PHOTO_DATA,
-	ADD_SINGLE_EDUCATION_DATA
+	ADD_SAMPLE_EXPERIENCE_DATA,
+	ADD_SINGLE_EXPERIENCE_DATA,
+	EDIT_SINGLE_EXPERIENCE_DATA
 } from '../actionTypes/resumeActionTypes';
 
 export const addPersonalData = (personalData) => (dispatch) => {
@@ -23,8 +25,25 @@ export const addExperienceData = (experiences) => (dispatch) => {
 
 export const addSingleExperienceData = (experience) => (dispatch) => {
 	dispatch({
-		type: ADD_SINGLE_EDUCATION_DATA,
+		type: ADD_SINGLE_EXPERIENCE_DATA,
 		payload: experience,
+	});
+};
+
+export const addSampleExperienceData = (experience) => (dispatch) => {
+	dispatch({
+		type: ADD_SAMPLE_EXPERIENCE_DATA,
+		payload: experience,
+	});
+};
+
+export const editSingleExperienceData = (experience) => (dispatch, getState) => {
+	const state = getState();
+	const experiences = state.resume.data.experiences;
+	const newExperiences = experiences.map(exp => exp.id === experience.id ? experience : exp)
+	dispatch({
+		type: EDIT_SINGLE_EXPERIENCE_DATA,
+		payload: newExperiences,
 	});
 };
 

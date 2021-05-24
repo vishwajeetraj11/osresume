@@ -8,16 +8,78 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Fragment } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
-import { addExperienceData } from '../../redux/actions/resumeActions';
+import { addExperienceData, addSampleExperienceData } from '../../redux/actions/resumeActions';
+import { Drawer, makeStyles, useMediaQuery } from '@material-ui/core';
+import clsx from 'clsx';
+import EditSingleExperience from '../forms/EditSingleExperience';
 
-const ReorderExperience = ({closeDrawer, anchor, openForm}) => {
+const ReorderExperience = ({closeDrawer, anchor}) => {
+	const matches = useMediaQuery('(min-width:1024px)');
 	const dispatch = useDispatch();
 	const experiences = useSelector((state) => state.resume.data.experiences);
-	const [exp, setExp] = useState(useSelector((state) => state.resume.data.experiences));
+	const [exp, setExp] = useState(experiences);
 	const experienceStates = {};
 	experiences.forEach((exp) => (experienceStates[exp.id] = false));
 	const [experienceActive, setExperienceActive] = useState({...experienceStates});
 	
+
+	const expDrawerStatesObj = {};
+	exp.map((exp) => (expDrawerStatesObj[exp.id] = false));
+
+	const useStyles = makeStyles({
+		list: {
+			width: matches ? '50vw' : '100vw',
+			// width: '50vw',
+			minHeight: matches ? '0' : '100vh',
+		},
+		fullList: {
+			width: 'auto',
+		},
+	});
+	const classes = useStyles();
+	// Nested Drawer States
+	const [expDrawerStates, setExpDrawerStates] = React.useState({ ...expDrawerStatesObj });
+	const toggleExpDrawerStates = (id, open) => (event) => {
+		// if (
+		// 	event.type === 'keydown' &&
+		// 	(event.key === 'Tab' || event.key === 'Shift')
+		// ) {
+		// 	return;
+		// }
+		setExpDrawerStates({ ...expDrawerStates, [id]: open });
+	};
+	const nestedLeft = (anchor) => (
+		<div
+			// className={clsx(classes.list, {
+			// 	[classes.fullList]: anchor === 'top' || anchor === 'bottom',
+			// })}
+			className={clsx(classes.list)}
+			role='presentation'
+			// onClick={toggleDrawer(anchor, false)}
+			// onKeyDown={toggleDrawer(anchor, false)}
+		>
+			<div className='pt-10 pl-10'>
+				<div className='flex align-center'>
+				<Button
+					className='px-4 py-2'
+					onClick={toggleExpDrawerStates(anchor, false)}
+					color='default'
+					variant='outlined'
+				>
+					{' '}
+					<ArrowBackIcon /><p className='ml-2'>Back</p>
+				</Button>
+				</div>
+				<EditSingleExperience
+				anchor={anchor}
+				// experience={}
+				closeDrawer={toggleExpDrawerStates(anchor, false)}
+				/>
+			</div>
+			{/*<Divider />*/}
+		</div>
+	)
+
 	const onDragEnd = (result) => {
 		if (!result.destination) return;
 		const items = Array.from(exp);
@@ -28,7 +90,7 @@ const ReorderExperience = ({closeDrawer, anchor, openForm}) => {
 
 	useEffect(() => {
 		setExp(experiences)
-	},[experiences])
+	},[experiences, exp])
 
 	const grid = 10;
 	const getItemStyle = (isDragging, draggableStyle) =>  ({
@@ -111,6 +173,34 @@ const ReorderExperience = ({closeDrawer, anchor, openForm}) => {
 		closeDrawer(anchor, false);
 	}
 
+	const onAdd = () => {
+		
+		// setExp((p) => {
+		// 	return p.concat({
+		// 				id: '200',
+		// 				designation: 'Sample Designation',
+		// 				company: 'Company Description',
+		// 				description: 'Sample Description',
+		// 				start: undefined,
+		// 				end: undefined,
+		// 				years: '1',
+		// 				country: 'Sample Country',
+		// 	})
+		// })
+
+		dispatch(addSampleExperienceData({
+			id: '200',
+			designation: 'Sample Designation',
+			company: 'Company Description',
+			description: 'Sample Description',
+			start: undefined,
+			end: undefined,
+			years: '1',
+			country: 'Sample Country',
+		}))
+
+	}
+
 	return (
 		<Fragment>
 		<div className='flex items-center justify-start'>
@@ -125,7 +215,7 @@ const ReorderExperience = ({closeDrawer, anchor, openForm}) => {
 		</Button>
 		<Button
 			className='px-4 py-2 mr-4'
-			onClick={() => openForm(anchor, true)}
+			onClick={onAdd}
 			color='primary'
 			variant='outlined'
 			>
@@ -182,7 +272,7 @@ const ReorderExperience = ({closeDrawer, anchor, openForm}) => {
 										<div 
 										className='mt-3 -mb-2'
 										style={{maxHeight:`${experienceActive[e.id] ? '60px' : '0px' }`, transition: 'all 0.5s', overflow: 'hidden' }}>
-											<Button className='mr-4' variant='text'>
+											<Button onClick={toggleExpDrawerStates(e.id, true)} className='mr-4' variant='text'>
 											<div className='flex items-center justify-center'>
 											<EditIcon style={{color: '#fff'}} /> <p className='ml-2 text-white capitalize'>Edit</p>
 											</div>
@@ -203,7 +293,48 @@ const ReorderExperience = ({closeDrawer, anchor, openForm}) => {
 				)}
 			</Droppable>
 		</DragDropContext>
-		</Fragment>
+	
+	{exp.map((exp) => (
+		<div 
+		key={exp.id} 
+		>
+		<Drawer
+		anchor={'left'}
+		open={expDrawerStates[exp.id]}
+		onClose={toggleExpDrawerStates(exp.id, false)}
+		>
+		<div
+			// className={clsx(classes.list, {
+			// 	[classes.fullList]: anchor === 'top' || anchor === 'bottom',
+			// })}
+			className={clsx(classes.list)}
+			role='presentation'
+			// onClick={toggleDrawer(anchor, false)}
+			// onKeyDown={toggleDrawer(anchor, false)}
+		>
+			<div className='pt-10 pl-10'>
+				<div className='flex align-center'>
+				<Button
+					className='px-4 py-2'
+					onClick={toggleExpDrawerStates(exp.id, false)}
+					color='default'
+					variant='outlined'
+				>
+					<ArrowBackIcon /><p className='ml-2'>Back</p>
+				</Button>
+				</div>
+				<EditSingleExperience
+				anchor={anchor}
+				experience={exp}
+				closeDrawer={toggleExpDrawerStates(exp.id, false)}
+				/>
+			</div>
+			{/*<Divider />*/}
+		</div>
+		</Drawer>
+		</div>
+	))}
+	</Fragment>
 		);
 };
 

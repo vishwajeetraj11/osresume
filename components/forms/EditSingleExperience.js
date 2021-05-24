@@ -14,7 +14,7 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
-import { addSingleExperienceData } from '../../redux/actions/resumeActions';
+import { editSingleExperienceData } from '../../redux/actions/resumeActions';
 
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp }) => {
 
@@ -65,9 +65,9 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp 
             validationSchema={ValidationSchema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
                 setTimeout(() => {
-                    values.id = '100';
-                    dispatch(addSingleExperienceData(values));
+                    dispatch(editSingleExperienceData(values));
                     resetForm({
+                        id: '',
                         designation: '',
                         company: '',
                         description: '',

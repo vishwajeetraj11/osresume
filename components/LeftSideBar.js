@@ -41,19 +41,6 @@ const LeftSideBar = () => {
 	// Left Drawer States
 	const [leftDrawerState, setLeftDrawerState] = React.useState({ ...sectionDrawerStates });
 
-	// Nested Drawer States
-	const [nestedDrawerStates, setNestedDrawerStates] = React.useState({ ...sectionDrawerStates });
-
-	const toggleNestedDrawer = (anchor, open) => (event) => {
-		// if (
-		// 	event.type === 'keydown' &&
-		// 	(event.key === 'Tab' || event.key === 'Shift')
-		// ) {
-		// 	return;
-		// }
-
-		setNestedDrawerStates({ ...nestedDrawerStates, [anchor]: open });
-	};
 	const toggleLeftDrawer = (anchor, open) => (event) => {
 		// if (
 		// 	event.type === 'keydown' &&
@@ -64,38 +51,6 @@ const LeftSideBar = () => {
 
 		setLeftDrawerState({ ...leftDrawerState, [anchor]: open });
 	};
-
-	const nestedLeft = (anchor) => (
-		<div
-			// className={clsx(classes.list, {
-			// 	[classes.fullList]: anchor === 'top' || anchor === 'bottom',
-			// })}
-			className={clsx(classes.list)}
-			role='presentation'
-			// onClick={toggleDrawer(anchor, false)}
-			// onKeyDown={toggleDrawer(anchor, false)}
-		>
-			<div className='pt-10 pl-10'>
-				<div className='flex align-center'>
-				<Button
-					className='px-4 py-2'
-					onClick={toggleNestedDrawer(anchor, false)}
-					color='default'
-					variant='outlined'
-				>
-					{' '}
-					<ArrowBackIcon /> <p className='ml-2'>Back</p>
-				</Button>
-				</div>
-				<EditSingleExperience
-				anchor={anchor}
-				// experience={}
-				closeDrawer={toggleNestedDrawer(anchor, false)}
-				/>
-			</div>
-			{/*<Divider />*/}
-		</div>
-	)
 
 	const leftList = (anchor) => {
 		const resume = useSelector(state => state.resume.data)
@@ -133,7 +88,6 @@ const LeftSideBar = () => {
 					<ReorderExperience
 						closeDrawer={toggleLeftDrawer(anchor, false)}
 						anchor={anchor}
-						openForm={toggleNestedDrawer(anchor, true)}
 					/>
 					)}
 					{anchor === 'education' && (
@@ -176,13 +130,6 @@ const LeftSideBar = () => {
 						onClose={toggleLeftDrawer(label, false)}
 					>
 						{leftList(label)}
-					</Drawer>
-					<Drawer
-						anchor={'left'}
-						open={nestedDrawerStates[label]}
-						onClose={toggleNestedDrawer(label, false)}
-					>
-						{nestedLeft(label)}
 					</Drawer>
 				</div>
 			))}
