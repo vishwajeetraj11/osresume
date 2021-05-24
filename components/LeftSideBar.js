@@ -6,17 +6,18 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
+// import Divider from '@material-ui/core/Divider';
 import PersonalDataForm from './forms/PersonalData';
-import WorkExperienceForm from './forms/Experience';
-import EducationForm from './forms/Education';
+// import WorkExperienceForm from './forms/Experience';
+// import EducationForm from './forms/Education';
 import ExtrasForm from './forms/ExtrasForm';
 import UploadPhoto from './forms/UploadPhoto';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ReorderExperience from './drag&drop/ReorderExperience';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import EditSingleExperience from "./forms/EditSingleExperience"
+// import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+// import EditSingleExperience from "./forms/EditSingleExperience"
 import ReorderEducation from './drag&drop/ReorderEducation';
+import ReorderExtras from './drag&drop/ReorderExtras';
 
 
 const LeftSideBar = () => {
@@ -105,8 +106,14 @@ const LeftSideBar = () => {
 							anchor={anchor}
 						/>
 					)} */}
-					{anchor === 'extras' && (
+					{/* {anchor === 'extras' && (
 						<ExtrasForm
+							closeDrawer={toggleLeftDrawer(anchor, false)}
+							anchor={anchor}
+						/>
+					)} */}
+					{anchor === 'extras' && (
+						<ReorderExtras
 							closeDrawer={toggleLeftDrawer(anchor, false)}
 							anchor={anchor}
 						/>

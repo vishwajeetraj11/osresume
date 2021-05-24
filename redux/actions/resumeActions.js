@@ -9,7 +9,10 @@ import {
 	EDIT_SINGLE_EXPERIENCE_DATA,
 	ADD_SAMPLE_EDUCATION_DATA,
 	EDIT_SINGLE_EDUCATION_DATA,
-	DELETE_SINGLE_EDUCATION_DATA
+	DELETE_SINGLE_EDUCATION_DATA,
+	ADD_SAMPLE_EXTRA_DATA,
+	EDIT_SINGLE_EXTRA_DATA,
+	DELETE_SINGLE_EXTRA_DATA
 } from '../actionTypes/resumeActionTypes';
 
 export const addPersonalData = (personalData) => (dispatch) => {
@@ -86,6 +89,34 @@ export const addEducationData = (education) => (dispatch) => {
 	dispatch({
 		type: ADD_EDUCATION_DATA,
 		payload: education,
+	});
+};
+
+export const addSampleExtraData = (extra) => (dispatch) => {
+	dispatch({
+		type: ADD_SAMPLE_EXTRA_DATA,
+		payload: extra,
+	});
+};
+
+export const editSingleExtraData = (extra) => (dispatch, getState) => {
+	const state = getState();
+	const extras = state.resume.data.extras;
+	const newExtras = extras.map(ext => ext.id === extra.id ? extra : ext)
+	dispatch({
+		type: EDIT_SINGLE_EXTRA_DATA,
+		payload: newExtras,
+	});
+};
+
+
+export const deleteSingleExtraData = (id) => (dispatch, getState) => {
+	const state = getState();
+	const extras = state.resume.data.extras;
+	const newExtras = extras.filter(ext => ext.id !== id)
+	dispatch({
+		type: DELETE_SINGLE_EXTRA_DATA,
+		payload: newExtras,
 	});
 };
 

@@ -45,7 +45,7 @@ const ExtrasForm = ({ closeDrawer, anchor }) => {
             )
             .min(1, 'Need at least one Extras'),
     });
-
+ 
     /*
     extras: [
                 {
@@ -95,7 +95,7 @@ const ExtrasForm = ({ closeDrawer, anchor }) => {
                             <div>
                                 {values.extras.length > 0 &&
                                     values.extras.map((extra, index) => (
-                                        <div className='mr-10' key={index}>
+                                        <div className='' key={index}>
                                             <div className='flex align-center justify-between'>
                                                 <h3 className='text-t1-lg font-medium mt-6'>
                                                     {values.extras[index].title ? values.extras[index].title : `Extras Block ${index+1}` }

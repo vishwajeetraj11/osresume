@@ -13,6 +13,12 @@ export default class MyDocument extends Document {
 
 					<link rel='manifest' href='/manifest.json' />
 					<meta name='theme-color' content='#1abc9c' />
+					{/* <!-- Chrome, Firefox OS and Opera --> */}
+					{/* <meta name="theme-color" content="#4285f4" /> */}
+					{/* <!-- Windows Phone --> */}
+					<meta name="msapplication-navbutton-color" content="#1abc9c" />
+					{/* <!-- iOS Safari --> */}
+					<meta name="apple-mobile-web-app-status-bar-style" content="#1abc9c" />
 				</Head>
 				<body>
 					<Main />

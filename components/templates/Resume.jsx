@@ -31,7 +31,7 @@ class Resume extends React.Component {
 						</p>
 						{data.experiences.map((exp, index) => (
 							<div key={index} className='mb-4'>
-								<h4 className='capitalize text-t1-md mb-1 font-medium text-t1-black'>
+								<h4 className='capitalize text-t1-md mb-1 font-semibold text-t1-black'>
 									{exp.designation}
 								</h4>
 								<h5 className='capitalize text-t1-sm mb-1 font-normal text-t1-black'>
@@ -54,7 +54,7 @@ class Resume extends React.Component {
 						</p>
 						{data.education.map((edu, index) => (
 							<div key={index} className='mb-4'>
-								<h4 className='capitalize text-t1-md mb-1 font-medium text-t1-black'>
+								<h4 className='capitalize text-t1-md mb-1 font-semibold text-t1-black'>
 									{edu.major}
 								</h4>
 								<h5 className='capitalize text-t1-sm mb-1 font-normal text-t1-black'>

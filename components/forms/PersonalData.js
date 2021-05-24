@@ -86,7 +86,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 				<form className='' onSubmit={handleSubmit}>
 					<TextField
 						id='name'
-						className='mt-10 pr-10'
+						className='mt-10'
 						rows={1}
 						variant='outlined'
 						fullWidth
@@ -100,7 +100,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 
 					<TextField
 						id='email'
-						className='mt-10 pr-10'
+						className='mt-10'
 						rows={1}
 						variant='outlined'
 						fullWidth
@@ -113,7 +113,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 					/>
 					<TextField
 						id='designation'
-						className='mt-10 pr-10'
+						className='mt-10'
 						rows={1}
 						variant='outlined'
 						fullWidth
@@ -126,7 +126,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 					/>
 					<TextField
 						id='country'
-						className='mt-10 pr-10'
+						className='mt-10'
 						rows={1}
 						variant='outlined'
 						fullWidth
@@ -140,7 +140,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 
 					<FormControl
 						fullWidth
-						className='mt-10 pr-10'
+						className='mt-10'
 						variant='outlined'
 						margin='normal'
 					>

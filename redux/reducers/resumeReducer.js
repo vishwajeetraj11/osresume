@@ -9,7 +9,10 @@ import {
 	DELETE_SINGLE_EXPERIENCE_DATA,
 	ADD_SAMPLE_EDUCATION_DATA,
 	EDIT_SINGLE_EDUCATION_DATA,
-	DELETE_SINGLE_EDUCATION_DATA
+	DELETE_SINGLE_EDUCATION_DATA,
+	ADD_SAMPLE_EXTRA_DATA,
+	EDIT_SINGLE_EXTRA_DATA,
+	DELETE_SINGLE_EXTRA_DATA
 } from '../actionTypes/resumeActionTypes';
 
 // new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
@@ -90,6 +93,7 @@ const initialState = {
 	],
 	extras: [
 		{
+			id:'1',
 			title: 'Industry Knowledge',
 			type: 'NEW_LINE',
 			items: [
@@ -103,6 +107,7 @@ const initialState = {
 			],
 		},
 		{
+			id:'2',
 			title: 'Tools and Technologies',
 			type: 'COMMA',
 			items: [
@@ -120,11 +125,13 @@ const initialState = {
 			],
 		},
 		{
+			id:'3',
 			title: 'Other Skills',
 			type: 'COMMA',
 			items: ['HTML', 'CSS', 'jQuery'],
 		},
 		{
+			id:'4',
 			title: 'Social',
 			type: 'NEW_LINE',
 			items: [
@@ -223,6 +230,27 @@ export const resumeReducer = (state = { data: initialState }, action) => {
 				data: {
 					...state.data,
 					education: action.payload,
+				},
+			};
+		case ADD_SAMPLE_EXTRA_DATA:
+			return {
+				data: {
+					...state.data,
+					extras: [action.payload, ...state.data.extras],
+				},
+			};
+		case EDIT_SINGLE_EXTRA_DATA:
+			return {
+				data: {
+					...state.data,
+					extras: action.payload,
+				},
+			};
+		case DELETE_SINGLE_EXTRA_DATA:
+			return {
+				data: {
+					...state.data,
+					extras: action.payload,
 				},
 			};
 	}
