@@ -8,7 +8,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Fragment } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
-import { addExperienceData, addSampleExperienceData } from '../../redux/actions/resumeActions';
+import { addExperienceData, addSampleExperienceData, deleteSingleExperienceData } from '../../redux/actions/resumeActions';
 import { Drawer, makeStyles, useMediaQuery } from '@material-ui/core';
 import clsx from 'clsx';
 import EditSingleExperience from '../forms/EditSingleExperience';
@@ -16,15 +16,26 @@ import EditSingleExperience from '../forms/EditSingleExperience';
 const ReorderExperience = ({closeDrawer, anchor}) => {
 	const matches = useMediaQuery('(min-width:1024px)');
 	const dispatch = useDispatch();
-	const experiences = useSelector((state) => state.resume.data.experiences);
+	const experiences = useSelector((state) => state.resume.data.experiences)
 	const [exp, setExp] = useState(experiences);
 	const experienceStates = {};
-	experiences.forEach((exp) => (experienceStates[exp.id] = false));
+	exp.forEach((exp) => (experienceStates[exp.id] = false));
 	const [experienceActive, setExperienceActive] = useState({...experienceStates});
-	
+
+	const [edit, setEdit] = useState(false)
 
 	const expDrawerStatesObj = {};
 	exp.map((exp) => (expDrawerStatesObj[exp.id] = false));
+
+	useEffect(() => {
+		if(!(experiences.length === exp.length)){
+			setExp(experiences)
+		}
+		if(edit) {
+			setExp(experiences)
+			setEdit(false)
+		}
+	},[experiences, exp, edit])
 
 	const useStyles = makeStyles({
 		list: {
@@ -87,10 +98,6 @@ const ReorderExperience = ({closeDrawer, anchor}) => {
 		items.splice(result.destination.index, 0, reorderItem);
 		setExp(items);
 	};
-
-	useEffect(() => {
-		setExp(experiences)
-	},[experiences, exp])
 
 	const grid = 10;
 	const getItemStyle = (isDragging, draggableStyle) =>  ({
@@ -163,9 +170,7 @@ const ReorderExperience = ({closeDrawer, anchor}) => {
 	}
 
 	const onDelete = ({id}) => {
-		setExp(p => {
-			return p.filter(e => e.id !== id)
-		})
+		dispatch(deleteSingleExperienceData(id))
 	}
 
 	const save = () => {
@@ -326,6 +331,7 @@ const ReorderExperience = ({closeDrawer, anchor}) => {
 				<EditSingleExperience
 				anchor={anchor}
 				experience={exp}
+				setEdit={setEdit}
 				closeDrawer={toggleExpDrawerStates(exp.id, false)}
 				/>
 			</div>

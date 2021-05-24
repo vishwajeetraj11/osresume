@@ -6,6 +6,7 @@ import {
 	ADD_PHOTO_DATA,
 	ADD_SAMPLE_EXPERIENCE_DATA,
 	ADD_SINGLE_EXPERIENCE_DATA,
+	DELETE_SINGLE_EXPERIENCE_DATA,
 	EDIT_SINGLE_EXPERIENCE_DATA,
 } from '../actionTypes/resumeActionTypes';
 
@@ -193,6 +194,13 @@ export const resumeReducer = (state = { data: initialState }, action) => {
 				},
 			};
 		case EDIT_SINGLE_EXPERIENCE_DATA:
+			return {
+				data: {
+					...state.data,
+					experiences: action.payload,
+				},
+			};
+		case DELETE_SINGLE_EXPERIENCE_DATA:
 			return {
 				data: {
 					...state.data,

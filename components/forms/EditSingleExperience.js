@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Formik } from 'formik';
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import DateFnsUtils from '@date-io/date-fns';
@@ -16,8 +16,7 @@ import {
 } from '@material-ui/pickers';
 import { editSingleExperienceData } from '../../redux/actions/resumeActions';
 
-const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp }) => {
-
+const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
     const experience = experienceProp ? experienceProp : {
         designation: '',
         company: '',
@@ -78,6 +77,7 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp 
                     });
                     setSubmitting(false);
                     closeDrawer(anchor, false);
+                    setEdit(true)
                 }, 400);
             }}
         >

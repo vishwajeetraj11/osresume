@@ -6,6 +6,7 @@ import {
 	ADD_PHOTO_DATA,
 	ADD_SAMPLE_EXPERIENCE_DATA,
 	ADD_SINGLE_EXPERIENCE_DATA,
+	DELETE_SINGLE_EXPERIENCE_DATA,
 	EDIT_SINGLE_EXPERIENCE_DATA
 } from '../actionTypes/resumeActionTypes';
 
@@ -43,6 +44,17 @@ export const editSingleExperienceData = (experience) => (dispatch, getState) => 
 	const newExperiences = experiences.map(exp => exp.id === experience.id ? experience : exp)
 	dispatch({
 		type: EDIT_SINGLE_EXPERIENCE_DATA,
+		payload: newExperiences,
+	});
+};
+
+
+export const deleteSingleExperienceData = (id) => (dispatch, getState) => {
+	const state = getState();
+	const experiences = state.resume.data.experiences;
+	const newExperiences = experiences.filter(exp => exp.id !== id)
+	dispatch({
+		type: DELETE_SINGLE_EXPERIENCE_DATA,
 		payload: newExperiences,
 	});
 };
