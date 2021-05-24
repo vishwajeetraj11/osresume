@@ -16,6 +16,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ReorderExperience from './drag&drop/ReorderExperience';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import EditSingleExperience from "./forms/EditSingleExperience"
+import ReorderEducation from './drag&drop/ReorderEducation';
 
 
 const LeftSideBar = () => {
@@ -90,12 +91,20 @@ const LeftSideBar = () => {
 						anchor={anchor}
 					/>
 					)}
+
 					{anchor === 'education' && (
+					<ReorderEducation
+						closeDrawer={toggleLeftDrawer(anchor, false)}
+						anchor={anchor}
+					/>
+					)}
+
+					{/* {anchor === 'education' && (
 						<EducationForm
 							closeDrawer={toggleLeftDrawer(anchor, false)}
 							anchor={anchor}
 						/>
-					)}
+					)} */}
 					{anchor === 'extras' && (
 						<ExtrasForm
 							closeDrawer={toggleLeftDrawer(anchor, false)}

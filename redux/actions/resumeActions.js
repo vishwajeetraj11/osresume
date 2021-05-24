@@ -5,9 +5,11 @@ import {
 	ADD_PERSONAL_DATA,
 	ADD_PHOTO_DATA,
 	ADD_SAMPLE_EXPERIENCE_DATA,
-	ADD_SINGLE_EXPERIENCE_DATA,
 	DELETE_SINGLE_EXPERIENCE_DATA,
-	EDIT_SINGLE_EXPERIENCE_DATA
+	EDIT_SINGLE_EXPERIENCE_DATA,
+	ADD_SAMPLE_EDUCATION_DATA,
+	EDIT_SINGLE_EDUCATION_DATA,
+	DELETE_SINGLE_EDUCATION_DATA
 } from '../actionTypes/resumeActionTypes';
 
 export const addPersonalData = (personalData) => (dispatch) => {
@@ -21,13 +23,6 @@ export const addExperienceData = (experiences) => (dispatch) => {
 	dispatch({
 		type: ADD_EXPERIENCE_DATA,
 		payload: experiences,
-	});
-};
-
-export const addSingleExperienceData = (experience) => (dispatch) => {
-	dispatch({
-		type: ADD_SINGLE_EXPERIENCE_DATA,
-		payload: experience,
 	});
 };
 
@@ -56,6 +51,34 @@ export const deleteSingleExperienceData = (id) => (dispatch, getState) => {
 	dispatch({
 		type: DELETE_SINGLE_EXPERIENCE_DATA,
 		payload: newExperiences,
+	});
+};
+
+export const addSampleEducationData = (education) => (dispatch) => {
+	dispatch({
+		type: ADD_SAMPLE_EDUCATION_DATA,
+		payload: education,
+	});
+};
+
+export const editSingleEducationData = (education) => (dispatch, getState) => {
+	const state = getState();
+	const educations = state.resume.data.education;
+	const newEducation = educations.map(edu => edu.id === education.id ? education : edu)
+	dispatch({
+		type: EDIT_SINGLE_EDUCATION_DATA,
+		payload: newEducation,
+	});
+};
+
+
+export const deleteSingleEducationData = (id) => (dispatch, getState) => {
+	const state = getState();
+	const education = state.resume.data.education;
+	const newEducation = education.filter(edu => edu.id !== id)
+	dispatch({
+		type: DELETE_SINGLE_EDUCATION_DATA,
+		payload: newEducation,
 	});
 };
 

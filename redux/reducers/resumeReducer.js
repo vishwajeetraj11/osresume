@@ -5,9 +5,11 @@ import {
 	ADD_PERSONAL_DATA,
 	ADD_PHOTO_DATA,
 	ADD_SAMPLE_EXPERIENCE_DATA,
-	ADD_SINGLE_EXPERIENCE_DATA,
-	DELETE_SINGLE_EXPERIENCE_DATA,
 	EDIT_SINGLE_EXPERIENCE_DATA,
+	DELETE_SINGLE_EXPERIENCE_DATA,
+	ADD_SAMPLE_EDUCATION_DATA,
+	EDIT_SINGLE_EDUCATION_DATA,
+	DELETE_SINGLE_EDUCATION_DATA
 } from '../actionTypes/resumeActionTypes';
 
 // new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
@@ -24,6 +26,7 @@ const initialState = {
 	},
 	education: [
 		{
+			id: '10',
 			institution: `St. Karen's Secondary School`,
 			major: 'Bachelor European in Graphic Design',
 			start: '2008',
@@ -31,6 +34,7 @@ const initialState = {
 			country: 'Bagnolet',
 		},
 		{
+			id: '11',
 			institution: `St. Karen's Secondary School`,
 			major: 'BTS Communication Visuelle option Multimédia',
 			start: '2009',
@@ -179,13 +183,6 @@ export const resumeReducer = (state = { data: initialState }, action) => {
 					photo: action.payload,
 				},
 			};
-		case ADD_SINGLE_EXPERIENCE_DATA:
-			return {
-				data: {
-					...state.data,
-					experiences: [...state.data.experiences,action.payload],
-				},
-			};
 		case ADD_SAMPLE_EXPERIENCE_DATA:
 			return {
 				data: {
@@ -205,6 +202,27 @@ export const resumeReducer = (state = { data: initialState }, action) => {
 				data: {
 					...state.data,
 					experiences: action.payload,
+				},
+			};
+		case ADD_SAMPLE_EDUCATION_DATA:
+			return {
+				data: {
+					...state.data,
+					education: [action.payload, ...state.data.education],
+				},
+			};
+		case EDIT_SINGLE_EDUCATION_DATA:
+			return {
+				data: {
+					...state.data,
+					education: action.payload,
+				},
+			};
+		case DELETE_SINGLE_EDUCATION_DATA:
+			return {
+				data: {
+					...state.data,
+					education: action.payload,
 				},
 			};
 	}
