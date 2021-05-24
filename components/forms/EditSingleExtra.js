@@ -1,7 +1,7 @@
 import { Button, Divider, TextField } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Formik } from 'formik';
-import React from 'react';
+import React, {useRef} from 'react';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import {
@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import ChipInput from 'material-ui-chip-input';
 import {editSingleExtraData} from '../../redux/actions/resumeActions';
+import { Fragment } from 'react';
 
 const useStyles = makeStyles((theme) => ({
 	formControl: {
@@ -33,6 +34,7 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
 		title: Yup.string().required('Title of the Extra is must.'),
 		type: Yup.string().oneOf(['NEW_LINE', 'COMMA']),
 	});
+
 	/* 
                 {
                     title: '',
@@ -129,7 +131,9 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
 								</MenuItem>
 							</Select>
 							{values.type === 'NEW_LINE' && (
+								<Fragment>
 								<ChipInput
+									// inputValue={value}
 									label='Items'
 									fullWidth
 									className='mt-6 mr-10'
@@ -154,9 +158,12 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
 											items
 										);
 									}}
-								/>
+								/>					
+								{/* <Button className='mt-4' onClick={() => console.log()} variant='contained' color='primary'>Add</Button> */}
+								</Fragment>
 							)}
 							{values.type === 'COMMA' && (
+								<Fragment>
 								<ChipInput
 									label='Items'
 									InputLabelProps={{ shrink: true }}
@@ -184,6 +191,8 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
 										);
 									}}
 								/>
+								{/* <Button className='mt-4' onClick={() => console.log()} variant='contained' color='primary'>Add</Button> */}
+								</Fragment>
 							)}
 						</FormControl>
 					</div>
