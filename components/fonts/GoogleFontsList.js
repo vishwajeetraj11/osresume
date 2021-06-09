@@ -58,8 +58,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
 
 	return (
 		<div className='pb-10 relative '>
-            {/*justify-center lg:justify-start */}
-			<div className='pl-10 pt-6 pb-4 flex align-center fixed bottom-0 lg:top-0 bg-white z-10 w-full shadow-md'>
+			<div className='pl-10 pt-6 pb-4 flex align-center fixed top-0 bg-white z-10 w-full shadow-md'>
 				<Button
 					className='px-4 py-2'
 					onClick={() => closeDrawer()}
@@ -92,7 +91,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
 					<div style={{transform: 'rotate(-180deg)'}}><ArrowBackIosIcon /></div>
 				</Button>
 			</div>
-			<div className='pb-24 lg:mt-24 pl-10'>
+			<div className='mt-24 pl-10'>
 				{googleFonts.length === 0
 					? 'loading'
 					: googleFonts.map((font, index) => {
