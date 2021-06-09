@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react';
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText';
 import FormatColorFillIcon from '@material-ui/icons/FormatColorFill';
 import PrintIcon from '@material-ui/icons/Print';
@@ -8,42 +8,34 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import PersonalDataForm from './forms/PersonalData';
-import WorkExperienceForm from './forms/Experience';
-import EducationForm from './forms/Education';
-import ExtrasForm from './forms/ExtrasForm';
-import UploadPhoto from './forms/UploadPhoto';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import GoogleFontsList from './fonts/GoogleFontsList';
 
-
-const RightSideBar = ({handlePrint}) => {
-    const matches = useMediaQuery('(min-width:1024px)');
-    const sectionTitles = sections.map((e) => e.label);
+const RightSideBar = ({ handlePrint }) => {
+	const matches = useMediaQuery('(min-width:1024px)');
+	const sectionTitles = sections.map((e) => e.label);
 	const sectionDrawerStates = {};
 	sectionTitles.map((section) => (sectionDrawerStates[section] = false));
 
-	const [fontsAdded, setFontsAdded]=useState([])
-	const [fontLoading, setFontLoading]=useState(false)
-
-    const useStyles = makeStyles({
+	const useStyles = makeStyles({
 		list: {
 			// width: !matches ? '50vw' : '100vw',
 			width: '50vw',
 			minHeight: matches ? '0' : '100vh',
 		},
 		fullList: {
-			width: 'auto',
+			width: '100vw',
 		},
 	});
 
-    const classes = useStyles();
+	const classes = useStyles();
 
-    // Right Drawer States
-	const [rightDrawerState, setRightDrawerState] = React.useState({ ...sectionDrawerStates });
+	// Right Drawer States
+	const [rightDrawerState, setRightDrawerState] = React.useState({
+		...sectionDrawerStates,
+	});
 
-    const toggleRightDrawer = (anchor, open) => (event) => {
+	const toggleRightDrawer = (anchor, open) => (event) => {
 		// if (
 		// 	event.type === 'keydown' &&
 		// 	(event.key === 'Tab' || event.key === 'Shift')
@@ -54,7 +46,7 @@ const RightSideBar = ({handlePrint}) => {
 		setRightDrawerState({ ...rightDrawerState, [anchor]: open });
 	};
 
-    const rightList = (anchor) => (
+	const rightList = (anchor) => (
 		<div
 			// className={clsx(classes.list, {
 			// 	[classes.fullList]: anchor === 'top' || anchor === 'bottom',
@@ -64,103 +56,51 @@ const RightSideBar = ({handlePrint}) => {
 			// onClick={toggleDrawer(anchor, false)}
 			// onKeyDown={toggleDrawer(anchor, false)}
 		>
-			<div className='pt-10 pl-10 w-screen'>
-				<div className='flex align-center'>
-				<Button
-					disabled={fontLoading}
-					className='px-4 py-2'
-					onClick={toggleRightDrawer(anchor, false)}
-					color='default'
-					variant='outlined'
-				>
-					{' '}
-					<ArrowBackIosIcon /> <p className='ml-2'>Back</p>
-				</Button>
-				</div>
-
-				{anchor === 'font-face' && (
-					<div className='mt-8'>
-					{fonts.map(font => {
-						const onClick = (fontFamily, fontID) => {
-							let fontAvailable;
-							const resume = document.getElementById('t1');
-
-							document.fonts.ready.then(() => {
-							setFontLoading(true)
-							// Check if the font is in the system
-							 fontAvailable = document.fonts.check(`16px ${fontFamily}`);
-
-							// Check if font is already added via web to avoid refetching of same font 
-							 if(fontsAdded.length > 4) {
-								const fontID = fontsAdded[fontsAdded.length - 1];
-								setFontsAdded(p => p.filter((_,i) => i !== fontsAdded.length - 1));
-								const fontNode = document.getElementById(fontID)
-								fontNode.remove();
-							} 
-
-							// Check if the font is already available in users system to avoid fetching
-							if(fontAvailable || fontsAdded.includes(fontID)) {
-								resume.style['fontFamily'] = fontFamily
-							} 
-							// Fetch fonts
-							else {
-								const head = document.getElementsByTagName('head')[0];
-								const link = document.createElement('link');
-								link.id = fontID;
-								link.rel = 'stylesheet';
-								link.type = 'text/css';
-								link.href = `https://fonts.googleapis.com/css?family=${fontID}:wght@100;300;400;500;600;700;900`;
-								link.media = 'all';
-								head.appendChild(link);
-								setFontsAdded(p => p.concat(fontID))
-								resume.style['fontFamily'] = fontFamily
-							}
-							setFontLoading(false)
-
-							}).catch(e => console.log(e));
-							
-						}
-						return (
-							<div key={font.id} className=''>
-							<Button variant='outlined' className='mt-6' onClick={() => onClick(font.fontFamily, font.fontId)}><p className='capitalize'>{font.fontFamily}</p></Button>
-							</div>
-						)
-					})}
-					</div>
-				)}
-				
-			</div>
+		{anchor === 'font-face' && (
+			<GoogleFontsList 
+				closeDrawer={toggleRightDrawer(anchor, false)}
+				anchor={anchor}
+			/>
+		)}
 		</div>
 	);
 
-    return (
-        <div className='bg-primary lg:pt-16 px-4 w-full lg:w-auto flex lg:block justify-center left-sidebar order-1 lg:order-3'>
-        {sections.map(({ title, Icon, id, label }) => (
-            <div key={id} className='inline-block lg:block my-4 lg:my-8'>
-                <Tooltip title={title} placement={matches ? 'right' : 'bottom'} arrow>
-                    <Button onClick={toggleRightDrawer(label, true)}>
-                        <Icon style={{ color: 'white' }} size='100px' />
-                    </Button>
-                </Tooltip>
-                <Drawer
-                    anchor={'right'}
-                    open={rightDrawerState[label]}
-                    onClose={toggleRightDrawer(label, false)}
-                >
-                    {rightList(label)}
-                </Drawer>
-            </div>
-        ))}
-         <Tooltip title={'Print Resume'} placement={matches ? 'right' : 'bottom'} arrow>
-                    <Button onClick={handlePrint}>
-                        <PrintIcon style={{ color: 'white' }} size='100px' />
-                    </Button>
-                </Tooltip>
-        </div>
-    )
-}
+	return (
+		<div className='bg-primary lg:pt-16 px-4 w-full lg:w-auto flex lg:block justify-center left-sidebar order-1 lg:order-3'>
+			{sections.map(({ title, Icon, id, label }) => (
+				<div key={id} className='inline-block lg:block my-4 lg:my-8'>
+					<Tooltip
+						title={title}
+						placement={matches ? 'right' : 'bottom'}
+						arrow
+					>
+						<Button onClick={toggleRightDrawer(label, true)}>
+							<Icon style={{ color: 'white' }} size='100px' />
+						</Button>
+					</Tooltip>
+					<Drawer
+						anchor={'right'}
+						open={rightDrawerState[label]}
+						onClose={toggleRightDrawer(label, false)}
+					>
+						{rightList(label)}
+					</Drawer>
+				</div>
+			))}
+			<Tooltip
+				title={'Print Resume'}
+				placement={matches ? 'right' : 'bottom'}
+				arrow
+			>
+				<Button onClick={handlePrint}>
+					<PrintIcon style={{ color: 'white' }} size='100px' />
+				</Button>
+			</Tooltip>
+		</div>
+	);
+};
 
-export default RightSideBar
+export default RightSideBar;
 
 const fonts = [
 	{
@@ -223,25 +163,25 @@ const fonts = [
 		fontFamily: 'Cormorant',
 		fontId: 'Cormorant',
 	},
-]
+];
 
 const sections = [
-    {
+	{
 		id: '1',
 		title: 'Font Face',
 		label: 'font-face',
 		Icon: FormatColorTextIcon,
 	},
-    {
+	{
 		id: '2',
 		title: 'Font Color',
 		label: 'font-color',
 		Icon: FormatColorFillIcon,
 	},
-    // {
+	// {
 	// 	id: '3',
 	// 	title: 'Print Resume',
 	// 	label: 'print-resume',
 	// 	Icon: PrintIcon,
 	// },
-]
+];
