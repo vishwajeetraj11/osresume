@@ -9,6 +9,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
 	const [googleFonts, setGoogleFonts] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [page, setPage] = useState(0);
+	const [totalPages, setTotalPages] = useState(10);
 	const [bound, setBound] = useState(20);
 	const [fontsAdded, setFontsAdded] = useState([]);
 	const [fontLoading, setFontLoading] = useState(false);
@@ -16,6 +17,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
 	useEffect(() => {
 		(async () => {
 			const fonts = await require('../../shared/googleFonts.json');
+			setTotalPages(Math.floor(fonts.items.length / 20));
 			setGoogleFonts(
 				fonts.items.slice(page, bound).map((e) => ({
 					fontFamily: e.family,
@@ -68,7 +70,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
 					{' '}
 					<ArrowBackIcon /> <p className='ml-2'>Back</p>
 				</Button>
-				
+
 				<Button
 					className='px-4 py-2 ml-4'
 					disabled={page === 0}
@@ -80,15 +82,18 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
 					<ArrowBackIosIcon /> <p className='ml-2'>Previous</p>
 				</Button>
 
-                <Button
+				<Button
 					className='px-4 py-2 ml-4'
+					disabled={totalPages === page}
 					onClick={() => handlePage('NEXT')}
 					color='primary'
 					variant='outlined'
 				>
 					{' '}
-                    <p className='mr-2'>Next</p>
-					<div style={{transform: 'rotate(-180deg)'}}><ArrowBackIosIcon /></div>
+					<p className='mr-2'>Next</p>
+					<div style={{ transform: 'rotate(-180deg)' }}>
+						<ArrowBackIosIcon />
+					</div>
 				</Button>
 			</div>
 			<div className='mt-24 pl-10'>
