@@ -34,6 +34,7 @@
     "redux-thunk": "^2.3.0",
     "sass": "^1.32.12",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "uuid": "^8.3.2",
     "yup": "^0.32.9"
   },
   "devDependencies": {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
-
+import { v4 as uuidv4 } from 'uuid';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Fragment } from 'react';
 import AddIcon from '@material-ui/icons/Add';
@@ -150,7 +150,7 @@ const ReorderExperience = ({closeDrawer, anchor}) => {
 
 	const onAdd = () => {
 		dispatch(addSampleExperienceData({
-			id: '200',
+			id: uuidv4(),
 			designation: 'Sample Designation',
 			company: 'Company Description',
 			description: 'Sample Description',

@@ -12,8 +12,10 @@ import {
 	DELETE_SINGLE_EDUCATION_DATA,
 	ADD_SAMPLE_EXTRA_DATA,
 	EDIT_SINGLE_EXTRA_DATA,
-	DELETE_SINGLE_EXTRA_DATA
+	DELETE_SINGLE_EXTRA_DATA,
 } from '../actionTypes/resumeActionTypes';
+
+import { v4 as uuidv4 } from 'uuid';
 
 // new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
 const initialState = {
@@ -25,11 +27,11 @@ const initialState = {
 		country: 'Your Country',
 	},
 	photo: {
-		src: '/images/avatar.png'
+		src: '/images/avatar.png',
 	},
 	education: [
 		{
-			id: '10',
+			id: uuidv4(),
 			institution: `St. Karen's Secondary School`,
 			major: 'Bachelor European in Graphic Design',
 			start: '2008',
@@ -37,7 +39,7 @@ const initialState = {
 			country: 'Bagnolet',
 		},
 		{
-			id: '11',
+			id: uuidv4(),
 			institution: `St. Karen's Secondary School`,
 			major: 'BTS Communication Visuelle option Multimédia',
 			start: '2009',
@@ -47,7 +49,7 @@ const initialState = {
 	],
 	experiences: [
 		{
-			id: '12',
+			id: uuidv4(),
 			designation: 'Senior UI/UX Product Designer',
 			company: 'Google',
 			description:
@@ -58,7 +60,7 @@ const initialState = {
 			country: 'London',
 		},
 		{
-			id: '13',
+			id: uuidv4(),
 			designation: 'Full Stack Developer',
 			company: 'Paypal',
 			description:
@@ -69,7 +71,7 @@ const initialState = {
 			country: 'Paris',
 		},
 		{
-			id: '14',
+			id: uuidv4(),
 			designation: 'Cloud Developer',
 			company: 'Paypal',
 			description:
@@ -80,7 +82,7 @@ const initialState = {
 			country: 'San Francisco',
 		},
 		{
-			id: '15',
+			id: uuidv4(),
 			designation: 'DevOps Developer',
 			company: 'Google',
 			description:
@@ -93,7 +95,7 @@ const initialState = {
 	],
 	extras: [
 		{
-			id:'1',
+			id: uuidv4(),
 			title: 'Industry Knowledge',
 			type: 'NEW_LINE',
 			items: [
@@ -107,7 +109,7 @@ const initialState = {
 			],
 		},
 		{
-			id:'2',
+			id: uuidv4(),
 			title: 'Tools and Technologies',
 			type: 'COMMA',
 			items: [
@@ -125,13 +127,13 @@ const initialState = {
 			],
 		},
 		{
-			id:'3',
+			id: uuidv4(),
 			title: 'Other Skills',
 			type: 'COMMA',
 			items: ['HTML', 'CSS', 'jQuery'],
 		},
 		{
-			id:'4',
+			id: uuidv4(),
 			title: 'Social',
 			type: 'NEW_LINE',
 			items: [
