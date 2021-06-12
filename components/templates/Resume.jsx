@@ -87,8 +87,8 @@ class Resume extends React.Component {
 							{data.personalData.country}
 						</p>
 					</div>
-					{data.extras.map((item, index) => (
-						<div key={index} className='mb-2'>
+					{data.extras.map((item) => (
+						<div key={item.id} className='mb-2'>
 							<p className='text-t1-gray capitalize font-semibold text-t1-sm'>
 								{item.title}
 							</p>

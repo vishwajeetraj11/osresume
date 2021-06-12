@@ -150,6 +150,7 @@ const ReorderExtras = ({closeDrawer, anchor}) => {
 
 	const onAdd = () => {
 		dispatch(addSampleExtraData({
+			id: uuidv4(),
 			title: 'Sample Title',
 			type: 'COMMA',
 			items: ['Sample Item 1', 'Sample Item 2'],
