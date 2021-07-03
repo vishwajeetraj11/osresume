@@ -1,22 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { useStore } from '../redux/store';
 import { Provider, useDispatch } from 'react-redux';
 import 'tailwindcss/tailwind.css';
 import '../styles/globals.scss';
+import { useRouter } from 'next/router';
+import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-react';
 
 // MUI Setup
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from '../shared/theme';
-import { login } from '../redux/actions/userActions';
-import { LOGOUT } from '../redux/actionTypes/userActionTypes';
+import Layout from '../components/layout/Layout';
+
+// Clerk Env
+const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API;
+const clerkSignInURL = process.env.NEXT_PUBLIC_CLERK_SIGN_IN;
+const publicPages = ['/'];
 
 function MyApp({ Component, pageProps }) {
 	const store = useStore(pageProps.initialReduxState);
+	const router = useRouter();
 
-	React.useEffect(() => {
+	useEffect(() => {
 		// Remove the server-side injected CSS.
 		const jssStyles = document.querySelector('#jss-server-side');
 		if (jssStyles) {
@@ -30,11 +37,36 @@ function MyApp({ Component, pageProps }) {
 				<StylesProvider injectFirst>
 					{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
 					<CssBaseline />
-					<Component {...pageProps} />
+					<ClerkProvider
+						frontendApi={process.env.NEXT_PUBLIC_CLERK_FRONTEND_API}
+						navigate={(to) => router.push(to)}
+					>
+						<Layout>
+							{publicPages.includes(router.pathname) ? (
+								<Component {...pageProps} />
+							) : (
+								<>
+									<SignedIn>
+										<Component {...pageProps} />
+									</SignedIn>
+									<SignedOut>
+										<RedirectToSignIn />
+									</SignedOut>
+								</>
+							)}
+						</Layout>
+					</ClerkProvider>
 				</StylesProvider>
 			</ThemeProvider>
 		</Provider>
 	);
+}
+
+function RedirectToSignIn() {
+	useEffect(() => {
+		window.location = clerkSignInURL;
+	});
+	return null;
 }
 
 MyApp.propTypes = {

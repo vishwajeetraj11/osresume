@@ -132,16 +132,6 @@ const initialState = {
 			type: 'COMMA',
 			items: ['HTML', 'CSS', 'jQuery'],
 		},
-		{
-			id: uuidv4(),
-			title: 'Social',
-			type: 'NEW_LINE',
-			items: [
-				'yoursite.com',
-				'linkedin.com/in/yourname',
-				'dribbble.com/yourname',
-			],
-		},
 	],
 };
 

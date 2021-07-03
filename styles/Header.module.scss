@@ -1,0 +1,34 @@
+.header {
+	display: flex;
+	justify-content: space-between;
+	padding: 1rem;
+	background-color: #1abc9c;
+}
+
+.logo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.appName {
+	margin-left: 12px;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+.left,
+.right {
+	display: flex;
+	align-items: center;
+}
+
+.right > :not(:first-child) {
+	margin-left: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+	.header {
+		padding: 1rem 2rem;
+	}
+}
