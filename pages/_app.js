@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
 import { useStore } from '../redux/store';
 import { Provider, useDispatch } from 'react-redux';
 import 'tailwindcss/tailwind.css';
@@ -15,9 +14,8 @@ import { theme } from '../shared/theme';
 import Layout from '../components/layout/Layout';
 
 // Clerk Env
-const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API;
 const clerkSignInURL = process.env.NEXT_PUBLIC_CLERK_SIGN_IN;
-const publicPages = ['/'];
+const publicPages = ['/', '/sign-in/[[...index]]', '/sign-up/[[...index]]'];
 
 function MyApp({ Component, pageProps }) {
 	const store = useStore(pageProps.initialReduxState);
@@ -41,7 +39,7 @@ function MyApp({ Component, pageProps }) {
 						frontendApi={process.env.NEXT_PUBLIC_CLERK_FRONTEND_API}
 						navigate={(to) => router.push(to)}
 					>
-						<Layout>
+						<Layout route={router.pathname}>
 							{publicPages.includes(router.pathname) ? (
 								<Component {...pageProps} />
 							) : (

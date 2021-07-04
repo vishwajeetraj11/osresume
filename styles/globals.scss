@@ -7,19 +7,19 @@
 }
 
 html {
-	font-size: 80%;
-	@media only screen and (min-width: 640px) {
-		font-size: 80%;
-	}
-	@media only screen and (min-width: 768px) {
-		font-size: 90%;
-	}
+	// font-size: 80%;
+	// @media only screen and (min-width: 640px) {
+	// 	font-size: 80%;
+	// }
+	// @media only screen and (min-width: 768px) {
+	// 	font-size: 90%;
+	// }
 	@media only screen and (min-width: 1024px) {
 		font-size: 100%;
 	}
 }
 
-div{
+div {
 	word-break: break-word;
 }
 
@@ -47,22 +47,25 @@ a {
 	// height: 874px;
 	// width: 596px;
 	// height: 842px;
-	height: 286.2mm;
-	max-width: 210mm;
+	// height: 278.6mm;
+	height: 297mm;
+	width: 210mm;
 
 	// Margin is causing messing up of the printing process (an extra page is coming (blank))
-	margin: 20px auto;
-	margin-bottom: 93px;
-	@media only screen and (min-width: 1024px)  {
-		margin-bottom: 20px;
-	}
+	// margin: 20px auto;
+	margin-left: auto;
+	margin-right: auto;
+	// margin-bottom: 93px;
+	// @media only screen and (min-width: 1024px) {
+	// 	margin-bottom: 20px;
+	// }
 }
 
-.left-sidebar {
-	@media only screen and (min-width: 1024px)  {
-		height: 297mm;
-	}
-}
+// .left-sidebar {
+// 	@media only screen and (min-width: 1024px) {
+// 		height: 297mm;
+// 	}
+// }
 
 img {
 	height: 100%;
@@ -87,7 +90,21 @@ img {
 .MuiDrawer-paperAnchorTop {
 	width: 100vw;
 	height: 100vh;
-	@media only screen and (min-width: 1024px)  {
-		width: 50vw;	
+	@media only screen and (min-width: 1024px) {
+		width: 50vw;
 	}
+}
+
+.landing-container {
+	background-image: url('/landing.jpg');
+	background-position: center;
+	background-size: cover;
+	background-attachment: fixed;
+	& > div {
+		height: 92vh;
+	}
+}
+
+.cl-user-button-avatar {
+	width: 100px;
 }
