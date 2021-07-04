@@ -1,0 +1,52 @@
+
+{
+    "root": true,
+    "parser": "babel-eslint",
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings",
+      "plugin:jsx-a11y/recommended",
+      "plugin:react-hooks/recommended",
+      "airbnb"
+    ],
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es6": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "plugins": [ "react-hooks", "prettier"],
+    "rules": {
+        "linebreak-style": 0,
+        "react/jsx-filename-extension": [1, {"extensions": [".js",".jsx"]}],
+        "react/prop-types": "off",
+        "react/jsx-no-bind": "warn",
+        "react-hooks/rules-of-hooks": "error",
+        "arrow-parens": ["error", "as-needed"],
+        "import/prefer-default-export": "off",
+        "max-len": "off",
+        "object-curly-newline": "off",
+        "react/jsx-props-no-spreading": "off",
+        "no-return-assign": "off",
+        "no-shadow": "off",
+        "operator-linebreak": "off",
+        "implicit-arrow-linebreak": "warn",
+        "react/jsx-curly-newline": "warn",
+        "no-unused-vars":"warn"
+    }
+  }
+  

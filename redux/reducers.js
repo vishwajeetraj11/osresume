@@ -4,8 +4,8 @@ import { sectionReducer } from './reducers/sectionReducer';
 
 // COMBINED REDUCERS
 const reducers = {
-	resume: resumeReducer,
-	sections: sectionReducer,
+  resume: resumeReducer,
+  sections: sectionReducer,
 };
 
 export default combineReducers(reducers);

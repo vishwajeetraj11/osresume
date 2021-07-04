@@ -1,16 +1,14 @@
 import { SignIn } from '@clerk/clerk-react';
-import { Fragment } from 'react';
 import Head from 'next/head';
+import React from 'react';
 
-const SignInPage = () => {
-	return (
-		<Fragment>
-			<Head>
-				<title>Sign In | OS Resume</title>
-			</Head>
-			<SignIn path='/sign-in' routing='path' />
-		</Fragment>
-	);
-};
+const SignInPage = () => (
+  <>
+    <Head>
+      <title>Sign In | OS Resume</title>
+    </Head>
+    <SignIn path="/sign-in" routing="path" />
+  </>
+);
 
 export default SignInPage;
