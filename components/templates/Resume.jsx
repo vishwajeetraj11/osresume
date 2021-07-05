@@ -10,7 +10,7 @@ class Resume extends React.Component {
   render() {
     const { data } = this.props;
     return (
-      <div id="t1" className={`resume-a4 bg-white flex justify-between ${t1.container} order-2`}>
+      <div id="t1" className={`resume-a4 bg-white flex justify-between ${t1.container}`}>
         <div className="left w-8/12 bg-yellow-4000">
           <div className="header-left">
             <div className="h-32 flex justify-center flex-col">
@@ -26,7 +26,7 @@ class Resume extends React.Component {
                 <h5 className="capitalize text-t1-sm mb-1 font-normal text-t1-black">{exp.company}</h5>
                 <p className="text-t1-xs text-t1-gray  mb-1 font-normal">
                   {`${exp.start} - ${exp.end} - ${exp.years}`}
-                  {`${exp.years === '1' ? 'year' : 'years'}, ${exp.country}`}
+                  {`${exp.years === '1' ? ' year' : ' years'}, ${exp.country}`}
                 </p>
                 <p className="text-t1-md mb-1 font-normal text-t1-black">{exp.description}</p>
               </div>

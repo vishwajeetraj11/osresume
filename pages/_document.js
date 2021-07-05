@@ -10,7 +10,6 @@ export default class MyDocument extends Document {
         <Head>
           <meta name="description" content="Description" />
           <meta name="keywords" content="Keywords" />
-
           <link rel="manifest" href="/manifest.json" />
           <meta name="theme-color" content="#1abc9c" />
           {/* <!-- Chrome, Firefox OS and Opera --> */}

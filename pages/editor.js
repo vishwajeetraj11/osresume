@@ -1,4 +1,4 @@
-import { RedirectToSignIn, SignedIn, SignedOut } from '@clerk/clerk-react';
+import { RedirectToSignIn, SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import { useMediaQuery } from '@material-ui/core';
 import Head from 'next/head';
 import React, { useRef } from 'react';
@@ -9,6 +9,9 @@ import RightSideBar from '../components/RightSideBar';
 import Resume from '../components/templates/Resume';
 
 const Editor = () => {
+  const {
+    data: { id },
+  } = useUser();
   const desktop = useMediaQuery('(min-width:1024px)');
   const resumeData = useSelector(state => state.resume.data);
   const username = resumeData.personalData.name;
@@ -45,13 +48,15 @@ const Editor = () => {
   return (
     <>
       <Head>
-        <title>{username ? `${username} | Resume` : 'Resume Editor'}</title>
+        <title>{username ? `${username} | OS Resume` : 'Resume Editor | OS Resume'}</title>
       </Head>
       <SignedIn>
         {desktop ? (
           <div className="flex flex-col lg:flex-row bg-gray-50">
             <LeftSideBar />
-            <Resume ref={resumeRef} data={resumeData} />
+            <div className="order-2 mx-auto my-10">
+              <Resume ref={resumeRef} data={resumeData} />
+            </div>
             <RightSideBar handlePrint={handlePrint} />
           </div>
         ) : (

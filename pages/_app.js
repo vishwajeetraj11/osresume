@@ -2,6 +2,7 @@ import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 // MUI Setup
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
@@ -34,6 +35,9 @@ function MyApp({ Component, pageProps }) {
         <StylesProvider injectFirst>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
+          <Head>
+            <title>OS Resume</title>
+          </Head>
           <ClerkProvider frontendApi={process.env.NEXT_PUBLIC_CLERK_FRONTEND_API} navigate={to => router.push(to)}>
             <Layout route={router.pathname}>
               {publicPages.includes(router.pathname) ? (
