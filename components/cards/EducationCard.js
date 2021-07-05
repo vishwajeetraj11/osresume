@@ -8,15 +8,15 @@ const EducationCard = ({ institution, start, end, major, onDelete, openEditEduFo
     <div className="flex justify-between items-center">
       <p className="font-light text-lg">{institution}</p>
       <p className="text-xs font-normal">
-        {start}
+        {`${start} `}
         &mdash;
-        {end}
+        {` ${end}`}
       </p>
     </div>
     <p className="text-sm font-medium tracking-wide mt-1 mb-0.5">
-      {major}
+      {`${major} `}
       &bull;
-      {country}
+      {` ${country}`}
     </p>
     <div
       className="mt-3 -mb-2"

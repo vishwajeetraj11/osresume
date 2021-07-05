@@ -8,15 +8,15 @@ const ExperienceCard = ({ designation, start, end, company, description, onDelet
     <div className="flex justify-between items-center">
       <p className="font-light text-lg">{designation}</p>
       <p className="text-xs font-normal">
-        {start}
+        {`${start} `}
         &mdash;
-        {end}
+        {` ${end}`}
       </p>
     </div>
     <p className="text-sm font-medium tracking-wide mt-1 mb-0.5">
-      {company}
+      {`${company} `}
       &bull;
-      {country}
+      {` ${country}`}
     </p>
     <p className="text-xs font-light tracking-wide mt-1 mb-0.5">
       {description.length > 180 ? `${description.slice(0, 180)}...` : description}
