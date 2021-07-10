@@ -6,9 +6,11 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import FormatColorFillIcon from '@material-ui/icons/FormatColorFill';
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText';
 import PrintIcon from '@material-ui/icons/Print';
+import SaveIcon from '@material-ui/icons/Save';
 import clsx from 'clsx';
 import React from 'react';
 import GoogleFontsList from './fonts/GoogleFontsList';
+import SaveResume from './SaveResume';
 
 const sections = [
   {
@@ -23,12 +25,12 @@ const sections = [
     label: 'font-color',
     Icon: FormatColorFillIcon,
   },
-  // {
-  //   id: '3',
-  //   title: 'Print Resume',
-  //   label: 'print-resume',
-  //   Icon: PrintIcon,
-  // },
+  {
+    id: '3',
+    title: 'Save Resume',
+    label: 'save-resume',
+    Icon: SaveIcon,
+  },
 ];
 
 const RightSideBar = ({ handlePrint }) => {
@@ -62,6 +64,7 @@ const RightSideBar = ({ handlePrint }) => {
   const rightList = anchor => (
     <div className={matches ? clsx(classes.list) : clsx(classes.fullList)} role="presentation">
       {anchor === 'font-face' && <GoogleFontsList closeDrawer={toggleRightDrawer(anchor, false)} anchor={anchor} />}
+      {anchor === 'save-resume' && <SaveResume closeDrawer={toggleRightDrawer(anchor, false)} anchor={anchor} />}
     </div>
   );
 

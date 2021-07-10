@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "seed": "node ./shared/utils/seeder.js"
   },
   "dependencies": {
     "@clerk/clerk-react": "^1.13.1",
@@ -16,10 +17,12 @@
     "@tailwindcss/postcss7-compat": "^2.1.2",
     "@zeit/next-sass": "^1.0.1",
     "autoprefixer": "^9",
+    "axios": "^0.21.1",
     "clsx": "^1.1.1",
     "date-fns": "2.11.1",
     "formik": "^2.2.6",
     "material-ui-chip-input": "^1.1.0",
+    "mongoose": "^5.13.2",
     "next": "10.2.0",
     "next-pwa": "^5.2.21",
     "nextjs-fonts": "^0.22.0",
