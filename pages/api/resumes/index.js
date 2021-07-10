@@ -1,20 +1,19 @@
-import Resume from '../../models/Resume';
-import dbConnect from '../../shared/utils/dbConnect';
+import Resume from '../../../models/Resume';
+import dbConnect from '../../../shared/utils/dbConnect';
 
 // eslint-disable-next-line consistent-return
 export default async function handler(req, res) {
-  const {
-    query: { id },
-    body,
-    method,
-  } = req;
+  const { body, method } = req;
 
   await dbConnect();
 
   switch (method) {
     case 'GET':
       try {
-        const resume = await Resume.findbyId(id);
+        const { template } = req.query;
+        const filterObj = {};
+        if (template) filterObj.template = true;
+        const resume = await Resume.find(filterObj);
         if (!resume) {
           return res.status(400).json({ success: false });
         }
