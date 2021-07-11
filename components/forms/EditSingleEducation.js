@@ -13,11 +13,11 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
 
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
-    institution: Yup.string().required('Institution is required'),
-    major: Yup.string().required('Please enter the major'),
-    start: Yup.date().required('Please enter start date'),
-    end: Yup.date().required('Please enter end date'),
-    country: Yup.string().required('Please enter country name'),
+    institution: Yup.string().required('Institution is required.'),
+    major: Yup.string().required('Please enter the major.'),
+    startedAt: Yup.date().required('Please enter start date.'),
+    endedAt: Yup.date().required('Please enter end date.'),
+    country: Yup.string().required('Please enter country name.'),
   });
 
   /*
@@ -46,8 +46,8 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
           resetForm({
             institution: '',
             major: '',
-            start: '',
-            end: '',
+            startedAt: '',
+            endedAt: '',
             years: '',
             country: '',
           });
@@ -125,18 +125,18 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
                   className="w-full lg:w-auto"
                   InputProps={{ readOnly: true }}
                   margin="normal"
-                  id="start"
+                  id="startedAt"
                   label="Enter Start Date"
                   views={['year', 'month']}
                   // format='/MM/yyyy'
                   onChange={date => {
                     const month = date.toLocaleString('default', { month: 'long' });
                     const year = date.getUTCFullYear();
-                    setFieldValue('start', `${month} ${year}`);
+                    setFieldValue('startedAt', `${month} ${year}`);
                   }}
-                  value={values.start}
-                  error={!!errors.start}
-                  helperText={errors.start}
+                  value={values.startedAt}
+                  error={!!errors.startedAt}
+                  helperText={errors.startedAt}
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
                   }}
@@ -144,7 +144,7 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
                 <KeyboardDatePicker
                   className="w-full lg:w-auto"
                   margin="normal"
-                  id="end"
+                  id="endedAt"
                   InputProps={{ readOnly: true }}
                   label="Enter End Date"
                   views={['year', 'month']}
@@ -152,14 +152,14 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
                   onChange={date => {
                     const month = date.toLocaleString('default', { month: 'long' });
                     const year = date.getUTCFullYear();
-                    setFieldValue('end', `${month} ${year}`);
+                    setFieldValue('endedAt', `${month} ${year}`);
                   }}
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
                   }}
-                  value={values.end}
-                  error={!!errors.end}
-                  helperText={errors.end}
+                  value={values.endedAt}
+                  error={!!errors.endedAt}
+                  helperText={errors.endedAt}
                 />
               </div>
             </MuiPickersUtilsProvider>

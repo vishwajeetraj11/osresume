@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "seed": "node ./shared/utils/seeder.js"
+    "seed": "node seeder.js"
   },
   "dependencies": {
     "@clerk/clerk-react": "^1.13.1",
@@ -20,12 +20,14 @@
     "axios": "^0.21.1",
     "clsx": "^1.1.1",
     "date-fns": "2.11.1",
+    "dotenv": "^10.0.0",
     "formik": "^2.2.6",
     "material-ui-chip-input": "^1.1.0",
     "mongoose": "^5.13.2",
     "next": "10.2.0",
     "next-pwa": "^5.2.21",
     "nextjs-fonts": "^0.22.0",
+    "notistack": "^1.0.9",
     "postcss": "^7",
     "postcss-import": "^14.0.2",
     "prop-types": "^15.7.2",
@@ -47,7 +49,6 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^7.30.0",
     "eslint-config-airbnb": "^18.2.1",
-    "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",

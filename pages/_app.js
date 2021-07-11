@@ -4,6 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { SnackbarProvider } from 'notistack';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
@@ -12,7 +13,6 @@ import Layout from '../components/layout/Layout';
 import { useStore } from '../redux/store';
 import { theme } from '../shared/theme';
 import '../styles/globals.scss';
-
 // Clerk Env
 const clerkSignInURL = process.env.NEXT_PUBLIC_CLERK_SIGN_IN;
 const publicPages = ['/', '/sign-in/[[...index]]', '/sign-up/[[...index]]'];
@@ -31,31 +31,33 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <StylesProvider injectFirst>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Head>
-            <title>OS Resume</title>
-          </Head>
-          <ClerkProvider frontendApi={process.env.NEXT_PUBLIC_CLERK_FRONTEND_API} navigate={to => router.push(to)}>
-            <Layout route={router.pathname}>
-              {publicPages.includes(router.pathname) ? (
-                <Component {...pageProps} />
-              ) : (
-                <>
-                  <SignedIn>
-                    <Component {...pageProps} />
-                  </SignedIn>
-                  <SignedOut>
-                    <RedirectToSignIn />
-                  </SignedOut>
-                </>
-              )}
-            </Layout>
-          </ClerkProvider>
-        </StylesProvider>
-      </ThemeProvider>
+      <SnackbarProvider maxSnack={3}>
+        <ThemeProvider theme={theme}>
+          <StylesProvider injectFirst>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Head>
+              <title>OS Resume</title>
+            </Head>
+            <ClerkProvider frontendApi={process.env.NEXT_PUBLIC_CLERK_FRONTEND_API} navigate={to => router.push(to)}>
+              <Layout route={router.pathname}>
+                {publicPages.includes(router.pathname) ? (
+                  <Component {...pageProps} />
+                ) : (
+                  <>
+                    <SignedIn>
+                      <Component {...pageProps} />
+                    </SignedIn>
+                    <SignedOut>
+                      <RedirectToSignIn />
+                    </SignedOut>
+                  </>
+                )}
+              </Layout>
+            </ClerkProvider>
+          </StylesProvider>
+        </ThemeProvider>
+      </SnackbarProvider>
     </Provider>
   );
 }

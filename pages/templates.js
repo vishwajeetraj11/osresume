@@ -1,9 +1,15 @@
+import { useUser } from '@clerk/clerk-react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import TemplateCard from '../components/cards/TemplateCard';
 
 const Templates = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const { id: userId, fullName } = useUser();
+  const router = useRouter();
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -19,37 +25,41 @@ const Templates = () => {
     setSelectedTemplate('');
   };
 
+  const showSnack = (message, variant) => {
+    enqueueSnackbar(message, { variant });
+  };
+
+  const handleClickVariant = variant => () => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar('This is a success message!', { variant });
+  };
+
   const onCreate = async () => {
     try {
       setLoadingCreate(true);
+      showSnack('Creating your resume...', 'default');
+      const { data } = await axios({
+        url: '/api/resumes',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          userId,
+          title: `${fullName}'s Resume`,
+        },
+      });
+      showSnack('Resume created successfully !', 'success');
+      router.push(`/editor/${data.data.id}`);
     } catch (error) {
       console.log(error);
+      showSnack(error.response.data, 'error');
     } finally {
       setLoadingCreate(false);
     }
   };
 
   useEffect(() => {
-    // Make a template
-    // (async () => {
-    //   try {
-    //     const { data } = await axios({
-    //       url: '/api/resume',
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       data: {
-    //         userId: 'user_dfn',
-    //         title: 'My resume',
-    //       },
-    //     });
-    //     console.log(data);
-    //   } catch (e) {
-    //     console.log(e.response.data);
-    //   }
-    // })();
-
     (async () => {
       try {
         setLoading(true);
@@ -100,7 +110,7 @@ const Templates = () => {
             <Button className="mr-10" variant="outlined" color="primary" onClick={onCancel}>
               Cancel
             </Button>
-            <Button variant="contained" color="primary" onCLick={onCreate}>
+            <Button variant="contained" color="primary" onClick={onCreate}>
               Create
             </Button>
           </div>

@@ -1,21 +1,28 @@
 import { RedirectToSignIn, SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import { useMediaQuery } from '@material-ui/core';
+import axios from 'axios';
 import Head from 'next/head';
-import React, { useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useReactToPrint } from 'react-to-print';
-import LeftSideBar from '../components/LeftSideBar';
-import RightSideBar from '../components/RightSideBar';
-import Resume from '../components/templates/Resume';
+import LeftSideBar from '../../components/LeftSideBar';
+import RightSideBar from '../../components/RightSideBar';
+import Resume from '../../components/templates/Resume';
+import { addEducationData, addExperienceData, addExtrasData, addPersonalData } from '../../redux/actions/resumeActions';
 
 const Editor = () => {
   const {
     data: { id },
   } = useUser();
+  const dispatch = useDispatch();
+  const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');
   const resumeData = useSelector(state => state.resume.data);
-  const username = resumeData.personalData.name;
   const resumeRef = useRef();
+  const [loading, setLoading] = useState(false);
+
+  const username = resumeData.personalData.name;
 
   const handlePrint = useReactToPrint({
     documentTitle: 'Vishwajeet Raj',
@@ -44,6 +51,27 @@ const Editor = () => {
 			}
 			`,
   });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        const { data } = await axios({
+          url: `/api/resumes/${router.query.id}`,
+          method: 'GET',
+        });
+        console.log(data.resume);
+        dispatch(addExperienceData(data.resume.experience));
+        dispatch(addExtrasData(data.resume.extras));
+        dispatch(addPersonalData(data.resume.personal));
+        dispatch(addEducationData(data.resume.education));
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [router.query.id, dispatch]);
 
   return (
     <>

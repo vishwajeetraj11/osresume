@@ -126,7 +126,6 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
         ) : (
           googleFonts.map((font, index) => {
             const onClick = (fontFamily, fontID) => {
-              console.log(fontFamily, fontID);
               let fontAvailable;
               const resume = document.getElementById('t1');
 

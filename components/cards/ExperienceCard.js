@@ -3,14 +3,25 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import React from 'react';
 
-const ExperienceCard = ({ designation, start, end, company, description, onDelete, openEditExpForm, country, experienceActive, id }) => (
+const ExperienceCard = ({
+  designation,
+  startedAt,
+  endedAt,
+  company,
+  description,
+  onDelete,
+  openEditExpForm,
+  country,
+  experienceActive,
+  id,
+}) => (
   <>
     <div className="flex justify-between items-center">
       <p className="font-light text-lg">{designation}</p>
       <p className="text-xs font-normal">
-        {`${start} `}
+        {`${startedAt} `}
         &mdash;
-        {` ${end}`}
+        {` ${endedAt}`}
       </p>
     </div>
     <p className="text-sm font-medium tracking-wide mt-1 mb-0.5">

@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import FormatColorFillIcon from '@material-ui/icons/FormatColorFill';
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText';
 import PrintIcon from '@material-ui/icons/Print';
 import SaveIcon from '@material-ui/icons/Save';
@@ -19,12 +18,12 @@ const sections = [
     label: 'font-face',
     Icon: FormatColorTextIcon,
   },
-  {
-    id: '2',
-    title: 'Font Color',
-    label: 'font-color',
-    Icon: FormatColorFillIcon,
-  },
+  // {
+  //   id: '2',
+  //   title: 'Font Color',
+  //   label: 'font-color',
+  //   Icon: FormatColorFillIcon,
+  // },
   {
     id: '3',
     title: 'Save Resume',
