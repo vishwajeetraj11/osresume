@@ -14,8 +14,8 @@ class Resume extends React.Component {
         <div className="left w-8/12 bg-yellow-4000">
           <div className="header-left">
             <div className="h-32 flex justify-center flex-col">
-              <h1 className="font-semibold text-t1-xl text-t1-black capitalize">{data.personalData.name}</h1>
-              <h2 className="font-normal text-t1-lg text-t1-black capitalize">{data.personalData.designation}</h2>
+              <h1 className="font-semibold text-t1-xl text-t1-black capitalize">{data?.personalData?.name}</h1>
+              <h2 className="font-normal text-t1-lg text-t1-black capitalize">{data?.personalData?.designation}</h2>
             </div>
           </div>
           <div className="">
@@ -49,13 +49,13 @@ class Resume extends React.Component {
         <div className="right w-3/12">
           <div className="header-right h-32 flex items-center">
             <div className={t1.profile_image_container}>
-              {data?.photo?.src && <img draggable={false} src={data.photo.src} alt={data.personalData.name} />}
+              {data?.photo?.src && <img draggable={false} src={data.photo.src} alt={data?.personalData?.name} />}
             </div>
           </div>
           <div className="mb-6">
-            <p className="text-t1-gray text-t1-sm">{data.personalData.email}</p>
-            <p className="text-t1-gray text-t1-sm">{data.personalData.phoneNumber}</p>
-            <p className="text-t1-gray text-t1-sm">{data.personalData.country}</p>
+            <p className="text-t1-gray text-t1-sm">{data?.personalData?.email}</p>
+            <p className="text-t1-gray text-t1-sm">{data?.personalData?.phoneNumber}</p>
+            <p className="text-t1-gray text-t1-sm">{data?.personalData?.country}</p>
           </div>
           {data.extras.map(item => (
             <div key={item.id} className="mb-2">

@@ -12,6 +12,10 @@ const ExperienceSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please enter the experience owner id.'],
     },
+    years: {
+      type: String,
+      required: [true, 'Please enter years of experience.'],
+    },
     designation: {
       type: String,
       required: [true, 'Please provide a designation your experience.'],

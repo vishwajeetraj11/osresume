@@ -22,10 +22,10 @@ const Editor = () => {
   const resumeRef = useRef();
   const [loading, setLoading] = useState(false);
 
-  const username = resumeData.personalData.name;
+  const username = resumeData?.personalData?.name;
 
   const handlePrint = useReactToPrint({
-    documentTitle: 'Vishwajeet Raj',
+    documentTitle: username || 'Your Resume',
     content: () => resumeRef.current,
     /* eslint-disable no-tabs */
     pageStyle: `

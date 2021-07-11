@@ -28,6 +28,9 @@ const PersonalSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please provide your country.'],
     },
+    objective: {
+      type: String,
+    },
     phoneNumber: {
       type: String,
     },
