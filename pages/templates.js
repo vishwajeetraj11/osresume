@@ -29,11 +29,6 @@ const Templates = () => {
     enqueueSnackbar(message, { variant });
   };
 
-  const handleClickVariant = variant => () => {
-    // variant could be success, error, warning, info, or default
-    enqueueSnackbar('This is a success message!', { variant });
-  };
-
   const onCreate = async () => {
     try {
       setLoadingCreate(true);

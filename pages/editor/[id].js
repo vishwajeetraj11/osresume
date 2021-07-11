@@ -9,7 +9,13 @@ import { useReactToPrint } from 'react-to-print';
 import LeftSideBar from '../../components/LeftSideBar';
 import RightSideBar from '../../components/RightSideBar';
 import Resume from '../../components/templates/Resume';
-import { addEducationData, addExperienceData, addExtrasData, addPersonalData } from '../../redux/actions/resumeActions';
+import {
+  addEducationData,
+  addExperienceData,
+  addExtrasData,
+  addPersonalDataState,
+  addResumeMetaData,
+} from '../../redux/actions/resumeActions';
 
 const Editor = () => {
   const {
@@ -60,13 +66,24 @@ const Editor = () => {
           url: `/api/resumes/${router.query.id}`,
           method: 'GET',
         });
-        console.log(data.resume);
+        // console.log(data);
+        const personalData = data.resume.personal
+          ? data.resume.personal
+          : { name: '', email: '', phoneNumber: '', designation: '', country: '', objective: '' };
+        dispatch(
+          addResumeMetaData({
+            title: data.resume.title,
+            createdAt: data.resume.createdAt,
+            resumeId: data.resume._id,
+            userId: data.resume.userId,
+          }),
+        );
         dispatch(addExperienceData(data.resume.experience));
         dispatch(addExtrasData(data.resume.extras));
-        dispatch(addPersonalData(data.resume.personal));
+        dispatch(addPersonalDataState(personalData));
         dispatch(addEducationData(data.resume.education));
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       } finally {
         setLoading(false);
       }

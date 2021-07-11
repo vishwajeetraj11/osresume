@@ -2,8 +2,9 @@ import {
   ADD_EDUCATION_DATA,
   ADD_EXPERIENCE_DATA,
   ADD_EXTRAS_DATA,
-  ADD_PERSONAL_DATA,
+  ADD_PERSONAL_DATA_STATE,
   ADD_PHOTO_DATA,
+  ADD_RESUME_METADATA,
   ADD_SAMPLE_EDUCATION_DATA,
   ADD_SAMPLE_EXPERIENCE_DATA,
   ADD_SAMPLE_EXTRA_DATA,
@@ -18,19 +19,23 @@ import {
 // new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds);
 
 const emptyInitialState = {
-  personalData: {},
-  photo: {},
-  education: [],
-  experiences: [],
-  extras: [],
+  data: {
+    personalData: {},
+    photo: {},
+    education: [],
+    experiences: [],
+    extras: [],
+  },
+  metadata: {},
 };
 
-export const resumeReducer = (state = { data: emptyInitialState }, action) => {
+export const resumeReducer = (state = emptyInitialState, action) => {
   switch (action.type) {
     default:
       return state;
-    case ADD_PERSONAL_DATA:
+    case ADD_PERSONAL_DATA_STATE:
       return {
+        ...state,
         data: {
           ...state.data,
           personalData: action.payload,
@@ -38,6 +43,7 @@ export const resumeReducer = (state = { data: emptyInitialState }, action) => {
       };
     case ADD_EXPERIENCE_DATA:
       return {
+        ...state,
         data: {
           ...state.data,
           experiences: action.payload,
@@ -45,6 +51,7 @@ export const resumeReducer = (state = { data: emptyInitialState }, action) => {
       };
     case ADD_EDUCATION_DATA:
       return {
+        ...state,
         data: {
           ...state.data,
           education: action.payload,
@@ -52,6 +59,7 @@ export const resumeReducer = (state = { data: emptyInitialState }, action) => {
       };
     case ADD_EXTRAS_DATA:
       return {
+        ...state,
         data: {
           ...state.data,
           extras: action.payload,
@@ -59,6 +67,7 @@ export const resumeReducer = (state = { data: emptyInitialState }, action) => {
       };
     case ADD_PHOTO_DATA:
       return {
+        ...state,
         data: {
           ...state.data,
           photo: action.payload,
@@ -66,6 +75,7 @@ export const resumeReducer = (state = { data: emptyInitialState }, action) => {
       };
     case ADD_SAMPLE_EXPERIENCE_DATA:
       return {
+        ...state,
         data: {
           ...state.data,
           experiences: [action.payload, ...state.data.experiences],
@@ -73,6 +83,7 @@ export const resumeReducer = (state = { data: emptyInitialState }, action) => {
       };
     case EDIT_SINGLE_EXPERIENCE_DATA:
       return {
+        ...state,
         data: {
           ...state.data,
           experiences: action.payload,
@@ -80,6 +91,7 @@ export const resumeReducer = (state = { data: emptyInitialState }, action) => {
       };
     case DELETE_SINGLE_EXPERIENCE_DATA:
       return {
+        ...state,
         data: {
           ...state.data,
           experiences: action.payload,
@@ -87,6 +99,7 @@ export const resumeReducer = (state = { data: emptyInitialState }, action) => {
       };
     case ADD_SAMPLE_EDUCATION_DATA:
       return {
+        ...state,
         data: {
           ...state.data,
           education: [action.payload, ...state.data.education],
@@ -94,6 +107,7 @@ export const resumeReducer = (state = { data: emptyInitialState }, action) => {
       };
     case EDIT_SINGLE_EDUCATION_DATA:
       return {
+        ...state,
         data: {
           ...state.data,
           education: action.payload,
@@ -101,6 +115,7 @@ export const resumeReducer = (state = { data: emptyInitialState }, action) => {
       };
     case DELETE_SINGLE_EDUCATION_DATA:
       return {
+        ...state,
         data: {
           ...state.data,
           education: action.payload,
@@ -108,6 +123,7 @@ export const resumeReducer = (state = { data: emptyInitialState }, action) => {
       };
     case ADD_SAMPLE_EXTRA_DATA:
       return {
+        ...state,
         data: {
           ...state.data,
           extras: [action.payload, ...state.data.extras],
@@ -115,6 +131,7 @@ export const resumeReducer = (state = { data: emptyInitialState }, action) => {
       };
     case EDIT_SINGLE_EXTRA_DATA:
       return {
+        ...state,
         data: {
           ...state.data,
           extras: action.payload,
@@ -122,10 +139,16 @@ export const resumeReducer = (state = { data: emptyInitialState }, action) => {
       };
     case DELETE_SINGLE_EXTRA_DATA:
       return {
+        ...state,
         data: {
           ...state.data,
           extras: action.payload,
         },
+      };
+    case ADD_RESUME_METADATA:
+      return {
+        ...state,
+        metadata: action.payload,
       };
   }
 };

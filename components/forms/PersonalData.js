@@ -1,17 +1,26 @@
+import { useUser } from '@clerk/clerk-react';
 import { Button, FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput, TextField } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import axios from 'axios';
 import { Formik } from 'formik';
+import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { addPersonalData } from '../../redux/actions/resumeActions';
+import { ADD_PERSONAL_DATA_STATE } from '../../redux/actionTypes/resumeActionTypes';
 
 const PersonalDataForm = ({ closeDrawer, anchor }) => {
   // Dispatch
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const {
+    data: { id: userId },
+  } = useUser();
 
   // Get personalData State from globalState
   let personalData = useSelector(state => state.resume.data.personalData);
+  const { resumeId } = useSelector(state => state.resume.metadata);
 
   // Remove +91 from phoneNumber
   let phoneNumber = personalData?.phoneNumber;
@@ -20,12 +29,17 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
-    name: Yup.string().required('Required').min(3, 'Too Short'),
-    email: Yup.string().email(),
-    designation: Yup.string(),
-    country: Yup.string().required(),
-    phoneNumber: Yup.string().min(10).required('Required'),
+    name: Yup.string().required('Please provide your full name.').min(3, 'Too Short'),
+    email: Yup.string().email().required('Please provide a valid email.'),
+    designation: Yup.string().required('Please provide your designation.'),
+    country: Yup.string().required('Please provide your country.'),
+    phoneNumber: Yup.string().min(10, 'Phone Number must be at least 10 digits long.'),
+    objective: Yup.string().nullable(),
   });
+
+  const showSnack = (message, variant) => {
+    enqueueSnackbar(message, { variant });
+  };
 
   return (
     <>
@@ -43,29 +57,65 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
         validateOnMount={false}
         validationSchema={ValidationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          setTimeout(() => {
+          if (values.phoneNumber) {
             if (!values.phoneNumber.startsWith('+91')) {
               // eslint-disable-next-line no-param-reassign
               values.phoneNumber = `+91${values.phoneNumber}`;
             }
-            dispatch(addPersonalData(values));
-            resetForm({
-              name: '',
-              email: '',
-              phoneNumber: '',
-              designation: '',
-              country: '',
-            });
-            setSubmitting(false);
-            closeDrawer();
-          }, 400);
+          }
+          setTimeout(async () => {
+            try {
+              showSnack(`${personalData._id ? 'Updating personal data...' : 'Creating personal data...'}`, 'default');
+
+              const { data } = await axios({
+                url: `${personalData._id ? `/api/personals/${personalData._id}` : '/api/personals'}`,
+                method: `${personalData._id ? 'PUT' : 'POST'}`,
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                data: {
+                  name: values.name,
+                  email: values.email,
+                  designation: values.designation,
+                  country: values.country,
+                  objective: values.objective || '',
+                  phoneNumber: values.phoneNumber || '',
+                  userId,
+                  resumeId,
+                },
+              });
+
+              resetForm({
+                name: '',
+                email: '',
+                phoneNumber: '',
+                designation: '',
+                country: '',
+                objective: '',
+              });
+
+              dispatch({
+                type: ADD_PERSONAL_DATA_STATE,
+                payload: data.personal,
+              });
+
+              showSnack(`${personalData._id ? 'Successfully updated personal data.' : 'Successfully created personal data.'}`, 'success');
+
+              setSubmitting(false);
+              closeDrawer();
+            } catch (error) {
+              // console.log(error.response.data);
+              showSnack('Error creating personal data! Please try again later.', 'error');
+              setSubmitting(false);
+            }
+          }, 100);
         }}
       >
         {({ values, errors, handleChange, handleBlur, handleSubmit, setFieldValue, isSubmitting }) => (
-          <form className="" onSubmit={handleSubmit}>
+          <form className="pb-10" onSubmit={handleSubmit}>
             <TextField
               id="name"
-              className="mt-10"
+              className="mt-6"
               rows={1}
               variant="outlined"
               fullWidth
@@ -79,7 +129,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 
             <TextField
               id="email"
-              className="mt-10"
+              className="mt-8"
               rows={1}
               variant="outlined"
               fullWidth
@@ -92,7 +142,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
             />
             <TextField
               id="designation"
-              className="mt-10"
+              className="mt-8"
               rows={1}
               variant="outlined"
               fullWidth
@@ -103,9 +153,25 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
               error={!!errors.designation}
               helperText={errors.designation}
             />
+
+            <TextField
+              id="objective"
+              className="mt-8"
+              rows={3}
+              multiline
+              variant="outlined"
+              fullWidth
+              onBlur={handleBlur}
+              onChange={handleChange}
+              label="Enter Career Objective"
+              value={values.objective}
+              error={!!errors.objective}
+              helperText={errors.objective}
+            />
+
             <TextField
               id="country"
-              className="mt-10"
+              className="mt-8"
               rows={1}
               variant="outlined"
               fullWidth
@@ -117,14 +183,16 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
               helperText={errors.country}
             />
 
-            <FormControl fullWidth className="mt-10" variant="outlined" margin="normal">
+            <FormControl fullWidth className="mt-8" variant="outlined" margin="normal">
               <InputLabel htmlFor="phone-number-input">Your Phone Number</InputLabel>
               <OutlinedInput
                 onChange={e => {
-                  setFieldValue('phoneNumber', e.target.value);
+                  if (e.target.value.match(/^[0-9]+$/)) {
+                    setFieldValue('phoneNumber', e.target.value);
+                  }
                 }}
                 value={values.phoneNumber}
-                placeholder="9999000099"
+                placeholder="1234567890"
                 id="phone-number-input"
                 startAdornment={<InputAdornment position="start">+91</InputAdornment>}
                 fullWidth

@@ -2,8 +2,9 @@ import {
   ADD_EDUCATION_DATA,
   ADD_EXPERIENCE_DATA,
   ADD_EXTRAS_DATA,
-  ADD_PERSONAL_DATA,
+  ADD_PERSONAL_DATA_STATE,
   ADD_PHOTO_DATA,
+  ADD_RESUME_METADATA,
   ADD_SAMPLE_EDUCATION_DATA,
   ADD_SAMPLE_EXPERIENCE_DATA,
   ADD_SAMPLE_EXTRA_DATA,
@@ -15,9 +16,9 @@ import {
   EDIT_SINGLE_EXTRA_DATA,
 } from '../actionTypes/resumeActionTypes';
 
-export const addPersonalData = personalData => dispatch => {
+export const addPersonalDataState = personalData => dispatch => {
   dispatch({
-    type: ADD_PERSONAL_DATA,
+    type: ADD_PERSONAL_DATA_STATE,
     payload: personalData,
   });
 };
@@ -128,5 +129,12 @@ export const addPhoto = photo => dispatch => {
   dispatch({
     type: ADD_PHOTO_DATA,
     payload: photo,
+  });
+};
+
+export const addResumeMetaData = metadata => dispatch => {
+  dispatch({
+    type: ADD_RESUME_METADATA,
+    payload: metadata,
   });
 };
