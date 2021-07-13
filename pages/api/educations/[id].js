@@ -1,6 +1,6 @@
 import Education from '../../../models/Education';
+import Resume from '../../../models/Resume';
 import dbConnect from '../../../shared/utils/dbConnect';
-
 // eslint-disable-next-line consistent-return
 export default async function handler(req, res) {
   const {
@@ -15,9 +15,6 @@ export default async function handler(req, res) {
     case 'PUT':
       try {
         const education = await Education.findByIdAndUpdate(id, body, { new: true, runValidators: true });
-        // await Resume.findByIdAndUpdate(body.resumeId, {
-        //   education: education._id,
-        // });
         if (!education) {
           return res.status(400).json({ success: false, error: 'Unable to edit educational data.' });
         }
@@ -29,7 +26,13 @@ export default async function handler(req, res) {
 
     case 'DELETE':
       try {
-        await Education.findByIdAndDelete(id);
+        const education = await Education.findById(id);
+        const resume = await Resume.findByIdAndUpdate(education.resumeId, {
+          $pull: {
+            education: education.id,
+          },
+        });
+        education.remove();
         res.status(204).json({ success: true });
       } catch (error) {
         res.status(400).json({ success: false, error });

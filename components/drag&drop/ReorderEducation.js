@@ -3,7 +3,9 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SaveIcon from '@material-ui/icons/Save';
+import axios from 'axios';
 import clsx from 'clsx';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +15,12 @@ import EducationCard from '../cards/EducationCard';
 import EditSingleEducation from '../forms/EditSingleEducation';
 
 const ReorderEducation = ({ closeDrawer, anchor }) => {
+  const { enqueueSnackbar } = useSnackbar();
+
+  const showSnack = (message, variant) => {
+    enqueueSnackbar(message, { variant });
+  };
+
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
   const dispatch = useDispatch();
@@ -144,8 +152,18 @@ const ReorderEducation = ({ closeDrawer, anchor }) => {
     }));
   };
 
-  const onDelete = ({ id }) => {
-    dispatch(deleteSingleEducationData(id));
+  const onDelete = async ({ id }) => {
+    try {
+      showSnack('Deleting Education...', 'default');
+      await axios({
+        url: `/api/educations/${id}`,
+        method: 'DELETE',
+      });
+      dispatch(deleteSingleEducationData(id));
+      showSnack('Successfully deleted education.', 'success');
+    } catch (error) {
+      showSnack('Unable to delete education, please try again later.', 'error');
+    }
   };
 
   const save = () => {
