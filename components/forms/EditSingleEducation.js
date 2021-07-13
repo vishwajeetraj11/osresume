@@ -1,13 +1,29 @@
+import { useUser } from '@clerk/clerk-react';
 import DateFnsUtils from '@date-io/date-fns';
 import { Button, Divider, TextField } from '@material-ui/core';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import axios from 'axios';
 import { Formik } from 'formik';
+import { useSnackbar } from 'notistack';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { editSingleEducationData } from '../../redux/actions/resumeActions';
+import { ADD_EDUCATION_DATA } from '../../redux/actionTypes/resumeActionTypes';
 
 const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
+  const {
+    data: { id: userId },
+  } = useUser();
+
+  const { resumeId } = useSelector(state => state.resume.metadata);
+  const educationCollection = useSelector(state => state.resume.data.education);
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const showSnack = (message, variant) => {
+    enqueueSnackbar(message, { variant });
+  };
+
   // Dispatch
   const dispatch = useDispatch();
 
@@ -41,19 +57,57 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
       validateOnMount={false}
       validationSchema={ValidationSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        setTimeout(() => {
-          dispatch(editSingleEducationData(values));
-          resetForm({
-            institution: '',
-            major: '',
-            startedAt: '',
-            endedAt: '',
-            years: '',
-            country: '',
-          });
-          setSubmitting(false);
-          closeDrawer(anchor, false);
-          setEdit(true);
+        setTimeout(async () => {
+          // dispatch(editSingleEducationData(values));
+          showSnack(`${education._id ? 'Updating educational data...' : 'Creating educational data...'}`, 'default');
+          try {
+            const { data } = await axios({
+              url: `${education._id ? `/api/educations/${education._id}` : '/api/educations'}`,
+              method: `${education._id ? 'PUT' : 'POST'}`,
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              data: {
+                institution: values.institution,
+                major: values.major,
+                startedAt: values.startedAt,
+                endedAt: values.endedAt,
+                country: values.country,
+                userId,
+                resumeId,
+              },
+            });
+
+            const educationExists = educationCollection.find(edu => edu._id === data.education._id);
+
+            if (educationExists) {
+              const education = educationCollection.map(edu => (edu._id === data.education._id ? data.education : edu));
+              dispatch({
+                type: ADD_EDUCATION_DATA,
+                payload: education,
+              });
+            } else {
+              const results = educationCollection.map(edu => (edu.id === education.id ? data.education : edu));
+              dispatch({
+                type: ADD_EDUCATION_DATA,
+                payload: results,
+              });
+            }
+            showSnack(`${education._id ? 'Successfully updated educational data.' : 'Successfully created educational data.'}`, 'success');
+            resetForm({
+              institution: '',
+              major: '',
+              startedAt: '',
+              endedAt: '',
+              country: '',
+            });
+            setSubmitting(false);
+            closeDrawer(anchor, false);
+            setEdit(true);
+          } catch (error) {
+            console.log(error);
+            showSnack('Error creating Educational data! Please try again later.', 'error');
+          }
         }, 400);
       }}
     >
@@ -71,7 +125,7 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
               fullWidth
               onBlur={handleBlur}
               onChange={handleChange}
-              label="Enter Enstitution"
+              label="Enter Institution"
               value={values.institution}
               error={!!errors.institution}
               helperText={errors.institution}
@@ -89,20 +143,6 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
               value={values.major}
               error={!!errors.major}
               helperText={errors.major}
-            />
-
-            <TextField
-              id="years"
-              className="mt-10 pr-10"
-              rows={1}
-              variant="outlined"
-              fullWidth
-              onBlur={handleBlur}
-              onChange={handleChange}
-              label="Enter Years of Education"
-              value={values.years}
-              error={!!errors.years}
-              helperText={errors.years}
             />
 
             <TextField
