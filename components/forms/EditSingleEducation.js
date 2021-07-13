@@ -105,7 +105,7 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
             closeDrawer(anchor, false);
             setEdit(true);
           } catch (error) {
-            console.log(error);
+            // console.log(error);
             showSnack('Error creating Educational data! Please try again later.', 'error');
           }
         }, 400);

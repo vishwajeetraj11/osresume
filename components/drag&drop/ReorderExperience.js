@@ -3,7 +3,9 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SaveIcon from '@material-ui/icons/Save';
+import axios from 'axios';
 import clsx from 'clsx';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +15,12 @@ import ExperienceCard from '../cards/ExperienceCard';
 import EditSingleExperience from '../forms/EditSingleExperience';
 
 const ReorderExperience = ({ closeDrawer, anchor }) => {
+  const { enqueueSnackbar } = useSnackbar();
+
+  const showSnack = (message, variant) => {
+    enqueueSnackbar(message, { variant });
+  };
+
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
   const dispatch = useDispatch();
@@ -140,8 +148,18 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
     }));
   };
 
-  const onDelete = ({ id }) => {
-    dispatch(deleteSingleExperienceData(id));
+  const onDelete = async ({ id }) => {
+    try {
+      showSnack('Deleting Experience...', 'default');
+      await axios({
+        url: `/api/experiences/${id}`,
+        method: 'DELETE',
+      });
+      dispatch(deleteSingleExperienceData(id));
+      showSnack('Successfully deleted experience.', 'success');
+    } catch (error) {
+      showSnack('Unable to delete experience, please try again later.', 'error');
+    }
   };
 
   const save = () => {

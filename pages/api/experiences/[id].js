@@ -1,4 +1,4 @@
-import Education from '../../../models/Education';
+import Experience from '../../../models/Experience';
 import Resume from '../../../models/Resume';
 import dbConnect from '../../../shared/utils/dbConnect';
 // eslint-disable-next-line consistent-return
@@ -14,11 +14,11 @@ export default async function handler(req, res) {
   switch (method) {
     case 'PUT':
       try {
-        const education = await Education.findByIdAndUpdate(id, body, { new: true, runValidators: true });
-        if (!education) {
-          return res.status(400).json({ success: false, error: 'Unable to edit educational data.' });
+        const experience = await Experience.findByIdAndUpdate(id, body, { new: true, runValidators: true });
+        if (!experience) {
+          return res.status(400).json({ success: false, error: 'Unable to edit experience data.' });
         }
-        res.status(200).json({ success: true, education });
+        res.status(200).json({ success: true, experience });
       } catch (error) {
         res.status(400).json({ success: false, error });
       }
@@ -26,13 +26,13 @@ export default async function handler(req, res) {
 
     case 'DELETE':
       try {
-        const education = await Education.findById(id);
-        await Resume.findByIdAndUpdate(education.resumeId, {
+        const experience = await Experience.findById(id);
+        await Resume.findByIdAndUpdate(experience.resumeId, {
           $pull: {
-            education: education.id,
+            experience: experience.id,
           },
         });
-        education.remove();
+        experience.remove();
         res.status(204).json({ success: true });
       } catch (error) {
         res.status(400).json({ success: false, error });

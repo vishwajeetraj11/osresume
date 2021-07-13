@@ -1,13 +1,29 @@
+import { useUser } from '@clerk/clerk-react';
 import DateFnsUtils from '@date-io/date-fns';
 import { Button, Divider, TextField } from '@material-ui/core';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import axios from 'axios';
 import { Formik } from 'formik';
+import { useSnackbar } from 'notistack';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { editSingleExperienceData } from '../../redux/actions/resumeActions';
+import { ADD_EXPERIENCE_DATA } from '../../redux/actionTypes/resumeActionTypes';
 
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
+  const {
+    data: { id: userId },
+  } = useUser();
+
+  const { resumeId } = useSelector(state => state.resume.metadata);
+  const experienceCollection = useSelector(state => state.resume.data.experiences);
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const showSnack = (message, variant) => {
+    enqueueSnackbar(message, { variant });
+  };
+
   const experience = experienceProp || {
     designation: '',
     company: '',
@@ -57,21 +73,63 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
       validateOnMount={false}
       validationSchema={ValidationSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        setTimeout(() => {
-          dispatch(editSingleExperienceData(values));
-          resetForm({
-            id: '',
-            designation: '',
-            company: '',
-            description: '',
-            startedAt: undefined,
-            endedAt: undefined,
-            years: '',
-            country: '',
-          });
-          setSubmitting(false);
-          closeDrawer(anchor, false);
-          setEdit(true);
+        setTimeout(async () => {
+          // dispatch(editSingleExperienceData(values));
+          showSnack(`${experience._id ? 'Updating experience data...' : 'Creating experience data...'}`, 'default');
+          try {
+            const { data } = await axios({
+              url: `${experience._id ? `/api/experiences/${experience._id}` : '/api/experiences'}`,
+              method: `${experience._id ? 'PUT' : 'POST'}`,
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              data: {
+                designation: values.designation,
+                description: values.description,
+                startedAt: values.startedAt,
+                endedAt: values.endedAt,
+                country: values.country,
+                company: values.company,
+                years: values.years,
+                userId,
+                resumeId,
+              },
+            });
+
+            const experienceExists = experienceCollection.find(exp => exp._id === data.experience._id);
+
+            if (experienceExists) {
+              const experience = experienceCollection.map(exp => (exp._id === data.experience._id ? data.experience : exp));
+              dispatch({
+                type: ADD_EXPERIENCE_DATA,
+                payload: experience,
+              });
+            } else {
+              const results = experienceCollection.map(exp => (exp.id === experience.id ? data.experience : exp));
+              dispatch({
+                type: ADD_EXPERIENCE_DATA,
+                payload: results,
+              });
+            }
+            showSnack(`${experience._id ? 'Successfully updated experience data.' : 'Successfully created experience data.'}`, 'success');
+            resetForm({
+              id: '',
+              designation: '',
+              company: '',
+              description: '',
+              startedAt: undefined,
+              endedAt: undefined,
+              years: '',
+              country: '',
+            });
+            setEdit(true);
+          } catch (error) {
+            console.log(error);
+            showSnack('Error creating Experience data! Please try again later.', 'error');
+          } finally {
+            setSubmitting(false);
+            closeDrawer(anchor, false);
+          }
         }, 400);
       }}
     >
