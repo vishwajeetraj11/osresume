@@ -13,7 +13,6 @@ import ReorderExperience from './drag&drop/ReorderExperience';
 import ReorderExtras from './drag&drop/ReorderExtras';
 // import Divider from '@material-ui/core/Divider';
 import PersonalDataForm from './forms/PersonalData';
-import UploadPhoto from './forms/UploadPhoto';
 
 const LeftSideBar = () => {
   const matches = useMediaQuery('(min-width:1024px)');
@@ -51,7 +50,6 @@ const LeftSideBar = () => {
         {anchor === 'work-experience' && <ReorderExperience closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
         {anchor === 'education' && <ReorderEducation closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
         {anchor === 'extras' && <ReorderExtras closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
-        {anchor === 'upload-photo' && <UploadPhoto closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
       </div>
       {/* <Divider /> */}
     </div>

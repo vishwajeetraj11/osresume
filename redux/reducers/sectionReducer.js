@@ -1,4 +1,3 @@
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import PersonIcon from '@material-ui/icons/Person';
 import SchoolIcon from '@material-ui/icons/School';
@@ -10,12 +9,6 @@ const initialState = [
     title: 'Personal Data',
     label: 'personal-data',
     Icon: PersonIcon,
-  },
-  {
-    id: '2',
-    title: 'Upload Photo',
-    label: 'upload-photo',
-    Icon: AccountCircleIcon,
   },
   {
     id: '3',

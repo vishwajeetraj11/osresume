@@ -34,9 +34,6 @@ const PersonalSchema = new mongoose.Schema(
     phoneNumber: {
       type: String,
     },
-    photo: {
-      url: String,
-    },
   },
   {
     toJSON: { virtuals: true },

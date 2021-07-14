@@ -2805,11 +2805,6 @@ core-js-pure@^3.15.0:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.15.2.tgz#c8e0874822705f3385d3197af9348f7c9ae2e3ce"
   integrity sha512-D42L7RYh1J2grW8ttxoY1+17Y4wXZeKe7uyplAI3FkNQyI5OgBIAjUfFiTPfL1rs0qLpxaabITNbjKl1Sp82tA==
 
-core-js@^3.11.0:
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.12.1.tgz#6b5af4ff55616c08a44d386f1f510917ff204112"
-  integrity sha512-Ne9DKPHTObRuB09Dru5AjwKjY4cJHVGu+y5f7coGn1E9Grkc3p2iBwE9AI/nJzsE29mQF7oq+mhYYRqOMFN1Bw==
-
 core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.2.tgz"
@@ -6767,15 +6762,6 @@ react-fast-compare@^2.0.1:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
-
-react-image-crop@^8.6.9:
-  version "8.6.9"
-  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-8.6.9.tgz#35c6ef740493afd98e6143ddc244f64575acec75"
-  integrity sha512-u9t9vtUsQBRtu/Z8A6dpQQcHiLhEDCmcFeaK/9E3fnV0noWSRKdChI0dN43m/IhgPZOdpALXrZaIfkNXVX7sDg==
-  dependencies:
-    clsx "^1.1.1"
-    core-js "^3.11.0"
-    prop-types "^15.7.2"
 
 react-is@16.13.1, react-is@^16.13.1, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
