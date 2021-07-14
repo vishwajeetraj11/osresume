@@ -156,13 +156,12 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
               {values.type === 'NEW_LINE' && (
                 <>
                   <ChipInput
-                    // inputValue={value}
                     label="Items"
                     fullWidth
                     className="mt-6 mr-10"
                     placeholder="Enter items and hit ENTER"
                     allowDuplicates={false}
-                    alwaysShowPlaceholder
+                    alwaysShowPlaceholder={!!values.items.length}
                     value={values.items}
                     onAdd={chip => {
                       setFieldValue('items', values.items.concat(chip));
@@ -179,12 +178,11 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
                 <>
                   <ChipInput
                     label="Items"
-                    InputLabelProps={{ shrink: true }}
                     fullWidth
                     className="mt-4 mr-10"
                     placeholder="Enter items and hit ENTER"
                     allowDuplicates={false}
-                    alwaysShowPlaceholder
+                    alwaysShowPlaceholder={!!values.items.length}
                     value={values.items}
                     onAdd={chip => {
                       setFieldValue('.items', values.items.push(chip));

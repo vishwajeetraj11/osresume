@@ -21,6 +21,8 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
     enqueueSnackbar(message, { variant });
   };
 
+  const { resumeId } = useSelector(state => state.resume.metadata);
+
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
   const dispatch = useDispatch();
@@ -166,9 +168,33 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
     }
   };
 
-  const save = () => {
-    dispatch(addExperienceData(exp));
-    closeDrawer(anchor, false);
+  const save = async () => {
+    let flag = false;
+    exp.forEach(e => {
+      if (e.id.includes('-')) {
+        flag = true;
+      }
+    });
+    if (flag) {
+      showSnack('You need to edit the sample data before saving the order.', 'info');
+      return;
+    }
+    try {
+      showSnack('Saving Order of Experience...', 'default');
+      const { data } = await axios({
+        url: `/api/resumes/${resumeId}`,
+        method: 'PATCH',
+        data: {
+          experience: exp,
+        },
+      });
+      dispatch(addExperienceData(data.resume.experience));
+      showSnack('Successfully saved order of experience.', 'success');
+      closeDrawer(anchor, false);
+    } catch (error) {
+      // console.log(error);
+      showSnack('Unable to save order of experience, please try again later.', 'error');
+    }
   };
 
   const onAdd = () => {

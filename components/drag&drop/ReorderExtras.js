@@ -15,6 +15,7 @@ import ExtrasCard from '../cards/ExtrasCard';
 import EditSingleExtra from '../forms/EditSingleExtra';
 
 const ReorderExtras = ({ closeDrawer, anchor }) => {
+  const { resumeId } = useSelector(state => state.resume.metadata);
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
   const dispatch = useDispatch();
@@ -168,9 +169,33 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
     }
   };
 
-  const save = () => {
-    dispatch(addExtrasData(ext));
-    closeDrawer(anchor, false);
+  const save = async () => {
+    let flag = false;
+    ext.forEach(e => {
+      if (e.id.includes('-')) {
+        flag = true;
+      }
+    });
+    if (flag) {
+      showSnack('You need to edit the sample data before saving the order.', 'info');
+      return;
+    }
+    try {
+      showSnack('Saving Order of Extras...', 'default');
+      const { data } = await axios({
+        url: `/api/resumes/${resumeId}`,
+        method: 'PATCH',
+        data: {
+          extras: ext,
+        },
+      });
+      dispatch(addExtrasData(data.resume.extras));
+      showSnack('Successfully saved order of extras.', 'success');
+      closeDrawer(anchor, false);
+    } catch (error) {
+      // console.log(error);
+      showSnack('Unable to save order of extras, please try again later.', 'error');
+    }
   };
 
   const onAdd = () => {

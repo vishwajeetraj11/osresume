@@ -37,6 +37,12 @@ const ResumeSchema = new mongoose.Schema(
         ref: 'Extras',
       },
     ],
+    customStyles: {
+      font: {
+        type: String,
+        default: 'Poppins',
+      },
+    },
   },
   {
     toJSON: { virtuals: true },

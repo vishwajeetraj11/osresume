@@ -21,6 +21,8 @@ const ReorderEducation = ({ closeDrawer, anchor }) => {
     enqueueSnackbar(message, { variant });
   };
 
+  const { resumeId } = useSelector(state => state.resume.metadata);
+
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
   const dispatch = useDispatch();
@@ -170,9 +172,32 @@ const ReorderEducation = ({ closeDrawer, anchor }) => {
     }
   };
 
-  const save = () => {
-    dispatch(addEducationData(edu));
-    closeDrawer(anchor, false);
+  const save = async () => {
+    let flag = false;
+    edu.forEach(e => {
+      if (e.id.includes('-')) {
+        flag = true;
+      }
+    });
+    if (flag) {
+      showSnack('You need to edit the sample data before saving the order.', 'info');
+      return;
+    }
+    try {
+      showSnack('Saving Order of Education...', 'default');
+      const { data } = await axios({
+        url: `/api/resumes/${resumeId}`,
+        method: 'PATCH',
+        data: {
+          education: edu,
+        },
+      });
+      dispatch(addEducationData(data.resume.education));
+      showSnack('Successfully saved order of education.', 'success');
+      closeDrawer(anchor, false);
+    } catch (error) {
+      showSnack('Unable to save order of education, please try again later.', 'error');
+    }
   };
 
   const onAdd = () => {
