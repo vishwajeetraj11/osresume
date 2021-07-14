@@ -153,6 +153,10 @@ const ReorderEducation = ({ closeDrawer, anchor }) => {
   };
 
   const onDelete = async ({ id }) => {
+    if (id.includes('-')) {
+      dispatch(deleteSingleEducationData(id));
+      return;
+    }
     try {
       showSnack('Deleting Education...', 'default');
       await axios({

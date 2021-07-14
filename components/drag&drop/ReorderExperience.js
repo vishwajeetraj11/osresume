@@ -149,6 +149,10 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
   };
 
   const onDelete = async ({ id }) => {
+    if (id.includes('-')) {
+      dispatch(deleteSingleExperienceData(id));
+      return;
+    }
     try {
       showSnack('Deleting Experience...', 'default');
       await axios({

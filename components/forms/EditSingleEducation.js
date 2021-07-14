@@ -101,12 +101,13 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
               endedAt: '',
               country: '',
             });
-            setSubmitting(false);
-            closeDrawer(anchor, false);
             setEdit(true);
           } catch (error) {
             // console.log(error);
             showSnack('Error creating Educational data! Please try again later.', 'error');
+          } finally {
+            setSubmitting(false);
+            closeDrawer(anchor, false);
           }
         }, 400);
       }}

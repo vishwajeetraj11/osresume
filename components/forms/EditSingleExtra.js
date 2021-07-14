@@ -1,10 +1,13 @@
+import { useUser } from '@clerk/clerk-react';
 import { Button, Divider, FormControl, InputLabel, makeStyles, MenuItem, Select, TextField } from '@material-ui/core';
+import axios from 'axios';
 import { Formik } from 'formik';
 import ChipInput from 'material-ui-chip-input';
+import { useSnackbar } from 'notistack';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { editSingleExtraData } from '../../redux/actions/resumeActions';
+import { ADD_EXTRAS_DATA } from '../../redux/actionTypes/resumeActionTypes';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -16,6 +19,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
+  const {
+    data: { id: userId },
+  } = useUser();
+
+  const { resumeId } = useSelector(state => state.resume.metadata);
+  const extrasCollection = useSelector(state => state.resume.data.extras);
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const showSnack = (message, variant) => {
+    enqueueSnackbar(message, { variant });
+  };
+
   // Dispatch
   const dispatch = useDispatch();
 
@@ -46,20 +62,61 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
       validateOnMount={false}
       validationSchema={ValidationSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        setTimeout(() => {
-          dispatch(editSingleExtraData(values));
-          resetForm({
-            title: '',
-            type: '',
-            items: [],
-          });
-          setSubmitting(false);
-          closeDrawer(anchor, false);
-          setEdit(true);
+        setTimeout(async () => {
+          // dispatch(editSingleExtraData(values));
+          try {
+            showSnack(`${extra._id ? 'Updating extras data...' : 'Creating extras data...'}`, 'default');
+
+            const { data } = await axios({
+              url: `${extra._id ? `/api/extras/${extra._id}` : '/api/extras'}`,
+              method: `${extra._id ? 'PUT' : 'POST'}`,
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              data: {
+                title: values.title,
+                type: values.type,
+                items: values.items,
+                userId,
+                resumeId,
+              },
+            });
+
+            const extraExists = extrasCollection.find(ext => ext._id === data.extras._id);
+
+            if (extraExists) {
+              const extras = extrasCollection.map(ext => (ext._id === data.extras._id ? data.extras : ext));
+              dispatch({
+                type: ADD_EXTRAS_DATA,
+                payload: extras,
+              });
+            } else {
+              const results = extrasCollection.map(ext => (ext.id === extra.id ? data.extras : ext));
+              dispatch({
+                type: ADD_EXTRAS_DATA,
+                payload: results,
+              });
+            }
+
+            resetForm({
+              title: '',
+              type: '',
+              items: [],
+            });
+
+            showSnack(`${extra._id ? 'Successfully updated extras data.' : 'Successfully created extras data.'}`, 'success');
+            setEdit(true);
+          } catch (error) {
+            console.log(error);
+            showSnack('Error creating Extra data! Please try again later.', 'error');
+          } finally {
+            setSubmitting(false);
+            closeDrawer(anchor, false);
+          }
         }, 400);
       }}
     >
-      {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue, isSubmitting }) => (
+      {({ values, errors, handleChange, handleBlur, handleSubmit, setFieldValue, isSubmitting }) => (
         <form className="pb-10" onSubmit={handleSubmit}>
           <div className="">
             <div className="flex align-center justify-between">

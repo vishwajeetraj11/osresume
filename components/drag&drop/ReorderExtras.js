@@ -3,7 +3,9 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SaveIcon from '@material-ui/icons/Save';
+import axios from 'axios';
 import clsx from 'clsx';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +18,12 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
   const dispatch = useDispatch();
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const showSnack = (message, variant) => {
+    enqueueSnackbar(message, { variant });
+  };
 
   // Fetch Global State
   const extras = useSelector(state => state.resume.data.extras);
@@ -142,8 +150,22 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
     }));
   };
 
-  const onDelete = ({ id }) => {
-    dispatch(deleteSingleExtraData(id));
+  const onDelete = async ({ id }) => {
+    if (id.includes('-')) {
+      dispatch(deleteSingleExtraData(id));
+      return;
+    }
+    try {
+      showSnack('Deleting Extras...', 'default');
+      await axios({
+        url: `/api/extras/${id}`,
+        method: 'DELETE',
+      });
+      dispatch(deleteSingleExtraData(id));
+      showSnack('Successfully deleted extra.', 'success');
+    } catch (error) {
+      showSnack('Unable to delete extra, please try again later.', 'error');
+    }
   };
 
   const save = () => {
