@@ -13,8 +13,6 @@ const Templates = () => {
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [loadingCreate, setLoadingCreate] = useState(false);
-
   const [selectedTemplate, setSelectedTemplate] = useState('');
 
   const onSelect = id => {
@@ -31,7 +29,6 @@ const Templates = () => {
 
   const onCreate = async () => {
     try {
-      setLoadingCreate(true);
       showSnack('Creating your resume...', 'default');
       const { data } = await axios({
         url: '/api/resumes',
@@ -41,16 +38,15 @@ const Templates = () => {
         },
         data: {
           userId,
+          templateName: selectedTemplate.templateName,
           title: `${fullName}'s Resume`,
         },
       });
       showSnack('Resume created successfully !', 'success');
       router.push(`/editor/${data.data.id}`);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       showSnack(error.response.data, 'error');
-    } finally {
-      setLoadingCreate(false);
     }
   };
 
@@ -80,16 +76,15 @@ const Templates = () => {
     }
     if (!templates.length) return <div>No Templates found.</div>;
     return (
-      <div
-        className="pt-10 px-10 lg:px-0"
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(16rem, 1fr)',
-          gridGap: '1rem',
-        }}
-      >
+      <div className="pt-10 px-10 lg:px-0 templates-grid-container">
         {templates.map(template => (
-          <TemplateCard template={template} selected={template._id === selectedTemplate._id} onSelect={onSelect} key={template._id} />
+          <TemplateCard
+            template={template}
+            type="TEMPLATE"
+            selected={template._id === selectedTemplate._id}
+            onSelect={onSelect}
+            key={template._id}
+          />
         ))}
       </div>
     );

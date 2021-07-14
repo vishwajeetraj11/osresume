@@ -34,6 +34,7 @@ const importData = async () => {
       userId: 'user_1unSh9oHqdp9BzvQSKWRDpT85j6',
       template: true,
       title: 'Onyx',
+      templateName: 'Onyx',
     });
 
     const exps = await Experience.insertMany(

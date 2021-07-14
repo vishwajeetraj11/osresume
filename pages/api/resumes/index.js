@@ -10,9 +10,10 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET':
       try {
-        const { template } = req.query;
+        const { template, user } = req.query;
         const filterObj = {};
         if (template) filterObj.template = true;
+        if (user) filterObj.userId = user;
         const resume = await Resume.find(filterObj);
         if (!resume) {
           return res.status(400).json({ success: false });
@@ -32,6 +33,7 @@ export default async function handler(req, res) {
         const resume = await Resume.create({
           title: body.title,
           userId: body.userId,
+          templateName: body.templateName,
         });
         if (!resume) {
           return res.status(400).json({ success: false });

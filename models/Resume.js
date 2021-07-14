@@ -11,6 +11,9 @@ const ResumeSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    templateName: {
+      type: String,
+    },
     userId: {
       type: String,
       required: [true, "Please enter the resume's owner id."],

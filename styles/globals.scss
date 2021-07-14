@@ -108,3 +108,15 @@ img {
 .cl-user-button-avatar {
 	width: 100px;
 }
+
+.templates-grid-container{
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: 1fr;
+	@media screen and (min-width: 600px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	@media screen and (min-width: 1200px) {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
