@@ -14,6 +14,7 @@ import {
   EDIT_SINGLE_EDUCATION_DATA,
   EDIT_SINGLE_EXPERIENCE_DATA,
   EDIT_SINGLE_EXTRA_DATA,
+  UPDATE_FONT,
   UPDATE_TITLE,
 } from '../actionTypes/resumeActionTypes';
 
@@ -34,6 +35,16 @@ export const resumeReducer = (state = emptyInitialState, action) => {
   switch (action.type) {
     default:
       return state;
+    case UPDATE_FONT:
+      return {
+        ...state,
+        metadata: {
+          ...state.metadata,
+          customStyles: {
+            font: action.payload,
+          },
+        },
+      };
     case UPDATE_TITLE:
       return {
         ...state,

@@ -76,6 +76,7 @@ const Editor = () => {
             resumeId: data.resume._id,
             userId: data.resume.userId,
             templateName: data.resume.templateName,
+            customStyles: data.resume.customStyles,
           }),
         );
         dispatch(addExperienceData(data.resume.experience));

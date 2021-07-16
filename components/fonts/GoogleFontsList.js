@@ -2,7 +2,11 @@ import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import axios from 'axios';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { UPDATE_FONT } from '../../redux/actionTypes/resumeActionTypes';
 import { items } from '../../shared/googleFonts.json';
 
 const GoogleFontsList = ({ anchor, closeDrawer }) => {
@@ -13,9 +17,18 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [bound, setBound] = useState(20);
   const [fontsAdded, setFontsAdded] = useState([]);
   const [fontLoading, setFontLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  const { resumeId } = useSelector(state => state.resume.metadata);
 
   // Search
   const [search, setSearch] = useState('');
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const showSnack = (message, variant) => {
+    enqueueSnackbar(message, { variant });
+  };
 
   useEffect(() => {
     (async () => {
@@ -130,7 +143,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
               const resume = document.getElementById('t1');
 
               document.fonts.ready
-                .then(() => {
+                .then(async () => {
                   setFontLoading(true);
                   // Check if the font is in the system
                   fontAvailable = document.fonts.check(`16px ${fontFamily}`);
@@ -141,6 +154,27 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
                     setFontsAdded(p => p.filter((_, i) => i !== fontsAdded.length - 1));
                     const fontNode = document.getElementById(fontID);
                     fontNode.remove();
+                  }
+
+                  try {
+                    showSnack('Updating font...', 'default');
+                    const { data } = await axios({
+                      url: `/api/resumes/${resumeId}`,
+                      method: 'PATCH',
+                      data: {
+                        customStyles: {
+                          font: fontFamily,
+                        },
+                      },
+                    });
+
+                    dispatch({
+                      type: UPDATE_FONT,
+                      payload: data.resume.customStyles.font,
+                    });
+                    showSnack('Successfully updated font.', 'success');
+                  } catch (e) {
+                    showSnack('Unable to update font, please try again later.', 'error');
                   }
 
                   // Check if the font is already available in users system to avoid fetching
