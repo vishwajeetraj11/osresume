@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <SnackbarProvider classes={{ variantSuccess: 'bg-primary' }} maxSnack={3}>
+      <SnackbarProvider classes={{ variantSuccess: 'nackbarItem-variantSuccess-99' }} maxSnack={3}>
         <ThemeProvider theme={theme}>
           <StylesProvider injectFirst>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
