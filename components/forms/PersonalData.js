@@ -33,7 +33,9 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
     email: Yup.string().email().required('Please provide a valid email.'),
     designation: Yup.string().required('Please provide your designation.'),
     country: Yup.string().required('Please provide your country.'),
-    phoneNumber: Yup.string().min(10, 'Phone Number must be at least 10 digits long.'),
+    phoneNumber: Yup.string()
+      .min(10, 'Phone Number must be at least 10 digits long.')
+      .max(12, 'Phone Number cannot be more than 12 digits.'),
     objective: Yup.string().nullable(),
   });
 
@@ -187,6 +189,10 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
               <InputLabel htmlFor="phone-number-input">Your Phone Number</InputLabel>
               <OutlinedInput
                 onChange={e => {
+                  if (e.target.value === '') {
+                    setFieldValue('phoneNumber', e.target.value);
+                    return;
+                  }
                   if (e.target.value.match(/^[0-9]+$/)) {
                     setFieldValue('phoneNumber', e.target.value);
                   }
