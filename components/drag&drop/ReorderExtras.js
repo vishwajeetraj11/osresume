@@ -207,6 +207,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
         items: ['Sample Item 1', 'Sample Item 2'],
       }),
     );
+    showSnack('Sample data for extras is added at the top, please edit accordingly.', 'success');
   };
 
   return (

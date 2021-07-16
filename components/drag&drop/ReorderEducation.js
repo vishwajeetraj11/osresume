@@ -212,6 +212,7 @@ const ReorderEducation = ({ closeDrawer, anchor }) => {
         country: 'Sample Country',
       }),
     );
+    showSnack('Sample data for education is added at the top, please edit accordingly.', 'success');
   };
 
   return (

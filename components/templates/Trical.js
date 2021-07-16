@@ -41,7 +41,7 @@ class Trical extends React.Component {
                 {education.map((edu, i) => (
                   <Description key={edu.id} index={i}>
                     <Paragraph classes="text-t2-sub-heading font-bold">
-                      {`${edu.startedAt.split(' ')[1]} -${edu.endedAt.split(' ')[1]}`}
+                      {`${edu?.startedAt?.split(' ')[1]} -${edu?.endedAt?.split(' ')[1]}`}
                     </Paragraph>
                     <Paragraph classes="text-t2-sub-heading font-bold">{edu.major}</Paragraph>
                     <Paragraph>{edu.institution}</Paragraph>

@@ -107,7 +107,7 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
             showSnack(`${extra._id ? 'Successfully updated extras data.' : 'Successfully created extras data.'}`, 'success');
             setEdit(true);
           } catch (error) {
-            console.log(error);
+            // console.log(error);
             showSnack('Error creating Extra data! Please try again later.', 'error');
           } finally {
             setSubmitting(false);

@@ -210,6 +210,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
         country: 'Sample Country',
       }),
     );
+    showSnack('Sample data for experience is added at the top, please edit accordingly.', 'success');
   };
 
   return (
