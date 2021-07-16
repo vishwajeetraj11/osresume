@@ -28,6 +28,9 @@ const Header = () => (
           </Link>
         </SignedOut>
         <SignedIn>
+          <Link href="/templates">
+            <p className="text-default cursor-pointer px-4">Templates</p>
+          </Link>
           <Link href="/dashboard">
             <p className="text-default cursor-pointer px-4">Dashboard</p>
           </Link>
