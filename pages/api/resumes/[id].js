@@ -8,7 +8,7 @@ import dbConnect from '../../../shared/utils/dbConnect';
 // eslint-disable-next-line consistent-return
 export default async function handler(req, res) {
   const {
-    query: { id },
+    query: { id, userId },
     body,
     method,
   } = req;
@@ -24,6 +24,9 @@ export default async function handler(req, res) {
         });
         if (!resume) {
           return res.status(404).json({ success: false, error: 'No such resume exist!' });
+        }
+        if (resume.userId !== userId) {
+          return res.status(403).json({ success: false, error: "You don't have access to this resume." });
         }
         res.status(200).json({ success: true, resume });
       } catch (error) {

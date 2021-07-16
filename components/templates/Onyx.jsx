@@ -1,7 +1,7 @@
 import React from 'react';
 import t1 from '../../styles/template1.module.scss';
 
-class Resume extends React.Component {
+class Onyx extends React.Component {
   constructor() {
     super();
     this.state = {};
@@ -80,4 +80,4 @@ class Resume extends React.Component {
   }
 }
 
-export default Resume;
+export default Onyx;

@@ -35,7 +35,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
         })),
       );
     })();
-  }, [search]);
+  }, [search, page, bound]);
 
   useEffect(() => {
     if (googleFonts.length !== 0) {

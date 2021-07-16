@@ -6,7 +6,6 @@ import Experience from './models/Experience.js';
 import Extras from './models/Extras.js';
 import Personal from './models/Personal.js';
 import Resume from './models/Resume.js';
-import { education, experience, extras, personal } from './shared/utils/demoData.js';
 
 dotenv.config({
   path: './.env',
@@ -31,10 +30,10 @@ const importData = async () => {
     await Resume.deleteMany();
 
     const resume = await Resume.create({
-      userId: 'user_1unSh9oHqdp9BzvQSKWRDpT85j6',
+      userId: 'template_user',
       template: true,
-      title: 'Onyx',
-      templateName: 'Onyx',
+      title: 'Trical',
+      templateName: 'Trical',
     });
 
     const exps = await Experience.insertMany(
@@ -59,6 +58,11 @@ const importData = async () => {
     );
 
     const personalData = await Personal.create({ ...personal, resumeId: resume._id });
+
+    // const exps = await Experience.find({});
+    // const edus = await Education.find({});
+    // const exts = await Extras.find({});
+    // const [personalData] = await Personal.find({});
 
     await Resume.findOneAndUpdate(
       { _id: resume.id },

@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useReactToPrint } from 'react-to-print';
 import LeftSideBar from '../../components/LeftSideBar';
 import RightSideBar from '../../components/RightSideBar';
-import Resume from '../../components/templates/Resume';
+import Onyx from '../../components/templates/Onyx';
+import Trical from '../../components/templates/Trical';
 import {
   addEducationData,
   addExperienceData,
@@ -19,12 +20,13 @@ import {
 
 const Editor = () => {
   const {
-    data: { id },
+    data: { id: userId },
   } = useUser();
   const dispatch = useDispatch();
   const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');
-  const resumeData = useSelector(state => state.resume.data);
+  const resume = useSelector(state => state.resume);
+  const { data: resumeData, metadata } = resume;
   const resumeRef = useRef();
   const [loading, setLoading] = useState(false);
 
@@ -63,7 +65,7 @@ const Editor = () => {
       try {
         setLoading(true);
         const { data } = await axios({
-          url: `/api/resumes/${router.query.id}`,
+          url: `/api/resumes/${router.query.id}/?userId=${userId}`,
           method: 'GET',
         });
         // console.log(data);
@@ -76,6 +78,7 @@ const Editor = () => {
             createdAt: data.resume.createdAt,
             resumeId: data.resume._id,
             userId: data.resume.userId,
+            templateName: data.resume.templateName,
           }),
         );
         dispatch(addExperienceData(data.resume.experience));
@@ -100,7 +103,8 @@ const Editor = () => {
           <div className="flex flex-col lg:flex-row bg-gray-50">
             <LeftSideBar />
             <div className="order-2 mx-auto my-10">
-              <Resume ref={resumeRef} data={resumeData} />
+              {metadata.templateName === 'Onyx' && <Onyx ref={resumeRef} data={resumeData} />}
+              {metadata.templateName === 'Trical' && <Trical ref={resumeRef} data={resumeData} />}
             </div>
             <RightSideBar handlePrint={handlePrint} />
           </div>

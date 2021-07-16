@@ -51,6 +51,12 @@ module.exports = {
       't1-md': '15px',
       't1-sm': '13px',
       't1-xs': '11px',
+      't2-2xl': '40px',
+      't2-xl': '20px',
+      't2-lg': '16px',
+      't2-md': '12px',
+      't2-sm': '10px',
+      't2-xs': '9px',
     },
     colors: {
       ...colors,
@@ -58,6 +64,10 @@ module.exports = {
       default: '#808080',
       't1-black': '#101214',
       primary: '#1abc9c',
+      't2-primary': '#5B6784',
+      't2-secondary': '#F3F7F8',
+      't2-paragraph': '#7F7F7F',
+      't2-sub-heading': '#3E4349',
     },
   },
   variants: {
