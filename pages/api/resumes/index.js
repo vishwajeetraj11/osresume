@@ -1,8 +1,9 @@
+import { requireSession } from '@clerk/clerk-sdk-node';
 import Resume from '../../../models/Resume';
 import dbConnect from '../../../shared/utils/dbConnect';
 
 // eslint-disable-next-line consistent-return
-export default async function handler(req, res) {
+export default requireSession(async (req, res) => {
   const { body, method } = req;
 
   await dbConnect();
@@ -13,7 +14,7 @@ export default async function handler(req, res) {
         const { template, user } = req.query;
         const filterObj = {};
         if (template) filterObj.template = true;
-        if (user) filterObj.userId = user;
+        if (user) filterObj.userId = req.session.userId;
         const resume = await Resume.find(filterObj);
         if (!resume) {
           return res.status(400).json({ success: false });
@@ -26,13 +27,10 @@ export default async function handler(req, res) {
 
     case 'POST':
       try {
-        const { title, userId } = body;
-        if (!title || !userId) {
-          res.status(400).json({ success: false, message: 'Please send both title and userId' });
-        }
+        const { title } = body;
         const resume = await Resume.create({
-          title: body.title,
-          userId: body.userId,
+          title,
+          userId: req.session.userId,
           templateName: body.templateName,
         });
         if (!resume) {
@@ -48,4 +46,4 @@ export default async function handler(req, res) {
       res.status(400).json({ success: false });
       break;
   }
-}
+});

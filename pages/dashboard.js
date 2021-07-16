@@ -5,10 +5,14 @@ import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import TemplateCard from '../components/cards/TemplateCard';
+import { useClerkSWR } from '../shared/utils/fetcher';
 
 const Dashboard = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { id: userId, fullName } = useUser();
+
+  const { data: userInfo } = useClerkSWR('/api/loggedIn');
+
   const router = useRouter();
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -26,7 +30,7 @@ const Dashboard = () => {
       try {
         setLoading(true);
         const { data } = await axios({
-          url: `/api/resumes?user=${userId}`,
+          url: '/api/resumes?user=true',
           method: 'GET',
         });
         setResumes(data.data);
@@ -48,6 +52,7 @@ const Dashboard = () => {
         url: `/api/resumes/${selectedResume._id}`,
         method: 'DELETE',
       });
+      setResumes(resumes => resumes.filter(resume => resume._id !== selectedResume._id));
       showSnack('Successfully deleted resume.', 'success');
     } catch (error) {
       showSnack('Error deleting resume, please try again later.', 'error');
@@ -85,7 +90,7 @@ const Dashboard = () => {
             <Button className="mr-6" variant="contained" color="primary" onClick={onUpdate}>
               Update
             </Button>
-            <Button variant="contained" color="primary" onClick={onDelete}>
+            <Button variant="outlined" color="primary" onClick={onDelete}>
               Delete
             </Button>
           </div>

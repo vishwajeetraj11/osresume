@@ -1,8 +1,10 @@
+import { requireSession } from '@clerk/clerk-sdk-node';
 import Education from '../../../models/Education';
 import Resume from '../../../models/Resume';
 import dbConnect from '../../../shared/utils/dbConnect';
+
 // eslint-disable-next-line consistent-return
-export default async function handler(req, res) {
+export default requireSession(async (req, res) => {
   const {
     query: { id },
     body,
@@ -14,7 +16,10 @@ export default async function handler(req, res) {
   switch (method) {
     case 'PUT':
       try {
-        const education = await Education.findByIdAndUpdate(id, body, { new: true, runValidators: true });
+        const education = await Education.findOneAndUpdate({ _id: id, userId: req.session.userId }, body, {
+          new: true,
+          runValidators: true,
+        });
         if (!education) {
           return res.status(400).json({ success: false, error: 'Unable to edit educational data.' });
         }
@@ -27,11 +32,14 @@ export default async function handler(req, res) {
     case 'DELETE':
       try {
         const education = await Education.findById(id);
-        await Resume.findByIdAndUpdate(education.resumeId, {
-          $pull: {
-            education: education.id,
+        await Resume.findOneAndUpdate(
+          { resumeId: education.resumeId, userId: req.session.userId },
+          {
+            $pull: {
+              education: education.id,
+            },
           },
-        });
+        );
         education.remove();
         res.status(204).json({ success: true });
       } catch (error) {
@@ -43,4 +51,4 @@ export default async function handler(req, res) {
       res.status(400).json({ success: false, error: "This route doesn't exist." });
       break;
   }
-}
+});

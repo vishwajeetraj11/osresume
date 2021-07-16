@@ -6,6 +6,7 @@ import Experience from './models/Experience.js';
 import Extras from './models/Extras.js';
 import Personal from './models/Personal.js';
 import Resume from './models/Resume.js';
+import { education, experience, extras, personal } from './shared/utils/demoData.js';
 
 dotenv.config({
   path: './.env',
@@ -32,8 +33,8 @@ const importData = async () => {
     const resume = await Resume.create({
       userId: 'template_user',
       template: true,
-      title: 'Trical',
-      templateName: 'Trical',
+      title: 'Onyx',
+      templateName: 'Onyx',
     });
 
     const exps = await Experience.insertMany(

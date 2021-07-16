@@ -1,4 +1,3 @@
-import { useUser } from '@clerk/clerk-react';
 import { Button, FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput, TextField } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
@@ -13,10 +12,6 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
   // Dispatch
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-
-  const {
-    data: { id: userId },
-  } = useUser();
 
   // Get personalData State from globalState
   let personalData = useSelector(state => state.resume.data.personalData);
@@ -82,7 +77,6 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
                   country: values.country,
                   objective: values.objective || '',
                   phoneNumber: values.phoneNumber || '',
-                  userId,
                   resumeId,
                 },
               });

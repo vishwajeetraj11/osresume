@@ -65,7 +65,7 @@ const Editor = () => {
       try {
         setLoading(true);
         const { data } = await axios({
-          url: `/api/resumes/${router.query.id}/?userId=${userId}`,
+          url: `/api/resumes/${router.query.id}`,
           method: 'GET',
         });
         // console.log(data);

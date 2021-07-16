@@ -1,8 +1,9 @@
+import { requireSession } from '@clerk/clerk-sdk-node';
 import Extras from '../../../models/Extras';
 import Resume from '../../../models/Resume';
 import dbConnect from '../../../shared/utils/dbConnect';
 // eslint-disable-next-line consistent-return
-export default async function handler(req, res) {
+export default requireSession(async (req, res) => {
   const {
     query: { id },
     body,
@@ -14,7 +15,7 @@ export default async function handler(req, res) {
   switch (method) {
     case 'PUT':
       try {
-        const extras = await Extras.findByIdAndUpdate(id, body, { new: true, runValidators: true });
+        const extras = await Extras.findOneAndUpdate({ _id: id, userId: req.session.userId }, body, { new: true, runValidators: true });
         if (!extras) {
           return res.status(400).json({ success: false, error: 'Unable to edit extras data.' });
         }
@@ -26,12 +27,15 @@ export default async function handler(req, res) {
 
     case 'DELETE':
       try {
-        const extras = await Extras.findById(id);
-        await Resume.findByIdAndUpdate(extras.resumeId, {
-          $pull: {
-            experience: extras.id,
+        const extras = await Extras.findOne({ _id: id, userId: req.session.userId });
+        await Resume.findOneAndUpdate(
+          { resumeId: extras.resumeId, userId: req.session.userId },
+          {
+            $pull: {
+              extras: extras.id,
+            },
           },
-        });
+        );
         extras.remove();
         res.status(204).json({ success: true });
       } catch (error) {
@@ -43,4 +47,4 @@ export default async function handler(req, res) {
       res.status(400).json({ success: false, error: "This route doesn't exist." });
       break;
   }
-}
+});

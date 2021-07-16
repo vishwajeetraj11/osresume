@@ -1,4 +1,3 @@
-import { useUser } from '@clerk/clerk-react';
 import { Button, Divider, FormControl, InputLabel, makeStyles, MenuItem, Select, TextField } from '@material-ui/core';
 import axios from 'axios';
 import { Formik } from 'formik';
@@ -19,10 +18,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
-  const {
-    data: { id: userId },
-  } = useUser();
-
   const { resumeId } = useSelector(state => state.resume.metadata);
   const extrasCollection = useSelector(state => state.resume.data.extras);
 
@@ -77,7 +72,6 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
                 title: values.title,
                 type: values.type,
                 items: values.items,
-                userId,
                 resumeId,
               },
             });

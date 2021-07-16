@@ -1,4 +1,3 @@
-import { useUser } from '@clerk/clerk-react';
 import DateFnsUtils from '@date-io/date-fns';
 import { Button, Divider, TextField } from '@material-ui/core';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -11,10 +10,6 @@ import * as Yup from 'yup';
 import { ADD_EDUCATION_DATA } from '../../redux/actionTypes/resumeActionTypes';
 
 const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
-  const {
-    data: { id: userId },
-  } = useUser();
-
   const { resumeId } = useSelector(state => state.resume.metadata);
   const educationCollection = useSelector(state => state.resume.data.education);
 
@@ -73,7 +68,6 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
                 startedAt: values.startedAt,
                 endedAt: values.endedAt,
                 country: values.country,
-                userId,
                 resumeId,
               },
             });

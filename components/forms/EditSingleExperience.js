@@ -1,4 +1,3 @@
-import { useUser } from '@clerk/clerk-react';
 import DateFnsUtils from '@date-io/date-fns';
 import { Button, Divider, TextField } from '@material-ui/core';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -11,10 +10,6 @@ import * as Yup from 'yup';
 import { ADD_EXPERIENCE_DATA } from '../../redux/actionTypes/resumeActionTypes';
 
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
-  const {
-    data: { id: userId },
-  } = useUser();
-
   const { resumeId } = useSelector(state => state.resume.metadata);
   const experienceCollection = useSelector(state => state.resume.data.experiences);
 
@@ -91,7 +86,6 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
                 country: values.country,
                 company: values.company,
                 years: values.years,
-                userId,
                 resumeId,
               },
             });
@@ -124,7 +118,7 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
             });
             setEdit(true);
           } catch (error) {
-            // console.log(error);
+            console.log(error.response);
             showSnack('Error creating Experience data! Please try again later.', 'error');
           } finally {
             setSubmitting(false);
