@@ -1,4 +1,4 @@
-import { RedirectToSignIn, SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
+import { RedirectToSignIn, SignedIn, SignedOut } from '@clerk/clerk-react';
 import { useMediaQuery } from '@material-ui/core';
 import axios from 'axios';
 import Head from 'next/head';
@@ -19,9 +19,6 @@ import {
 } from '../../redux/actions/resumeActions';
 
 const Editor = () => {
-  const {
-    data: { id: userId },
-  } = useUser();
   const dispatch = useDispatch();
   const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');

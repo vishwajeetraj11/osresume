@@ -48,7 +48,8 @@
         "react/jsx-curly-newline": "warn",
         "no-unused-vars":"warn",
         "no-underscore-dangle": "off",
-        "react/jsx-one-expression-per-line": "off"
+        "react/jsx-one-expression-per-line": "off",
+        "comma-dangle":"warn"
     }
   }
   

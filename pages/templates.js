@@ -1,6 +1,7 @@
 import { useUser } from '@clerk/clerk-react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
@@ -92,20 +93,29 @@ const Templates = () => {
 
   return (
     <div className="py-12 lg:max-w-screen-xl mx-auto">
+      <Head>
+        <title>Templates | OS Resume</title>
+      </Head>
       <h1 className="text-3xl lg:text-5xl font-extralight text-center pb-10">Browse All Templates</h1>
-      {selectedTemplate && (
-        <div className="bg-gray-50 rounded px-8 py-6 transition-all flex flex-col lg:flex-row items-center justify-between">
-          <h2 className="text-regular text-lg font-medium text-default">Selected Template : {selectedTemplate.title}</h2>
-          <div className="mt-6 lg:mt-0">
-            <Button className="mr-10" variant="outlined" color="primary" onClick={onCancel}>
-              Cancel
-            </Button>
-            <Button variant="contained" color="primary" onClick={onCreate}>
-              Create
-            </Button>
-          </div>
+
+      <div className="bg-gray-50 rounded px-8 py-6 transition-all flex flex-col lg:flex-row items-center justify-between">
+        <h2 className="text-regular text-lg font-medium text-default">
+          {`${selectedTemplate ? `Selected Template : ${selectedTemplate.title}` : 'Select a Template'}`}
+        </h2>
+        <div className="mt-6 lg:mt-0">
+          {selectedTemplate && (
+            <>
+              <Button className="mr-10" variant="outlined" color="primary" onClick={onCancel}>
+                Cancel
+              </Button>
+              <Button variant="contained" color="primary" onClick={onCreate}>
+                Create
+              </Button>
+            </>
+          )}
         </div>
-      )}
+      </div>
+
       {render()}
     </div>
   );

@@ -14,6 +14,7 @@ import {
   EDIT_SINGLE_EDUCATION_DATA,
   EDIT_SINGLE_EXPERIENCE_DATA,
   EDIT_SINGLE_EXTRA_DATA,
+  UPDATE_TITLE,
 } from '../actionTypes/resumeActionTypes';
 
 // new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds);
@@ -33,6 +34,14 @@ export const resumeReducer = (state = emptyInitialState, action) => {
   switch (action.type) {
     default:
       return state;
+    case UPDATE_TITLE:
+      return {
+        ...state,
+        metadata: {
+          ...state.metadata,
+          title: action.payload,
+        },
+      };
     case ADD_PERSONAL_DATA_STATE:
       return {
         ...state,

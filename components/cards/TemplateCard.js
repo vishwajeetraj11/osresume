@@ -21,7 +21,7 @@ const TemplateCard = ({ template, selected, onSelect, type }) => (
       placeholder="blur"
     />
     <div className="absolute bottom-0 w-full bg-gray-50">
-      <h2 className="text-xl font-regular text-default text-center">{template.title}</h2>
+      <h2 className="text-lg py-1 font-regular text-default text-center">{template.title}</h2>
     </div>
   </div>
 );

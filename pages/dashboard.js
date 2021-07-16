@@ -1,17 +1,17 @@
 import { useUser } from '@clerk/clerk-react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import TemplateCard from '../components/cards/TemplateCard';
-import { useClerkSWR } from '../shared/utils/fetcher';
 
 const Dashboard = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const { id: userId, fullName } = useUser();
+  const { id: userId } = useUser();
 
-  const { data: userInfo } = useClerkSWR('/api/loggedIn');
+  // const { data: userInfo } = useClerkSWR('/api/loggedIn');
 
   const router = useRouter();
   const [resumes, setResumes] = useState([]);
@@ -82,20 +82,30 @@ const Dashboard = () => {
 
   return (
     <div className="py-12 lg:max-w-screen-xl mx-auto">
+      <Head>
+        <title>Dashboard | OS Resume</title>
+      </Head>
       <h1 className="text-3xl lg:text-5xl font-extralight text-center pb-10">Your Resumes</h1>
-      {selectedResume && (
-        <div className="bg-gray-50 rounded px-8 py-6 transition-all flex flex-col lg:flex-row items-center justify-between">
-          <h2 className="text-regular text-lg font-medium text-default">Selected Resume : {selectedResume.title}</h2>
-          <div className="mt-6 lg:mt-0">
-            <Button className="mr-6" variant="contained" color="primary" onClick={onUpdate}>
-              Update
-            </Button>
-            <Button variant="outlined" color="primary" onClick={onDelete}>
-              Delete
-            </Button>
-          </div>
+      <div className="bg-gray-50 rounded px-8 py-6 transition-all flex flex-col lg:flex-row items-center justify-between">
+        <h2 className="text-regular text-lg font-medium text-default">
+          {`${selectedResume ? `Selected Resume : ${selectedResume.title}` : 'Select a Resume'}`}
+        </h2>
+        <h2 className="text-regular text-lg font-medium text-default">
+          {`${selectedResume && `Template : ${selectedResume.templateName}`}`}
+        </h2>
+        <div className="mt-6 lg:mt-0">
+          {selectedResume && (
+            <>
+              <Button className="mr-6" variant="contained" color="primary" onClick={onUpdate}>
+                Update
+              </Button>
+              <Button variant="outlined" color="primary" onClick={onDelete}>
+                Delete
+              </Button>
+            </>
+          )}
         </div>
-      )}
+      </div>
       {render()}
     </div>
   );
