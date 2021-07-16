@@ -17,6 +17,10 @@ const Dashboard = () => {
 
   const [selectedResume, setSelectedResume] = useState('');
 
+  const showSnack = (message, variant) => {
+    enqueueSnackbar(message, { variant });
+  };
+
   useEffect(() => {
     (async () => {
       try {
@@ -34,9 +38,21 @@ const Dashboard = () => {
     })();
   }, [userId]);
 
-  const onClone = () => {};
-  const onUpdate = () => {};
-  const onDelete = () => {};
+  const onUpdate = () => {
+    router.push(`/editor/${selectedResume._id}`);
+  };
+  const onDelete = async () => {
+    try {
+      showSnack('Deleting Resume...', 'default');
+      await axios({
+        url: `/api/resumes/${selectedResume._id}`,
+        method: 'DELETE',
+      });
+      showSnack('Successfully deleted resume.', 'success');
+    } catch (error) {
+      showSnack('Error deleting resume, please try again later.', 'error');
+    }
+  };
 
   const onSelect = id => {
     setSelectedResume(id);
@@ -51,7 +67,7 @@ const Dashboard = () => {
     }
     if (!resumes.length) return <div>No Templates found.</div>;
     return (
-      <div className="pt-10 px-10 lg:px-0 templates-grid-container">
+      <div className="pt-10 px-10 xl:px-0 templates-grid-container">
         {resumes.map(resume => (
           <TemplateCard template={resume} type="RESUME" selected={resume._id === selectedResume._id} onSelect={onSelect} key={resume._id} />
         ))}
@@ -66,9 +82,6 @@ const Dashboard = () => {
         <div className="bg-gray-50 rounded px-8 py-6 transition-all flex flex-col lg:flex-row items-center justify-between">
           <h2 className="text-regular text-lg font-medium text-default">Selected Resume : {selectedResume.title}</h2>
           <div className="mt-6 lg:mt-0">
-            <Button className="mr-6" variant="outlined" color="primary" onClick={onClone}>
-              Clone
-            </Button>
             <Button className="mr-6" variant="contained" color="primary" onClick={onUpdate}>
               Update
             </Button>
