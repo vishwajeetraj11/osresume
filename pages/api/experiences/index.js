@@ -27,7 +27,6 @@ export default requireSession(async (req, res) => {
             },
           },
         );
-        console.log({ resume, body, experience, userId: req.session.userId });
         if (!experience) {
           return res.status(400).json({ success: false, error: 'Unable to create Experience data.' });
         }

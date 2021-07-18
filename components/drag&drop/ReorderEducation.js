@@ -14,7 +14,7 @@ import { addEducationData, addSampleEducationData, deleteSingleEducationData } f
 import EducationCard from '../cards/EducationCard';
 import EditSingleEducation from '../forms/EditSingleEducation';
 
-const ReorderEducation = ({ closeDrawer, anchor }) => {
+const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const showSnack = (message, variant) => {
@@ -206,8 +206,8 @@ const ReorderEducation = ({ closeDrawer, anchor }) => {
         id: uuidv4(),
         institution: 'Sample Institution',
         major: 'Sample Major',
-        start: undefined,
-        end: undefined,
+        startedAt: 'June 2012',
+        endedAt: 'July 2013',
         years: '1',
         country: 'Sample Country',
       }),

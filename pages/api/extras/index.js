@@ -27,7 +27,6 @@ export default requireSession(async (req, res) => {
             },
           },
         );
-        console.log(resume);
         if (!extras) {
           return res.status(400).json({ success: false, error: 'Unable to create Extras data.' });
         }
