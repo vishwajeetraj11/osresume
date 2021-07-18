@@ -11,11 +11,14 @@ import { education, experience, extras, personal } from './shared/utils/demoData
 dotenv.config({
   path: './.env',
 });
+
 /*
 To seed
 Package.json set "type":"module",
+Modify acc. to you needs
 RUN!
 */
+
 const importData = async () => {
   try {
     await mongoose.connect(process.env.NEXT_PUBLIC_MONOGO_URI, {
@@ -33,8 +36,8 @@ const importData = async () => {
     const resume = await Resume.create({
       userId: 'template_user',
       template: true,
-      title: 'Onyx',
-      templateName: 'Onyx',
+      title: 'Trical',
+      templateName: 'Trical',
     });
 
     const exps = await Experience.insertMany(

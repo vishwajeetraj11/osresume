@@ -7,6 +7,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useReactToPrint } from 'react-to-print';
 import LeftSideBar from '../../components/LeftSideBar';
+import Loader from '../../components/Loader';
 import RightSideBar from '../../components/RightSideBar';
 import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
@@ -27,10 +28,11 @@ const Editor = () => {
   const resumeRef = useRef();
   const [loading, setLoading] = useState(false);
 
-  const username = resumeData?.personalData?.name;
+  const { title } = metadata;
+  const { username } = resumeData?.personalData;
 
   const handlePrint = useReactToPrint({
-    documentTitle: username || 'Your Resume',
+    documentTitle: title || 'Your Resume',
     content: () => resumeRef.current,
     /* eslint-disable no-tabs */
     pageStyle: `
@@ -91,25 +93,31 @@ const Editor = () => {
     })();
   }, [router.query.id, dispatch]);
 
+  const render = () => {
+    if (loading) {
+      return <Loader fullScreen />;
+    }
+    if (desktop) {
+      return (
+        <div className="flex flex-col lg:flex-row bg-gray-50">
+          <LeftSideBar />
+          <div className="order-2 mx-auto my-10">
+            {metadata.templateName === 'Onyx' && <Onyx ref={resumeRef} data={resumeData} />}
+            {metadata.templateName === 'Trical' && <Trical ref={resumeRef} data={resumeData} />}
+          </div>
+          <RightSideBar handlePrint={handlePrint} />
+        </div>
+      );
+    }
+    return <div className="">Please switch to desktop for better experience.</div>;
+  };
+
   return (
     <>
       <Head>
         <title>{username ? `${username} | OS Resume` : 'Resume Editor | OS Resume'}</title>
       </Head>
-      <SignedIn>
-        {desktop ? (
-          <div className="flex flex-col lg:flex-row bg-gray-50">
-            <LeftSideBar />
-            <div className="order-2 mx-auto my-10">
-              {metadata.templateName === 'Onyx' && <Onyx ref={resumeRef} data={resumeData} />}
-              {metadata.templateName === 'Trical' && <Trical ref={resumeRef} data={resumeData} />}
-            </div>
-            <RightSideBar handlePrint={handlePrint} />
-          </div>
-        ) : (
-          <div className="">Please switch to desktop for better experience.</div>
-        )}
-      </SignedIn>
+      <SignedIn>{render()}</SignedIn>
       <SignedOut>
         <RedirectToSignIn />
       </SignedOut>

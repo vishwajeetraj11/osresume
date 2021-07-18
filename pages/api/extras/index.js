@@ -16,9 +16,9 @@ export default requireSession(async (req, res) => {
           ...body,
           userId: req.session.userId,
         });
-        await Resume.findOneAndUpdate(
+        const resume = await Resume.findOneAndUpdate(
           {
-            resumeId: body.resumeId,
+            _id: body.resumeId,
             userId: req.session.userId,
           },
           {
@@ -27,6 +27,7 @@ export default requireSession(async (req, res) => {
             },
           },
         );
+        console.log(resume);
         if (!extras) {
           return res.status(400).json({ success: false, error: 'Unable to create Extras data.' });
         }

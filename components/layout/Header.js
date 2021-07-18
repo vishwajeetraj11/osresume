@@ -9,8 +9,8 @@ import styles from '../../styles/Header.module.scss';
 // on whether or not a visitor is signed in.
 //
 // https://docs.clerk.dev/frontend/react/signedin-and-signedout
-const Header = () => (
-  <header className="shadow-sm">
+const Header = ({ route }) => (
+  <header className={`shadow-sm ${route === '/' ? 'bg-transparent' : ''}`}>
     <div className="max-w-screen-xl mx-auto flex justify-between p-4">
       <div className={styles.left}>
         <Link href="/">

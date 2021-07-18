@@ -17,7 +17,7 @@ export default requireSession(async (req, res) => {
           userId: req.session.userId,
         });
         await Resume.findOneAndUpdate(
-          { resumeId: body.resumeId, userId: req.session.userId },
+          { _id: body.resumeId, userId: req.session.userId },
           {
             $addToSet: {
               education: education._id,

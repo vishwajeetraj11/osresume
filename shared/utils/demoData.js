@@ -16,16 +16,16 @@ export const initialState = {
       id: uuidv4(),
       institution: "St. Karen's Secondary School",
       major: 'Bachelor European in Graphic Design',
-      startedAt: '2008',
-      endedAt: '2009',
+      startedAt: 'June 2008',
+      endedAt: 'July 2009',
       country: 'Bagnolet',
     },
     {
       id: uuidv4(),
       institution: "St. Karen's Secondary School",
       major: 'BTS Communication Visuelle option Multimédia',
-      startedAt: '2009',
-      endedAt: '2010',
+      startedAt: 'June 2009',
+      endedAt: 'July 2010',
       country: 'Bagnolet',
     },
   ],
@@ -126,12 +126,15 @@ export const personal = {
   country: 'Your Country',
   objective:
     'I am a software engineer with a strong focus on javascript. I also have experience with PHP and python. I enjoy working on new frameworks and libraries on my own time and have a fairly active github profile to show for it. I particularly enjoy the to get an understanding of the challenges that certain technologies face and how to overcome those issues.',
-  photo: {
-    url: '/images/avatar.png',
-  },
 };
 
 export const extras = [
+  {
+    userId: 'template_user',
+    title: 'Soft Skills',
+    type: 'NEW_LINE',
+    items: [' Organizational skills', 'Public Speaking', 'Presentation skills', 'Conflict management', 'Decision-making', 'Brainstorming'],
+  },
   {
     userId: 'template_user',
     title: 'Industry Knowledge',
@@ -150,40 +153,17 @@ export const extras = [
     userId: 'template_user',
     title: 'Tools and Technologies',
     type: 'COMMA',
-    items: [
-      'Figma',
-      'Sketch',
-      'Protopie',
-      'Framer',
-      'Invision',
-      'Abstract',
-      'Zeplin',
-      'Google Analytics',
-      'Amplitude',
-      'Fullstory',
-      'Figma',
-    ],
+    items: ['Figma', 'Sketch', 'Protopie', 'Framer', 'Invision', 'Abstract', 'Zeplin', 'Google Analytics', 'Amplitude', 'Fullstory'],
   },
   {
     userId: 'template_user',
-    title: 'Other Skills',
+    title: 'Tech Stack',
     type: 'COMMA',
-    items: ['HTML', 'CSS', 'jQuery'],
+    items: ['React', 'Typescript', 'GraphQL', 'PostgreSQL', 'MongoDB', 'Node', 'Next.js', 'Gatsby'],
   },
 ];
 
 export const experience = [
-  {
-    designation: 'Senior UI/UX Product Designer',
-    company: 'Google',
-    description:
-      'Directly collaborated with CEO and Product team to prototype, design and deliver the UI and UX experience with a lean design process: research, design, test, and iterate.',
-    startedAt: 'Aug 2000',
-    endedAt: 'July 2004',
-    years: '4',
-    country: 'London',
-    userId: 'template_user',
-  },
   {
     designation: 'Full Stack Developer',
     company: 'Next',
@@ -223,16 +203,16 @@ export const education = [
   {
     institution: 'Allen University',
     major: 'Bachelor European in Graphic Design',
-    startedAt: '1998',
-    endedAt: '2000',
+    startedAt: 'June 1998',
+    endedAt: 'July 2000',
     country: 'Bagnolet',
     userId: 'template_user',
   },
   {
     institution: 'Lavencroft University',
     major: 'BTS Communication Visuelle option Multimédia',
-    startedAt: '1996',
-    endedAt: '1998',
+    startedAt: 'June 1996',
+    endedAt: 'July 1998',
     country: 'Chenovet',
     userId: 'template_user',
   },

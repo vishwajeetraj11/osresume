@@ -31,6 +31,8 @@ body {
 	font-weight: 300;
 	background-color: #f9fafb;
 	position: relative;
+	backface-visibility: hidden;
+	overflow-x: hidden;
 }
 
 a {
@@ -98,13 +100,13 @@ img {
 }
 
 .landing-container {
-	background-image: url('/landing.jpg');
+	background: #1abc9c url('/images/landing-resume-1.jpg');
 	background-position: center;
 	background-size: cover;
 	background-attachment: fixed;
-	& > div {
-		height: 92vh;
-	}
+	// & > div {
+	// 	height: 92vh;
+	// }
 }
 
 .cl-user-button-avatar {

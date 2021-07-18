@@ -19,6 +19,8 @@ class Onyx extends React.Component {
             </div>
           </div>
           <div className="">
+            <p className="tracking-widest uppercase text-t1-md text-t1-black">{data?.personalData?.objective && 'Career Objective'}</p>
+            <p className="text-t1-md mb-3 font-normal text-t1-black">{data?.personalData?.objective}</p>
             <p className="tracking-widest uppercase text-t1-md text-t1-black">{data.experiences.length > 0 && 'Experience'}</p>
             {data.experiences.map(exp => (
               <div key={exp.id} className="mb-4">

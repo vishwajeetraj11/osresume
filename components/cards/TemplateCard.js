@@ -18,7 +18,6 @@ const TemplateCard = ({ template, selected, onSelect, type }) => (
       layout="responsive"
       width="300px"
       height="450px"
-      placeholder="blur"
     />
     <div className="absolute bottom-0 w-full bg-gray-50">
       <h2 className="text-lg py-1 font-regular text-default text-center">{template.title}</h2>

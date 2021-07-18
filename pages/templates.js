@@ -1,5 +1,6 @@
 import { useUser } from '@clerk/clerk-react';
 import { Button } from '@material-ui/core';
+import Skeleton from '@material-ui/lab/Skeleton';
 import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -70,25 +71,23 @@ const Templates = () => {
 
   const render = () => {
     if (loading) {
-      return <div>Loader</div>;
+      return Array.from(Array(4).keys()).map(loader => (
+        <Skeleton key={loader} className="rounded" variant="rect" width="100%" height={462} />
+      ));
     }
     if (error) {
       return <div>{error}</div>;
     }
     if (!templates.length) return <div>No Templates found.</div>;
-    return (
-      <div className="pt-10 px-10 lg:px-0 templates-grid-container">
-        {templates.map(template => (
-          <TemplateCard
-            template={template}
-            type="TEMPLATE"
-            selected={template._id === selectedTemplate._id}
-            onSelect={onSelect}
-            key={template._id}
-          />
-        ))}
-      </div>
-    );
+    return templates.map(template => (
+      <TemplateCard
+        template={template}
+        type="TEMPLATE"
+        selected={template._id === selectedTemplate._id}
+        onSelect={onSelect}
+        key={template._id}
+      />
+    ));
   };
 
   return (
@@ -115,8 +114,7 @@ const Templates = () => {
           )}
         </div>
       </div>
-
-      {render()}
+      <div className="pt-10 px-10 lg:px-0 templates-grid-container">{render()}</div>
     </div>
   );
 };

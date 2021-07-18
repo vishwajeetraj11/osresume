@@ -16,20 +16,24 @@ export default requireSession(async (req, res) => {
           ...body,
           userId: req.session.userId,
         });
-        await Resume.findOneAndUpdate(
-          { resumeId: body.resumeId, userId: req.session.userId },
+        const resume = await Resume.findOneAndUpdate(
+          {
+            _id: body.resumeId,
+            userId: req.session.userId,
+          },
           {
             $addToSet: {
               experience: experience._id,
             },
           },
         );
+        console.log({ resume, body, experience, userId: req.session.userId });
         if (!experience) {
           return res.status(400).json({ success: false, error: 'Unable to create Experience data.' });
         }
         res.status(201).json({ success: true, experience });
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         res.status(400).json({ success: false, error });
       }
       break;
