@@ -9,6 +9,7 @@ import { useReactToPrint } from 'react-to-print';
 import LeftSideBar from '../../components/LeftSideBar';
 import Loader from '../../components/Loader';
 import RightSideBar from '../../components/RightSideBar';
+import { ResumeNotFoundSVG } from '../../components/SVGs';
 import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
 import {
@@ -18,6 +19,7 @@ import {
   addPersonalDataState,
   addResumeMetaData,
 } from '../../redux/actions/resumeActions';
+import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 
 const Editor = () => {
   const dispatch = useDispatch();
@@ -27,6 +29,7 @@ const Editor = () => {
   const { data: resumeData, metadata } = resume;
   const resumeRef = useRef();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const { title } = metadata;
   const { username } = resumeData?.personalData;
@@ -87,16 +90,10 @@ const Editor = () => {
         dispatch(addEducationData(data.resume.education));
 
         const fontID = data.resume.customStyles.font.replace(/ /g, '+');
-        const head = document.getElementsByTagName('head')[0];
-        const link = document.createElement('link');
-        link.id = fontID;
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = `https://fonts.googleapis.com/css?family=${fontID}:wght@100;300;400;500;600;700;900`;
-        link.media = 'all';
-        head.appendChild(link);
+        addFontInHeadTag(fontID);
       } catch (error) {
         // console.log(error);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -106,6 +103,17 @@ const Editor = () => {
   const render = () => {
     if (loading) {
       return <Loader fullScreen />;
+    }
+    if (error) {
+      return (
+        <div className="p-10 flex flex-col items-center justify-center" style={{ height: '90vh' }}>
+          <ResumeNotFoundSVG width="50%" />
+          <h5 className="text-default mt-6 font-normal text-xl">
+            The Resume you are looking for is <span className="bg-primary text-white"> no longer available </span> or you
+            <span className="bg-primary text-white"> don&apos;t have the permission </span>to view it.
+          </h5>
+        </div>
+      );
     }
     if (desktop) {
       return (

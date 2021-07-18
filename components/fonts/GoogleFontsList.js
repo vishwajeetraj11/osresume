@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UPDATE_FONT } from '../../redux/actionTypes/resumeActionTypes';
 import { items } from '../../shared/googleFonts.json';
+import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 
 const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [googleFonts, setGoogleFonts] = useState([]);
@@ -178,14 +179,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
                   if (fontAvailable || fontsAdded.includes(fontID)) resume.style.fontFamily = fontFamily;
                   // Fetch fonts
                   else {
-                    const head = document.getElementsByTagName('head')[0];
-                    const link = document.createElement('link');
-                    link.id = fontID;
-                    link.rel = 'stylesheet';
-                    link.type = 'text/css';
-                    link.href = `https://fonts.googleapis.com/css?family=${fontID}:wght@100;300;400;500;600;700;900`;
-                    link.media = 'all';
-                    head.appendChild(link);
+                    addFontInHeadTag(fontID);
                     setFontsAdded(p => p.concat(fontID));
                     resume.style.fontFamily = fontFamily;
                   }

@@ -2,11 +2,13 @@ import { useUser } from '@clerk/clerk-react';
 import { Button } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import axios from 'axios';
+import { ErrorMessage } from 'formik';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import TemplateCard from '../components/cards/TemplateCard';
+import NoDocumentFound from '../components/NoDocumentFound';
 
 const Dashboard = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -18,7 +20,7 @@ const Dashboard = () => {
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  // const [loadingClone, setLoadingCreate] = useState(false);
+  const [noResume, setNoResume] = useState(false);
 
   const [selectedResume, setSelectedResume] = useState('');
 
@@ -35,8 +37,12 @@ const Dashboard = () => {
           method: 'GET',
         });
         setResumes(data.data);
+        if (!data.data.length) {
+          setNoResume(true);
+        }
       } catch (error) {
-        setError('An error occureed. Please try again later!');
+        setNoResume(true);
+        setError('An error occurred. Please try again later!');
       } finally {
         setLoading(false);
       }
@@ -71,9 +77,11 @@ const Dashboard = () => {
       ));
     }
     if (error) {
-      return <div>{error}</div>;
+      return <ErrorMessage error={error} />;
     }
-    if (!resumes.length) return <div>No Resumes found.</div>;
+    if (!resumes.length) {
+      return <NoDocumentFound text="No Resumes Found." />;
+    }
     return resumes.map(resume => (
       <TemplateCard template={resume} type="RESUME" selected={resume._id === selectedResume._id} onSelect={onSelect} key={resume._id} />
     ));
@@ -85,26 +93,28 @@ const Dashboard = () => {
         <title>Dashboard | OS Resume</title>
       </Head>
       <h1 className="text-3xl lg:text-5xl font-extralight text-center pb-10">Your Resumes</h1>
-      <div className="bg-gray-50 rounded px-8 py-6 transition-all flex flex-col lg:flex-row items-center justify-between">
-        <h2 className="text-regular text-lg font-medium text-default">
-          {`${selectedResume ? `Selected Resume : ${selectedResume.title}` : 'Select a Resume'}`}
-        </h2>
-        <h2 className="text-regular text-lg font-medium text-default">
-          {`${selectedResume && `Template : ${selectedResume.templateName}`}`}
-        </h2>
-        <div className="mt-6 lg:mt-0">
-          {selectedResume && (
-            <>
-              <Button className="mr-6" variant="contained" color="primary" onClick={onUpdate}>
-                Update
-              </Button>
-              <Button variant="outlined" color="primary" onClick={onDelete}>
-                Delete
-              </Button>
-            </>
-          )}
+      {!noResume && (
+        <div className="bg-gray-50 rounded px-8 py-6 transition-all flex flex-col lg:flex-row items-center justify-between">
+          <h2 className="text-regular text-lg font-medium text-default">
+            {`${selectedResume ? `Selected Resume : ${selectedResume.title}` : 'Select a Resume'}`}
+          </h2>
+          <h2 className="text-regular text-lg font-medium text-default">
+            {`${selectedResume && `Template : ${selectedResume.templateName}`}`}
+          </h2>
+          <div className="mt-6 lg:mt-0">
+            {selectedResume && (
+              <>
+                <Button className="mr-6" variant="contained" color="primary" onClick={onUpdate}>
+                  Update
+                </Button>
+                <Button variant="outlined" color="primary" onClick={onDelete}>
+                  Delete
+                </Button>
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      )}
       <div className="pt-10 px-10 xl:px-0 templates-grid-container">{render()}</div>
     </div>
   );
