@@ -42,8 +42,8 @@ const LeftSideBar = () => {
   };
 
   const leftList = anchor => (
-    <div className={`${matches ? clsx(classes.list) : clsx(classes.fullList)} h-full`} role="presentation">
-      <div className="pt-10 pr-6 pl-6 lg:pt-10 lg:pl-10 lg:pr-10">
+    <div className={`${matches ? clsx(classes.list) : clsx(classes.fullList)} h-full flex flex-col flex-1`} role="presentation">
+      <div className="pt-10 pr-6 pl-6 lg:pt-10 lg:pl-10 lg:pr-10 flex-1 flex flex-col">
         {anchor === 'personal-data' && <PersonalDataForm closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
         {anchor === 'work-experience' && <ReorderExperience closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
         {anchor === 'education' && <ReorderEducation closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}

@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { addEducationData, addSampleEducationData, deleteSingleEducationData } from '../../redux/actions/resumeActions';
 import EducationCard from '../cards/EducationCard';
 import EditSingleEducation from '../forms/EditSingleEducation';
+import { EmptyFileSVG } from '../SVGs';
 
 const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -240,7 +241,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
             // eslint-disable-next-line
             <div
               style={getListStyle(snapshot.isDraggingOver)}
-              className="pb-10 pt-8 rounded"
+              className="pb-10 pt-8 rounded flex-1 flex flex-col"
               {...provided.droppableProps}
               ref={provided.innerRef}
               onClick={() => {
@@ -249,30 +250,39 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
                 }
               }}
             >
-              {edu.map((e, index) => (
-                <Draggable key={e.id} draggableId={e.id} index={index}>
-                  {(provided, snapshot) => (
-                    // eslint-disable-next-line
-                    <div
-                      onClick={() => onClickEdu({ id: e.id })}
-                      className="p-6 text-white text-lg bg-primary rounded"
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      ref={provided.innerRef}
-                      style={{
-                        ...getItemStyle(snapshot.isDragging, provided.draggableProps.style),
-                      }}
-                    >
-                      <EducationCard
-                        {...e}
-                        onDelete={onDelete}
-                        openEditEduForm={toggleEduDrawerStates(e.id, true)}
-                        educationActive={educationActive}
-                      />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
+              {edu.length === 0 ? (
+                <div className="flex items-center justify-center flex-1">
+                  <div className="bg-gray-50 rounded-full h-96 w-96 flex flex-col items-center justify-center">
+                    <EmptyFileSVG />
+                    <h5 className="text-default font-normal my-5">No Education Yet!</h5>
+                  </div>
+                </div>
+              ) : (
+                edu.map((e, index) => (
+                  <Draggable key={e.id} draggableId={e.id} index={index}>
+                    {(provided, snapshot) => (
+                      // eslint-disable-next-line
+                      <div
+                        onClick={() => onClickEdu({ id: e.id })}
+                        className="p-6 text-white text-lg bg-primary rounded"
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                        style={{
+                          ...getItemStyle(snapshot.isDragging, provided.draggableProps.style),
+                        }}
+                      >
+                        <EducationCard
+                          {...e}
+                          onDelete={onDelete}
+                          openEditEduForm={toggleEduDrawerStates(e.id, true)}
+                          educationActive={educationActive}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ))
+              )}
               {provided.placeholder}
             </div>
           )}

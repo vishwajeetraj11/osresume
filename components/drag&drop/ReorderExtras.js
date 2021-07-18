@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { addExtrasData, addSampleExtraData, deleteSingleExtraData } from '../../redux/actions/resumeActions';
 import ExtrasCard from '../cards/ExtrasCard';
 import EditSingleExtra from '../forms/EditSingleExtra';
+import { EmptyFileSVG } from '../SVGs';
 
 const ReorderExtras = ({ closeDrawer, anchor }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
@@ -235,7 +236,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
             // eslint-disable-next-line
             <div
               style={getListStyle(snapshot.isDraggingOver)}
-              className="pb-10 pt-8 rounded"
+              className="pb-10 pt-8 rounded flex-1 flex flex-col"
               {...provided.droppableProps}
               ref={provided.innerRef}
               onClick={() => {
@@ -244,28 +245,37 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
                 }
               }}
             >
-              {ext.map((e, index) => (
-                <Draggable key={e.id} draggableId={e.id} index={index}>
-                  {(provided, snapshot) => (
-                    // eslint-disable-next-line
-                    <div
-                      onClick={() => onClickExt({ id: e.id })}
-                      className="p-6 text-white text-lg bg-primary rounded"
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      ref={provided.innerRef}
-                      style={{ ...getItemStyle(snapshot.isDragging, provided.draggableProps.style) }}
-                    >
-                      <ExtrasCard
-                        {...e}
-                        onDelete={onDelete}
-                        openEditExtForm={toggleExtDrawerStates(e.id, true)}
-                        extraActive={extraActive}
-                      />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
+              {ext.length === 0 ? (
+                <div className="flex items-center justify-center flex-1">
+                  <div className="bg-gray-50 rounded-full h-96 w-96 flex flex-col items-center justify-center">
+                    <EmptyFileSVG />
+                    <h5 className="text-default font-normal my-5">No Extras Yet!</h5>
+                  </div>
+                </div>
+              ) : (
+                ext.map((e, index) => (
+                  <Draggable key={e.id} draggableId={e.id} index={index}>
+                    {(provided, snapshot) => (
+                      // eslint-disable-next-line
+                      <div
+                        onClick={() => onClickExt({ id: e.id })}
+                        className="p-6 text-white text-lg bg-primary rounded"
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                        style={{ ...getItemStyle(snapshot.isDragging, provided.draggableProps.style) }}
+                      >
+                        <ExtrasCard
+                          {...e}
+                          onDelete={onDelete}
+                          openEditExtForm={toggleExtDrawerStates(e.id, true)}
+                          extraActive={extraActive}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ))
+              )}
               {provided.placeholder}
             </div>
           )}
