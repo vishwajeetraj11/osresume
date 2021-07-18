@@ -17,22 +17,22 @@ const Header = ({ route }) => (
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a>
             {/* <Image src='/logo.svg' width='32' height='32' alt='Logo' /> */}
-            <span className="text-default font-semibold text-base">OS Resume</span>
+            <span className="text-default font-semibold text-sm lg:text-base">OS Resume</span>
           </a>
         </Link>
       </div>
       <div className={styles.right}>
         <SignedOut>
           <Link href="/sign-in">
-            <p className="text-default cursor-pointer px-4">Sign in</p>
+            <p className="text-default cursor-pointer">Sign in</p>
           </Link>
         </SignedOut>
         <SignedIn>
           <Link href="/templates">
-            <p className="text-default cursor-pointer px-4">Templates</p>
+            <p className="text-default text-xs md:text-sm cursor-pointer lg:px-4">Templates</p>
           </Link>
           <Link href="/dashboard">
-            <p className="text-default cursor-pointer px-4">Dashboard</p>
+            <p className="text-default text-xs md:text-sm cursor-pointer lg:px-4">Dashboard</p>
           </Link>
           <UserButton />
         </SignedIn>

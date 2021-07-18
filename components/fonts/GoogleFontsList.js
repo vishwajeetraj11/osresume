@@ -131,10 +131,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
               style={{ height: 'max-content' }}
               alt="Not Found Illustration"
             />
-            <h4 className="text-xl font-medium text-gray-600">
-              {"OOPS! Couldn't find font:"}
-              {search}
-            </h4>
+            <h4 className="text-xl font-medium text-gray-600">The font you are looking for is not available.</h4>
           </div>
         ) : (
           googleFonts.map((font, index) => {

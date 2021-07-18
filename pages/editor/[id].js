@@ -85,6 +85,16 @@ const Editor = () => {
         dispatch(addExtrasData(data.resume.extras));
         dispatch(addPersonalDataState(personalData));
         dispatch(addEducationData(data.resume.education));
+
+        const fontID = data.resume.customStyles.font.replace(/ /g, '+');
+        const head = document.getElementsByTagName('head')[0];
+        const link = document.createElement('link');
+        link.id = fontID;
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = `https://fonts.googleapis.com/css?family=${fontID}:wght@100;300;400;500;600;700;900`;
+        link.media = 'all';
+        head.appendChild(link);
       } catch (error) {
         // console.log(error);
       } finally {
@@ -102,8 +112,8 @@ const Editor = () => {
         <div className="flex flex-col lg:flex-row bg-gray-50">
           <LeftSideBar />
           <div className="order-2 mx-auto my-10">
-            {metadata.templateName === 'Onyx' && <Onyx ref={resumeRef} data={resumeData} />}
-            {metadata.templateName === 'Trical' && <Trical ref={resumeRef} data={resumeData} />}
+            {metadata.templateName === 'Onyx' && <Onyx ref={resumeRef} data={resumeData} customStyles={metadata.customStyles} />}
+            {metadata.templateName === 'Trical' && <Trical ref={resumeRef} data={resumeData} customStyles={metadata.customStyles} />}
           </div>
           <RightSideBar handlePrint={handlePrint} />
         </div>
