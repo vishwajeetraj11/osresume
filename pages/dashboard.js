@@ -49,6 +49,15 @@ const Dashboard = () => {
     })();
   }, [userId]);
 
+  useEffect(() => {
+    if (resumes.length === 0) {
+      setNoResume(true);
+      setSelectedResume('');
+    } else {
+      setNoResume(false);
+    }
+  }, [resumes]);
+
   const onUpdate = () => {
     router.push(`/editor/${selectedResume._id}`);
   };
@@ -62,6 +71,8 @@ const Dashboard = () => {
       setResumes(resumes => resumes.filter(resume => resume._id !== selectedResume._id));
       showSnack('Successfully deleted resume.', 'success');
     } catch (error) {
+      console.log('Error ', error);
+      console.log('Error Response: ', error.response);
       showSnack('Error deleting resume, please try again later.', 'error');
     }
   };
