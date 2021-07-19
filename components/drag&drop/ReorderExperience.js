@@ -152,11 +152,15 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
   };
 
   const onDelete = async ({ id }) => {
-    if (id.includes('-')) {
+    console.log('error');
+
+    if (id.includes('- includes')) {
+      console.log('error');
       dispatch(deleteSingleExperienceData(id));
       return;
     }
     try {
+      console.log('error--try');
       showSnack('Deleting Experience...', 'default');
       await axios({
         url: `/api/experiences/${id}`,
@@ -165,6 +169,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
       dispatch(deleteSingleExperienceData(id));
       showSnack('Successfully deleted experience.', 'success');
     } catch (error) {
+      console.log(error);
       showSnack('Unable to delete experience, please try again later.', 'error');
     }
   };

@@ -41,7 +41,7 @@ export default requireSession(async (req, res) => {
           },
         );
         education.remove();
-        res.status(204).json({ success: true });
+        res.status(200).json({ success: true });
       } catch (error) {
         res.status(400).json({ success: false, error });
       }
