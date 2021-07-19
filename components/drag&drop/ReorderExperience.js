@@ -152,9 +152,6 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
   };
 
   const onDelete = async ({ id }) => {
-    console.log('error');
-    console.log(id);
-
     if (id.includes('-')) {
       dispatch(deleteSingleExperienceData(id));
       return;
