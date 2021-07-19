@@ -118,7 +118,7 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
             });
             setEdit(true);
           } catch (error) {
-            console.log(error.response);
+            // console.log(error.response);
             showSnack('Error creating Experience data! Please try again later.', 'error');
           } finally {
             setSubmitting(false);

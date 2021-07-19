@@ -22,7 +22,7 @@ export default function Home() {
     <>
       <Head>
         <title>OS Resume | Oversimplifying Resume building experience.</title>
-        <meta property="og:title" content="OS Resume: Online Resume Builder – Free Download" />
+        <meta property="og:title" content="OS Resume: Online Resume Builder" />
         <meta
           property="og:description"
           content="The best free online resume builder that’ll land you interviews. Create a professional resume in minutes. Download or print your resume for free."
@@ -40,12 +40,12 @@ export default function Home() {
         <h1 className="text-lg text-left lg:text-center text-white font-medium mb-6">Create your professional resume in 15 minutes</h1>
         <div className="flex justify-start lg:justify-center mb-6">
           <Link href="/templates">
-            <a className="px-6 py-4 text-md bg-primary text-white rounded" href="/templates">
+            <a className="px-6 py-4 text-md bg-primary text-white rounded shadow-sm" href="/templates">
               Start Building
             </a>
           </Link>
         </div>
-        <div className="hidden lg:block relative rounded overflow-hidden">
+        <div className="hidden lg:block relative rounded overflow-hidden shadow-sm">
           <img src="/images/landing-resume.png" alt="Lanidng page Resume" />
         </div>
       </div>

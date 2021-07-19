@@ -127,7 +127,11 @@ const Editor = () => {
         </div>
       );
     }
-    return <div className="">Please switch to desktop for better experience.</div>;
+    return (
+      <div className="flex items-center justify-center" style={{ minHeight: '91vh' }}>
+        Please switch to desktop for better experience.
+      </div>
+    );
   };
 
   return (

@@ -74,7 +74,7 @@ export default requireSession(async (req, res) => {
 
         res.status(200).json({ success: true });
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         res.status(400).json({ success: false, error });
       }
       break;

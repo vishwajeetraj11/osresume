@@ -83,7 +83,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   return (
     <div className={`${googleFonts.length === 0 ? 'pb-0' : 'pb-10'} relative`}>
       <div
-        className="pl-10 pt-6 pb-4 flex align-center fixed bottom-0 lg:bottom-auto lg:top-0 bg-white z-10 w-full flex-wrap"
+        className="pl-10 pt-6 pb-4 flex items-center fixed bottom-0 lg:bottom-auto lg:top-0 bg-white z-10 w-full flex-wrap"
         style={{ boxShadow: '10px 0 20px rgb(0 0 0 / 7%)' }}
       >
         <Button className="px-4 py-2" onClick={() => closeDrawer()} color="default" variant="text">
@@ -91,12 +91,13 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
           <ArrowBackIcon />
           <p className="ml-2">Back</p>
         </Button>
-
         <Button className="px-4 py-2 ml-4" disabled={page === 0} onClick={() => handlePage('PREV')} color="primary" variant="outlined">
           {' '}
           <ArrowBackIosIcon />
-          <p className="ml-2">Previous</p>
+          <p className="ml-4">Previous</p>
         </Button>
+
+        <p className="ml-4">{`${totalPages} / ${page + 1}`}</p>
 
         <Button
           className="px-4 py-2 ml-4"

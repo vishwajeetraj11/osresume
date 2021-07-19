@@ -71,8 +71,8 @@ const Dashboard = () => {
       setResumes(resumes => resumes.filter(resume => resume._id !== selectedResume._id));
       showSnack('Successfully deleted resume.', 'success');
     } catch (error) {
-      console.log('Error ', error);
-      console.log('Error Response: ', error.response);
+      // console.log('Error ', error);
+      // console.log('Error Response: ', error.response);
       showSnack('Error deleting resume, please try again later.', 'error');
     }
   };

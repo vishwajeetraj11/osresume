@@ -40,7 +40,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 
   return (
     <>
-      <Button className="px-4 py-2 mr-4" onClick={() => closeDrawer(anchor, false)} color="default" variant="text">
+      <Button className="px-4 py-2 mr-4 self-start" onClick={() => closeDrawer(anchor, false)} color="default" variant="text">
         {' '}
         <ArrowBackIcon />
         <p className="ml-2 capitalize">Back</p>
