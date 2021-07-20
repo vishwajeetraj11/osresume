@@ -11,7 +11,7 @@ import { ErrorSVG, NoFilesFoundSVG } from '../components/SVGs';
 
 const Templates = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const { id: userId, fullName } = useUser();
+  const { id: userId } = useUser();
   const router = useRouter();
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -43,7 +43,7 @@ const Templates = () => {
         data: {
           userId,
           templateName: selectedTemplate.templateName,
-          title: `${fullName}'s Resume`,
+          title: 'Your Resume',
         },
       });
       showSnack('Resume created successfully !', 'success');
