@@ -8,6 +8,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { ADD_EDUCATION_DATA } from '../../redux/actionTypes/resumeActionTypes';
+import { toastMessages } from '../../shared/contants';
 
 const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
@@ -54,7 +55,10 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(async () => {
           // dispatch(editSingleEducationData(values));
-          showSnack(`${education._id ? 'Updating educational data...' : 'Creating educational data...'}`, 'default');
+          showSnack(
+            education._id ? toastMessages.UPDATE_RESOURCE_REQUEST('Education') : toastMessages.CREATE_RESOURCE_REQUEST('Education'),
+            'default',
+          );
           try {
             const { data } = await axios({
               url: `${education._id ? `/api/educations/${education._id}` : '/api/educations'}`,
@@ -87,7 +91,10 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
                 payload: results,
               });
             }
-            showSnack(`${education._id ? 'Successfully updated educational data.' : 'Successfully created educational data.'}`, 'success');
+            showSnack(
+              education._id ? toastMessages.UPDATE_RESOURCE_SUCCESS('Education') : toastMessages.CREATE_RESOURCE_SUCCESS('Education'),
+              'success',
+            );
             resetForm({
               institution: '',
               major: '',
@@ -98,7 +105,10 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
             setEdit(true);
           } catch (error) {
             // console.log(error);
-            showSnack('Error creating Educational data! Please try again later.', 'error');
+            showSnack(
+              education._id ? toastMessages.UPDATE_RESOURCE_ERROR('Education') : toastMessages.CREATE_RESOURCE_ERROR('Education'),
+              'error',
+            );
           } finally {
             setSubmitting(false);
             closeDrawer(anchor, false);

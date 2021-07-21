@@ -11,6 +11,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { addExtrasData, addSampleExtraData, deleteSingleExtraData } from '../../redux/actions/resumeActions';
+import { toastMessages } from '../../shared/contants';
 import ExtrasCard from '../cards/ExtrasCard';
 import EditSingleExtra from '../forms/EditSingleExtra';
 import { EmptyFileSVG } from '../SVGs';
@@ -158,15 +159,15 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
       return;
     }
     try {
-      showSnack('Deleting Extras...', 'default');
+      showSnack(toastMessages.DELETE_RESOURCE_REQUEST('Extras'), 'default');
       await axios({
         url: `/api/extras/${id}`,
         method: 'DELETE',
       });
       dispatch(deleteSingleExtraData(id));
-      showSnack('Successfully deleted extra.', 'success');
+      showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Extras'), 'success');
     } catch (error) {
-      showSnack('Unable to delete extra, please try again later.', 'error');
+      showSnack(toastMessages.DELETE_RESOURCE_ERROR('Extras'), 'error');
     }
   };
 
@@ -178,11 +179,11 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
       }
     });
     if (flag) {
-      showSnack('You need to edit the sample data before saving the order.', 'info');
+      showSnack(toastMessages.WARN_BEFORE_SAVE('Extras'), 'info');
       return;
     }
     try {
-      showSnack('Saving Order of Extras...', 'default');
+      showSnack(toastMessages.SAVE_ORDER_RESOURCE_REQUEST('Extras'), 'default');
       const { data } = await axios({
         url: `/api/resumes/${resumeId}`,
         method: 'PATCH',
@@ -191,11 +192,11 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
         },
       });
       dispatch(addExtrasData(data.resume.extras));
-      showSnack('Successfully saved order of extras.', 'success');
+      showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Extras'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
       // console.log(error);
-      showSnack('Unable to save order of extras, please try again later.', 'error');
+      showSnack(toastMessages.SAVE_ORDER_RESOURCE_ERROR('Extras'), 'error');
     }
   };
 
@@ -208,7 +209,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
         items: ['Sample Item 1', 'Sample Item 2'],
       }),
     );
-    showSnack('Sample data for extras is added at the top, please edit accordingly.', 'success');
+    showSnack(toastMessages.SAMPLE_DATA('Extras'), 'success');
   };
 
   return (

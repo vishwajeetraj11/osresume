@@ -11,6 +11,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { addEducationData, addSampleEducationData, deleteSingleEducationData } from '../../redux/actions/resumeActions';
+import { toastMessages } from '../../shared/contants';
 import EducationCard from '../cards/EducationCard';
 import EditSingleEducation from '../forms/EditSingleEducation';
 import { EmptyFileSVG } from '../SVGs';
@@ -161,15 +162,15 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
       return;
     }
     try {
-      showSnack('Deleting Education...', 'default');
+      showSnack(toastMessages.DELETE_RESOURCE_REQUEST('Education'), 'default');
       await axios({
         url: `/api/educations/${id}`,
         method: 'DELETE',
       });
       dispatch(deleteSingleEducationData(id));
-      showSnack('Successfully deleted education.', 'success');
+      showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Education'), 'success');
     } catch (error) {
-      showSnack('Unable to delete education, please try again later.', 'error');
+      showSnack(toastMessages.DELETE_RESOURCE_ERROR('Education'), 'error');
     }
   };
 
@@ -181,11 +182,11 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
       }
     });
     if (flag) {
-      showSnack('You need to edit the sample data before saving the order.', 'info');
+      showSnack(toastMessages.WARN_BEFORE_SAVE('Education'), 'info');
       return;
     }
     try {
-      showSnack('Saving Order of Education...', 'default');
+      showSnack(toastMessages.SAVE_ORDER_RESOURCE_REQUEST('Education'), 'default');
       const { data } = await axios({
         url: `/api/resumes/${resumeId}`,
         method: 'PATCH',
@@ -194,10 +195,10 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
         },
       });
       dispatch(addEducationData(data.resume.education));
-      showSnack('Successfully saved order of education.', 'success');
+      showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Education'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
-      showSnack('Unable to save order of education, please try again later.', 'error');
+      showSnack(toastMessages.SAVE_ORDER_RESOURCE_ERROR('Education'), 'error');
     }
   };
 
@@ -213,7 +214,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
         country: 'Sample Country',
       }),
     );
-    showSnack('Sample data for education is added at the top, please edit accordingly.', 'success');
+    showSnack(toastMessages.SAMPLE_DATA('Education'), 'success');
   };
 
   return (

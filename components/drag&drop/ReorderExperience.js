@@ -11,6 +11,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { addExperienceData, addSampleExperienceData, deleteSingleExperienceData } from '../../redux/actions/resumeActions';
+import { toastMessages } from '../../shared/contants';
 import ExperienceCard from '../cards/ExperienceCard';
 import EditSingleExperience from '../forms/EditSingleExperience';
 import { EmptyFileSVG } from '../SVGs';
@@ -157,16 +158,16 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
       return;
     }
     try {
-      showSnack('Deleting Experience...', 'default');
+      showSnack(toastMessages.DELETE_RESOURCE_REQUEST('Experience'), 'default');
       await axios({
         url: `/api/experiences/${id}`,
         method: 'DELETE',
       });
       dispatch(deleteSingleExperienceData(id));
-      showSnack('Successfully deleted experience.', 'success');
+      showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Experience'), 'success');
     } catch (error) {
       // console.log(error);
-      showSnack('Unable to delete experience, please try again later.', 'error');
+      showSnack(toastMessages.DELETE_RESOURCE_ERROR('Experience'), 'error');
     }
   };
 
@@ -178,11 +179,11 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
       }
     });
     if (flag) {
-      showSnack('You need to edit the sample data before saving the order.', 'info');
+      showSnack(toastMessages.WARN_BEFORE_SAVE('Experience'), 'info');
       return;
     }
     try {
-      showSnack('Saving Order of Experience...', 'default');
+      showSnack(toastMessages.SAVE_ORDER_RESOURCE_REQUEST('Experience'), 'default');
       const { data } = await axios({
         url: `/api/resumes/${resumeId}`,
         method: 'PATCH',
@@ -191,11 +192,11 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
         },
       });
       dispatch(addExperienceData(data.resume.experience));
-      showSnack('Successfully saved order of experience.', 'success');
+      showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Experience'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
       // console.log(error);
-      showSnack('Unable to save order of experience, please try again later.', 'error');
+      showSnack(toastMessages.SAVE_ORDER_RESOURCE_ERROR('Experience'), 'error');
     }
   };
 
@@ -212,7 +213,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
         country: 'Sample Country',
       }),
     );
-    showSnack('Sample data for experience is added at the top, please edit accordingly.', 'success');
+    showSnack(toastMessages.SAMPLE_DATA('Experience'), 'success');
   };
 
   return (

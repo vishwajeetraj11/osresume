@@ -7,6 +7,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { ADD_EXTRAS_DATA } from '../../redux/actionTypes/resumeActionTypes';
+import { toastMessages } from '../../shared/contants';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -60,8 +61,10 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
         setTimeout(async () => {
           // dispatch(editSingleExtraData(values));
           try {
-            showSnack(`${extra._id ? 'Updating extras data...' : 'Creating extras data...'}`, 'default');
-
+            showSnack(
+              extra._id ? toastMessages.UPDATE_RESOURCE_REQUEST('Extras') : toastMessages.CREATE_RESOURCE_REQUEST('Extras'),
+              'default',
+            );
             const { data } = await axios({
               url: `${extra._id ? `/api/extras/${extra._id}` : '/api/extras'}`,
               method: `${extra._id ? 'PUT' : 'POST'}`,
@@ -98,11 +101,14 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
               items: [],
             });
 
-            showSnack(`${extra._id ? 'Successfully updated extras data.' : 'Successfully created extras data.'}`, 'success');
+            showSnack(
+              extra._id ? toastMessages.UPDATE_RESOURCE_SUCCESS('Extras') : toastMessages.CREATE_RESOURCE_SUCCESS('Extras'),
+              'success',
+            );
             setEdit(true);
           } catch (error) {
             // console.log(error);
-            showSnack('Error creating Extra data! Please try again later.', 'error');
+            showSnack(extra._id ? toastMessages.UPDATE_RESOURCE_ERROR('Extras') : toastMessages.CREATE_RESOURCE_ERROR('Extras'), 'error');
           } finally {
             setSubmitting(false);
             closeDrawer(anchor, false);

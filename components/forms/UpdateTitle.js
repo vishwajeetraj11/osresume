@@ -7,8 +7,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { UPDATE_TITLE } from '../../redux/actionTypes/resumeActionTypes';
+import { toastMessages } from '../../shared/contants';
 
-const SaveResume = ({ closeDrawer }) => {
+const UpdateTitle = ({ closeDrawer }) => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -41,7 +42,7 @@ const SaveResume = ({ closeDrawer }) => {
         onSubmit={(values, { setSubmitting, resetForm }) => {
           setTimeout(async () => {
             try {
-              showSnack('Updating title of your resume.', 'default');
+              showSnack(toastMessages.UPDATE_RESUME_TITLE_REQUEST, 'default');
 
               const { data } = await axios({
                 url: `/api/resumes/${resumeId}`,
@@ -63,13 +64,13 @@ const SaveResume = ({ closeDrawer }) => {
                 payload: data.resume.title,
               });
 
-              showSnack('Successfully updated title of your resume.', 'success');
+              showSnack(toastMessages.UPDATE_RESUME_TITLE_SUCCESS, 'success');
 
               setSubmitting(false);
               closeDrawer();
             } catch (error) {
               // console.log(error.response.data);
-              showSnack('Error updating title, Please try again later.', 'error');
+              showSnack(toastMessages.UPDATE_RESUME_TITLE_ERROR, 'error');
               setSubmitting(false);
             }
           }, 100);
@@ -100,4 +101,4 @@ const SaveResume = ({ closeDrawer }) => {
   );
 };
 
-export default SaveResume;
+export default UpdateTitle;

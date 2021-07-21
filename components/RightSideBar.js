@@ -9,7 +9,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import clsx from 'clsx';
 import React from 'react';
 import GoogleFontsList from './fonts/GoogleFontsList';
-import SaveResume from './forms/SaveResume';
+import UpdateTitle from './forms/UpdateTitle';
 
 const sections = [
   {
@@ -63,7 +63,7 @@ const RightSideBar = ({ handlePrint }) => {
   const rightList = anchor => (
     <div className={matches ? clsx(classes.list) : clsx(classes.fullList)} role="presentation">
       {anchor === 'font-face' && <GoogleFontsList closeDrawer={toggleRightDrawer(anchor, false)} anchor={anchor} />}
-      {anchor === 'update-title' && <SaveResume closeDrawer={toggleRightDrawer(anchor, false)} anchor={anchor} />}
+      {anchor === 'update-title' && <UpdateTitle closeDrawer={toggleRightDrawer(anchor, false)} anchor={anchor} />}
     </div>
   );
 

@@ -1,4 +1,3 @@
-import { useUser } from '@clerk/clerk-react';
 import { Button } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import axios from 'axios';
@@ -8,10 +7,10 @@ import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import TemplateCard from '../components/cards/TemplateCard';
 import { ErrorSVG, NoFilesFoundSVG } from '../components/SVGs';
+import { toastMessages } from '../shared/contants';
 
 const Templates = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const { id: userId } = useUser();
   const router = useRouter();
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -33,7 +32,7 @@ const Templates = () => {
 
   const onCreate = async () => {
     try {
-      showSnack('Creating your resume...', 'default');
+      showSnack(toastMessages.CREATE_RESOURCE_REQUEST('Resume'), 'default');
       const { data } = await axios({
         url: '/api/resumes',
         method: 'POST',
@@ -41,16 +40,15 @@ const Templates = () => {
           'Content-Type': 'application/json',
         },
         data: {
-          userId,
           templateName: selectedTemplate.templateName,
           title: 'Your Resume',
         },
       });
-      showSnack('Resume created successfully !', 'success');
+      showSnack(toastMessages.CREATE_RESOURCE_SUCCESS('Resume'), 'success');
       router.push(`/editor/${data.data.id}`);
     } catch (error) {
       // console.log(error);
-      showSnack(error.response.data, 'error');
+      showSnack(toastMessages.CREATE_RESOURCE_ERROR('Resume'), 'error');
     }
   };
 
@@ -68,7 +66,7 @@ const Templates = () => {
         }
       } catch (e) {
         setNoTemplate(true);
-        setError('An error occureed. Please try again later!');
+        setError('An error occurred. Please try again later!');
       } finally {
         setLoading(false);
       }

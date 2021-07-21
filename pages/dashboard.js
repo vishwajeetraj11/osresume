@@ -9,6 +9,7 @@ import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import TemplateCard from '../components/cards/TemplateCard';
 import NoDocumentFound from '../components/NoDocumentFound';
+import { toastMessages } from '../shared/contants';
 
 const Dashboard = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -63,17 +64,17 @@ const Dashboard = () => {
   };
   const onDelete = async () => {
     try {
-      showSnack('Deleting Resume...', 'default');
+      showSnack(toastMessages.DELETE_RESOURCE_REQUEST('Resume'), 'default');
       await axios({
         url: `/api/resumes/${selectedResume._id}`,
         method: 'DELETE',
       });
       setResumes(resumes => resumes.filter(resume => resume._id !== selectedResume._id));
-      showSnack('Successfully deleted resume.', 'success');
+      showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Resume'), 'success');
     } catch (error) {
       // console.log('Error ', error);
       // console.log('Error Response: ', error.response);
-      showSnack('Error deleting resume, please try again later.', 'error');
+      showSnack(toastMessages.DELETE_RESOURCE_ERROR('Resume'), 'error');
     }
   };
 

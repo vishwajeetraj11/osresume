@@ -8,6 +8,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { ADD_EXPERIENCE_DATA } from '../../redux/actionTypes/resumeActionTypes';
+import { toastMessages } from '../../shared/contants';
 
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
@@ -70,7 +71,10 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(async () => {
           // dispatch(editSingleExperienceData(values));
-          showSnack(`${experience._id ? 'Updating experience data...' : 'Creating experience data...'}`, 'default');
+          showSnack(
+            experience._id ? toastMessages.UPDATE_RESOURCE_REQUEST('Experience') : toastMessages.CREATE_RESOURCE_REQUEST('Experience'),
+            'default',
+          );
           try {
             const { data } = await axios({
               url: `${experience._id ? `/api/experiences/${experience._id}` : '/api/experiences'}`,
@@ -105,7 +109,10 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
                 payload: results,
               });
             }
-            showSnack(`${experience._id ? 'Successfully updated experience data.' : 'Successfully created experience data.'}`, 'success');
+            showSnack(
+              experience._id ? toastMessages.UPDATE_RESOURCE_SUCCESS('Experience') : toastMessages.CREATE_RESOURCE_SUCCESS('Experience'),
+              'success',
+            );
             resetForm({
               id: '',
               designation: '',
@@ -119,7 +126,10 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
             setEdit(true);
           } catch (error) {
             // console.log(error.response);
-            showSnack('Error creating Experience data! Please try again later.', 'error');
+            showSnack(
+              experience._id ? toastMessages.UPDATE_RESOURCE_ERROR('Experience') : toastMessages.CREATE_RESOURCE_ERROR('Experience'),
+              'error',
+            );
           } finally {
             setSubmitting(false);
             closeDrawer(anchor, false);

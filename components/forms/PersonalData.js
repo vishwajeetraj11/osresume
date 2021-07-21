@@ -7,6 +7,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { ADD_PERSONAL_DATA_STATE } from '../../redux/actionTypes/resumeActionTypes';
+import { toastMessages } from '../../shared/contants';
 
 const PersonalDataForm = ({ closeDrawer, anchor }) => {
   // Dispatch
@@ -62,7 +63,12 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
           }
           setTimeout(async () => {
             try {
-              showSnack(`${personalData._id ? 'Updating personal data...' : 'Creating personal data...'}`, 'default');
+              showSnack(
+                personalData._id
+                  ? toastMessages.UPDATE_RESOURCE_REQUEST('Personal data')
+                  : toastMessages.CREATE_RESOURCE_REQUEST('Personal data'),
+                'default',
+              );
 
               const { data } = await axios({
                 url: `${personalData._id ? `/api/personals/${personalData._id}` : '/api/personals'}`,
@@ -95,13 +101,23 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
                 payload: data.personal,
               });
 
-              showSnack(`${personalData._id ? 'Successfully updated personal data.' : 'Successfully created personal data.'}`, 'success');
+              showSnack(
+                personalData._id
+                  ? toastMessages.UPDATE_RESOURCE_SUCCESS('Personal data')
+                  : toastMessages.CREATE_RESOURCE_SUCCESS('Personal data'),
+                'success',
+              );
 
               setSubmitting(false);
               closeDrawer();
             } catch (error) {
               // console.log(error.response.data);
-              showSnack('Error creating personal data! Please try again later.', 'error');
+              showSnack(
+                personalData._id
+                  ? toastMessages.UPDATE_RESOURCE_ERROR('Personal data')
+                  : toastMessages.CREATE_RESOURCE_ERRUPDATE_RESOURCE_ERROR('Personal data'),
+                'error',
+              );
               setSubmitting(false);
             }
           }, 100);
