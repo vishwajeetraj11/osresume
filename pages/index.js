@@ -1,28 +1,13 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
-  const bgImgDivRef = useRef(null);
-
-  useEffect(() => {
-    // const bgImgDiv = document.querySelector('.landing-container');
-    // const imageUrl = '/images/landing-resume-1.jpg';
-    // const img = new Image();
-    // img.src = imageUrl;
-    // img.onload = () => {
-    //   bgImgDiv.style.backgroundImage = `url(${imageUrl})`;
-    //   bgImgDiv.classList.add('opacity-100');
-    //   // setLoading(false);
-    // };
-  }, []);
-
   return (
     <>
       <Head>
         <title>OS Resume | Oversimplifying Resume building experience.</title>
-        <meta property="og:title" content="OS Resume: Online Resume Builder" />
+        <meta property="og:title" content="OS Resume: Oversimplified Resume Builder" />
         <meta
           property="og:description"
           content="The best free online resume builder that’ll land you interviews. Create a professional resume in minutes. Download or print your resume for free."

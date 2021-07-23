@@ -41,7 +41,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
         }
         return false;
       });
-      setTotalPages(Math.floor(found.length / 20));
+      setTotalPages(Math.ceil(found.length / 20));
       setGoogleFonts(
         found.slice(page, bound).map(e => ({
           fontFamily: e.family,
@@ -49,7 +49,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
         })),
       );
     })();
-  }, [search, page, bound]);
+  }, [search]);
 
   useEffect(() => {
     if (googleFonts.length !== 0) {
@@ -97,11 +97,11 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
           <p className="ml-4">Previous</p>
         </Button>
 
-        <p className="ml-4">{`${totalPages} / ${page + 1}`}</p>
+        {!!totalPages && <p className="ml-4">{`${totalPages} / ${page + 1}`}</p>}
 
         <Button
           className="px-4 py-2 ml-4"
-          disabled={totalPages === page}
+          disabled={totalPages === page + 1}
           onClick={() => handlePage('NEXT')}
           color="primary"
           variant="outlined"

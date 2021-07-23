@@ -7,13 +7,6 @@
 }
 
 html {
-	// font-size: 80%;
-	// @media only screen and (min-width: 640px) {
-	// 	font-size: 80%;
-	// }
-	// @media only screen and (min-width: 768px) {
-	// 	font-size: 90%;
-	// }
 	@media only screen and (min-width: 1024px) {
 		font-size: 100%;
 	}
@@ -47,48 +40,14 @@ a {
 }
 
 .resume-a4 {
-	// width: 1240px;
-	// height: 874px;
-	// width: 596px;
-	// height: 842px;
-	// height: 278.6mm;
 	height: 297mm;
 	width: 210mm;
-
-	// Margin is causing messing up of the printing process (an extra page is coming (blank))
-	// margin: 20px auto;
-	// margin-left: auto;
-	// margin-right: auto;
-	// margin-bottom: 93px;
-	// @media only screen and (min-width: 1024px) {
-	// 	margin-bottom: 20px;
-	// }
 }
-
-// .left-sidebar {
-// 	@media only screen and (min-width: 1024px) {
-// 		height: 297mm;
-// 	}
-// }
 
 img {
 	height: 100%;
 	width: 100%;
 	object-fit: cover;
-}
-
-.ReactCrop-opt {
-	position: relative;
-	display: inline-block;
-	cursor: crosshair;
-	overflow: hidden;
-	// max-height: 500px;
-	margin-right: 2.5rem;
-
-	// img {
-	// 	object-fit: contain;
-	// 	height: 500px;
-	// }
 }
 
 .MuiDrawer-paperAnchorTop {
@@ -104,9 +63,6 @@ img {
 	background-position: center;
 	background-size: cover;
 	background-attachment: fixed;
-	// & > div {
-	// 	height: 92vh;
-	// }
 }
 
 .cl-user-button-avatar {
