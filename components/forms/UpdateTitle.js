@@ -42,7 +42,7 @@ const UpdateTitle = ({ closeDrawer }) => {
         onSubmit={(values, { setSubmitting, resetForm }) => {
           setTimeout(async () => {
             try {
-              showSnack(toastMessages.UPDATE_RESUME_TITLE_REQUEST, 'default');
+              showSnack(toastMessages.UPDATE_RESOURCE_REQUEST('Resume Title'), 'default');
 
               const { data } = await axios({
                 url: `/api/resumes/${resumeId}`,
@@ -64,13 +64,13 @@ const UpdateTitle = ({ closeDrawer }) => {
                 payload: data.resume.title,
               });
 
-              showSnack(toastMessages.UPDATE_RESUME_TITLE_SUCCESS, 'success');
+              showSnack(toastMessages.UPDATE_RESOURCE_SUCCESS('Resume Title'), 'success');
 
               setSubmitting(false);
               closeDrawer();
             } catch (error) {
               // console.log(error.response.data);
-              showSnack(toastMessages.UPDATE_RESUME_TITLE_ERROR, 'error');
+              showSnack(toastMessages.UPDATE_RESOURCE_REQUEST('Resume Title'), 'error');
               setSubmitting(false);
             }
           }, 100);

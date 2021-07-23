@@ -115,7 +115,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
               showSnack(
                 personalData._id
                   ? toastMessages.UPDATE_RESOURCE_ERROR('Personal data')
-                  : toastMessages.CREATE_RESOURCE_ERRUPDATE_RESOURCE_ERROR('Personal data'),
+                  : toastMessages.CREATE_RESOURCE_ERROR('Personal data'),
                 'error',
               );
               setSubmitting(false);
