@@ -34,6 +34,10 @@ export default function Home() {
           <img src="/images/landing-resume.png" alt="Lanidng page Resume" />
         </div>
       </div>
+      <div className="footer p-5 mx-10 flex flex-row justify-between">
+        <p className="">&copy; OS Resume 2021</p>
+        <p className="">Next.js + Clerk </p>
+      </div>
     </>
   );
 }

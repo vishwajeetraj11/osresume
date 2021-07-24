@@ -17,7 +17,6 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [totalPages, setTotalPages] = useState(10);
   const [bound, setBound] = useState(20);
   const [fontsAdded, setFontsAdded] = useState([]);
-  const [fontLoading, setFontLoading] = useState(false);
   const dispatch = useDispatch();
 
   const { resumeId } = useSelector(state => state.resume.metadata);
@@ -34,8 +33,8 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   useEffect(() => {
     (async () => {
       // eslint-disable-next-line global-require
-      const fonts = await require('../../shared/googleFonts.json');
-      const found = await fonts.items.filter(font => {
+      const fonts = require('../../shared/googleFonts.json');
+      const found = fonts.items.filter(font => {
         if (font.family.toLowerCase().startsWith(search.toLowerCase())) {
           return true;
         }
@@ -43,7 +42,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
       });
       setTotalPages(Math.ceil(found.length / 20));
       setGoogleFonts(
-        found.slice(page, bound).map(e => ({
+        found.slice(0, 40).map(e => ({
           fontFamily: e.family,
           fontID: e.family.replace(/ /g, '+'),
         })),
@@ -97,7 +96,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
           <p className="ml-4">Previous</p>
         </Button>
 
-        {!!totalPages && <p className="ml-4">{`${totalPages} / ${page + 1}`}</p>}
+        {/* {!!totalPages && <p className="ml-4">{`${totalPages} / ${page + 1}`}</p>} */}
 
         <Button
           className="px-4 py-2 ml-4"
@@ -143,7 +142,6 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
 
               document.fonts.ready
                 .then(async () => {
-                  setFontLoading(true);
                   // Check if the font is in the system
                   fontAvailable = document.fonts.check(`16px ${fontFamily}`);
 
@@ -184,7 +182,6 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
                     setFontsAdded(p => p.concat(fontID));
                     resume.style.fontFamily = fontFamily;
                   }
-                  setFontLoading(false);
                 })
                 .catch(e => console.log(e));
             };

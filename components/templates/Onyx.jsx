@@ -55,7 +55,9 @@ class Onyx extends React.Component {
             </div>
           </div>
           <div className="mb-6">
-            <p className="text-t1-gray text-t1-sm">{data?.personalData?.email}</p>
+            <p className="text-t1-gray text-t1-sm" style={{ wordBreak: 'keep-all' }}>
+              {data?.personalData?.email}
+            </p>
             <p className="text-t1-gray text-t1-sm">{data?.personalData?.phoneNumber}</p>
             <p className="text-t1-gray text-t1-sm">{data?.personalData?.country}</p>
           </div>

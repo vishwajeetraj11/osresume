@@ -119,7 +119,15 @@ const Dashboard = () => {
                 <Button className="mr-6" variant="contained" color="primary" onClick={onUpdate}>
                   Update
                 </Button>
-                <Button variant="outlined" color="primary" onClick={onDelete}>
+                <Button
+                  style={{
+                    border: '2px solid #e74c3c',
+                    color: '#e74c3c',
+                    padding: '6px 16px',
+                  }}
+                  variant="text"
+                  onClick={onDelete}
+                >
                   Delete
                 </Button>
               </>

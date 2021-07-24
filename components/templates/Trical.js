@@ -38,9 +38,9 @@ class Trical extends React.Component {
                 </>
               )}
               {!!education.length && <Title>my education</Title>}
-              <div className="flex flex-row justify-between mb-12">
+              <div className="flex flex-row justify-between mb-12 flex-wrap">
                 {education.map((edu, i) => (
-                  <Description key={edu.id} index={i}>
+                  <Description classes="mb-3" key={edu.id} index={i}>
                     <Paragraph classes="text-t2-sub-heading font-bold">
                       {`${edu?.startedAt?.split(' ')[1]} -${edu?.endedAt?.split(' ')[1]}`}
                     </Paragraph>
