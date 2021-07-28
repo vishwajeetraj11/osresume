@@ -51,7 +51,7 @@ class Trical extends React.Component {
                 ))}
               </div>
 
-              {!!experiences.length && <Title classes="mt-8">work experiences</Title>}
+              {!!experiences.length && <Title classes="mt-8">work experience</Title>}
               <div className="flex flex-col justify-between">
                 {experiences.map((exp, i) => (
                   <Description classes="mb-4" key={exp.id} index={i}>
