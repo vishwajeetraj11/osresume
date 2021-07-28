@@ -10,7 +10,11 @@ class Onyx extends React.Component {
   render() {
     const { data, customStyles } = this.props;
     return (
-      <div id="t1" className={`resume-a4 bg-white flex justify-between ${t1.container}`} style={{ fontFamily: customStyles.font }}>
+      <div
+        id="t1"
+        className={`resume-a4 bg-white flex justify-between ${t1.container} overflow-hidden`}
+        style={{ fontFamily: customStyles.font }}
+      >
         <div className="left w-8/12 bg-yellow-4000">
           <div className="header-left">
             <div className="h-32 flex justify-center flex-col">

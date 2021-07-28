@@ -49,7 +49,8 @@
         "no-unused-vars":"warn",
         "no-underscore-dangle": "off",
         "react/jsx-one-expression-per-line": "off",
-        "comma-dangle":"warn"
+        "comma-dangle":"warn",
+        "react/react-in-jsx-scope":"off"
     }
   }
   

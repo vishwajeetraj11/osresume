@@ -16,7 +16,7 @@ const Header = ({ route }) => {
   const mobile = useMediaQuery('(max-width:400px)');
   return (
     <header className={`shadow-sm ${route === '/' ? 'bg-transparent' : ''}`}>
-      <div className="max-w-screen-xl mx-auto flex justify-between p-4">
+      <div className="max-w-screen-xl mx-auto flex justify-between py-4 px-2 sm:p-4">
         <div className={styles.left}>
           <Link href="/">
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
