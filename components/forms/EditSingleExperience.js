@@ -226,7 +226,7 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
                   // format='/MM/yyyy'
                   onChange={date => {
                     const month = date.toLocaleString('default', { month: 'long' });
-                    const year = date.getUTCFullYear();
+                    const year = date.getFullYear();
                     setFieldValue('startedAt', `${month} ${year}`);
                   }}
                   value={values.startedAt}
@@ -246,7 +246,7 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
                   // format='MM/yyyy'
                   onChange={date => {
                     const month = date.toLocaleString('default', { month: 'long' });
-                    const year = date.getUTCFullYear();
+                    const year = date.getFullYear();
                     setFieldValue('endedAt', `${month} ${year}`);
                   }}
                   KeyboardButtonProps={{

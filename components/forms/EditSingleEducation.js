@@ -176,7 +176,7 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
                   // format='/MM/yyyy'
                   onChange={date => {
                     const month = date.toLocaleString('default', { month: 'long' });
-                    const year = date.getUTCFullYear();
+                    const year = date.getFullYear();
                     setFieldValue('startedAt', `${month} ${year}`);
                   }}
                   value={values.startedAt}
@@ -196,7 +196,7 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
                   // format='MM/yyyy'
                   onChange={date => {
                     const month = date.toLocaleString('default', { month: 'long' });
-                    const year = date.getUTCFullYear();
+                    const year = date.getFullYear();
                     setFieldValue('endedAt', `${month} ${year}`);
                   }}
                   KeyboardButtonProps={{
