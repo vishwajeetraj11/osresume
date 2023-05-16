@@ -3,7 +3,7 @@
 
 [![OS Resume Editor DEMO](https://img.youtube.com/vi/plFUCIFGOVc/0.jpg)](https://www.youtube.com/watch?v=plFUCIFGOVc)
 
-## 💻 Screens
+## 💻 Screens 
 Landing Page          |  Templates Page
 :-------------------------:|:-------------------------:
 <img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1626894875481/-qAU5ukz2.png" alt="OS Resume Landing Page"> | <img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1626895094040/vzhgmLk5A.png" alt="OS Resume Templates Page">
