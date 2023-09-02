@@ -1,10 +1,10 @@
-import { requireSession } from '@clerk/clerk-sdk-node';
+import { withAuth } from '@clerk/nextjs/api';
 import Education from '../../../models/Education';
 import Resume from '../../../models/Resume';
 import dbConnect from '../../../shared/utils/dbConnect';
 
 // eslint-disable-next-line consistent-return
-export default requireSession(async (req, res) => {
+export default withAuth(async (req, res) => {
   const {
     query: { id },
     body,
@@ -12,11 +12,12 @@ export default requireSession(async (req, res) => {
   } = req;
 
   await dbConnect();
+  const { userId, sessionId, getToken } = req.auth;
 
   switch (method) {
     case 'PUT':
       try {
-        const education = await Education.findOneAndUpdate({ _id: id, userId: req.session.userId }, body, {
+        const education = await Education.findOneAndUpdate({ _id: id, userId }, body, {
           new: true,
           runValidators: true,
         });
@@ -33,7 +34,7 @@ export default requireSession(async (req, res) => {
       try {
         const education = await Education.findById(id);
         await Resume.findOneAndUpdate(
-          { resumeId: education.resumeId, userId: req.session.userId },
+          { resumeId: education.resumeId, userId },
           {
             $pull: {
               education: education.id,

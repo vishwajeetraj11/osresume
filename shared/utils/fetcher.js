@@ -1,4 +1,5 @@
-import { useClerk } from '@clerk/clerk-react';
+// import { useClerk } from '@clerk/nextjs';
+import { useClerk } from '@clerk/nextjs';
 import useSWR from 'swr';
 
 export const useClerkSWR = (url, fetcher = null) => {
