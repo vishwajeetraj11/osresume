@@ -6,7 +6,7 @@ const Layout = ({ children, route }) => {
   return (
     <div className="bg-white min-h-screen">
       {!showHeader && <Header route={route} />}
-      <main className={`${showHeader ? 'pt-8 pb-8 min-h-screen' : ''}`}>{children}</main>
+      <main className={`${showHeader ? 'pt-8 pb-8 min-h-screen flex justify-center items-center' : ''}`}>{children}</main>
     </div>
   );
 };

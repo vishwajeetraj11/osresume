@@ -32,10 +32,10 @@ export default function Home() {
         </div>
         <h1 className="text-lg text-center text-white font-medium mb-6">Create your professional resume in 15 minutes</h1>
         <div className="flex justify-start lg:justify-center mb-6">
-          <Link href="/templates">
-            <a className="px-6 py-4 text-md bg-primary text-white rounded shadow-sm" href="/templates">
-              Start Building
-            </a>
+          <Link className="px-6 py-4 text-md bg-primary text-white rounded shadow-sm" href="/templates">
+
+            Start Building
+
           </Link>
         </div>
         <div className="hidden lg:block relative rounded overflow-hidden shadow-sm">
