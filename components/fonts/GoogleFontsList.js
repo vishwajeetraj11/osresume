@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UPDATE_FONT } from '../../redux/actionTypes/resumeActionTypes';
-import { items } from '../../shared/googleFonts.json';
+import items from '../../shared/googleFonts.json';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 
 const GoogleFontsList = ({ anchor, closeDrawer }) => {
