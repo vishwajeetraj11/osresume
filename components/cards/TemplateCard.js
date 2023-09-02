@@ -16,8 +16,8 @@ const TemplateCard = ({ template, selected, onSelect, type }) => (
       draggable={false}
       alt={`Template ${template.title} Preview`}
       layout="responsive"
-      width="300px"
-      height="450px"
+      width={300}
+      height={450}
     />
     <div className="absolute bottom-0 w-full bg-gray-50">
       <h2 className="text-lg py-1 font-regular text-default text-center">{template.title}</h2>

@@ -8,6 +8,7 @@ here https://github.com/vercel/next-plugins/tree/master/packages/next-sass */
 });
 
 module.exports = {
+  swcMinify: true,
   /* Add Your Scss File Folder Path Here */
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],

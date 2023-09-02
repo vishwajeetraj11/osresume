@@ -3,8 +3,8 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
-import { Faq } from '../components/landing/Faq';
 import { BuyMeACoffee } from '../components/SVGs';
+import { Faq } from '../components/landing/Faq';
 import { features } from '../shared/contants';
 
 export default function Home() {
@@ -74,10 +74,10 @@ export default function Home() {
             effective resume in several clicks. Choose a design, fill in your details and ideas. Fast and simple.
           </p>
           <div className="flex justify-center mt-6">
-            <Link href="/templates">
-              <a className="px-6 py-4 text-md bg-primary text-white rounded shadow-sm" href="/templates">
-                Start Building Now!
-              </a>
+            <Link href="/templates" className="px-6 py-4 text-md bg-primary text-white rounded shadow-sm">
+
+              Start Building Now!
+
             </Link>
           </div>
         </div>

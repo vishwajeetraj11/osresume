@@ -18,12 +18,9 @@ const Header = ({ route }) => {
     <header className={`shadow-sm ${route === '/' ? 'bg-transparent' : ''}`}>
       <div className="max-w-screen-xl mx-auto flex justify-between py-4 px-2 sm:p-4">
         <div className={styles.left}>
-          <Link href="/">
-            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a className="flex items-center">
-              {!mobile && <Image src="/icon-192x192.png" width="32" height="32" alt="Logo" />}
-              <span className="text-default font-semibold text-sm lg:text-base ml-3">OS Resume</span>
-            </a>
+          <Link href="/" className="flex items-center">
+            {!mobile && <Image src="/icon-192x192.png" className="h-8 w-8" width={32} height={32} alt="Logo" />}
+            <span className="text-default font-semibold text-sm lg:text-base ml-3">OS Resume</span>
           </Link>
         </div>
         <div className={styles.right}>
