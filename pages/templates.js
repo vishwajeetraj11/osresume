@@ -5,8 +5,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
-import TemplateCard from '../components/cards/TemplateCard';
 import { ErrorSVG, NoFilesFoundSVG } from '../components/SVGs';
+import TemplateCard from '../components/cards/TemplateCard';
 import { toastMessages } from '../shared/contants';
 
 const Templates = () => {
@@ -47,7 +47,6 @@ const Templates = () => {
       showSnack(toastMessages.CREATE_RESOURCE_SUCCESS('Resume'), 'success');
       router.push(`/editor/${data.data.id}`);
     } catch (error) {
-      // console.log(error);
       showSnack(toastMessages.CREATE_RESOURCE_ERROR('Resume'), 'error');
     }
   };
@@ -65,6 +64,8 @@ const Templates = () => {
           setNoTemplate(true);
         }
       } catch (e) {
+        console.log(e);
+
         setNoTemplate(true);
         setError('An error occurred. Please try again later!');
       } finally {

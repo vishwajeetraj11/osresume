@@ -1,11 +1,12 @@
-import { requireSession } from '@clerk/clerk-sdk-node';
+import { withAuth } from '@clerk/nextjs/api';
 import Experience from '../../../models/Experience';
 import Resume from '../../../models/Resume';
 import dbConnect from '../../../shared/utils/dbConnect';
 
 // eslint-disable-next-line consistent-return
-export default requireSession(async (req, res) => {
+export default withAuth(async (req, res) => {
   const { body, method } = req;
+  const { userId, sessionId, getToken } = req.auth;
 
   await dbConnect();
 
@@ -14,12 +15,12 @@ export default requireSession(async (req, res) => {
       try {
         const experience = await Experience.create({
           ...body,
-          userId: req.session.userId,
+          userId,
         });
         const resume = await Resume.findOneAndUpdate(
           {
             _id: body.resumeId,
-            userId: req.session.userId,
+            userId,
           },
           {
             $addToSet: {

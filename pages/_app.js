@@ -1,4 +1,5 @@
-import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-react';
+// import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs';
+import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs';
 import CssBaseline from '@material-ui/core/CssBaseline';
 // MUI Setup
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
@@ -9,8 +10,8 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import 'tailwindcss/tailwind.css';
-import Layout from '../components/layout/Layout';
 import Loader from '../components/Loader';
+import Layout from '../components/layout/Layout';
 import { useStore } from '../redux/store';
 import { theme } from '../shared/theme';
 import '../styles/globals.scss';
@@ -61,7 +62,7 @@ function MyApp({ Component, pageProps }) {
             <Head>
               <title>OS Resume</title>
             </Head>
-            <ClerkProvider frontendApi={process.env.NEXT_PUBLIC_CLERK_FRONTEND_API} navigate={to => router.push(to)}>
+            <ClerkProvider {...pageProps}>
               {loading ? (
                 <Loader fullScreen />
               ) : (

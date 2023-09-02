@@ -1,9 +1,10 @@
-import { requireSession } from '@clerk/clerk-sdk-node';
+import { withAuth } from '@clerk/nextjs/api';
 import Extras from '../../../models/Extras';
 import Resume from '../../../models/Resume';
 import dbConnect from '../../../shared/utils/dbConnect';
+
 // eslint-disable-next-line consistent-return
-export default requireSession(async (req, res) => {
+export default withAuth(async (req, res) => {
   const {
     query: { id },
     body,
@@ -11,11 +12,12 @@ export default requireSession(async (req, res) => {
   } = req;
 
   await dbConnect();
+  const { userId, sessionId, getToken } = req.auth;
 
   switch (method) {
     case 'PUT':
       try {
-        const extras = await Extras.findOneAndUpdate({ _id: id, userId: req.session.userId }, body, { new: true, runValidators: true });
+        const extras = await Extras.findOneAndUpdate({ _id: id, userId }, body, { new: true, runValidators: true });
         if (!extras) {
           return res.status(400).json({ success: false, error: 'Unable to edit extras data.' });
         }
@@ -27,9 +29,9 @@ export default requireSession(async (req, res) => {
 
     case 'DELETE':
       try {
-        const extras = await Extras.findOne({ _id: id, userId: req.session.userId });
+        const extras = await Extras.findOne({ _id: id, userId });
         await Resume.findOneAndUpdate(
-          { resumeId: extras.resumeId, userId: req.session.userId },
+          { resumeId: extras.resumeId, userId },
           {
             $pull: {
               extras: extras.id,

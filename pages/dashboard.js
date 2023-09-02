@@ -1,14 +1,14 @@
-import { useUser } from '@clerk/clerk-react';
+import { useUser } from '@clerk/nextjs';
 import { Button } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import axios from 'axios';
-import { ErrorMessage } from 'formik';
+// import { ErrorMessage } from 'formik';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
-import TemplateCard from '../components/cards/TemplateCard';
 import NoDocumentFound from '../components/NoDocumentFound';
+import TemplateCard from '../components/cards/TemplateCard';
 import { toastMessages } from '../shared/contants';
 
 const Dashboard = () => {
@@ -41,11 +41,16 @@ const Dashboard = () => {
         if (!data.data.length) {
           setNoResume(true);
         }
+         setLoading(false);
       } catch (error) {
+        if(axios.isAxiosError(error)) {
+          console.log(error.response.data);
+        }
+        setLoading(false);
         setNoResume(true);
         setError('An error occurred. Please try again later!');
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     })();
   }, [userId]);
@@ -89,7 +94,7 @@ const Dashboard = () => {
       ));
     }
     if (error) {
-      return <ErrorMessage error={error} />;
+      return <p className='text-rose-600 text-xs'>{error}</p>;
     }
     if (!resumes.length) {
       return <NoDocumentFound text="No Resumes Found." />;

@@ -1,4 +1,4 @@
-import { RedirectToSignIn, SignedIn, SignedOut } from '@clerk/clerk-react';
+import { RedirectToSignIn, SignedIn, SignedOut } from '@clerk/nextjs';
 import { useMediaQuery } from '@material-ui/core';
 import axios from 'axios';
 import Head from 'next/head';
@@ -13,11 +13,11 @@ import { ResumeNotFoundSVG } from '../../components/SVGs';
 import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
 import {
-  addEducationData,
-  addExperienceData,
-  addExtrasData,
-  addPersonalDataState,
-  addResumeMetaData,
+    addEducationData,
+    addExperienceData,
+    addExtrasData,
+    addPersonalDataState,
+    addResumeMetaData,
 } from '../../redux/actions/resumeActions';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 
