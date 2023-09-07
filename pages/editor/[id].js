@@ -1,4 +1,4 @@
-import { RedirectToSignIn, SignedIn, SignedOut } from '@clerk/nextjs';
+import { RedirectToSignIn, SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
 import { useMediaQuery } from '@material-ui/core';
 import axios from 'axios';
 import Head from 'next/head';
@@ -13,15 +13,16 @@ import { ResumeNotFoundSVG } from '../../components/SVGs';
 import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
 import {
-    addEducationData,
-    addExperienceData,
-    addExtrasData,
-    addPersonalDataState,
-    addResumeMetaData,
+  addEducationData,
+  addExperienceData,
+  addExtrasData,
+  addPersonalDataState,
+  addResumeMetaData,
 } from '../../redux/actions/resumeActions';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 
 const Editor = () => {
+  const { getToken } = useAuth();
   const dispatch = useDispatch();
   const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');
@@ -66,9 +67,13 @@ const Editor = () => {
     (async () => {
       try {
         setLoading(true);
+        const token = await getToken();
         const { data } = await axios({
           url: `/api/resumes/${router.query.id}`,
           method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         // console.log(data);
         const personalData = data.resume.personal

@@ -1,3 +1,4 @@
+import { useAuth } from '@clerk/nextjs';
 import DateFnsUtils from '@date-io/date-fns';
 import { Button, Divider, TextField } from '@material-ui/core';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -13,6 +14,7 @@ import { toastMessages } from '../../shared/contants';
 const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
   const educationCollection = useSelector(state => state.resume.data.education);
+  const { getToken } = useAuth();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -60,11 +62,14 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
             'default',
           );
           try {
+            const token = await getToken();
+
             const { data } = await axios({
               url: `${education._id ? `/api/educations/${education._id}` : '/api/educations'}`,
               method: `${education._id ? 'PUT' : 'POST'}`,
               headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
               },
               data: {
                 institution: values.institution,

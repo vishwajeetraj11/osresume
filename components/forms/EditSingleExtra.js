@@ -1,3 +1,4 @@
+import { useAuth } from '@clerk/nextjs';
 import { Button, Divider, FormControl, InputLabel, makeStyles, MenuItem, Select, TextField } from '@material-ui/core';
 import axios from 'axios';
 import { Formik } from 'formik';
@@ -21,6 +22,7 @@ const useStyles = makeStyles(theme => ({
 const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
   const extrasCollection = useSelector(state => state.resume.data.extras);
+  const { getToken } = useAuth();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -61,6 +63,8 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
         setTimeout(async () => {
           // dispatch(editSingleExtraData(values));
           try {
+            const token = await getToken();
+
             showSnack(
               extra._id ? toastMessages.UPDATE_RESOURCE_REQUEST('Extras') : toastMessages.CREATE_RESOURCE_REQUEST('Extras'),
               'default',
@@ -70,6 +74,7 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
               method: `${extra._id ? 'PUT' : 'POST'}`,
               headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
               },
               data: {
                 title: values.title,

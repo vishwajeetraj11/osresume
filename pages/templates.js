@@ -1,3 +1,4 @@
+import { useAuth } from '@clerk/nextjs';
 import { Button } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import axios from 'axios';
@@ -17,6 +18,7 @@ const Templates = () => {
   const [error, setError] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const [noTemplate, setNoTemplate] = useState(false);
+  const { getToken } = useAuth();
 
   const onSelect = id => {
     setSelectedTemplate(id);
@@ -33,11 +35,13 @@ const Templates = () => {
   const onCreate = async () => {
     try {
       showSnack(toastMessages.CREATE_RESOURCE_REQUEST('Resume'), 'default');
+      const token = await getToken();
       const { data } = await axios({
         url: '/api/resumes',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         data: {
           templateName: selectedTemplate.templateName,
@@ -55,9 +59,13 @@ const Templates = () => {
     (async () => {
       try {
         setLoading(true);
+        const token = await getToken();
         const { data: res } = await axios({
           url: '/api/resumes?template=true',
           method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         setTemplates(res.data);
         if (!res.data.length) {

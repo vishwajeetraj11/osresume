@@ -1,3 +1,4 @@
+import { useAuth } from '@clerk/nextjs';
 import DateFnsUtils from '@date-io/date-fns';
 import { Button, Divider, TextField } from '@material-ui/core';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -15,6 +16,7 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
   const experienceCollection = useSelector(state => state.resume.data.experiences);
 
   const { enqueueSnackbar } = useSnackbar();
+  const { getToken } = useAuth();
 
   const showSnack = (message, variant) => {
     enqueueSnackbar(message, { variant });
@@ -76,11 +78,14 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
             'default',
           );
           try {
+            const token = await getToken();
+
             const { data } = await axios({
               url: `${experience._id ? `/api/experiences/${experience._id}` : '/api/experiences'}`,
               method: `${experience._id ? 'PUT' : 'POST'}`,
               headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
               },
               data: {
                 designation: values.designation,

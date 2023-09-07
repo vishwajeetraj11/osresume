@@ -1,3 +1,4 @@
+import { useAuth } from '@clerk/nextjs';
 import { Drawer, makeStyles, useMediaQuery } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -12,15 +13,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { addExtrasData, addSampleExtraData, deleteSingleExtraData } from '../../redux/actions/resumeActions';
 import { toastMessages } from '../../shared/contants';
+import { EmptyFileSVG } from '../SVGs';
 import ExtrasCard from '../cards/ExtrasCard';
 import EditSingleExtra from '../forms/EditSingleExtra';
-import { EmptyFileSVG } from '../SVGs';
 
 const ReorderExtras = ({ closeDrawer, anchor }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
   const dispatch = useDispatch();
+  const { getToken } = useAuth();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -160,9 +162,14 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
     }
     try {
       showSnack(toastMessages.DELETE_RESOURCE_REQUEST('Extras'), 'default');
+      const token = await getToken();
+
       await axios({
         url: `/api/extras/${id}`,
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       dispatch(deleteSingleExtraData(id));
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Extras'), 'success');
@@ -184,11 +191,16 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
     }
     try {
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_REQUEST('Extras'), 'default');
+      const token = await getToken();
+
       const { data } = await axios({
         url: `/api/resumes/${resumeId}`,
         method: 'PATCH',
         data: {
           extras: ext,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       });
       dispatch(addExtrasData(data.resume.extras));

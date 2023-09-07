@@ -1,3 +1,4 @@
+import { useAuth } from '@clerk/nextjs';
 import { Button, FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput, TextField } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
@@ -13,6 +14,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
   // Dispatch
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  const { getToken } = useAuth();
 
   // Get personalData State from globalState
   let personalData = useSelector(state => state.resume.data.personalData);
@@ -63,6 +65,8 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
           }
           setTimeout(async () => {
             try {
+              const token = await getToken();
+
               showSnack(
                 personalData._id
                   ? toastMessages.UPDATE_RESOURCE_REQUEST('Personal data')
@@ -75,6 +79,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
                 method: `${personalData._id ? 'PUT' : 'POST'}`,
                 headers: {
                   'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`,
                 },
                 data: {
                   name: values.name,

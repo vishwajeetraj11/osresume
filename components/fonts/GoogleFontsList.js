@@ -1,3 +1,4 @@
+import { useAuth } from '@clerk/nextjs';
 import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -18,6 +19,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [bound, setBound] = useState(20);
   const [fontsAdded, setFontsAdded] = useState([]);
   const dispatch = useDispatch();
+  const { getToken } = useAuth();
 
   const { resumeId } = useSelector(state => state.resume.metadata);
 
@@ -154,6 +156,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
                   }
 
                   try {
+                    const token = await getToken();
                     showSnack('Updating font...', 'default');
                     const { data } = await axios({
                       url: `/api/resumes/${resumeId}`,
@@ -162,6 +165,9 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
                         customStyles: {
                           font: fontFamily,
                         },
+                      },
+                      headers: {
+                        Authorization: `Bearer ${token}`,
                       },
                     });
 

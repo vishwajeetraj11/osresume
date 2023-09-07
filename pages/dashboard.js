@@ -34,7 +34,6 @@ const Dashboard = () => {
       try {
         setLoading(true);
         const token = await getToken();
-        console.log({ token });
         const { data } = await axios({
           url: '/api/resumes?user=true',
           method: 'GET',

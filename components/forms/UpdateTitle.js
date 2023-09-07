@@ -1,3 +1,4 @@
+import { useAuth } from '@clerk/nextjs';
 import { Button, TextField } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
@@ -12,6 +13,7 @@ import { toastMessages } from '../../shared/contants';
 const UpdateTitle = ({ closeDrawer }) => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  const { getToken } = useAuth();
 
   const { title, resumeId } = useSelector(state => state.resume.metadata);
 
@@ -42,6 +44,8 @@ const UpdateTitle = ({ closeDrawer }) => {
         onSubmit={(values, { setSubmitting, resetForm }) => {
           setTimeout(async () => {
             try {
+              const token = await getToken();
+
               showSnack(toastMessages.UPDATE_RESOURCE_REQUEST('Resume Title'), 'default');
 
               const { data } = await axios({
@@ -49,6 +53,7 @@ const UpdateTitle = ({ closeDrawer }) => {
                 method: 'PATCH',
                 headers: {
                   'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`,
                 },
                 data: {
                   title: values.title,

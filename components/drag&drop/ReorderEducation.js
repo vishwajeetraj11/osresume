@@ -1,3 +1,4 @@
+import { useAuth } from '@clerk/nextjs';
 import { Drawer, makeStyles, useMediaQuery } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -12,12 +13,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { addEducationData, addSampleEducationData, deleteSingleEducationData } from '../../redux/actions/resumeActions';
 import { toastMessages } from '../../shared/contants';
+import { EmptyFileSVG } from '../SVGs';
 import EducationCard from '../cards/EducationCard';
 import EditSingleEducation from '../forms/EditSingleEducation';
-import { EmptyFileSVG } from '../SVGs';
 
 const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const { enqueueSnackbar } = useSnackbar();
+  const { getToken } = useAuth();
 
   const showSnack = (message, variant) => {
     enqueueSnackbar(message, { variant });
@@ -163,9 +165,13 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
     }
     try {
       showSnack(toastMessages.DELETE_RESOURCE_REQUEST('Education'), 'default');
+      const token = await getToken();
       await axios({
         url: `/api/educations/${id}`,
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       dispatch(deleteSingleEducationData(id));
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Education'), 'success');
@@ -187,11 +193,15 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
     }
     try {
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_REQUEST('Education'), 'default');
+      const token = await getToken();
       const { data } = await axios({
         url: `/api/resumes/${resumeId}`,
         method: 'PATCH',
         data: {
           education: edu,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       });
       dispatch(addEducationData(data.resume.education));
