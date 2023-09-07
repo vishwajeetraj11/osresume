@@ -1,4 +1,4 @@
-import { useUser } from '@clerk/nextjs';
+import { useAuth, useUser } from '@clerk/nextjs';
 import { Button } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import axios from 'axios';
@@ -15,7 +15,7 @@ const Dashboard = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { id: userId } = useUser();
 
-  // const { data: userInfo } = useClerkSWR('/api/loggedIn');
+  const { getToken } = useAuth();
 
   const router = useRouter();
   const [resumes, setResumes] = useState([]);
@@ -33,17 +33,22 @@ const Dashboard = () => {
     (async () => {
       try {
         setLoading(true);
+        const token = await getToken();
+        console.log({ token });
         const { data } = await axios({
           url: '/api/resumes?user=true',
           method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         setResumes(data.data);
         if (!data.data.length) {
           setNoResume(true);
         }
-         setLoading(false);
+        setLoading(false);
       } catch (error) {
-        if(axios.isAxiosError(error)) {
+        if (axios.isAxiosError(error)) {
           console.log(error.response.data);
         }
         setLoading(false);
@@ -94,7 +99,7 @@ const Dashboard = () => {
       ));
     }
     if (error) {
-      return <p className='text-rose-600 text-xs'>{error}</p>;
+      return <p className="text-rose-600 text-xs">{error}</p>;
     }
     if (!resumes.length) {
       return <NoDocumentFound text="No Resumes Found." />;
