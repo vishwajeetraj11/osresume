@@ -1,4 +1,3 @@
-// import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs';
 import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs';
 import CssBaseline from '@material-ui/core/CssBaseline';
 // MUI Setup
