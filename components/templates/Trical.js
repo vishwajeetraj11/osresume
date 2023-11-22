@@ -13,7 +13,7 @@ class Trical extends React.Component {
     } = this.props;
 
     return (
-      <div id="t1" className="resume-a4 bg-white flex justify-between overflow-hidden" style={{ fontFamily: customStyles.font }}>
+      <div id="t2" className="resume-a4 bg-white flex justify-between overflow-hidden" style={{ fontFamily: customStyles.font }}>
         <div className="w-full">
           <div className="flex justify-center flex-col relative pt-12">
             <h1 className="pl-20 font-semibold text-t2-xl tracking-widest text-t1-black uppercase" style={{ letterSpacing: '7px' }}>

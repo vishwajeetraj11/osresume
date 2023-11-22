@@ -6,12 +6,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import clsx from 'clsx';
 import React from 'react';
 import { useSelector } from 'react-redux';
-// import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-// import EditSingleExperience from "./forms/EditSingleExperience"
 import ReorderEducation from './drag&drop/ReorderEducation';
 import ReorderExperience from './drag&drop/ReorderExperience';
 import ReorderExtras from './drag&drop/ReorderExtras';
-// import Divider from '@material-ui/core/Divider';
 import PersonalDataForm from './forms/PersonalData';
 
 const LeftSideBar = () => {
@@ -23,7 +20,6 @@ const LeftSideBar = () => {
 
   const useStyles = makeStyles({
     list: {
-      // width: !matches ? '50vw' : '100vw',
       width: '50vw',
       minHeight: matches ? '0' : '100vh',
     },

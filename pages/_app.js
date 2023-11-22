@@ -16,7 +16,7 @@ import { theme } from '../shared/theme';
 import '../styles/globals.scss';
 // Clerk Env
 const clerkSignInURL = process.env.NEXT_PUBLIC_CLERK_SIGN_IN;
-const publicPages = ['/', '/sign-in/[[...index]]', '/sign-up/[[...index]]'];
+const publicPages = ['/', '/sign-in/[[...index]]', '/sign-up/[[...index]]', '/exp'];
 
 function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
