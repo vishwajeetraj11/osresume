@@ -24,6 +24,20 @@ export const demoData = {
       description: 'Developed the interface of web forums and adding a charging station. Worked with Next.js, Typescript, Gatsby and Firebase.',
     },
   ],
+  extras: [
+    {
+      id: 1,
+      type: 'NEW_LINE',
+      title: 'Programming',
+      items: ['HTML', 'CSS', 'JavaScript'],
+    },
+    {
+      id: 2,
+      title: 'Database',
+      type: 'SAME_LINE',
+      items: ['Postgres', 'Firebase', 'SQL'],
+    },
+  ],
 };
 
 const Exp = () => {
