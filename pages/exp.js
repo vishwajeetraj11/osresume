@@ -37,6 +37,12 @@ export const demoData = {
       type: 'SAME_LINE',
       items: ['Postgres', 'Firebase', 'SQL'],
     },
+    {
+      id: 3,
+      title: 'Hackathons',
+      type: 'NEW_LINE',
+      items: ['Hashnode x Appwrite', 'Hashnode x Clerk', 'Hashnode x Netlify'],
+    },
   ],
 };
 
