@@ -39,7 +39,7 @@ export default function Home() {
           </Link>
         </div>
         <div className="hidden lg:block relative rounded overflow-hidden shadow-sm">
-          <img src="/images/landing-resume.png" alt="Lanidng page Resume" />
+          <img src="/images/landing-resume.webp" alt="Lanidng page Resume" />
         </div>
       </section>
 
