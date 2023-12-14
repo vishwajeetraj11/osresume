@@ -129,7 +129,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
         {googleFonts.length === 0 ? (
           <div className="-mt-12 lg:-mt-24 flex items-center justify-center flex-col h-screen">
             <img
-              src="/images/fontnotfound.png"
+              src="/images/fontnotfound.webp"
               className="w-11/12 object-contain"
               style={{ height: 'max-content' }}
               alt="Not Found Illustration"
