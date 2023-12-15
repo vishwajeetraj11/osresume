@@ -3,13 +3,12 @@ import { Button, Divider, FormControl, InputLabel, makeStyles, MenuItem, Select,
 import axios from 'axios';
 import { Formik } from 'formik';
 import ChipInput from 'material-ui-chip-input';
-import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { ADD_EXTRAS_DATA } from '../../redux/actionTypes/resumeActionTypes';
 import { toastMessages } from '../../shared/contants';
-
 const useStyles = makeStyles(theme => ({
   formControl: {
     minWidth: 120,
@@ -24,12 +23,26 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
   const extrasCollection = useSelector(state => state.resume.data.extras);
   const { getToken } = useAuth();
 
-  const { enqueueSnackbar } = useSnackbar();
 
   const showSnack = (message, variant) => {
-    enqueueSnackbar(message, { variant });
-  };
 
+
+    if(variant=='success')  {
+      toast.success(message)    
+    }    
+    
+    else if(variant==="error"){
+      toast.error(message)    
+    }
+    
+    else if (variant=== "default"){
+      toast.message(message)
+    }
+    else if (variant=== "info"){
+      toast.info(message)
+    }
+     };
+    
   // Dispatch
   const dispatch = useDispatch();
 

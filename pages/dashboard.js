@@ -5,14 +5,13 @@ import axios from 'axios';
 // import { ErrorMessage } from 'formik';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import NoDocumentFound from '../components/NoDocumentFound';
 import TemplateCard from '../components/cards/TemplateCard';
 import { toastMessages } from '../shared/contants';
+import { toast } from 'sonner';
 
 const Dashboard = () => {
-  const { enqueueSnackbar } = useSnackbar();
   const { id: userId } = useUser();
 
   const { getToken } = useAuth();
@@ -26,9 +25,24 @@ const Dashboard = () => {
   const [selectedResume, setSelectedResume] = useState('');
 
   const showSnack = (message, variant) => {
-    enqueueSnackbar(message, { variant });
-  };
 
+
+    if(variant=='success')  {
+      toast.success(message)    
+    }    
+    
+    else if(variant==="error"){
+      toast.error(message)    
+    }
+    
+    else if (variant=== "default"){
+      toast.message(message)
+    }
+    else if (variant=== "info"){
+      toast.info(message)
+    }
+     };
+    
   useEffect(() => {
     (async () => {
       try {

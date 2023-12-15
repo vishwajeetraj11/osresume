@@ -6,17 +6,16 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SaveIcon from '@material-ui/icons/Save';
 import axios from 'axios';
 import clsx from 'clsx';
-import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { addExtrasData, addSampleExtraData, deleteSingleExtraData } from '../../redux/actions/resumeActions';
 import { toastMessages } from '../../shared/contants';
 import { EmptyFileSVG } from '../SVGs';
 import ExtrasCard from '../cards/ExtrasCard';
 import EditSingleExtra from '../forms/EditSingleExtra';
-
 const ReorderExtras = ({ closeDrawer, anchor }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
   // media Query
@@ -24,13 +23,26 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
   const dispatch = useDispatch();
   const { getToken } = useAuth();
 
-  const { enqueueSnackbar } = useSnackbar();
 
   const showSnack = (message, variant) => {
-    enqueueSnackbar(message, { variant });
-  };
 
-  // Fetch Global State
+
+    if(variant=='success')  {
+      toast.success(message)    
+    }    
+    
+    else if(variant==="error"){
+      toast.error(message)    
+    }
+    
+    else if (variant=== "default"){
+      toast.message(message)
+    }
+    else if (variant=== "info"){
+      toast.info(message)
+    }
+     };
+      // Fetch Global State
   const extras = useSelector(state => state.resume.data.extras);
 
   // Local Extras State for drag and drop

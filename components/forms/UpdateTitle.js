@@ -3,16 +3,16 @@ import { Button, TextField } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 import { Formik } from 'formik';
-import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { UPDATE_TITLE } from '../../redux/actionTypes/resumeActionTypes';
 import { toastMessages } from '../../shared/contants';
+import { toast } from 'sonner';
+
 
 const UpdateTitle = ({ closeDrawer }) => {
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
   const { getToken } = useAuth();
 
   const { title, resumeId } = useSelector(state => state.resume.metadata);
@@ -23,10 +23,24 @@ const UpdateTitle = ({ closeDrawer }) => {
   });
 
   const showSnack = (message, variant) => {
-    enqueueSnackbar(message, { variant });
-  };
 
-  return (
+
+    if(variant=='success')  {
+      toast.success(message)    
+    }    
+    
+    else if(variant==="error"){
+      toast.error(message)    
+    }
+    
+    else if (variant=== "default"){
+      toast.message(message)
+    }
+    else if (variant=== "info"){
+      toast.info(message)
+    }
+     };
+      return (
     <div className="p-10">
       <Button className="px-4 py-2" onClick={() => closeDrawer()} color="default" variant="text">
         {' '}

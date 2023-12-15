@@ -4,24 +4,37 @@ import { Button, Divider, TextField } from '@material-ui/core';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import axios from 'axios';
 import { Formik } from 'formik';
-import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { ADD_EDUCATION_DATA } from '../../redux/actionTypes/resumeActionTypes';
 import { toastMessages } from '../../shared/contants';
-
+import { toast } from 'sonner';
 const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
   const educationCollection = useSelector(state => state.resume.data.education);
   const { getToken } = useAuth();
 
-  const { enqueueSnackbar } = useSnackbar();
 
   const showSnack = (message, variant) => {
-    enqueueSnackbar(message, { variant });
-  };
 
+
+    if(variant=='success')  {
+      toast.success(message)    
+    }    
+    
+    else if(variant==="error"){
+      toast.error(message)    
+    }
+    
+    else if (variant=== "default"){
+      toast.message(message)
+    }
+    else if (variant=== "info"){
+      toast.info(message)
+    }
+     };
+    
   // Dispatch
   const dispatch = useDispatch();
 
