@@ -1,9 +1,9 @@
 {
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true,
-        "source.organizeImports": true,
-        "source.fixAll.stylelint": true
-    },
-    "eslint.validate": ["html", "javascript", "javascriptreact"],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
+  "eslint.validate": ["html", "javascript", "javascriptreact"]
 }
