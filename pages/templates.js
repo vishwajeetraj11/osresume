@@ -4,14 +4,13 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { ErrorSVG, NoFilesFoundSVG } from '../components/SVGs';
 import TemplateCard from '../components/cards/TemplateCard';
 import { toastMessages } from '../shared/contants';
 
 const Templates = () => {
-  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -29,10 +28,24 @@ const Templates = () => {
   };
 
   const showSnack = (message, variant) => {
-    enqueueSnackbar(message, { variant });
-  };
 
-  const onCreate = async () => {
+
+    if(variant=='success')  {
+      toast.success(message)    
+    }    
+    
+    else if(variant==="error"){
+      toast.error(message)    
+    }
+    
+    else if (variant=== "default"){
+      toast.message(message)
+    }
+    else if (variant=== "info"){
+      toast.info(message)
+    }
+     };
+      const onCreate = async () => {
     try {
       showSnack(toastMessages.CREATE_RESOURCE_REQUEST('Resume'), 'default');
       const token = await getToken();

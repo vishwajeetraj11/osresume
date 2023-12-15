@@ -4,13 +4,12 @@ import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import axios from 'axios';
-import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
 import { UPDATE_FONT } from '../../redux/actionTypes/resumeActionTypes';
 import items from '../../shared/googleFonts.json';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
-
 const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [googleFonts, setGoogleFonts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -26,12 +25,26 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   // Search
   const [search, setSearch] = useState('');
 
-  const { enqueueSnackbar } = useSnackbar();
 
   const showSnack = (message, variant) => {
-    enqueueSnackbar(message, { variant });
-  };
 
+
+    if(variant=='success')  {
+      toast.success(message)    
+    }    
+    
+    else if(variant==="error"){
+      toast.error(message)    
+    }
+    
+    else if (variant=== "default"){
+      toast.message(message)
+    }
+    else if (variant=== "info"){
+      toast.info(message)
+    }
+     };
+    
   useEffect(() => {
     (async () => {
       // eslint-disable-next-line global-require

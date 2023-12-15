@@ -3,17 +3,17 @@ import { Button, FormControl, FormHelperText, InputAdornment, InputLabel, Outlin
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 import { Formik } from 'formik';
-import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { ADD_PERSONAL_DATA_STATE } from '../../redux/actionTypes/resumeActionTypes';
 import { toastMessages } from '../../shared/contants';
 
+
 const PersonalDataForm = ({ closeDrawer, anchor }) => {
   // Dispatch
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
   const { getToken } = useAuth();
 
   // Get personalData State from globalState
@@ -38,10 +38,24 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
   });
 
   const showSnack = (message, variant) => {
-    enqueueSnackbar(message, { variant });
-  };
 
-  return (
+
+    if(variant=='success')  {
+      toast.success(message)    
+    }    
+    
+    else if(variant==="error"){
+      toast.error(message)    
+    }
+    
+    else if (variant=== "default"){
+      toast.message(message)
+    }
+    else if (variant=== "info"){
+      toast.info(message)
+    }
+     };
+      return (
     <>
       <Button className="px-4 py-2 mr-4 self-start" onClick={() => closeDrawer(anchor, false)} color="default" variant="text">
         {' '}

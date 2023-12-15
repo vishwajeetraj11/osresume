@@ -8,6 +8,7 @@ import { SnackbarProvider } from 'notistack';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
+import { Toaster } from 'sonner';
 import 'tailwindcss/tailwind.css';
 import Loader from '../components/Loader';
 import Layout from '../components/layout/Layout';
@@ -54,10 +55,14 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <SnackbarProvider classes={{ variantSuccess: 'nackbarItem-variantSuccess-99', anchorOriginBottomLeft: 'mt-2' }} maxSnack={3}>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider  classNames="" theme={theme}>
           <StylesProvider injectFirst>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
+
+<Toaster richColors
+            position="bottom-left" 
+/>
             <Head>
               <title>OS Resume</title>
             </Head>

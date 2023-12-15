@@ -4,24 +4,37 @@ import { Button, Divider, TextField } from '@material-ui/core';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import axios from 'axios';
 import { Formik } from 'formik';
-import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { ADD_EXPERIENCE_DATA } from '../../redux/actionTypes/resumeActionTypes';
 import { toastMessages } from '../../shared/contants';
-
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
   const experienceCollection = useSelector(state => state.resume.data.experiences);
 
-  const { enqueueSnackbar } = useSnackbar();
   const { getToken } = useAuth();
 
   const showSnack = (message, variant) => {
-    enqueueSnackbar(message, { variant });
-  };
 
+
+    if(variant=='success')  {
+      toast.success(message)    
+    }    
+    
+    else if(variant==="error"){
+      toast.error(message)    
+    }
+    
+    else if (variant=== "default"){
+      toast.message(message)
+    }
+    else if (variant=== "info"){
+      toast.info(message)
+    }
+     };
+    
   const experience = experienceProp || {
     designation: '',
     company: '',

@@ -6,10 +6,10 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SaveIcon from '@material-ui/icons/Save';
 import axios from 'axios';
 import clsx from 'clsx';
-import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { addExperienceData, addSampleExperienceData, deleteSingleExperienceData } from '../../redux/actions/resumeActions';
 import { toastMessages } from '../../shared/contants';
@@ -17,12 +17,27 @@ import { EmptyFileSVG } from '../SVGs';
 import ExperienceCard from '../cards/ExperienceCard';
 import EditSingleExperience from '../forms/EditSingleExperience';
 
-const ReorderExperience = ({ closeDrawer, anchor }) => {
-  const { enqueueSnackbar } = useSnackbar();
 
-  const showSnack = (message, variant) => {
-    enqueueSnackbar(message, { variant });
-  };
+const ReorderExperience = ({ closeDrawer, anchor }) => {
+
+const showSnack = (message, variant) => {
+
+
+if(variant=='success')  {
+  toast.success(message)    
+}    
+
+else if(variant==="error"){
+  toast.error(message)    
+}
+
+else if (variant=== "default"){
+  toast.message(message)
+}
+else if (variant=== "info"){
+  toast.info(message)
+}
+ };
 
   const { getToken } = useAuth();
 

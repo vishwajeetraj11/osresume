@@ -6,10 +6,10 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SaveIcon from '@material-ui/icons/Save';
 import axios from 'axios';
 import clsx from 'clsx';
-import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { addEducationData, addSampleEducationData, deleteSingleEducationData } from '../../redux/actions/resumeActions';
 import { toastMessages } from '../../shared/contants';
@@ -17,14 +17,29 @@ import { EmptyFileSVG } from '../SVGs';
 import EducationCard from '../cards/EducationCard';
 import EditSingleEducation from '../forms/EditSingleEducation';
 
+
 const ReorderEducation = ({ closeDrawer, anchor, type }) => {
-  const { enqueueSnackbar } = useSnackbar();
   const { getToken } = useAuth();
 
   const showSnack = (message, variant) => {
-    enqueueSnackbar(message, { variant });
-  };
 
+
+    if(variant=='success')  {
+      toast.success(message)    
+    }    
+    
+    else if(variant==="error"){
+      toast.error(message)    
+    }
+    
+    else if (variant=== "default"){
+      toast.message(message)
+    }
+    else if (variant=== "info"){
+      toast.info(message)
+    }
+     };
+    
   const { resumeId } = useSelector(state => state.resume.metadata);
 
   // media Query
