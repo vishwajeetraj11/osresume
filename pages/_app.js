@@ -4,7 +4,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { SnackbarProvider } from 'notistack';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
@@ -54,7 +53,6 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <SnackbarProvider classes={{ variantSuccess: 'nackbarItem-variantSuccess-99', anchorOriginBottomLeft: 'mt-2' }} maxSnack={3}>
         <ThemeProvider  classNames="" theme={theme}>
           <StylesProvider injectFirst>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
@@ -88,7 +86,6 @@ function MyApp({ Component, pageProps }) {
             </ClerkProvider>
           </StylesProvider>
         </ThemeProvider>
-      </SnackbarProvider>
     </Provider>
   );
 }
