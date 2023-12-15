@@ -14,6 +14,10 @@ Resume Editor (Form Updata/Create Resume Fields)         |  Resume Editor (Googl
 
 Resume Editor (Manage Resume Sub Fields)
 <img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1627115172897/jWl6cpIVg.png" alt="=OS Resume Manage Sub Fields">
+
+### Requirements
+node: v18.12.0
+
 ## Getting Started
 
 1. Install all dependencies:
