@@ -73,7 +73,6 @@ const Templates = () => {
         }
       } catch (e) {
         console.log(e);
-
         setNoTemplate(true);
         setError('An error occurred. Please try again later!');
       } finally {
