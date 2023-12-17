@@ -87,10 +87,14 @@ const Dashboard = () => {
   };
   const onDelete = async () => {
     try {
+      const token = await getToken();
       showSnack(toastMessages.DELETE_RESOURCE_REQUEST('Resume'), 'default');
       await axios({
         url: `/api/resumes/${selectedResume._id}`,
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       setResumes(resumes => resumes.filter(resume => resume._id !== selectedResume._id));
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Resume'), 'success');
