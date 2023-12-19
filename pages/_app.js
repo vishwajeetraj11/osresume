@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { Toaster } from 'sonner';
-import 'tailwindcss/tailwind.css';
 import Loader from '../components/Loader';
 import Layout from '../components/layout/Layout';
 import { useStore } from '../redux/store';
