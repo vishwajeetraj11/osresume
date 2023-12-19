@@ -257,9 +257,9 @@ else if (variant=== "info"){
           <AddIcon />
           <p className="ml-2 capitalize">Add Experience</p>
         </Button>
-        <Button className="lg:px-4 lg:py-2" onClick={save} color="primary" variant="contained">
+        <Button className="lg:px-4 lg:py-2  text-white hover:bg-[#12836d]  bg-primary" onClick={save} color="primary" variant="contained">
           <SaveIcon />
-          <p className="ml-2 capitalize">Save Order</p>
+          <p className="ml-2 capitalize mr-6   ">Save Order</p>
         </Button>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>

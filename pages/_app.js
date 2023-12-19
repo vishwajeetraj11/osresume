@@ -53,7 +53,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-        <ThemeProvider  classNames="" theme={theme}>
+        <ThemeProvider  theme={theme}>
           <StylesProvider injectFirst>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
