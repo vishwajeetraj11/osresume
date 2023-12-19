@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { Toaster } from 'sonner';
-import 'tailwindcss/tailwind.css';
 import Loader from '../components/Loader';
 import Layout from '../components/layout/Layout';
 import { useStore } from '../redux/store';
@@ -53,39 +52,40 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-        <ThemeProvider  theme={theme}>
-          <StylesProvider injectFirst>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <StylesProvider injectFirst>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
 
-<Toaster richColors
-            position="bottom-left" 
-/>
-            <Head>
-              <title>OS Resume</title>
-            </Head>
-            <ClerkProvider {...pageProps}>
-              {loading ? (
-                <Loader fullScreen />
-              ) : (
-                <Layout route={router.pathname}>
-                  {publicPages.includes(router.pathname) ? (
-                    <Component {...pageProps} />
-                  ) : (
-                    <>
-                      <SignedIn>
-                        <Component {...pageProps} />
-                      </SignedIn>
-                      <SignedOut>
-                        <RedirectToSignIn />
-                      </SignedOut>
-                    </>
-                  )}
-                </Layout>
-              )}
-            </ClerkProvider>
-          </StylesProvider>
-        </ThemeProvider>
+          <Toaster
+            richColors
+            position="bottom-left"
+          />
+          <Head>
+            <title>OS Resume</title>
+          </Head>
+          <ClerkProvider {...pageProps}>
+            {loading ? (
+              <Loader fullScreen />
+            ) : (
+              <Layout route={router.pathname}>
+                {publicPages.includes(router.pathname) ? (
+                  <Component {...pageProps} />
+                ) : (
+                  <>
+                    <SignedIn>
+                      <Component {...pageProps} />
+                    </SignedIn>
+                    <SignedOut>
+                      <RedirectToSignIn />
+                    </SignedOut>
+                  </>
+                )}
+              </Layout>
+            )}
+          </ClerkProvider>
+        </StylesProvider>
+      </ThemeProvider>
     </Provider>
   );
 }

@@ -25,24 +25,16 @@ const Dashboard = () => {
   const [selectedResume, setSelectedResume] = useState('');
 
   const showSnack = (message, variant) => {
-
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
+    if (variant === 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
     }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-    
+  };
 
   useEffect(() => {
     (async () => {
@@ -144,13 +136,16 @@ const Dashboard = () => {
           <div className="mt-6 lg:mt-0">
             {selectedResume && (
               <>
-                <Button 
-                  className="mr-6 text-white hover:bg-[#12836d]  bg-primary" variant="contained"   onClick={onUpdate}>
+                <Button
+                  className="mr-6 text-white hover:bg-[#12836d]  bg-primary"
+                  variant="contained"
+                  onClick={onUpdate}
+                >
                   Update
                 </Button>
                 <Button
                   style={{
-                    
+
                     border: '2px solid #e74c3c',
                     padding: '6px 16px',
                   }}
