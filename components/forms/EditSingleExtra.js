@@ -216,7 +216,7 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
             </FormControl>
           </div>
           <Divider className="mt-8 -ml-10" />
-          <Button className="mt-6" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
+          <Button className="mt-6  text-white hover:bg-[#12836d]  bg-primary" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
             Submit
           </Button>
         </form>

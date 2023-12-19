@@ -6,10 +6,10 @@ import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { ADD_EDUCATION_DATA } from '../../redux/actionTypes/resumeActionTypes';
 import { toastMessages } from '../../shared/contants';
-import { toast } from 'sonner';
 const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
   const educationCollection = useSelector(state => state.resume.data.education);
@@ -228,7 +228,7 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
             </MuiPickersUtilsProvider>
           </div>
           <Divider className="mt-8 -ml-10" />
-          <Button className="mt-6" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
+          <Button className="mt-6     text-white hover:bg-[#12836d]  bg-primary" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
             Submit
           </Button>
         </form>

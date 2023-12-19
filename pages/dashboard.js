@@ -6,10 +6,10 @@ import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import NoDocumentFound from '../components/NoDocumentFound';
 import TemplateCard from '../components/cards/TemplateCard';
 import { toastMessages } from '../shared/contants';
-import { toast } from 'sonner';
 
 const Dashboard = () => {
   const { id: userId } = useUser();
@@ -43,6 +43,7 @@ const Dashboard = () => {
     }
      };
     
+
   useEffect(() => {
     (async () => {
       try {
@@ -139,16 +140,18 @@ const Dashboard = () => {
           <div className="mt-6 lg:mt-0">
             {selectedResume && (
               <>
-                <Button className="mr-6" variant="contained" color="primary" onClick={onUpdate}>
+                <Button 
+                  className="mr-6 text-white hover:bg-[#12836d]  bg-primary" variant="contained"   onClick={onUpdate}>
                   Update
                 </Button>
                 <Button
                   style={{
+                    
                     border: '2px solid #e74c3c',
-                    color: '#e74c3c',
                     padding: '6px 16px',
                   }}
-                  variant="text"
+                  className="   text-red-700"
+                  variant="contained"
                   onClick={onDelete}
                 >
                   Delete

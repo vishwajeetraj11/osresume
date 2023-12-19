@@ -146,7 +146,7 @@ const Templates = () => {
                 <Button className="mr-10" variant="outlined" color="primary" onClick={onCancel}>
                   Cancel
                 </Button>
-                <Button variant="contained" color="primary" onClick={onCreate}>
+                <Button variant="outlined "  className=' text-white hover:bg-[#12836d]  bg-primary' color="primary" onClick={onCreate}>
                   Create
                 </Button>
               </>

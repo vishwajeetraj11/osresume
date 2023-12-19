@@ -5,10 +5,10 @@ import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { UPDATE_TITLE } from '../../redux/actionTypes/resumeActionTypes';
 import { toastMessages } from '../../shared/contants';
-import { toast } from 'sonner';
 
 
 const UpdateTitle = ({ closeDrawer }) => {
@@ -110,7 +110,7 @@ const UpdateTitle = ({ closeDrawer }) => {
               error={!!errors.title}
               helperText={errors.title}
             />
-            <Button className="mt-6" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
+            <Button className="mt-6  text-white hover:bg-[#12836d]  bg-primary" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
               Submit
             </Button>
           </form>

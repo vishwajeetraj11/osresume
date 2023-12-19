@@ -256,7 +256,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
           <AddIcon />
           <p className="ml-2 capitalize">Add Education</p>
         </Button>
-        <Button className="lg:px-4 lg:py-2" onClick={save} color="primary" variant="contained">
+        <Button className="lg:px-4 lg:py-2 mr-6    text-white hover:bg-[#12836d]  bg-primary" onClick={save} color="primary" variant="contained">
           <SaveIcon />
           <p className="ml-2 capitalize">Save Order</p>
         </Button>
