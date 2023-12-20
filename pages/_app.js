@@ -12,7 +12,7 @@ import Loader from '../components/Loader';
 import Layout from '../components/layout/Layout';
 import { useStore } from '../redux/store';
 import { theme } from '../shared/theme';
-import '../styles/globals.scss';
+import '../styles/global.css';
 // Clerk Env
 const clerkSignInURL = process.env.NEXT_PUBLIC_CLERK_SIGN_IN;
 const publicPages = ['/', '/sign-in/[[...index]]', '/sign-up/[[...index]]'];
