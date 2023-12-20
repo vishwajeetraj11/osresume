@@ -27,24 +27,17 @@ const Templates = () => {
   };
 
   const showSnack = (message, variant) => {
-
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
+    if (variant === 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
     }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-      const onCreate = async () => {
+  };
+  const onCreate = async () => {
     try {
       showSnack(toastMessages.CREATE_RESOURCE_REQUEST('Resume'), 'default');
       const token = await getToken();
@@ -85,7 +78,6 @@ const Templates = () => {
         }
       } catch (e) {
         console.log(e);
-
         setNoTemplate(true);
         setError('An error occurred. Please try again later!');
       } finally {
@@ -145,7 +137,7 @@ const Templates = () => {
                 <Button className="mr-10" variant="outlined" color="primary" onClick={onCancel}>
                   Cancel
                 </Button>
-                <Button variant="outlined "  className=' text-white hover:bg-[#12836d]  bg-primary' color="primary" onClick={onCreate}>
+                <Button variant="outlined " className=" text-white hover:bg-[#12836d]  bg-primary" color="primary" onClick={onCreate}>
                   Create
                 </Button>
               </>

@@ -24,24 +24,16 @@ const Dashboard = () => {
   const [selectedResume, setSelectedResume] = useState('');
 
   const showSnack = (message, variant) => {
-
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
+    if (variant === 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
     }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-    
+  };
 
   useEffect(() => {
     (async () => {
@@ -87,10 +79,14 @@ const Dashboard = () => {
   };
   const onDelete = async () => {
     try {
+      const token = await getToken();
       showSnack(toastMessages.DELETE_RESOURCE_REQUEST('Resume'), 'default');
       await axios({
         url: `/api/resumes/${selectedResume._id}`,
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       setResumes(resumes => resumes.filter(resume => resume._id !== selectedResume._id));
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Resume'), 'success');
@@ -140,13 +136,16 @@ const Dashboard = () => {
           <div className="mt-6 lg:mt-0">
             {selectedResume && (
               <>
-                <Button 
-                  className="mr-6 text-white hover:bg-[#12836d]  bg-primary" variant="contained"   onClick={onUpdate}>
+                <Button
+                  className="mr-6 text-white hover:bg-[#12836d]  bg-primary"
+                  variant="contained"
+                  onClick={onUpdate}
+                >
                   Update
                 </Button>
                 <Button
                   style={{
-                    
+
                     border: '2px solid #e74c3c',
                     padding: '6px 16px',
                   }}
