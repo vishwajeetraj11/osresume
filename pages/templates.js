@@ -95,9 +95,9 @@ const Templates = () => {
   }, []);
 
   const render = () => {
-    if (loading) {
+    if (true) {
       return Array.from(Array(4).keys()).map(loader => (
-        <div className='h-[462px] animate-pulse bg-[#f8fafd] rounded-lg h-[500px]'></div>
+        <div className='h-[462px] animate-pulse bg-[#e0e5ebd6] rounded-lg h-[500px]'></div>
       ));
     }
     if (error) {
