@@ -1,5 +1,4 @@
 import React from 'react';
-import t1 from '../../styles/template1.module.scss';
 
 class Onyx extends React.Component {
   constructor() {
@@ -11,8 +10,8 @@ class Onyx extends React.Component {
     const { data, customStyles } = this.props;
     return (
       <div
-        id="t1"
-        className={`resume-a4 bg-white flex justify-between ${t1.container} overflow-hidden`}
+        id="t1"  
+        className={`resume-a4 bg-white flex justify-between py-px-[36px] px-px-[48px] overflow-hidden`}
         style={{ fontFamily: customStyles.font }}
       >
         <div className="left w-8/12 bg-yellow-4000">
@@ -54,7 +53,7 @@ class Onyx extends React.Component {
         </div>
         <div className="right w-3/12">
           <div className="header-right h-32 flex items-center">
-            <div className={t1.profile_image_container}>
+            <div >
               {data?.photo?.src && <img draggable={false} src={data.photo.src} alt={data?.personalData?.name} />}
             </div>
           </div>

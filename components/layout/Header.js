@@ -3,7 +3,6 @@ import { useMediaQuery } from '@material-ui/core';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import styles from '../../styles/Header.module.scss';
 
 // Header component using <SignedIn> & <SignedOut>.
 //
@@ -17,13 +16,13 @@ const Header = ({ route }) => {
   return (
     <header className={`shadow-sm ${route === '/' ? 'bg-transparent' : ''}`}>
       <div className="max-w-screen-xl mx-auto flex justify-between py-4 px-2 sm:p-4">
-        <div className={styles.left}>
+        <div className="flex align-center items-center">
           <Link href="/" className="flex items-center">
             {!mobile && <Image src="/icon-192x192.png" className="h-8 w-8" width={32} height={32} alt="Logo" />}
             <span className="text-default font-semibold text-sm lg:text-base ml-3">OS Resume</span>
           </Link>
         </div>
-        <div className={styles.right}>
+        <div className="flex align-center items-center"> 
           <SignedOut>
             <Link href="/sign-up">
               <p className="cursor-pointer rounded-full px-3 py-2 bg-primary text-white font-normal">Sign Up</p>
@@ -34,7 +33,7 @@ const Header = ({ route }) => {
               </p>
             </Link>
           </SignedOut>
-          <SignedIn>
+          <SignedIn className="ml-4">
             <Link href="/templates">
               <p className="text-default text-xs md:text-sm cursor-pointer lg:px-4">Templates</p>
             </Link>
