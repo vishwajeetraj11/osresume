@@ -1,6 +1,5 @@
 import { useAuth, useUser } from '@clerk/nextjs';
 import { Button } from '@material-ui/core';
-import Skeleton from '@material-ui/lab/Skeleton';
 import axios from 'axios';
 // import { ErrorMessage } from 'formik';
 import Head from 'next/head';
@@ -109,7 +108,8 @@ const Dashboard = () => {
   const render = () => {
     if (loading) {
       return Array.from(Array(4).keys()).map(loader => (
-        <Skeleton key={loader} className="rounded" variant="rect" width="100%" height={462} />
+        
+        <div className='h-[462px] animate-pulse bg-[#f8fafd] rounded-lg h-[500px]'></div>
       ));
     }
     if (error) {
