@@ -12,6 +12,7 @@ import RightSideBar from '../../components/RightSideBar';
 import { ResumeNotFoundSVG } from '../../components/SVGs';
 import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
+
 import {
   addEducationData,
   addExperienceData,
