@@ -17,27 +17,18 @@ import { EmptyFileSVG } from '../SVGs';
 import ExperienceCard from '../cards/ExperienceCard';
 import EditSingleExperience from '../forms/EditSingleExperience';
 
-
 const ReorderExperience = ({ closeDrawer, anchor }) => {
-
-const showSnack = (message, variant) => {
-
-
-if(variant=='success')  {
-  toast.success(message)    
-}    
-
-else if(variant==="error"){
-  toast.error(message)    
-}
-
-else if (variant=== "default"){
-  toast.message(message)
-}
-else if (variant=== "info"){
-  toast.info(message)
-}
- };
+  const showSnack = (message, variant) => {
+    if (variant === 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
+    }
+  };
 
   const { getToken } = useAuth();
 

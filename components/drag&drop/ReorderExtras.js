@@ -16,6 +16,7 @@ import { toastMessages } from '../../shared/contants';
 import { EmptyFileSVG } from '../SVGs';
 import ExtrasCard from '../cards/ExtrasCard';
 import EditSingleExtra from '../forms/EditSingleExtra';
+
 const ReorderExtras = ({ closeDrawer, anchor }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
   // media Query
@@ -23,26 +24,18 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
   const dispatch = useDispatch();
   const { getToken } = useAuth();
 
-
   const showSnack = (message, variant) => {
-
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
+    if (variant === 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
     }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-      // Fetch Global State
+  };
+  // Fetch Global State
   const extras = useSelector(state => state.resume.data.extras);
 
   // Local Extras State for drag and drop

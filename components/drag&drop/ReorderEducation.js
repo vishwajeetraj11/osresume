@@ -17,29 +17,21 @@ import { EmptyFileSVG } from '../SVGs';
 import EducationCard from '../cards/EducationCard';
 import EditSingleEducation from '../forms/EditSingleEducation';
 
-
 const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const { getToken } = useAuth();
 
   const showSnack = (message, variant) => {
+    if (variant === 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
+    }
+  };
 
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
-    }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-    
   const { resumeId } = useSelector(state => state.resume.metadata);
 
   // media Query
