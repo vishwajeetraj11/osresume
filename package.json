@@ -29,6 +29,8 @@
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-redux": "^7.2.4",
     "react-to-print": "^2.12.4",
@@ -38,9 +40,9 @@
     "sass": "^1.32.12",
     "sonner": "^1.2.4",
     "swr": "^0.5.6",
+    "tailwindcss": "^3.3.6",
     "uuid": "^8.3.2",
-    "yup": "^0.32.9",
-    "tailwindcss": "^3.3.6"
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.19",
