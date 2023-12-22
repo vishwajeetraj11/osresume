@@ -19,6 +19,7 @@ import {
   addPersonalDataState,
   addResumeMetaData,
 } from '../../redux/actions/resumeActions';
+import { adddata } from '../../redux/zustand';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 
 const Editor = () => {
@@ -34,6 +35,9 @@ const Editor = () => {
 
   const { title } = metadata;
   const { username } = resumeData?.personalData;
+
+  const addpersonaldata = adddata(state => state.addpersonaldata);
+  const personaldata = adddata(state => state.data.personaldata);
 
   const handlePrint = useReactToPrint({
     documentTitle: title || 'Your Resume',
@@ -89,6 +93,8 @@ const Editor = () => {
             customStyles: data.resume.customStyles,
           }),
         );
+        addpersonaldata(personalData);
+
         dispatch(addExperienceData(data.resume.experience));
         dispatch(addExtrasData(data.resume.extras));
         dispatch(addPersonalDataState(personalData));
@@ -126,7 +132,9 @@ const Editor = () => {
           <LeftSideBar />
           <div className="order-2 mx-auto my-10">
             {metadata.templateName === 'Onyx' && <Onyx ref={resumeRef} data={resumeData} customStyles={metadata.customStyles} />}
-            {metadata.templateName === 'Trical' && <Trical ref={resumeRef} data={resumeData} customStyles={metadata.customStyles} />}
+            {metadata.templateName === 'Trical' && (
+              <Trical ref={resumeRef} data={resumeData} perosnaldata={personaldata} customStyles={metadata.customStyles} />
+            )}
           </div>
           <RightSideBar handlePrint={handlePrint} />
         </div>

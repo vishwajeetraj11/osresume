@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { ADD_PERSONAL_DATA_STATE } from '../../redux/actionTypes/resumeActionTypes';
+import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
-
 
 const PersonalDataForm = ({ closeDrawer, anchor }) => {
   // Dispatch
@@ -24,6 +24,8 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
   let phoneNumber = personalData?.phoneNumber;
   phoneNumber = phoneNumber?.replace('+91', '');
   personalData = { ...personalData, phoneNumber };
+  //zustand
+  const addpersonaldata = adddata(state => state.addpersonaldata);
 
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
@@ -38,24 +40,17 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
   });
 
   const showSnack = (message, variant) => {
-
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
+    if (variant == 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
     }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-      return (
+  };
+  return (
     <>
       <Button className="px-4 py-2 mr-4 self-start" onClick={() => closeDrawer(anchor, false)} color="default" variant="text">
         {' '}
@@ -119,6 +114,8 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
                 type: ADD_PERSONAL_DATA_STATE,
                 payload: data.personal,
               });
+
+              addpersonaldata(data.personal);
 
               showSnack(
                 personalData._id
@@ -237,7 +234,13 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
               <FormHelperText className="Mui-error">{errors.phoneNumber}</FormHelperText>
             </FormControl>
 
-            <Button variant="contained" className="mr-6 mt-6   text-white hover:bg-[#12836d]  bg-primary" color="primary" type="submit" disabled={isSubmitting}>
+            <Button
+              variant="contained"
+              className="mr-6 mt-6   text-white hover:bg-[#12836d]  bg-primary"
+              color="primary"
+              type="submit"
+              disabled={isSubmitting}
+            >
               Submit
             </Button>
           </form>
