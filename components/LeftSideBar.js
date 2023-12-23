@@ -8,6 +8,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 // import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 // import EditSingleExperience from "./forms/EditSingleExperience"
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import ReorderEducation from './drag&drop/ReorderEducation';
 import ReorderExperience from './drag&drop/ReorderExperience';
 import ReorderExtras from './drag&drop/ReorderExtras';
@@ -54,21 +56,23 @@ const LeftSideBar = () => {
   );
 
   return (
-    <div className="bg-primary lg:pt-16 lg:px-4 flex lg:block fixed lg:static bottom-0 w-screen lg:w-auto justify-center left-sidebar order-3 lg:order-1">
-      {/* add overflow-scroll ||^^ if section are needed to scroll */}
-      {sections.data.map(({ title, Icon, id, label }) => (
-        <div key={id} className="inline-block lg:block my-4 lg:my-8">
-          <Tooltip title={title} placement={matches ? 'right' : 'bottom'} arrow>
-            <Button onClick={toggleLeftDrawer(label, true)}>
-              <Icon style={{ color: 'white' }} size="100px" />
-            </Button>
-          </Tooltip>
-          <Drawer anchor="left" open={leftDrawerState[label]} onClose={toggleLeftDrawer(label, false)}>
-            {leftList(label)}
-          </Drawer>
-        </div>
-      ))}
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <div className="bg-primary lg:pt-16 lg:px-4 flex lg:block fixed lg:static bottom-0 w-screen lg:w-auto justify-center left-sidebar order-3 lg:order-1">
+        {/* add overflow-scroll ||^^ if section are needed to scroll */}
+        {sections.data.map(({ title, Icon, id, label }) => (
+          <div key={id} className="inline-block lg:block my-4 lg:my-8">
+            <Tooltip title={title} placement={matches ? 'right' : 'bottom'} arrow>
+              <Button onClick={toggleLeftDrawer(label, true)}>
+                <Icon style={{ color: 'white' }} size="100px" />
+              </Button>
+            </Tooltip>
+            <Drawer anchor="left" open={leftDrawerState[label]} onClose={toggleLeftDrawer(label, false)}>
+              {leftList(label)}
+            </Drawer>
+          </div>
+        ))}
+      </div>
+    </DndProvider>
   );
 };
 

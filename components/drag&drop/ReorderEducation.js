@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useAuth } from '@clerk/nextjs';
 import { Drawer, makeStyles, useMediaQuery } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
@@ -6,8 +8,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SaveIcon from '@material-ui/icons/Save';
 import axios from 'axios';
 import clsx from 'clsx';
-import React, { useEffect, useState } from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,6 +18,7 @@ import { toastMessages } from '../../shared/contants';
 import { EmptyFileSVG } from '../SVGs';
 import EducationCard from '../cards/EducationCard';
 import EditSingleEducation from '../forms/EditSingleEducation';
+import { DraggableCard } from './DraggableCard';
 
 const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const { getToken } = useAuth();
@@ -85,29 +88,32 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const toggleEduDrawerStates = (id, open) => event => {
     setEduDrawerStates({ ...eduDrawerStates, [id]: open });
   };
-  const onDragEnd = result => {
-    if (!result.destination) return;
-    const items = Array.from(edu);
-    const [reorderItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderItem);
-    setEdu(items);
-  };
-
-  const grid = 10;
-  const getItemStyle = (isDragging, draggableStyle) => ({
-    // some basic styles to make the items look a bit nicer
-    userSelect: 'none',
-    padding: grid * 2,
-    margin: `0 0 ${grid}px 0`,
-    transition: 'height 0.2s',
-    overflow: 'hidden',
-
-    // change background colour if dragging
-    background: isDragging ? '#1abc9c95' : '#1abc9c',
-
-    // styles we need to apply on draggables
-    ...draggableStyle,
-  });
+  const findCard = useCallback(
+    id => {
+      const card = edu.filter(c => `${c.id}` === id)[0];
+      return {
+        card,
+        index: edu.indexOf(card),
+      };
+    },
+    [edu],
+  );
+  const moveCard = useCallback(
+    (id, atIndex) => {
+      const { card, index } = findCard(id);
+      const items = Array.from(edu);
+      const [reorderItem] = items.splice(index, 1);
+      items.splice(atIndex, 0, reorderItem);
+      setEdu(items);
+    },
+    [findCard, edu, setEdu],
+  );
+  const [{ didDrop }, drop] = useDrop(() => ({
+    accept: 'card',
+    collect: monitor => ({
+      didDrop: monitor.didDrop(),
+    }),
+  }));
 
   const getListStyle = isDraggingOver => ({
     // background: isDraggingOver ? '#ffffff' : '#16a085',
@@ -248,64 +254,47 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
           <AddIcon />
           <p className="ml-2 capitalize">Add Education</p>
         </Button>
-        <Button className="lg:px-4 lg:py-2 mr-6    text-white hover:bg-[#12836d]  bg-primary" onClick={save} color="primary" variant="contained">
+        <Button
+          className="lg:px-4 lg:py-2 mr-6    text-white hover:bg-[#12836d]  bg-primary"
+          onClick={save}
+          color="primary"
+          variant="contained"
+        >
           <SaveIcon />
           <p className="ml-2 capitalize">Save Order</p>
         </Button>
       </div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="education">
-          {(provided, snapshot) => (
-            // eslint-disable-next-line
-            <div
-              style={getListStyle(snapshot.isDraggingOver)}
-              className="pb-10 pt-8 rounded flex-1 flex flex-col"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              onClick={() => {
-                if (snapshot.isDraggingOver) {
-                  disableActiveEdu();
-                }
-              }}
-            >
-              {edu.length === 0 ? (
-                <div className="flex items-center justify-center flex-1">
-                  <div className="bg-gray-50 rounded-full h-96 w-96 flex flex-col items-center justify-center">
-                    <EmptyFileSVG />
-                    <h5 className="text-default font-normal my-5">No Education Yet!</h5>
-                  </div>
-                </div>
-              ) : (
-                edu.map((e, index) => (
-                  <Draggable key={e.id} draggableId={e.id} index={index}>
-                    {(provided, snapshot) => (
-                      // eslint-disable-next-line
-                      <div
-                        onClick={() => onClickEdu({ id: e.id })}
-                        className="p-6 text-white text-lg bg-primary rounded"
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}
-                        style={{
-                          ...getItemStyle(snapshot.isDragging, provided.draggableProps.style),
-                        }}
-                      >
-                        <EducationCard
-                          {...e}
-                          onDelete={onDelete}
-                          openEditEduForm={toggleEduDrawerStates(e.id, true)}
-                          educationActive={educationActive}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                ))
-              )}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+
+      {edu.length === 0 ? (
+        <div className="flex items-center justify-center flex-1">
+          <div className="bg-gray-50 rounded-full h-96 w-96 flex flex-col items-center justify-center">
+            <EmptyFileSVG />
+            <h5 className="text-default font-normal my-5">No Education Yet!</h5>
+          </div>
+        </div>
+      ) : (
+        <div
+          style={getListStyle(didDrop)}
+          className="pb-10 pt-8 rounded flex-1 flex flex-col"
+          ref={drop}
+          onClick={() => {
+            if (didDrop) {
+              disableActiveEdu();
+            }
+          }}
+        >
+          {edu.map((e, index) => (
+            <DraggableCard key={e.id} id={e.id} index={index} moveCard={moveCard} findCard={findCard} onClickItem={onClickEdu}>
+              <EducationCard
+                {...e}
+                onDelete={onDelete}
+                openEditEduForm={toggleEduDrawerStates(e.id, true)}
+                educationActive={educationActive}
+              />
+            </DraggableCard>
+          ))}
+        </div>
+      )}
 
       {edu.map(edu => (
         <div key={edu.id}>
