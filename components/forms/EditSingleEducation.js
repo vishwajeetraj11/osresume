@@ -8,33 +8,26 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
-import { ADD_EDUCATION_DATA } from '../../redux/actionTypes/resumeActionTypes';
+import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
 const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
   const educationCollection = useSelector(state => state.resume.data.education);
   const { getToken } = useAuth();
-
+  const addeducation = adddata(state => state.addeducationdata);
 
   const showSnack = (message, variant) => {
+    if (variant == 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
+    }
+  };
 
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
-    }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-    
   // Dispatch
   const dispatch = useDispatch();
 
@@ -98,16 +91,18 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
 
             if (educationExists) {
               const education = educationCollection.map(edu => (edu._id === data.education._id ? data.education : edu));
-              dispatch({
-                type: ADD_EDUCATION_DATA,
-                payload: education,
-              });
+              addeducation(education);
+              //  dispatch({
+              //    type: ADD_EDUCATION_DATA,
+              //    payload: education,
+              //  });
             } else {
               const results = educationCollection.map(edu => (edu.id === education.id ? data.education : edu));
-              dispatch({
-                type: ADD_EDUCATION_DATA,
-                payload: results,
-              });
+              addeducation(results);
+              //  dispatch({
+              //       type: ADD_EDUCATION_DATA,
+              //     payload: results,
+              //   });
             }
             showSnack(
               education._id ? toastMessages.UPDATE_RESOURCE_SUCCESS('Education') : toastMessages.CREATE_RESOURCE_SUCCESS('Education'),
@@ -228,7 +223,13 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
             </MuiPickersUtilsProvider>
           </div>
           <Divider className="mt-8 -ml-10" />
-          <Button className="mt-6     text-white hover:bg-[#12836d]  bg-primary" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
+          <Button
+            className="mt-6     text-white hover:bg-[#12836d]  bg-primary"
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={isSubmitting}
+          >
             Submit
           </Button>
         </form>

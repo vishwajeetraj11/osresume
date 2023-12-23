@@ -11,35 +11,32 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
-import { addEducationData, addSampleEducationData, deleteSingleEducationData } from '../../redux/actions/resumeActions';
+import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
 import { EmptyFileSVG } from '../SVGs';
 import EducationCard from '../cards/EducationCard';
 import EditSingleEducation from '../forms/EditSingleEducation';
 
-
 const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const { getToken } = useAuth();
 
+  const addeducationdata = adddata(state => state.addeducationdata);
+  const educationdata = adddata(state => state.data.educationdata);
+  const addsampleeducationdata = adddata(state => state.addsampleeducation);
+  const deletsingleducationdata = adddata(state => state.deletesingleeducation);
+  console.log(educationdata);
   const showSnack = (message, variant) => {
+    if (variant == 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
+    }
+  };
 
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
-    }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-    
   const { resumeId } = useSelector(state => state.resume.metadata);
 
   // media Query
@@ -47,7 +44,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const dispatch = useDispatch();
 
   // Fetch Global State
-  const education = useSelector(state => state.resume.data.education);
+  const education = adddata(state => state.data.educationdata);
 
   // Local Education State for drag and drop
   const [edu, setEdu] = useState(education);
@@ -175,7 +172,9 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
 
   const onDelete = async ({ id }) => {
     if (id.includes('-')) {
-      dispatch(deleteSingleEducationData(id));
+      //   dispatch(deleteSingleEducationData(id));
+      deletsingleducationdata(id);
+      console.log(educationdata, 'first');
       return;
     }
     try {
@@ -188,9 +187,13 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      dispatch(deleteSingleEducationData(id));
+      console.log(educationdata[0].id);
+      deletsingleducationdata(id);
+      //   dispatch(deleteSingleEducationData(id));
+      console.log(educationdata);
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Education'), 'success');
     } catch (error) {
+      console.log(error);
       showSnack(toastMessages.DELETE_RESOURCE_ERROR('Education'), 'error');
     }
   };
@@ -219,26 +222,41 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      dispatch(addEducationData(data.resume.education));
+
+      addeducationdata(data.resume.education);
+
+      //    dispatch(addEducationData(data.resume.education));
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Education'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
+      console.log('error', error);
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_ERROR('Education'), 'error');
     }
   };
 
   const onAdd = () => {
-    dispatch(
-      addSampleEducationData({
-        id: uuidv4(),
-        institution: 'Sample Institution',
-        major: 'Sample Major',
-        startedAt: 'June 2012',
-        endedAt: 'July 2013',
-        years: '1',
-        country: 'Sample Country',
-      }),
-    );
+    //   dispatch(
+    //   addSampleEducationData({
+    //     id: uuidv4(),
+    //     institution: 'Sample Institution',
+    //     major: 'Sample Major',
+    //     startedAt: 'June 2012',
+    //     endedAt: 'July 2013',
+    //     years: '1',
+    //     country: 'Sample Country',
+    //   }),
+    // );
+    //zustand
+    addsampleeducationdata({
+      id: uuidv4(),
+      institution: 'Sample Institution',
+      major: 'Sample Major',
+      startedAt: 'June 2012',
+      endedAt: 'July 2013',
+      years: '1',
+      country: 'Sample Country',
+    });
+
     showSnack(toastMessages.SAMPLE_DATA('Education'), 'success');
   };
 
@@ -256,7 +274,12 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
           <AddIcon />
           <p className="ml-2 capitalize">Add Education</p>
         </Button>
-        <Button className="lg:px-4 lg:py-2 mr-6    text-white hover:bg-[#12836d]  bg-primary" onClick={save} color="primary" variant="contained">
+        <Button
+          className="lg:px-4 lg:py-2 mr-6    text-white hover:bg-[#12836d]  bg-primary"
+          onClick={save}
+          color="primary"
+          variant="contained"
+        >
           <SaveIcon />
           <p className="ml-2 capitalize">Save Order</p>
         </Button>

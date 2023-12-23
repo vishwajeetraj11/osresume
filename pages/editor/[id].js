@@ -38,6 +38,7 @@ const Editor = () => {
 
   const addpersonaldata = adddata(state => state.addpersonaldata);
   const personaldata = adddata(state => state.data.personaldata);
+  const educationdata = adddata(state => state.addeducationdata);
 
   const handlePrint = useReactToPrint({
     documentTitle: title || 'Your Resume',
@@ -99,6 +100,7 @@ const Editor = () => {
         dispatch(addExtrasData(data.resume.extras));
         dispatch(addPersonalDataState(personalData));
         dispatch(addEducationData(data.resume.education));
+        educationdata(data.resume.education);
 
         const fontID = data.resume.customStyles.font.replace(/ /g, '+');
         addFontInHeadTag(fontID);
