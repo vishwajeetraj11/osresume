@@ -8,12 +8,14 @@ class Trical extends React.Component {
 
   render() {
     const {
+      educationdata,
       perosnaldata,
       data: { personalData, experiences, extras, education },
       customStyles,
     } = this.props;
 
     // console.log(perosnaldata, 'hellooo');
+    console.log(educationdata);
 
     return (
       <div id="t1" className="resume-a4 bg-white flex justify-between overflow-hidden" style={{ fontFamily: customStyles.font }}>
@@ -40,9 +42,9 @@ class Trical extends React.Component {
                   <p className="mb-12 text-t2-md">{perosnaldata?.objective}</p>
                 </>
               )}
-              {!!education.length && <Title>my education</Title>}
+              {!!educationdata.length && <Title>my education</Title>}
               <div className="flex flex-row justify-between mb-12 flex-wrap">
-                {education.map((edu, i) => (
+                {educationdata.map((edu, i) => (
                   <Description classes="mb-3" key={edu.id} index={i}>
                     <Paragraph classes="text-t2-sub-heading font-bold">
                       {`${edu?.startedAt?.split(' ')[1]} -${edu?.endedAt?.split(' ')[1]}`}

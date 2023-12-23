@@ -39,6 +39,7 @@ const Editor = () => {
   const addpersonaldata = adddata(state => state.addpersonaldata);
   const personaldata = adddata(state => state.data.personaldata);
   const educationdata = adddata(state => state.addeducationdata);
+  const eductainvalues = adddata(state => state.data.educationdata);
 
   const handlePrint = useReactToPrint({
     documentTitle: title || 'Your Resume',
@@ -135,7 +136,13 @@ const Editor = () => {
           <div className="order-2 mx-auto my-10">
             {metadata.templateName === 'Onyx' && <Onyx ref={resumeRef} data={resumeData} customStyles={metadata.customStyles} />}
             {metadata.templateName === 'Trical' && (
-              <Trical ref={resumeRef} data={resumeData} perosnaldata={personaldata} customStyles={metadata.customStyles} />
+              <Trical
+                ref={resumeRef}
+                data={resumeData}
+                perosnaldata={personaldata}
+                educationdata={eductainvalues}
+                customStyles={metadata.customStyles}
+              />
             )}
           </div>
           <RightSideBar handlePrint={handlePrint} />
