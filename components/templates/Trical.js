@@ -10,7 +10,7 @@ class Trical extends React.Component {
     const {
       educationdata,
       perosnaldata,
-      data: { personalData, experiences, extras, education },
+      data: { experiences, extras, education },
       customStyles,
     } = this.props;
 

@@ -1,22 +1,20 @@
-
 module.exports = {
-  content:  ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
 
     extend: {
       colors: {
-            
-      't1-gray': '#73808D',
-      default: '#808080',
-      't1-black': '#101214',
-      primary: '#1abc9c',
-      't2-primary': '#5B6784',
-      't2-secondary': '#F3F7F8',
-      't2-paragraph': '#7F7F7F',
-      't2-sub-heading': '#3E4349',
-    },
 
-      
+        't1-gray': '#73808D',
+        default: '#808080',
+        't1-black': '#101214',
+        primary: '#1abc9c',
+        't2-primary': '#5B6784',
+        't2-secondary': '#F3F7F8',
+        't2-paragraph': '#7F7F7F',
+        't2-sub-heading': '#3E4349',
+      },
+
     },
     screens: {
       sm: '640px',

@@ -70,7 +70,7 @@ export const adddata = create(
           ...state.data,
           experiencedata: state.data.experiencedata.filter(a => {
             console.log(a.id);
-            return a._id !== id;
+            return a.id !== id;
           }),
         },
       })),

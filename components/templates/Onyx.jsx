@@ -10,8 +10,8 @@ class Onyx extends React.Component {
     const { data, customStyles } = this.props;
     return (
       <div
-        id="t1"  
-        className={`resume-a4 bg-white flex justify-between py-px-[36px] px-px-[48px] overflow-hidden`}
+        id="t1"
+        className="resume-a4 bg-white flex justify-between py-[36px] px-[48px] overflow-hidden"
         style={{ fontFamily: customStyles.font }}
       >
         <div className="left w-8/12 bg-yellow-4000">
@@ -53,7 +53,7 @@ class Onyx extends React.Component {
         </div>
         <div className="right w-3/12">
           <div className="header-right h-32 flex items-center">
-            <div >
+            <div>
               {data?.photo?.src && <img draggable={false} src={data.photo.src} alt={data?.personalData?.name} />}
             </div>
           </div>

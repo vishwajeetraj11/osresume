@@ -26,7 +26,11 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const deletsingleducationdata = adddata(state => state.deletesingleeducation);
   console.log(educationdata);
   const showSnack = (message, variant) => {
+<<<<<<< HEAD
     if (variant == 'success') {
+=======
+    if (variant === 'success') {
+>>>>>>> 5123794f0bd915b167d6307b5422da2839ce9ad5
       toast.success(message);
     } else if (variant === 'error') {
       toast.error(message);

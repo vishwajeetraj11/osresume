@@ -22,9 +22,9 @@ const Header = ({ route }) => {
             <span className="text-default font-semibold text-sm lg:text-base ml-3">OS Resume</span>
           </Link>
         </div>
-        <div className="flex align-center items-center"> 
+        <div className="flex align-center items-center">
           <SignedOut>
-            <Link href="/sign-up">
+            <Link className="mr-5" href="/sign-up">
               <p className="cursor-pointer rounded-full px-3 py-2 bg-primary text-white font-normal">Sign Up</p>
             </Link>
             <Link href="/sign-in">

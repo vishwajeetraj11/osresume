@@ -4,93 +4,96 @@
 @tailwind utilities;
 
 html {
-	@media only screen and (min-width: 1024px) {
-		font-size: 100%;
-	}
+  @media only screen and (min-width: 1024px) {
+    font-size: 100%;
+  }
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-
 div {
-	word-break: break-word;
+  word-break: break-word;
 }
 
 html,
 body {
-	padding: 0;
-	margin: 0;
-	font-family: 'Poppins', sans-serif;
-	font-weight: 300;
-	background-color: #f9fafb;
-	position: relative;
-	backface-visibility: hidden;
-	overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  background-color: #f9fafb;
+  position: relative;
+  backface-visibility: hidden;
+  overflow-x: hidden;
 }
 
 a {
-	color: inherit;
-	text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 * {
-	box-sizing: border-box;
-	print-color-adjust: exact;
-	-webkit-print-color-adjust: exact;
+  box-sizing: border-box;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
 }
 
 .resume-a4 {
-	height: 297mm;
-	width: 210mm;
+  height: 297mm;
+  width: 210mm;
 }
 
 img {
-	height: 100%;
-	width: 100%;
-	object-fit: cover;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 .MuiDrawer-paperAnchorTop {
-	width: 100vw;
-	height: 100vh;
-	@media only screen and (min-width: 1024px) {
-		width: 50vw;
-	}
+  width: 100vw;
+  height: 100vh;
+  @media only screen and (min-width: 1024px) {
+    width: 50vw;
+  }
 }
 
 .landing-container {
-	background: #1abc9c url('/images/landing-resume-1.jpg');
-	background-position: center;
-	background-size: cover;
-	background-attachment: fixed;
+  background: #1abc9c url('/images/landing-resume-1.jpg');
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .cl-user-button-avatar {
-	width: 100px;
-	height: 100px;
-	object-fit: cover;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
 }
 
-.templates-grid-container{
-	display: grid;
-	grid-gap: 1rem;
-	grid-template-columns: 1fr;
-	@media screen and (min-width: 600px) {
-		grid-template-columns: repeat(2, 1fr);
-	}
-	@media screen and (min-width: 1200px) {
-		grid-template-columns: repeat(4, 1fr);
-	}
+.templates-grid-container {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr;
 }
 
+@media screen and (min-width: 600px) {
+  .templates-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (min-width: 1200px) {
+  .templates-grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 .word-keep-all {
-	word-break: keep-all;
+  word-break: keep-all;
 }
 
 .nackbarItem-variantSuccess-99 {
-	background-color: #1abc9c !important;
+  background-color: #1abc9c !important;
 }
