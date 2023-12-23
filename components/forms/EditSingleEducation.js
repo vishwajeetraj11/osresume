@@ -12,7 +12,7 @@ import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
 const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
-  const educationCollection = useSelector(state => state.resume.data.education);
+  const educationCollection = adddata(state => state.data.educationdata);
   const { getToken } = useAuth();
   const addeducation = adddata(state => state.addeducationdata);
 
