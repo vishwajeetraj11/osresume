@@ -53,9 +53,7 @@ class Onyx extends React.Component {
         </div>
         <div className="right w-3/12">
           <div className="header-right h-32 flex items-center">
-            <div>
-              {data?.photo?.src && <img draggable={false} src={data.photo.src} alt={data?.personalData?.name} />}
-            </div>
+            <div>{data?.photo?.src && <img draggable={false} src={data.photo.src} alt={data?.personalData?.name} />}</div>
           </div>
           <div className="mb-6">
             <p className="text-t1-gray text-t1-sm" style={{ wordBreak: 'keep-all' }}>

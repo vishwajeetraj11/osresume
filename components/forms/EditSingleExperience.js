@@ -5,14 +5,14 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { ADD_EXPERIENCE_DATA } from '../../redux/actionTypes/resumeActionTypes';
 import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
-  const { resumeId } = useSelector(state => state.resume.metadata);
+  const { resumeId } = adddata(state => state.data.resumemetadata);
   const experienceCollection = adddata(state => state.data.experiencedata);
   const addexperiencedata = adddata(state => state.addexperiencedata);
 

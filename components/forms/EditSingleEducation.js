@@ -5,13 +5,13 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
 const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
-  const { resumeId } = useSelector(state => state.resume.metadata);
+  const { resumeId } = adddata(state => state.data.resumemetadata);
   const educationCollection = adddata(state => state.data.educationdata);
   const { getToken } = useAuth();
   const addeducation = adddata(state => state.addeducationdata);

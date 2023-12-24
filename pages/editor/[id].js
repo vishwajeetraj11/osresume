@@ -44,6 +44,7 @@ const Editor = () => {
   const eductainvalues = adddata(state => state.data.educationdata);
   const experiencedata = adddata(state => state.data.experiencedata);
   const extrasdata = adddata(state => state.data.extrasdata);
+  const addmetadata = adddata(state => state.addresumemetadata);
 
   const handlePrint = useReactToPrint({
     documentTitle: title || 'Your Resume',
@@ -89,6 +90,14 @@ const Editor = () => {
         const personalData = data.resume.personal
           ? data.resume.personal
           : { name: '', email: '', phoneNumber: '', designation: '', country: '', objective: '' };
+        addmetadata({
+          title: data.resume.title,
+          createdAt: data.resume.createdAt,
+          resumeId: data.resume._id,
+          userId: data.resume.userId,
+          templateName: data.resume.templateName,
+          customStyles: data.resume.customStyles,
+        });
         dispatch(
           addResumeMetaData({
             title: data.resume.title,

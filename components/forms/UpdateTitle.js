@@ -4,18 +4,18 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { UPDATE_TITLE } from '../../redux/actionTypes/resumeActionTypes';
+import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
-
 
 const UpdateTitle = ({ closeDrawer }) => {
   const dispatch = useDispatch();
   const { getToken } = useAuth();
 
-  const { title, resumeId } = useSelector(state => state.resume.metadata);
+  const { title, resumeId } = adddata(state => state.data.resumemetadata);
 
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
@@ -23,24 +23,17 @@ const UpdateTitle = ({ closeDrawer }) => {
   });
 
   const showSnack = (message, variant) => {
-
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
+    if (variant == 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
     }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-      return (
+  };
+  return (
     <div className="p-10">
       <Button className="px-4 py-2" onClick={() => closeDrawer()} color="default" variant="text">
         {' '}
@@ -110,7 +103,13 @@ const UpdateTitle = ({ closeDrawer }) => {
               error={!!errors.title}
               helperText={errors.title}
             />
-            <Button className="mt-6  text-white hover:bg-[#12836d]  bg-primary" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
+            <Button
+              className="mt-6  text-white hover:bg-[#12836d]  bg-primary"
+              variant="contained"
+              color="primary"
+              type="submit"
+              disabled={isSubmitting}
+            >
               Submit
             </Button>
           </form>

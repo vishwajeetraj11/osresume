@@ -18,8 +18,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
 
   // Get personalData State from globalState
   let personalData = useSelector(state => state.resume.data.personalData);
-  const { resumeId } = useSelector(state => state.resume.metadata);
-
+  const { resumeId } = adddata(state => state.data.resumemetadata);
   // Remove +91 from phoneNumber
   let phoneNumber = personalData?.phoneNumber;
   phoneNumber = phoneNumber?.replace('+91', '');
