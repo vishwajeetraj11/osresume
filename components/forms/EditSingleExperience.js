@@ -9,32 +9,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { ADD_EXPERIENCE_DATA } from '../../redux/actionTypes/resumeActionTypes';
+import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
-  const experienceCollection = useSelector(state => state.resume.data.experiences);
+  const experienceCollection = adddata(state => state.data.experiencedata);
+  const addexperiencedata = adddata(state => state.addexperiencedata);
+
+  //useSelector(state => state.resume.data.experiences);
 
   const { getToken } = useAuth();
 
   const showSnack = (message, variant) => {
+    if (variant == 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
+    }
+  };
 
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
-    }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-    
   const experience = experienceProp || {
     designation: '',
     company: '',
@@ -116,12 +113,15 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
 
             if (experienceExists) {
               const experience = experienceCollection.map(exp => (exp._id === data.experience._id ? data.experience : exp));
+              addexperiencedata(experience);
               dispatch({
                 type: ADD_EXPERIENCE_DATA,
                 payload: experience,
               });
             } else {
               const results = experienceCollection.map(exp => (exp.id === experience.id ? data.experience : exp));
+              addexperiencedata(results);
+
               dispatch({
                 type: ADD_EXPERIENCE_DATA,
                 payload: results,
@@ -278,7 +278,13 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
             </MuiPickersUtilsProvider>
           </div>
           <Divider className="mt-8 -ml-10" />
-          <Button className="mt-6  text-white hover:bg-[#12836d]  bg-primary" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
+          <Button
+            className="mt-6  text-white hover:bg-[#12836d]  bg-primary"
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={isSubmitting}
+          >
             Submit
           </Button>
         </form>

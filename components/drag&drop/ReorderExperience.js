@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { addExperienceData, addSampleExperienceData, deleteSingleExperienceData } from '../../redux/actions/resumeActions';
+import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
 import { EmptyFileSVG } from '../SVGs';
 import ExperienceCard from '../cards/ExperienceCard';
@@ -39,7 +40,10 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
   const dispatch = useDispatch();
 
   // Fetch Global State
-  const experiences = useSelector(state => state.resume.data.experiences);
+  const experiences = adddata(state => state.data.experiencedata);
+  const addexperiencedata = adddata(state => state.addexperiencedata);
+  const addsampleexperience = adddata(state => state.addsampleexperience);
+  const deletesingleexperience = adddata(state => state.deletesingleexperience);
 
   // Local Experiences State for drag and drop
   const [exp, setExp] = useState(experiences);
@@ -163,6 +167,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
 
   const onDelete = async ({ id }) => {
     if (id.includes('-')) {
+      deletesingleexperience(id);
       dispatch(deleteSingleExperienceData(id));
       return;
     }
@@ -176,7 +181,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      deletesingleexperience(id);
       dispatch(deleteSingleExperienceData(id));
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Experience'), 'success');
     } catch (error) {
@@ -209,6 +214,8 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(data.resume.experience);
+      addexperiencedata(data.resume.experience);
       dispatch(addExperienceData(data.resume.experience));
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Experience'), 'success');
       closeDrawer(anchor, false);
@@ -219,6 +226,16 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
   };
 
   const onAdd = () => {
+    addsampleexperience({
+      id: uuidv4(),
+      designation: 'Sample Designation',
+      company: 'Company Description',
+      description: 'Sample Description',
+      startedAt: 'June 2012',
+      endedAt: 'July 2013',
+      years: '1',
+      country: 'Sample Country',
+    });
     dispatch(
       addSampleExperienceData({
         id: uuidv4(),

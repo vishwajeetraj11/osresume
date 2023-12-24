@@ -37,10 +37,12 @@ const Editor = () => {
   const { title } = metadata;
   const { username } = resumeData?.personalData;
 
+  const addexperiencedata = adddata(state => state.addexperiencedata);
   const addpersonaldata = adddata(state => state.addpersonaldata);
   const personaldata = adddata(state => state.data.personaldata);
   const educationdata = adddata(state => state.addeducationdata);
   const eductainvalues = adddata(state => state.data.educationdata);
+  const experiencedata = adddata(state => state.data.experiencedata);
 
   const handlePrint = useReactToPrint({
     documentTitle: title || 'Your Resume',
@@ -96,13 +98,14 @@ const Editor = () => {
             customStyles: data.resume.customStyles,
           }),
         );
-        addpersonaldata(personalData);
 
         dispatch(addExperienceData(data.resume.experience));
         dispatch(addExtrasData(data.resume.extras));
         dispatch(addPersonalDataState(personalData));
         dispatch(addEducationData(data.resume.education));
         educationdata(data.resume.education);
+        addexperiencedata(data.resume.experience);
+        addpersonaldata(personalData);
 
         const fontID = data.resume.customStyles.font.replace(/ /g, '+');
         addFontInHeadTag(fontID);
@@ -143,6 +146,7 @@ const Editor = () => {
                 perosnaldata={personaldata}
                 educationdata={eductainvalues}
                 customStyles={metadata.customStyles}
+                experiencedata={experiencedata}
               />
             )}
           </div>

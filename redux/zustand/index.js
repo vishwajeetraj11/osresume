@@ -6,7 +6,7 @@ export const adddata = create(
     data: {
       personaldata: {},
       resumemetadata: {},
-      experiencedata: {},
+      experiencedata: [],
       extrasdata: {},
       educationdata: [],
     },
@@ -89,7 +89,7 @@ export const adddata = create(
       set(state => ({
         data: {
           ...state.data,
-          experiencedata: data,
+          experiencedata: [...state.data.experiencedata, data],
         },
       })),
     addsampleeducation: data =>

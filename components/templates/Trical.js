@@ -10,6 +10,7 @@ class Trical extends React.Component {
     const {
       educationdata,
       perosnaldata,
+      experiencedata,
       data: { experiences, extras, education },
       customStyles,
     } = this.props;
@@ -56,9 +57,9 @@ class Trical extends React.Component {
                 ))}
               </div>
 
-              {!!experiences.length && <Title classes="mt-8">work experience</Title>}
+              {!!experiencedata.length && <Title classes="mt-8">work experience</Title>}
               <div className="flex flex-col justify-between">
-                {experiences.map((exp, i) => (
+                {experiencedata.map((exp, i) => (
                   <Description classes="mb-4" key={exp.id} index={i}>
                     <Paragraph>
                       {`${exp.startedAt} -${exp.endedAt} | ${exp.country} | ${exp.years} ${exp.years === '1' ? ' year' : ' years'}`}
