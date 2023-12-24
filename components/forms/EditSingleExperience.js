@@ -5,10 +5,8 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
-import { ADD_EXPERIENCE_DATA } from '../../redux/actionTypes/resumeActionTypes';
 import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
@@ -43,7 +41,6 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
   };
 
   // Dispatch
-  const dispatch = useDispatch();
 
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
@@ -114,18 +111,9 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
             if (experienceExists) {
               const experience = experienceCollection.map(exp => (exp._id === data.experience._id ? data.experience : exp));
               addexperiencedata(experience);
-              dispatch({
-                type: ADD_EXPERIENCE_DATA,
-                payload: experience,
-              });
             } else {
               const results = experienceCollection.map(exp => (exp.id === experience.id ? data.experience : exp));
               addexperiencedata(results);
-
-              dispatch({
-                type: ADD_EXPERIENCE_DATA,
-                payload: results,
-              });
             }
             showSnack(
               experience._id ? toastMessages.UPDATE_RESOURCE_SUCCESS('Experience') : toastMessages.CREATE_RESOURCE_SUCCESS('Experience'),

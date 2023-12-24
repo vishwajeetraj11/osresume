@@ -13,13 +13,6 @@ import { ResumeNotFoundSVG } from '../../components/SVGs';
 import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
 
-import {
-  addEducationData,
-  addExperienceData,
-  addExtrasData,
-  addPersonalDataState,
-  addResumeMetaData,
-} from '../../redux/actions/resumeActions';
 import { adddata } from '../../redux/zustand';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 
@@ -98,21 +91,21 @@ const Editor = () => {
           templateName: data.resume.templateName,
           customStyles: data.resume.customStyles,
         });
-        dispatch(
-          addResumeMetaData({
-            title: data.resume.title,
-            createdAt: data.resume.createdAt,
-            resumeId: data.resume._id,
-            userId: data.resume.userId,
-            templateName: data.resume.templateName,
-            customStyles: data.resume.customStyles,
-          }),
-        );
+        //    dispatch(
+        //    addResumeMetaData({
+        //     title: data.resume.title,
+        //   createdAt: data.resume.createdAt,
+        //       resumeId: data.resume._id,
+        //       userId: data.resume.userId,
+        //      templateName: data.resume.templateName,
+        //    customStyles: data.resume.customStyles,
+        //     }),
+        // );
 
-        dispatch(addExperienceData(data.resume.experience));
-        dispatch(addExtrasData(data.resume.extras));
-        dispatch(addPersonalDataState(personalData));
-        dispatch(addEducationData(data.resume.education));
+        // dispatch(addExperienceData(data.resume.experience));
+        // dispatch(addExtrasData(data.resume.extras));
+        // dispatch(addPersonalDataState(personalData));
+        // dispatch(addEducationData(data.resume.education));
         educationdata(data.resume.education);
         addexperiencedata(data.resume.experience);
         addpersonaldata(personalData);

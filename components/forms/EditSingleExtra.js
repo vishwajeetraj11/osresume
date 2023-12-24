@@ -4,10 +4,8 @@ import axios from 'axios';
 import { Formik } from 'formik';
 import ChipInput from 'material-ui-chip-input';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
-import { ADD_EXTRAS_DATA } from '../../redux/actionTypes/resumeActionTypes';
 import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
 const useStyles = makeStyles(theme => ({
@@ -39,7 +37,7 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
   };
 
   // Dispatch
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
@@ -97,17 +95,17 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
             if (extraExists) {
               const extras = extrasCollection.map(ext => (ext._id === data.extras._id ? data.extras : ext));
               addextrasdata(extras);
-              dispatch({
-                type: ADD_EXTRAS_DATA,
-                payload: extras,
-              });
+              // dispatch({
+              //   type: ADD_EXTRAS_DATA,
+              //   payload: extras,
+              // });
             } else {
               const results = extrasCollection.map(ext => (ext.id === extra.id ? data.extras : ext));
               addextrasdata(results);
-              dispatch({
-                type: ADD_EXTRAS_DATA,
-                payload: results,
-              });
+              // dispatch({
+              //   type: ADD_EXTRAS_DATA,
+              //   payload: results,
+              // });
             }
 
             resetForm({

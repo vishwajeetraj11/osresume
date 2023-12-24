@@ -4,20 +4,18 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
-import { ADD_PERSONAL_DATA_STATE } from '../../redux/actionTypes/resumeActionTypes';
 import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
 
 const PersonalDataForm = ({ closeDrawer, anchor }) => {
   // Dispatch
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const { getToken } = useAuth();
 
   // Get personalData State from globalState
-  let personalData = useSelector(state => state.resume.data.personalData);
+  let personalData = adddata(state => state.data.personaldata);
   const { resumeId } = adddata(state => state.data.resumemetadata);
   // Remove +91 from phoneNumber
   let phoneNumber = personalData?.phoneNumber;
@@ -107,11 +105,6 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
                 designation: '',
                 country: '',
                 objective: '',
-              });
-
-              dispatch({
-                type: ADD_PERSONAL_DATA_STATE,
-                payload: data.personal,
               });
 
               addpersonaldata(data.personal);
