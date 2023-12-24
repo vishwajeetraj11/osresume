@@ -8,6 +8,7 @@ class Trical extends React.Component {
 
   render() {
     const {
+      extrasdata,
       educationdata,
       perosnaldata,
       experiencedata,
@@ -75,7 +76,7 @@ class Trical extends React.Component {
               {(perosnaldata?.email || perosnaldata?.phoneNumber) && <Title>contact</Title>}
               <Paragraph classes="word-keep-all">{perosnaldata?.email}</Paragraph>
               <Paragraph>{perosnaldata?.phoneNumber}</Paragraph>
-              {extras.map(item => (
+              {extrasdata.map(item => (
                 <div key={item.id}>
                   <Paragraph classes="text-t2-sub-heading font-semibold mt-6 mb-3">{item.title}</Paragraph>
                   {item.type === 'NEW_LINE' ? (

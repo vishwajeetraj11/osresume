@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { ADD_EXTRAS_DATA } from '../../redux/actionTypes/resumeActionTypes';
 import { toastMessages } from '../../shared/contants';
+import { adddata } from '../../redux/zustand';
 const useStyles = makeStyles(theme => ({
   formControl: {
     minWidth: 120,
@@ -20,29 +21,23 @@ const useStyles = makeStyles(theme => ({
 
 const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
   const { resumeId } = useSelector(state => state.resume.metadata);
-  const extrasCollection = useSelector(state => state.resume.data.extras);
+  const extrasCollection = adddata(state => state.data.extrasdata);
+  const addextrasdata = adddata(state => state.addextrasdata);
+
   const { getToken } = useAuth();
 
-
   const showSnack = (message, variant) => {
+    if (variant == 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
+    }
+  };
 
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
-    }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-    
   // Dispatch
   const dispatch = useDispatch();
 
@@ -101,12 +96,14 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
 
             if (extraExists) {
               const extras = extrasCollection.map(ext => (ext._id === data.extras._id ? data.extras : ext));
+              addextrasdata(extras);
               dispatch({
                 type: ADD_EXTRAS_DATA,
                 payload: extras,
               });
             } else {
               const results = extrasCollection.map(ext => (ext.id === extra.id ? data.extras : ext));
+              addextrasdata(results);
               dispatch({
                 type: ADD_EXTRAS_DATA,
                 payload: results,
@@ -216,7 +213,13 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
             </FormControl>
           </div>
           <Divider className="mt-8 -ml-10" />
-          <Button className="mt-6  text-white hover:bg-[#12836d]  bg-primary" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
+          <Button
+            className="mt-6  text-white hover:bg-[#12836d]  bg-primary"
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={isSubmitting}
+          >
             Submit
           </Button>
         </form>

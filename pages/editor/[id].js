@@ -43,6 +43,7 @@ const Editor = () => {
   const educationdata = adddata(state => state.addeducationdata);
   const eductainvalues = adddata(state => state.data.educationdata);
   const experiencedata = adddata(state => state.data.experiencedata);
+  const extrasdata = adddata(state => state.data.extrasdata);
 
   const handlePrint = useReactToPrint({
     documentTitle: title || 'Your Resume',
@@ -143,6 +144,7 @@ const Editor = () => {
               <Trical
                 ref={resumeRef}
                 data={resumeData}
+                extrasdata={extrasdata}
                 perosnaldata={personaldata}
                 educationdata={eductainvalues}
                 customStyles={metadata.customStyles}

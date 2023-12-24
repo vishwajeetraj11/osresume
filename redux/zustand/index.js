@@ -7,7 +7,7 @@ export const adddata = create(
       personaldata: {},
       resumemetadata: {},
       experiencedata: [],
-      extrasdata: {},
+      extrasdata: [],
       educationdata: [],
     },
     addpersonaldata: data =>
@@ -44,7 +44,7 @@ export const adddata = create(
       set(state => ({
         data: {
           ...state.data,
-          extrasdata: state.data.extrasdata.filter(e => e.id != id),
+          extrasdata: state.data.extrasdata.filter(e => e.id !== id),
         },
       })),
 
@@ -52,7 +52,7 @@ export const adddata = create(
       set(state => ({
         data: {
           ...state.data,
-          extrasdata: data,
+          extrasdata: [...state.data.extrasdata, data],
         },
       })),
 
