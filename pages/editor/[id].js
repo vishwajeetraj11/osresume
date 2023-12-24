@@ -13,13 +13,6 @@ import { ResumeNotFoundSVG } from '../../components/SVGs';
 import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
 
-import {
-  addEducationData,
-  addExperienceData,
-  addExtrasData,
-  addPersonalDataState,
-  addResumeMetaData,
-} from '../../redux/actions/resumeActions';
 import { adddata } from '../../redux/zustand';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 
@@ -28,16 +21,21 @@ const Editor = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');
+  const alll = adddata(state => state.data);
+
   const resume = useSelector(state => state.resume);
+
   const { data: resumeData, metadata } = resume;
   const resumeRef = useRef();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { title } = metadata;
-  const { username } = resumeData?.personalData;
+  const { title } = alll.resumemetadata;
+  const { username } = alll?.personaldata;
 
   const addexperiencedata = adddata(state => state.addexperiencedata);
+  const addextradata = adddata(state => state.addextrasdata);
+
   const addpersonaldata = adddata(state => state.addpersonaldata);
   const personaldata = adddata(state => state.data.personaldata);
   const educationdata = adddata(state => state.addeducationdata);
@@ -98,24 +96,15 @@ const Editor = () => {
           templateName: data.resume.templateName,
           customStyles: data.resume.customStyles,
         });
-        dispatch(
-          addResumeMetaData({
-            title: data.resume.title,
-            createdAt: data.resume.createdAt,
-            resumeId: data.resume._id,
-            userId: data.resume.userId,
-            templateName: data.resume.templateName,
-            customStyles: data.resume.customStyles,
-          }),
-        );
 
-        dispatch(addExperienceData(data.resume.experience));
-        dispatch(addExtrasData(data.resume.extras));
-        dispatch(addPersonalDataState(personalData));
-        dispatch(addEducationData(data.resume.education));
+        // dispatch(addExperienceData(data.resume.experience));
+        // dispatch(addExtrasData(data.resume.extras));
+        // dispatch(addPersonalDataState(personalData));
+        // dispatch(addEducationData(data.resume.education));
         educationdata(data.resume.education);
         addexperiencedata(data.resume.experience);
         addpersonaldata(personalData);
+        addextradata(data.resume.extras);
 
         const fontID = data.resume.customStyles.font.replace(/ /g, '+');
         addFontInHeadTag(fontID);
@@ -148,15 +137,16 @@ const Editor = () => {
         <div className="flex flex-col lg:flex-row bg-gray-50">
           <LeftSideBar />
           <div className="order-2 mx-auto my-10">
-            {metadata.templateName === 'Onyx' && <Onyx ref={resumeRef} data={resumeData} customStyles={metadata.customStyles} />}
-            {metadata.templateName === 'Trical' && (
+            {alll.resumemetadata.templateName === 'Onyx' && (
+              <Onyx data={{}} ref={resumeRef} customStyles={alll.resumemetadata.customStyles} />
+            )}
+            {alll.resumemetadata.templateName === 'Trical' && (
               <Trical
                 ref={resumeRef}
-                data={resumeData}
                 extrasdata={extrasdata}
                 perosnaldata={personaldata}
                 educationdata={eductainvalues}
-                customStyles={metadata.customStyles}
+                customStyles={alll.resumemetadata.customStyles}
                 experiencedata={experiencedata}
               />
             )}

@@ -5,9 +5,9 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
-import { UPDATE_FONT } from '../../redux/actionTypes/resumeActionTypes';
+import { adddata } from '../../redux/zustand';
 import items from '../../shared/googleFonts.json';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 const GoogleFontsList = ({ anchor, closeDrawer }) => {
@@ -20,31 +20,25 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const dispatch = useDispatch();
   const { getToken } = useAuth();
 
-  const { resumeId } = useSelector(state => state.resume.metadata);
+  const { resumeId } = adddata(state => state.data.resumemetadata);
+
+  const updatefont = adddata(state => state.updatefont);
 
   // Search
   const [search, setSearch] = useState('');
 
-
   const showSnack = (message, variant) => {
+    if (variant == 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
+    }
+  };
 
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
-    }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-    
   useEffect(() => {
     (async () => {
       // eslint-disable-next-line global-require
@@ -184,10 +178,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
                       },
                     });
 
-                    dispatch({
-                      type: UPDATE_FONT,
-                      payload: data.resume.customStyles.font,
-                    });
+                    updatefont(data.resume.customStyles.font);
                     showSnack('Successfully updated font.', 'success');
                   } catch (e) {
                     showSnack('Unable to update font, please try again later.', 'error');

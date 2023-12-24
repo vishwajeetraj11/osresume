@@ -12,12 +12,12 @@ class Trical extends React.Component {
       educationdata,
       perosnaldata,
       experiencedata,
-      data: { experiences, extras, education },
+
       customStyles,
     } = this.props;
 
     // console.log(perosnaldata, 'hellooo');
-    console.log(educationdata);
+    console.log(customStyles);
 
     return (
       <div id="t1" className="resume-a4 bg-white flex justify-between overflow-hidden" style={{ fontFamily: customStyles.font }}>

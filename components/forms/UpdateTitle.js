@@ -4,19 +4,16 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
-import { UPDATE_TITLE } from '../../redux/actionTypes/resumeActionTypes';
 import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
 
 const UpdateTitle = ({ closeDrawer }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { getToken } = useAuth();
-
   const { title, resumeId } = adddata(state => state.data.resumemetadata);
-
+  const updatetitel = adddata(state => state.updatetitel);
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
     title: Yup.string().required('Please provide the title.').min(3, 'Too Short'),
@@ -71,11 +68,7 @@ const UpdateTitle = ({ closeDrawer }) => {
                 title: '',
               });
 
-              dispatch({
-                type: UPDATE_TITLE,
-                payload: data.resume.title,
-              });
-
+              updatetitel(data.resume.title);
               showSnack(toastMessages.UPDATE_RESOURCE_SUCCESS('Resume Title'), 'success');
 
               setSubmitting(false);

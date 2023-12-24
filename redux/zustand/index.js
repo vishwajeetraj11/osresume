@@ -99,5 +99,27 @@ export const adddata = create(
           educationdata: [...state.data.educationdata, data],
         },
       })),
+    updatetitel: data =>
+      set(state => ({
+        data: {
+          ...state.data,
+          resumemetadata: {
+            ...state.data.resumemetadata,
+            title: data,
+          },
+        },
+      })),
+    updatefont: data =>
+      set(state => ({
+        data: {
+          ...state.data,
+          resumemetadata: {
+            ...state.data.resumemetadata,
+            customStyles: {
+              font: data,
+            },
+          },
+        },
+      })),
   })),
 );
