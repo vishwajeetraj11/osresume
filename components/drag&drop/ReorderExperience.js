@@ -8,7 +8,6 @@ import axios from 'axios';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { adddata } from '../../redux/zustand';
@@ -36,7 +35,6 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
 
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
-  const dispatch = useDispatch();
 
   // Fetch Global State
   const experiences = adddata(state => state.data.experiencedata);

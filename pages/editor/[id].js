@@ -27,9 +27,8 @@ const Editor = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { title } = metadata;
-  const { username } = resumeData?.personalData;
-
+  const { title } = adddata(state => state.data.resumemetadata);
+  const { username } = adddata(state => state.data.personaldata);
   const addexperiencedata = adddata(state => state.addexperiencedata);
   const addpersonaldata = adddata(state => state.addpersonaldata);
   const personaldata = adddata(state => state.data.personaldata);

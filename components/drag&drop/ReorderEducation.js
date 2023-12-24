@@ -20,7 +20,6 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const { getToken } = useAuth();
 
   const addeducationdata = adddata(state => state.addeducationdata);
-  const educationdata = adddata(state => state.data.educationdata);
   const addsampleeducationdata = adddata(state => state.addsampleeducation);
   const deletsingleducationdata = adddata(state => state.deletesingleeducation);
 
