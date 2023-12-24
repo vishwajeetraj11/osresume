@@ -213,7 +213,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(data.resume.experience);
+      //  console.log(data.resume.experience);
       addexperiencedata(data.resume.experience);
       // dispatch(addExperienceData(data.resume.experience));
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Experience'), 'success');

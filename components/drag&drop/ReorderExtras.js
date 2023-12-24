@@ -8,7 +8,7 @@ import axios from 'axios';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { addExtrasData, addSampleExtraData, deleteSingleExtraData } from '../../redux/actions/resumeActions';
@@ -19,7 +19,7 @@ import ExtrasCard from '../cards/ExtrasCard';
 import EditSingleExtra from '../forms/EditSingleExtra';
 
 const ReorderExtras = ({ closeDrawer, anchor }) => {
-  const { resumeId } = useSelector(state => state.resume.metadata);
+  const { resumeId } = addata(state => state.data.resumemetadata);
   const addextrasdata = adddata(state => state.addextrasdata);
   const addsampleextradata = adddata(state => state.addsampleextra);
   const deletesingleextra = adddata(state => state.deletesingleextra);

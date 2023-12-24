@@ -23,7 +23,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const educationdata = adddata(state => state.data.educationdata);
   const addsampleeducationdata = adddata(state => state.addsampleeducation);
   const deletsingleducationdata = adddata(state => state.deletesingleeducation);
-  console.log(educationdata);
+
   const showSnack = (message, variant) => {
     if (variant === 'success') {
       toast.success(message);
@@ -172,7 +172,6 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
     if (id.includes('-')) {
       //   dispatch(deleteSingleEducationData(id));
       deletsingleducationdata(id);
-      console.log(educationdata, 'first');
       return;
     }
     try {
@@ -185,13 +184,13 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(educationdata[0].id);
+      //  console.log(educationdata[0].id);
       deletsingleducationdata(id);
       //   dispatch(deleteSingleEducationData(id));
-      console.log(educationdata);
+      //    console.log(educationdata);
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Education'), 'success');
     } catch (error) {
-      console.log(error);
+      //  console.log(error);
       showSnack(toastMessages.DELETE_RESOURCE_ERROR('Education'), 'error');
     }
   };
@@ -227,7 +226,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Education'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
-      console.log('error', error);
+      //    console.log('error', error);
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_ERROR('Education'), 'error');
     }
   };
