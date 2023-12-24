@@ -5,7 +5,6 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import { adddata } from '../../redux/zustand';
 import items from '../../shared/googleFonts.json';
@@ -17,7 +16,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [totalPages, setTotalPages] = useState(10);
   const [bound, setBound] = useState(20);
   const [fontsAdded, setFontsAdded] = useState([]);
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const { getToken } = useAuth();
 
   const { resumeId } = adddata(state => state.data.resumemetadata);

@@ -8,10 +8,8 @@ import axios from 'axios';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
-import { addExperienceData, addSampleExperienceData, deleteSingleExperienceData } from '../../redux/actions/resumeActions';
 import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
 import { EmptyFileSVG } from '../SVGs';
@@ -37,7 +35,6 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
 
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
-  const dispatch = useDispatch();
 
   // Fetch Global State
   const experiences = adddata(state => state.data.experiencedata);
@@ -168,7 +165,6 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
   const onDelete = async ({ id }) => {
     if (id.includes('-')) {
       deletesingleexperience(id);
-      dispatch(deleteSingleExperienceData(id));
       return;
     }
     try {
@@ -182,7 +178,6 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
         },
       });
       deletesingleexperience(id);
-      dispatch(deleteSingleExperienceData(id));
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Experience'), 'success');
     } catch (error) {
       // console.log(error);
@@ -216,7 +211,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
       });
       console.log(data.resume.experience);
       addexperiencedata(data.resume.experience);
-      dispatch(addExperienceData(data.resume.experience));
+      // dispatch(addExperienceData(data.resume.experience));
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Experience'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
@@ -236,18 +231,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
       years: '1',
       country: 'Sample Country',
     });
-    dispatch(
-      addSampleExperienceData({
-        id: uuidv4(),
-        designation: 'Sample Designation',
-        company: 'Company Description',
-        description: 'Sample Description',
-        startedAt: 'June 2012',
-        endedAt: 'July 2013',
-        years: '1',
-        country: 'Sample Country',
-      }),
-    );
+
     showSnack(toastMessages.SAMPLE_DATA('Experience'), 'success');
   };
 

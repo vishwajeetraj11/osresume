@@ -5,7 +5,6 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { adddata } from '../../redux/zustand';
@@ -29,7 +28,6 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
   };
 
   // Dispatch
-  const dispatch = useDispatch();
 
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({

@@ -4,7 +4,6 @@ import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useReactToPrint } from 'react-to-print';
 import LeftSideBar from '../../components/LeftSideBar';
 import Loader from '../../components/Loader';
@@ -18,21 +17,20 @@ import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 
 const Editor = () => {
   const { getToken } = useAuth();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');
   const alll = adddata(state => state.data);
 
-  const resume = useSelector(state => state.resume);
+  // const resume = useSelector(state => state.resume);
 
-  const { data: resumeData, metadata } = resume;
+  //const { data: resumeData, metadata } = resume;
   const resumeRef = useRef();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { title } = alll.resumemetadata;
-  const { username } = alll?.personaldata;
-
+  const { title } = adddata(state => state.data.resumemetadata);
+  const { username } = adddata(state => state.data.personaldata);
   const addexperiencedata = adddata(state => state.addexperiencedata);
   const addextradata = adddata(state => state.addextrasdata);
 
@@ -96,6 +94,16 @@ const Editor = () => {
           templateName: data.resume.templateName,
           customStyles: data.resume.customStyles,
         });
+        //    dispatch(
+        //    addResumeMetaData({
+        //     title: data.resume.title,
+        //   createdAt: data.resume.createdAt,
+        //       resumeId: data.resume._id,
+        //       userId: data.resume.userId,
+        //      templateName: data.resume.templateName,
+        //    customStyles: data.resume.customStyles,
+        //     }),
+        // );
 
         // dispatch(addExperienceData(data.resume.experience));
         // dispatch(addExtrasData(data.resume.extras));
@@ -115,7 +123,7 @@ const Editor = () => {
         setLoading(false);
       }
     })();
-  }, [router.query.id, dispatch]);
+  }, [router.query.id]);
 
   const render = () => {
     if (loading) {

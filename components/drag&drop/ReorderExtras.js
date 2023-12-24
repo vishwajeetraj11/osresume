@@ -8,10 +8,8 @@ import axios from 'axios';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
-import { addExtrasData, addSampleExtraData, deleteSingleExtraData } from '../../redux/actions/resumeActions';
 import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
 import { EmptyFileSVG } from '../SVGs';
@@ -26,7 +24,6 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
 
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
-  const dispatch = useDispatch();
   const { getToken } = useAuth();
 
   const showSnack = (message, variant) => {
@@ -169,7 +166,6 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
     if (id.includes('-')) {
       deletesingleextra(id);
 
-      dispatch(deleteSingleExtraData(id));
       return;
     }
     try {
@@ -183,7 +179,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      dispatch(deleteSingleExtraData(id));
+
       deletesingleextra(id);
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Extras'), 'success');
     } catch (error) {
@@ -216,7 +212,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      dispatch(addExtrasData(data.resume.extras));
+
       addextrasdata(data.resume.extras);
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Extras'), 'success');
       closeDrawer(anchor, false);
@@ -227,14 +223,6 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
   };
 
   const onAdd = () => {
-    dispatch(
-      addSampleExtraData({
-        id: uuidv4(),
-        title: 'Sample Title',
-        type: 'COMMA',
-        items: ['Sample Item 1', 'Sample Item 2'],
-      }),
-    );
     addsampleextradata({
       id: uuidv4(),
       title: 'Sample Title',

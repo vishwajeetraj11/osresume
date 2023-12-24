@@ -5,7 +5,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import clsx from 'clsx';
 import React from 'react';
-import { useSelector } from 'react-redux';
+
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import PersonIcon from '@material-ui/icons/Person';
+import SchoolIcon from '@material-ui/icons/School';
+import WorkIcon from '@material-ui/icons/Work';
+
 // import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 // import EditSingleExperience from "./forms/EditSingleExperience"
 import ReorderEducation from './drag&drop/ReorderEducation';
@@ -16,8 +21,34 @@ import PersonalDataForm from './forms/PersonalData';
 
 const LeftSideBar = () => {
   const matches = useMediaQuery('(min-width:1024px)');
-  const sections = useSelector(state => state.sections);
-  const sectionTitles = sections.data.map(e => e.label);
+  const sections = [
+    {
+      id: '1',
+      title: 'Personal Data',
+      label: 'personal-data',
+      Icon: PersonIcon,
+    },
+    {
+      id: '3',
+      title: 'Work Experience',
+      label: 'work-experience',
+      Icon: WorkIcon,
+    },
+    {
+      id: '4',
+      title: 'Education',
+      label: 'education',
+      Icon: SchoolIcon,
+    },
+    {
+      id: '5',
+      title: 'Extras',
+      label: 'extras',
+      Icon: AssignmentIcon,
+    },
+  ];
+
+  const sectionTitles = sections.map(e => e.label);
   const sectionDrawerStates = {};
   sectionTitles.map(section => (sectionDrawerStates[section] = false));
 
@@ -56,7 +87,7 @@ const LeftSideBar = () => {
   return (
     <div className="bg-primary lg:pt-16 lg:px-4 flex lg:block fixed lg:static bottom-0 w-screen lg:w-auto justify-center left-sidebar order-3 lg:order-1">
       {/* add overflow-scroll ||^^ if section are needed to scroll */}
-      {sections.data.map(({ title, Icon, id, label }) => (
+      {sections.map(({ title, Icon, id, label }) => (
         <div key={id} className="inline-block lg:block my-4 lg:my-8">
           <Tooltip title={title} placement={matches ? 'right' : 'bottom'} arrow>
             <Button onClick={toggleLeftDrawer(label, true)}>
