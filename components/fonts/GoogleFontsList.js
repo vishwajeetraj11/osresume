@@ -6,9 +6,9 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { adddata } from '../../redux/zustand';
 import items from '../../shared/googleFonts.json';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
+import { adddata } from '../../zustand/zustand';
 const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [googleFonts, setGoogleFonts] = useState([]);
   const [loading, setLoading] = useState(false);

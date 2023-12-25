@@ -7,8 +7,8 @@ import { Formik } from 'formik';
 import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
-import { adddata } from '../../redux/zustand';
 import { toastMessages } from '../../shared/contants';
+import { adddata } from '../../zustand/zustand';
 const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
   const { resumeId } = adddata(state => state.data.resumemetadata);
   const educationCollection = adddata(state => state.data.educationdata);

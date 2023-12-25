@@ -12,8 +12,8 @@ import { ResumeNotFoundSVG } from '../../components/SVGs';
 import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
 
-import { adddata } from '../../redux/zustand';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
+import { adddata } from '../../zustand/zustand';
 
 const Editor = () => {
   const { getToken } = useAuth();
