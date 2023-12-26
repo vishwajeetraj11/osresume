@@ -5,11 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import clsx from 'clsx';
 import React from 'react';
-
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import PersonIcon from '@material-ui/icons/Person';
-import SchoolIcon from '@material-ui/icons/School';
-import WorkIcon from '@material-ui/icons/Work';
+import { sidebarContent } from '../zustand/zustand/index';
 
 import ReorderEducation from './drag&drop/ReorderEducation';
 import ReorderExperience from './drag&drop/ReorderExperience';
@@ -18,32 +14,7 @@ import PersonalDataForm from './forms/PersonalData';
 
 const LeftSideBar = () => {
   const matches = useMediaQuery('(min-width:1024px)');
-  const sections = [
-    {
-      id: '1',
-      title: 'Personal Data',
-      label: 'personal-data',
-      Icon: PersonIcon,
-    },
-    {
-      id: '3',
-      title: 'Work Experience',
-      label: 'work-experience',
-      Icon: WorkIcon,
-    },
-    {
-      id: '4',
-      title: 'Education',
-      label: 'education',
-      Icon: SchoolIcon,
-    },
-    {
-      id: '5',
-      title: 'Extras',
-      label: 'extras',
-      Icon: AssignmentIcon,
-    },
-  ];
+  const sections = sidebarContent(state => state.data.LeftSidebar);
 
   const sectionTitles = sections.map(e => e.label);
   const sectionDrawerStates = {};
