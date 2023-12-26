@@ -27,8 +27,6 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
     }
   };
 
-  // Dispatch
-
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
     institution: Yup.string().required('Institution is required.'),
@@ -60,7 +58,6 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
       validationSchema={ValidationSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(async () => {
-          // dispatch(editSingleEducationData(values));
           showSnack(
             education._id ? toastMessages.UPDATE_RESOURCE_REQUEST('Education') : toastMessages.CREATE_RESOURCE_REQUEST('Education'),
             'default',
