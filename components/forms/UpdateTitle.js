@@ -19,7 +19,7 @@ const UpdateTitle = ({ closeDrawer }) => {
   });
 
   const showSnack = (message, variant) => {
-    if (variant == 'success') {
+    if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {
       toast.error(message);
