@@ -18,7 +18,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [fontsAdded, setFontsAdded] = useState([]);
   const { getToken } = useAuth();
 
-  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
+  const { resumeId } = useResumeStore(state => state.data.resumeMeta);
 
   const updateFont = useResumeStore(state => state.updatefont);
 

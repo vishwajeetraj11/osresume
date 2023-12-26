@@ -18,8 +18,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
-  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
-  const extrasCollection = useResumeStore(state => state.data.extrasdata);
+  const { resumeId } = useResumeStore(state => state.data.resumeMeta);
+  const extrasCollection = useResumeStore(state => state.data.extras);
   const addExtrasdata = useResumeStore(state => state.addextrasdata);
 
   const { getToken } = useAuth();

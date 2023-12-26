@@ -20,7 +20,6 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const { getToken } = useAuth();
 
   const addeducationdata = useResumeStore(state => state.addeducationdata);
-  const educationdata = useResumeStore(state => state.data.educationdata);
   const addSampleEducationdata = useResumeStore(state => state.addsampleeducation);
   const deletSinglEducationdata = useResumeStore(state => state.deletesingleeducation);
 
@@ -36,12 +35,12 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
     }
   };
 
-  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
+  const { resumeId } = useResumeStore(state => state.data.resumeMeta);
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
 
   // Fetch Global State
-  const education = useResumeStore(state => state.data.educationdata);
+  const education = useResumeStore(state => state.data.education);
 
   // Local Education State for drag and drop
   const [edu, setEdu] = useState(education);
@@ -170,7 +169,6 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const onDelete = async ({ id }) => {
     if (id.includes('-')) {
       deletSinglEducationdata(id);
-      console.log(educationdata, 'first');
       return;
     }
     try {
@@ -183,7 +181,6 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(educationdata[0].id);
       deletSinglEducationdata(id);
 
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Education'), 'success');

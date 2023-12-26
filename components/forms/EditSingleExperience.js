@@ -10,8 +10,8 @@ import * as Yup from 'yup';
 import { toastMessages } from '../../shared/contants';
 import { useResumeStore } from '../../zustand/zustand';
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
-  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
-  const experienceCollection = useResumeStore(state => state.data.experiencedata);
+  const { resumeId } = useResumeStore(state => state.data.resumeMeta);
+  const experienceCollection = useResumeStore(state => state.data.experience);
   const addExperiencedata = useResumeStore(state => state.addexperiencedata);
 
   const { getToken } = useAuth();

@@ -8,24 +8,24 @@ import { devtools } from 'zustand/middleware';
 export const useResumeStore = create(
   devtools(set => ({
     data: {
-      personaldata: {},
-      resumemetadata: {},
-      experiencedata: [],
-      extrasdata: [],
-      educationdata: [],
+      personal: {},
+      resumeMeta: {},
+      experience: [],
+      extras: [],
+      education: [],
     },
     addpersonaldata: data =>
       set(state => ({
         data: {
           ...state.data,
-          personaldata: data,
+          personal: data,
         },
       })),
     addresumemetadata: data =>
       set(state => ({
         data: {
           ...state.data,
-          resumemetadata: data,
+          resumeMeta: data,
         },
       })),
 
@@ -33,14 +33,14 @@ export const useResumeStore = create(
       set(state => ({
         data: {
           ...state.data,
-          experiencedata: data,
+          experience: data,
         },
       })),
     addextrasdata: data =>
       set(state => ({
         data: {
           ...state.data,
-          extrasdata: data,
+          extras: data,
         },
       })),
 
@@ -48,7 +48,7 @@ export const useResumeStore = create(
       set(state => ({
         data: {
           ...state.data,
-          extrasdata: state.data.extrasdata.filter(e => e.id !== id),
+          extras: state.data.extras.filter(e => e.id !== id),
         },
       })),
 
@@ -56,7 +56,7 @@ export const useResumeStore = create(
       set(state => ({
         data: {
           ...state.data,
-          extrasdata: [...state.data.extrasdata, data],
+          extras: [...state.data.extras, data],
         },
       })),
 
@@ -64,7 +64,7 @@ export const useResumeStore = create(
       set(state => ({
         data: {
           ...state.data,
-          educationdata: data,
+          education: data,
         },
       })),
 
@@ -72,7 +72,7 @@ export const useResumeStore = create(
       set(state => ({
         data: {
           ...state.data,
-          experiencedata: state.data.experiencedata.filter(a => {
+          experience: state.data.experience.filter(a => {
             console.log(a.id);
             return a.id !== id;
           }),
@@ -82,8 +82,7 @@ export const useResumeStore = create(
       set(state => ({
         data: {
           ...state.data,
-          educationdata: state.data.educationdata.filter(a => {
-            console.log(a.id);
+          education: state.data.education.filter(a => {
             return a.id !== id;
           }),
         },
@@ -93,22 +92,22 @@ export const useResumeStore = create(
       set(state => ({
         data: {
           ...state.data,
-          experiencedata: [...state.data.experiencedata, data],
+          experience: [...state.data.experience, data],
         },
       })),
     addsampleeducation: data =>
       set(state => ({
         data: {
           ...state.data,
-          educationdata: [...state.data.educationdata, data],
+          education: [...state.data.education, data],
         },
       })),
     updatetitel: data =>
       set(state => ({
         data: {
           ...state.data,
-          resumemetadata: {
-            ...state.data.resumemetadata,
+          resumeMeta: {
+            ...state.data.resumeMeta,
             title: data,
           },
         },
@@ -117,8 +116,8 @@ export const useResumeStore = create(
       set(state => ({
         data: {
           ...state.data,
-          resumemetadata: {
-            ...state.data.resumemetadata,
+          resumeMeta: {
+            ...state.data.resumeMeta,
             customStyles: {
               font: data,
             },

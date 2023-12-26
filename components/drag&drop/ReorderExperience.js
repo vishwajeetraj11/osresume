@@ -31,13 +31,13 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
 
   const { getToken } = useAuth();
 
-  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
+  const { resumeId } = useResumeStore(state => state.data.resumeMeta);
 
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
 
   // Fetch Global State
-  const experiences = useResumeStore(state => state.data.experiencedata);
+  const experiences = useResumeStore(state => state.data.experience);
   const addExperiencedata = useResumeStore(state => state.addexperiencedata);
   const addSampleExperience = useResumeStore(state => state.addsampleexperience);
   const deleteSingleExperience = useResumeStore(state => state.deletesingleexperience);

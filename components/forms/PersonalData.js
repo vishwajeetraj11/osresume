@@ -12,8 +12,8 @@ import { useResumeStore } from '../../zustand/zustand';
 const PersonalDataForm = ({ closeDrawer, anchor }) => {
   const { getToken } = useAuth();
 
-  let personalData = useResumeStore(state => state.data.personaldata);
-  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
+  let personalData = useResumeStore(state => state.data.personal);
+  const { resumeId } = useResumeStore(state => state.data.resumeMeta);
   // Remove +91 from phoneNumber
   let phoneNumber = personalData?.phoneNumber;
   phoneNumber = phoneNumber?.replace('+91', '');

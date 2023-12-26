@@ -25,17 +25,17 @@ const Editor = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { title } = useResumeStore(state => state.data.resumemetadata);
-  const { username } = useResumeStore(state => state.data.personaldata);
+  const { title } = useResumeStore(state => state.data.resumeMeta);
+  const { username } = useResumeStore(state => state.data.personal);
   const addexperiencedata = useResumeStore(state => state.addexperiencedata);
   const addextradata = useResumeStore(state => state.addextrasdata);
 
   const addpersonaldata = useResumeStore(state => state.addpersonaldata);
-  const personaldata = useResumeStore(state => state.data.personaldata);
+  const personaldata = useResumeStore(state => state.data.personal);
   const educationdata = useResumeStore(state => state.addeducationdata);
-  const eductainvalues = useResumeStore(state => state.data.educationdata);
-  const experiencedata = useResumeStore(state => state.data.experiencedata);
-  const extrasdata = useResumeStore(state => state.data.extrasdata);
+  const eductainvalues = useResumeStore(state => state.data.education);
+  const experiencedata = useResumeStore(state => state.data.experience);
+  const extrasdata = useResumeStore(state => state.data.extras);
   const addmetadata = useResumeStore(state => state.addresumemetadata);
 
   const handlePrint = useReactToPrint({
@@ -126,16 +126,14 @@ const Editor = () => {
         <div className="flex flex-col lg:flex-row bg-gray-50">
           <LeftSideBar />
           <div className="order-2 mx-auto my-10">
-            {alll.resumemetadata.templateName === 'Onyx' && (
-              <Onyx data={{}} ref={resumeRef} customStyles={alll.resumemetadata.customStyles} />
-            )}
-            {alll.resumemetadata.templateName === 'Trical' && (
+            {alll.resumeMeta.templateName === 'Onyx' && <Onyx data={{}} ref={resumeRef} customStyles={alll.resumeMeta.customStyles} />}
+            {alll.resumeMeta.templateName === 'Trical' && (
               <Trical
                 ref={resumeRef}
                 extrasdata={extrasdata}
                 perosnaldata={personaldata}
                 educationdata={eductainvalues}
-                customStyles={alll.resumemetadata.customStyles}
+                customStyles={alll.resumeMeta.customStyles}
                 experiencedata={experiencedata}
               />
             )}
