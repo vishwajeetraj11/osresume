@@ -38,9 +38,9 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
 
   // Fetch Global State
   const experiences = adddata(state => state.data.experiencedata);
-  const addexperiencedata = adddata(state => state.addexperiencedata);
-  const addsampleexperience = adddata(state => state.addsampleexperience);
-  const deletesingleexperience = adddata(state => state.deletesingleexperience);
+  const addExperiencedata = adddata(state => state.addexperiencedata);
+  const addSampleExperience = adddata(state => state.addsampleexperience);
+  const deleteSingleExperience = adddata(state => state.deletesingleexperience);
 
   // Local Experiences State for drag and drop
   const [exp, setExp] = useState(experiences);
@@ -164,7 +164,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
 
   const onDelete = async ({ id }) => {
     if (id.includes('-')) {
-      deletesingleexperience(id);
+      deleteSingleExperience(id);
       return;
     }
     try {
@@ -177,7 +177,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      deletesingleexperience(id);
+      deleteSingleExperience(id);
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Experience'), 'success');
     } catch (error) {
       // console.log(error);
@@ -210,7 +210,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
         },
       });
       console.log(data.resume.experience);
-      addexperiencedata(data.resume.experience);
+      addExperiencedata(data.resume.experience);
       // dispatch(addExperienceData(data.resume.experience));
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Experience'), 'success');
       closeDrawer(anchor, false);
@@ -221,7 +221,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
   };
 
   const onAdd = () => {
-    addsampleexperience({
+    addSampleExperience({
       id: uuidv4(),
       designation: 'Sample Designation',
       company: 'Company Description',
