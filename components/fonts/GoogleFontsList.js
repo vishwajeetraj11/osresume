@@ -26,7 +26,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [search, setSearch] = useState('');
 
   const showSnack = (message, variant) => {
-    if (variant == 'success') {
+    if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {
       toast.error(message);
