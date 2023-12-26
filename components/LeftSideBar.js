@@ -11,12 +11,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import SchoolIcon from '@material-ui/icons/School';
 import WorkIcon from '@material-ui/icons/Work';
 
-// import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-// import EditSingleExperience from "./forms/EditSingleExperience"
 import ReorderEducation from './drag&drop/ReorderEducation';
 import ReorderExperience from './drag&drop/ReorderExperience';
 import ReorderExtras from './drag&drop/ReorderExtras';
-// import Divider from '@material-ui/core/Divider';
 import PersonalDataForm from './forms/PersonalData';
 
 const LeftSideBar = () => {
