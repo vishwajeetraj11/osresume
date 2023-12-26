@@ -1,4 +1,4 @@
-import { RedirectToSignIn, SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
+import { RedirectToSignIn, SignedIn, SignedOut, useAuth, useUser } from '@clerk/nextjs';
 import { useMediaQuery } from '@material-ui/core';
 import axios from 'axios';
 import Head from 'next/head';
@@ -11,12 +11,15 @@ import RightSideBar from '../../components/RightSideBar';
 import { ResumeNotFoundSVG } from '../../components/SVGs';
 import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
-
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 import { useResumeStore } from '../../zustand/zustand';
 
 const Editor = () => {
   const { getToken } = useAuth();
+  const {
+    user: { firstName, emailAddresses },
+  } = useUser();
+
   const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');
   const alll = useResumeStore(state => state.data);
@@ -81,7 +84,7 @@ const Editor = () => {
         // console.log(data);
         const personalData = data.resume.personal
           ? data.resume.personal
-          : { name: '', email: '', phoneNumber: '', designation: '', country: '', objective: '' };
+          : { name: firstName, email: emailAddresses[0].emailAddress, phoneNumber: '', designation: '', country: '', objective: '' };
         addmetadata({
           title: data.resume.title,
           createdAt: data.resume.createdAt,
