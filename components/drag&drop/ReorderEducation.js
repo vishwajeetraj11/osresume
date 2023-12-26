@@ -169,7 +169,6 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
 
   const onDelete = async ({ id }) => {
     if (id.includes('-')) {
-      //   dispatch(deleteSingleEducationData(id));
       deletSinglEducationdata(id);
       console.log(educationdata, 'first');
       return;
@@ -232,17 +231,6 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   };
 
   const onAdd = () => {
-    //   dispatch(
-    //   addSampleEducationData({
-    //     id: uuidv4(),
-    //     institution: 'Sample Institution',
-    //     major: 'Sample Major',
-    //     startedAt: 'June 2012',
-    //     endedAt: 'July 2013',
-    //     years: '1',
-    //     country: 'Sample Country',
-    //   }),
-    // );
     //zustand
     addSampleEducationdata({
       id: uuidv4(),

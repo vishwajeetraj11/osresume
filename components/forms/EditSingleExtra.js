@@ -36,9 +36,6 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
     }
   };
 
-  // Dispatch
-  //const dispatch = useDispatch();
-
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
     title: Yup.string().required('Title of the Extra is must.'),

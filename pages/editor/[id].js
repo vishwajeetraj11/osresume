@@ -17,14 +17,10 @@ import { adddata } from '../../zustand/zustand';
 
 const Editor = () => {
   const { getToken } = useAuth();
-  // const dispatch = useDispatch();
   const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');
   const alll = adddata(state => state.data);
 
-  // const resume = useSelector(state => state.resume);
-
-  //const { data: resumeData, metadata } = resume;
   const resumeRef = useRef();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -94,21 +90,6 @@ const Editor = () => {
           templateName: data.resume.templateName,
           customStyles: data.resume.customStyles,
         });
-        //    dispatch(
-        //    addResumeMetaData({
-        //     title: data.resume.title,
-        //   createdAt: data.resume.createdAt,
-        //       resumeId: data.resume._id,
-        //       userId: data.resume.userId,
-        //      templateName: data.resume.templateName,
-        //    customStyles: data.resume.customStyles,
-        //     }),
-        // );
-
-        // dispatch(addExperienceData(data.resume.experience));
-        // dispatch(addExtrasData(data.resume.extras));
-        // dispatch(addPersonalDataState(personalData));
-        // dispatch(addEducationData(data.resume.education));
         educationdata(data.resume.education);
         addexperiencedata(data.resume.experience);
         addpersonaldata(personalData);

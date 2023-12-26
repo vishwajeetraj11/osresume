@@ -10,7 +10,6 @@ import { toastMessages } from '../../shared/contants';
 import { adddata } from '../../zustand/zustand';
 
 const PersonalDataForm = ({ closeDrawer, anchor }) => {
-  // Dispatch
   const { getToken } = useAuth();
 
   let personalData = adddata(state => state.data.personaldata);

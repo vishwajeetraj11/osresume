@@ -10,7 +10,6 @@ import { toastMessages } from '../../shared/contants';
 import { adddata } from '../../zustand/zustand';
 
 const UpdateTitle = ({ closeDrawer }) => {
-  // const dispatch = useDispatch();
   const { getToken } = useAuth();
   const { title, resumeId } = adddata(state => state.data.resumemetadata);
   const updateTitel = adddata(state => state.updatetitel);

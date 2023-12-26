@@ -16,7 +16,6 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [totalPages, setTotalPages] = useState(10);
   const [bound, setBound] = useState(20);
   const [fontsAdded, setFontsAdded] = useState([]);
-  //const dispatch = useDispatch();
   const { getToken } = useAuth();
 
   const { resumeId } = adddata(state => state.data.resumemetadata);
