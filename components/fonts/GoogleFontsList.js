@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import items from '../../shared/googleFonts.json';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
-import { adddata } from '../../zustand/zustand';
+import { useResumeStore } from '../../zustand/zustand';
 const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [googleFonts, setGoogleFonts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,9 +18,9 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [fontsAdded, setFontsAdded] = useState([]);
   const { getToken } = useAuth();
 
-  const { resumeId } = adddata(state => state.data.resumemetadata);
+  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
 
-  const updateFont = adddata(state => state.updatefont);
+  const updateFont = useResumeStore(state => state.updatefont);
 
   // Search
   const [search, setSearch] = useState('');

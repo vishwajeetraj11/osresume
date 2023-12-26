@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-export const adddata = create(
+export const useResumeStore = create(
   devtools(set => ({
     data: {
       personaldata: {},

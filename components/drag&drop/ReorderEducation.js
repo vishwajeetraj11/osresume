@@ -11,7 +11,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { toastMessages } from '../../shared/contants';
-import { adddata } from '../../zustand/zustand';
+import { useResumeStore } from '../../zustand/zustand';
 import { EmptyFileSVG } from '../SVGs';
 import EducationCard from '../cards/EducationCard';
 import EditSingleEducation from '../forms/EditSingleEducation';
@@ -19,10 +19,10 @@ import EditSingleEducation from '../forms/EditSingleEducation';
 const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const { getToken } = useAuth();
 
-  const addeducationdata = adddata(state => state.addeducationdata);
-  const educationdata = adddata(state => state.data.educationdata);
-  const addSampleEducationdata = adddata(state => state.addsampleeducation);
-  const deletSinglEducationdata = adddata(state => state.deletesingleeducation);
+  const addeducationdata = useResumeStore(state => state.addeducationdata);
+  const educationdata = useResumeStore(state => state.data.educationdata);
+  const addSampleEducationdata = useResumeStore(state => state.addsampleeducation);
+  const deletSinglEducationdata = useResumeStore(state => state.deletesingleeducation);
 
   const showSnack = (message, variant) => {
     if (variant === 'success') {
@@ -36,12 +36,12 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
     }
   };
 
-  const { resumeId } = adddata(state => state.data.resumemetadata);
+  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
 
   // Fetch Global State
-  const education = adddata(state => state.data.educationdata);
+  const education = useResumeStore(state => state.data.educationdata);
 
   // Local Education State for drag and drop
   const [edu, setEdu] = useState(education);

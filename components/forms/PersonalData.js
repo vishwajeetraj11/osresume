@@ -7,19 +7,19 @@ import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { toastMessages } from '../../shared/contants';
-import { adddata } from '../../zustand/zustand';
+import { useResumeStore } from '../../zustand/zustand';
 
 const PersonalDataForm = ({ closeDrawer, anchor }) => {
   const { getToken } = useAuth();
 
-  let personalData = adddata(state => state.data.personaldata);
-  const { resumeId } = adddata(state => state.data.resumemetadata);
+  let personalData = useResumeStore(state => state.data.personaldata);
+  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
   // Remove +91 from phoneNumber
   let phoneNumber = personalData?.phoneNumber;
   phoneNumber = phoneNumber?.replace('+91', '');
   personalData = { ...personalData, phoneNumber };
   //zustand
-  const addpersonaldata = adddata(state => state.addpersonaldata);
+  const addpersonaldata = useResumeStore(state => state.addpersonaldata);
 
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({

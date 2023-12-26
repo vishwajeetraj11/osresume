@@ -7,12 +7,12 @@ import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { toastMessages } from '../../shared/contants';
-import { adddata } from '../../zustand/zustand';
+import { useResumeStore } from '../../zustand/zustand';
 
 const UpdateTitle = ({ closeDrawer }) => {
   const { getToken } = useAuth();
-  const { title, resumeId } = adddata(state => state.data.resumemetadata);
-  const updateTitel = adddata(state => state.updatetitel);
+  const { title, resumeId } = useResumeStore(state => state.data.resumemetadata);
+  const updateTitel = useResumeStore(state => state.updatetitel);
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
     title: Yup.string().required('Please provide the title.').min(3, 'Too Short'),

@@ -8,12 +8,12 @@ import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { toastMessages } from '../../shared/contants';
-import { adddata } from '../../zustand/zustand';
+import { useResumeStore } from '../../zustand/zustand';
 const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
-  const { resumeId } = adddata(state => state.data.resumemetadata);
-  const educationCollection = adddata(state => state.data.educationdata);
+  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
+  const educationCollection = useResumeStore(state => state.data.educationdata);
   const { getToken } = useAuth();
-  const addEducation = adddata(state => state.addeducationdata);
+  const addEducation = useResumeStore(state => state.addeducationdata);
 
   const showSnack = (message, variant) => {
     if (variant == 'success') {

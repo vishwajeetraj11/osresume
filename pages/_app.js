@@ -16,7 +16,6 @@ const clerkSignInURL = process.env.NEXT_PUBLIC_CLERK_SIGN_IN;
 const publicPages = ['/', '/sign-in/[[...index]]', '/sign-up/[[...index]]'];
 
 function MyApp({ Component, pageProps }) {
-  // const store = useStore(pageProps.initialReduxState);
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);

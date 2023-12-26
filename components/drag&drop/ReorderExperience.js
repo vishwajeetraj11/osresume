@@ -11,7 +11,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { toastMessages } from '../../shared/contants';
-import { adddata } from '../../zustand/zustand';
+import { useResumeStore } from '../../zustand/zustand';
 import { EmptyFileSVG } from '../SVGs';
 import ExperienceCard from '../cards/ExperienceCard';
 import EditSingleExperience from '../forms/EditSingleExperience';
@@ -31,16 +31,16 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
 
   const { getToken } = useAuth();
 
-  const { resumeId } = adddata(state => state.data.resumemetadata);
+  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
 
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
 
   // Fetch Global State
-  const experiences = adddata(state => state.data.experiencedata);
-  const addExperiencedata = adddata(state => state.addexperiencedata);
-  const addSampleExperience = adddata(state => state.addsampleexperience);
-  const deleteSingleExperience = adddata(state => state.deletesingleexperience);
+  const experiences = useResumeStore(state => state.data.experiencedata);
+  const addExperiencedata = useResumeStore(state => state.addexperiencedata);
+  const addSampleExperience = useResumeStore(state => state.addsampleexperience);
+  const deleteSingleExperience = useResumeStore(state => state.deletesingleexperience);
 
   // Local Experiences State for drag and drop
   const [exp, setExp] = useState(experiences);

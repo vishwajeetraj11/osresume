@@ -13,30 +13,30 @@ import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
 
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
-import { adddata } from '../../zustand/zustand';
+import { useResumeStore } from '../../zustand/zustand';
 
 const Editor = () => {
   const { getToken } = useAuth();
   const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');
-  const alll = adddata(state => state.data);
+  const alll = useResumeStore(state => state.data);
 
   const resumeRef = useRef();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { title } = adddata(state => state.data.resumemetadata);
-  const { username } = adddata(state => state.data.personaldata);
-  const addexperiencedata = adddata(state => state.addexperiencedata);
-  const addextradata = adddata(state => state.addextrasdata);
+  const { title } = useResumeStore(state => state.data.resumemetadata);
+  const { username } = useResumeStore(state => state.data.personaldata);
+  const addexperiencedata = useResumeStore(state => state.addexperiencedata);
+  const addextradata = useResumeStore(state => state.addextrasdata);
 
-  const addpersonaldata = adddata(state => state.addpersonaldata);
-  const personaldata = adddata(state => state.data.personaldata);
-  const educationdata = adddata(state => state.addeducationdata);
-  const eductainvalues = adddata(state => state.data.educationdata);
-  const experiencedata = adddata(state => state.data.experiencedata);
-  const extrasdata = adddata(state => state.data.extrasdata);
-  const addmetadata = adddata(state => state.addresumemetadata);
+  const addpersonaldata = useResumeStore(state => state.addpersonaldata);
+  const personaldata = useResumeStore(state => state.data.personaldata);
+  const educationdata = useResumeStore(state => state.addeducationdata);
+  const eductainvalues = useResumeStore(state => state.data.educationdata);
+  const experiencedata = useResumeStore(state => state.data.experiencedata);
+  const extrasdata = useResumeStore(state => state.data.extrasdata);
+  const addmetadata = useResumeStore(state => state.addresumemetadata);
 
   const handlePrint = useReactToPrint({
     documentTitle: title || 'Your Resume',

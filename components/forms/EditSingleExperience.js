@@ -8,13 +8,11 @@ import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { toastMessages } from '../../shared/contants';
-import { adddata } from '../../zustand/zustand';
+import { useResumeStore } from '../../zustand/zustand';
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
-  const { resumeId } = adddata(state => state.data.resumemetadata);
-  const experienceCollection = adddata(state => state.data.experiencedata);
-  const addExperiencedata = adddata(state => state.addexperiencedata);
-
-  //useSelector(state => state.resume.data.experiences);
+  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
+  const experienceCollection = useResumeStore(state => state.data.experiencedata);
+  const addExperiencedata = useResumeStore(state => state.addexperiencedata);
 
   const { getToken } = useAuth();
 
@@ -39,9 +37,6 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
     years: '',
     country: '',
   };
-
-  // Dispatch
-  //const dispatch = useDispatch();
 
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
@@ -80,7 +75,6 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
       validationSchema={ValidationSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(async () => {
-          // dispatch(editSingleExperienceData(values));
           showSnack(
             experience._id ? toastMessages.UPDATE_RESOURCE_REQUEST('Experience') : toastMessages.CREATE_RESOURCE_REQUEST('Experience'),
             'default',

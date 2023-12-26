@@ -7,7 +7,7 @@ import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { toastMessages } from '../../shared/contants';
-import { adddata } from '../../zustand/zustand';
+import { useResumeStore } from '../../zustand/zustand';
 const useStyles = makeStyles(theme => ({
   formControl: {
     minWidth: 120,
@@ -18,9 +18,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
-  const { resumeId } = adddata(state => state.data.resumemetadata);
-  const extrasCollection = adddata(state => state.data.extrasdata);
-  const addExtrasdata = adddata(state => state.addextrasdata);
+  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
+  const extrasCollection = useResumeStore(state => state.data.extrasdata);
+  const addExtrasdata = useResumeStore(state => state.addextrasdata);
 
   const { getToken } = useAuth();
 
@@ -64,7 +64,6 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
       validationSchema={ValidationSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(async () => {
-          // dispatch(editSingleExtraData(values));
           try {
             const token = await getToken();
 

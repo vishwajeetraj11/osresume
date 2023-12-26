@@ -11,16 +11,16 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { toastMessages } from '../../shared/contants';
-import { adddata } from '../../zustand/zustand';
+import { useResumeStore } from '../../zustand/zustand';
 import { EmptyFileSVG } from '../SVGs';
 import ExtrasCard from '../cards/ExtrasCard';
 import EditSingleExtra from '../forms/EditSingleExtra';
 
 const ReorderExtras = ({ closeDrawer, anchor }) => {
-  const { resumeId } = adddata(state => state.data.resumemetadata);
-  const addextrasdata = adddata(state => state.addextrasdata);
-  const addsampleextradata = adddata(state => state.addsampleextra);
-  const deletesingleextra = adddata(state => state.deletesingleextra);
+  const { resumeId } = useResumeStore(state => state.data.resumemetadata);
+  const addextrasdata = useResumeStore(state => state.addextrasdata);
+  const addsampleextradata = useResumeStore(state => state.addsampleextra);
+  const deletesingleextra = useResumeStore(state => state.deletesingleextra);
 
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
@@ -38,7 +38,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
     }
   };
   // Fetch Global State
-  const extras = adddata(state => state.data.extrasdata);
+  const extras = useResumeStore(state => state.data.extrasdata);
 
   // Local Extras State for drag and drop
   const [ext, setExt] = useState(extras);
