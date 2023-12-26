@@ -13,7 +13,7 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
   const { resumeId } = adddata(state => state.data.resumemetadata);
   const educationCollection = adddata(state => state.data.educationdata);
   const { getToken } = useAuth();
-  const addeducation = adddata(state => state.addeducationdata);
+  const addEducation = adddata(state => state.addeducationdata);
 
   const showSnack = (message, variant) => {
     if (variant == 'success') {
@@ -89,18 +89,10 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
 
             if (educationExists) {
               const education = educationCollection.map(edu => (edu._id === data.education._id ? data.education : edu));
-              addeducation(education);
-              //  dispatch({
-              //    type: ADD_EDUCATION_DATA,
-              //    payload: education,
-              //  });
+              addEducation(education);
             } else {
               const results = educationCollection.map(edu => (edu.id === education.id ? data.education : edu));
-              addeducation(results);
-              //  dispatch({
-              //       type: ADD_EDUCATION_DATA,
-              //     payload: results,
-              //   });
+              addEducation(results);
             }
             showSnack(
               education._id ? toastMessages.UPDATE_RESOURCE_SUCCESS('Education') : toastMessages.CREATE_RESOURCE_SUCCESS('Education'),

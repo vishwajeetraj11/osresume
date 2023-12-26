@@ -21,9 +21,9 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
 
   const addeducationdata = adddata(state => state.addeducationdata);
   const educationdata = adddata(state => state.data.educationdata);
-  const addsampleeducationdata = adddata(state => state.addsampleeducation);
-  const deletsingleducationdata = adddata(state => state.deletesingleeducation);
-  console.log(educationdata);
+  const addSampleEducationdata = adddata(state => state.addsampleeducation);
+  const deletSinglEducationdata = adddata(state => state.deletesingleeducation);
+
   const showSnack = (message, variant) => {
     if (variant === 'success') {
       toast.success(message);
@@ -170,7 +170,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const onDelete = async ({ id }) => {
     if (id.includes('-')) {
       //   dispatch(deleteSingleEducationData(id));
-      deletsingleducationdata(id);
+      deletSinglEducationdata(id);
       console.log(educationdata, 'first');
       return;
     }
@@ -185,9 +185,9 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
         },
       });
       console.log(educationdata[0].id);
-      deletsingleducationdata(id);
+      deletSinglEducationdata(id);
       //   dispatch(deleteSingleEducationData(id));
-      console.log(educationdata);
+
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Education'), 'success');
     } catch (error) {
       console.log(error);
@@ -244,7 +244,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
     //   }),
     // );
     //zustand
-    addsampleeducationdata({
+    addSampleEducationdata({
       id: uuidv4(),
       institution: 'Sample Institution',
       major: 'Sample Major',

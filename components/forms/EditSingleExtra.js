@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
   const { resumeId } = adddata(state => state.data.resumemetadata);
   const extrasCollection = adddata(state => state.data.extrasdata);
-  const addextrasdata = adddata(state => state.addextrasdata);
+  const addExtrasdata = adddata(state => state.addextrasdata);
 
   const { getToken } = useAuth();
 
@@ -94,10 +94,10 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
 
             if (extraExists) {
               const extras = extrasCollection.map(ext => (ext._id === data.extras._id ? data.extras : ext));
-              addextrasdata(extras);
+              addExtrasdata(extras);
             } else {
               const results = extrasCollection.map(ext => (ext.id === extra.id ? data.extras : ext));
-              addextrasdata(results);
+              addExtrasdata(results);
             }
 
             resetForm({

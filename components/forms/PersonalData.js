@@ -13,7 +13,6 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
   // Dispatch
   const { getToken } = useAuth();
 
-  // Get personalData State from globalState
   let personalData = adddata(state => state.data.personaldata);
   const { resumeId } = adddata(state => state.data.resumemetadata);
   // Remove +91 from phoneNumber

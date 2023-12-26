@@ -13,7 +13,7 @@ const UpdateTitle = ({ closeDrawer }) => {
   // const dispatch = useDispatch();
   const { getToken } = useAuth();
   const { title, resumeId } = adddata(state => state.data.resumemetadata);
-  const updatetitel = adddata(state => state.updatetitel);
+  const updateTitel = adddata(state => state.updatetitel);
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
     title: Yup.string().required('Please provide the title.').min(3, 'Too Short'),
@@ -68,7 +68,7 @@ const UpdateTitle = ({ closeDrawer }) => {
                 title: '',
               });
 
-              updatetitel(data.resume.title);
+              updateTitel(data.resume.title);
               showSnack(toastMessages.UPDATE_RESOURCE_SUCCESS('Resume Title'), 'success');
 
               setSubmitting(false);

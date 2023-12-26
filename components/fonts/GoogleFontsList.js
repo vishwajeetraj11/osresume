@@ -21,7 +21,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
 
   const { resumeId } = adddata(state => state.data.resumemetadata);
 
-  const updatefont = adddata(state => state.updatefont);
+  const updateFont = adddata(state => state.updatefont);
 
   // Search
   const [search, setSearch] = useState('');
@@ -177,7 +177,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
                       },
                     });
 
-                    updatefont(data.resume.customStyles.font);
+                    updateFont(data.resume.customStyles.font);
                     showSnack('Successfully updated font.', 'success');
                   } catch (e) {
                     showSnack('Unable to update font, please try again later.', 'error');

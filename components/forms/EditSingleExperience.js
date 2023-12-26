@@ -12,7 +12,7 @@ import { adddata } from '../../zustand/zustand';
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
   const { resumeId } = adddata(state => state.data.resumemetadata);
   const experienceCollection = adddata(state => state.data.experiencedata);
-  const addexperiencedata = adddata(state => state.addexperiencedata);
+  const addExperiencedata = adddata(state => state.addexperiencedata);
 
   //useSelector(state => state.resume.data.experiences);
 
@@ -111,10 +111,10 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
 
             if (experienceExists) {
               const experience = experienceCollection.map(exp => (exp._id === data.experience._id ? data.experience : exp));
-              addexperiencedata(experience);
+              addExperiencedata(experience);
             } else {
               const results = experienceCollection.map(exp => (exp.id === experience.id ? data.experience : exp));
-              addexperiencedata(results);
+              addExperiencedata(results);
             }
             showSnack(
               experience._id ? toastMessages.UPDATE_RESOURCE_SUCCESS('Experience') : toastMessages.CREATE_RESOURCE_SUCCESS('Experience'),
