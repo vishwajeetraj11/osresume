@@ -185,7 +185,6 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
       });
       console.log(educationdata[0].id);
       deletSinglEducationdata(id);
-      //   dispatch(deleteSingleEducationData(id));
 
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Education'), 'success');
     } catch (error) {
@@ -221,7 +220,6 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
 
       addeducationdata(data.resume.education);
 
-      //    dispatch(addEducationData(data.resume.education));
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Education'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
