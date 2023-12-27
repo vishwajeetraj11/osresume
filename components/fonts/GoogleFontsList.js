@@ -214,3 +214,4 @@ export default GoogleFontsList;
 
 // Good Google Fonts
 // Mulish
+// NewsReader
