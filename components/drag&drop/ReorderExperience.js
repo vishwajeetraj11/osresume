@@ -38,9 +38,9 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
 
   // Fetch Global State
   const experiences = useResumeStore(state => state.data.experience);
-  const addExperiencedata = useResumeStore(state => state.addexperiencedata);
-  const addSampleExperience = useResumeStore(state => state.addsampleexperience);
-  const deleteSingleExperience = useResumeStore(state => state.deletesingleexperience);
+  const addExperiencedata = useResumeStore(state => state.addExperience);
+  const addSampleExperience = useResumeStore(state => state.addSampleExperience);
+  const deleteSingleExperience = useResumeStore(state => state.deleteSingleExperience);
 
   // Local Experiences State for drag and drop
   const [exp, setExp] = useState(experiences);

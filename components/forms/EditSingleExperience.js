@@ -12,7 +12,7 @@ import { useResumeStore } from '../../zustand/zustand';
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
   const { resumeId } = useResumeStore(state => state.data.resumeMeta);
   const experienceCollection = useResumeStore(state => state.data.experience);
-  const addExperiencedata = useResumeStore(state => state.addexperiencedata);
+  const addExperiencedata = useResumeStore(state => state.addExperience);
 
   const { getToken } = useAuth();
 

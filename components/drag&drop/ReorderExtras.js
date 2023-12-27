@@ -18,9 +18,9 @@ import EditSingleExtra from '../forms/EditSingleExtra';
 
 const ReorderExtras = ({ closeDrawer, anchor }) => {
   const { resumeId } = useResumeStore(state => state.data.resumeMeta);
-  const addextrasdata = useResumeStore(state => state.addextrasdata);
-  const addsampleextradata = useResumeStore(state => state.addsampleextra);
-  const deletesingleextra = useResumeStore(state => state.deletesingleextra);
+  const addextrasdata = useResumeStore(state => state.addExtras);
+  const addsampleextradata = useResumeStore(state => state.addSampleExtra);
+  const deletesingleextra = useResumeStore(state => state.deleteSingleExtra);
 
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');

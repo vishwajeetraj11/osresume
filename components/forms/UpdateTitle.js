@@ -12,7 +12,7 @@ import { useResumeStore } from '../../zustand/zustand';
 const UpdateTitle = ({ closeDrawer }) => {
   const { getToken } = useAuth();
   const { title, resumeId } = useResumeStore(state => state.data.resumeMeta);
-  const updateTitel = useResumeStore(state => state.updatetitel);
+  const updateTitel = useResumeStore(state => state.updateTitel);
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
     title: Yup.string().required('Please provide the title.').min(3, 'Too Short'),

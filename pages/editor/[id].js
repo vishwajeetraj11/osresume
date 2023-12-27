@@ -19,24 +19,23 @@ const Editor = () => {
   const { getToken } = useAuth();
   const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');
-  const alll = useResumeStore(state => state.data);
+  const {} = useResumeStore(state => state.data);
 
   const resumeRef = useRef();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { title } = useResumeStore(state => state.data.resumeMeta);
-  const { username } = useResumeStore(state => state.data.personal);
-  const addexperiencedata = useResumeStore(state => state.addexperiencedata);
-  const addextradata = useResumeStore(state => state.addextrasdata);
+  const { title, username } = useResumeStore(state => ({ title: state.data.resumeMeta, username: state.data.personal }));
+  const addexperiencedata = useResumeStore(state => state.addExperience);
+  const addextradata = useResumeStore(state => state.addExtras);
 
-  const addpersonaldata = useResumeStore(state => state.addpersonaldata);
+  const addpersonaldata = useResumeStore(state => state.addPersonal);
   const personaldata = useResumeStore(state => state.data.personal);
-  const educationdata = useResumeStore(state => state.addeducationdata);
+  const educationdata = useResumeStore(state => state.addEducation);
   const eductainvalues = useResumeStore(state => state.data.education);
   const experiencedata = useResumeStore(state => state.data.experience);
   const extrasdata = useResumeStore(state => state.data.extras);
-  const addmetadata = useResumeStore(state => state.addresumemetadata);
+  const addmetadata = useResumeStore(state => state.addResumemeta);
 
   const handlePrint = useReactToPrint({
     documentTitle: title || 'Your Resume',

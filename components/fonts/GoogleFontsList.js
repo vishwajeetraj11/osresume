@@ -20,7 +20,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
 
   const { resumeId } = useResumeStore(state => state.data.resumeMeta);
 
-  const updateFont = useResumeStore(state => state.updatefont);
+  const updateFont = useResumeStore(state => state.updateFont);
 
   // Search
   const [search, setSearch] = useState('');

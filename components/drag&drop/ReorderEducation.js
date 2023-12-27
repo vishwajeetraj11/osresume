@@ -19,9 +19,9 @@ import EditSingleEducation from '../forms/EditSingleEducation';
 const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const { getToken } = useAuth();
 
-  const addeducationdata = useResumeStore(state => state.addeducationdata);
-  const addSampleEducationdata = useResumeStore(state => state.addsampleeducation);
-  const deletSinglEducationdata = useResumeStore(state => state.deletesingleeducation);
+  const addeducationdata = useResumeStore(state => state.addEducation);
+  const addSampleEducationdata = useResumeStore(state => state.addSampleEducation);
+  const deletSinglEducationdata = useResumeStore(state => state.deleteSingleEducation);
 
   const showSnack = (message, variant) => {
     if (variant === 'success') {

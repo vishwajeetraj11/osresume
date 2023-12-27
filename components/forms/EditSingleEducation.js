@@ -13,7 +13,7 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
   const { resumeId } = useResumeStore(state => state.data.resumeMeta);
   const educationCollection = useResumeStore(state => state.data.education);
   const { getToken } = useAuth();
-  const addEducation = useResumeStore(state => state.addeducationdata);
+  const addEducation = useResumeStore(state => state.addEducation);
 
   const showSnack = (message, variant) => {
     if (variant == 'success') {
