@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
+import { useShallow } from 'zustand/react/shallow';
 import LeftSideBar from '../../components/LeftSideBar';
 import Loader from '../../components/Loader';
 import RightSideBar from '../../components/RightSideBar';
@@ -25,16 +26,22 @@ const Editor = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { title, username } = useResumeStore(state => ({ title: state.data.resumeMeta, username: state.data.personal }));
+  const { title, username, personaldata, eductainvalues, experiencedata, extrasdata, resumeMeta } = useResumeStore(
+    useShallow(state => ({
+      title: state.data.resumeMeta.title,
+      username: state.data.personal.username,
+      personaldata: state.data.personal,
+      eductainvalues: state.data.education,
+      experiencedata: state.data.experience,
+      extrasdata: state.data.extras,
+      resumeMeta: state.data.resumeMeta,
+    })),
+  );
+
   const addexperiencedata = useResumeStore(state => state.addExperience);
   const addextradata = useResumeStore(state => state.addExtras);
-
   const addpersonaldata = useResumeStore(state => state.addPersonal);
-  const personaldata = useResumeStore(state => state.data.personal);
-  const educationdata = useResumeStore(state => state.addEducation);
-  const eductainvalues = useResumeStore(state => state.data.education);
-  const experiencedata = useResumeStore(state => state.data.experience);
-  const extrasdata = useResumeStore(state => state.data.extras);
+  const addeducationdata = useResumeStore(state => state.addEducation);
   const addmetadata = useResumeStore(state => state.addResumemeta);
 
   const handlePrint = useReactToPrint({
@@ -89,7 +96,7 @@ const Editor = () => {
           templateName: data.resume.templateName,
           customStyles: data.resume.customStyles,
         });
-        educationdata(data.resume.education);
+        addeducationdata(data.resume.education);
         addexperiencedata(data.resume.experience);
         addpersonaldata(personalData);
         addextradata(data.resume.extras);
@@ -125,14 +132,14 @@ const Editor = () => {
         <div className="flex flex-col lg:flex-row bg-gray-50">
           <LeftSideBar />
           <div className="order-2 mx-auto my-10">
-            {alll.resumeMeta.templateName === 'Onyx' && <Onyx data={{}} ref={resumeRef} customStyles={alll.resumeMeta.customStyles} />}
-            {alll.resumeMeta.templateName === 'Trical' && (
+            {resumeMeta.templateName === 'Onyx' && <Onyx data={{}} ref={resumeRef} customStyles={alll.resumeMeta.customStyles} />}
+            {resumeMeta.templateName === 'Trical' && (
               <Trical
                 ref={resumeRef}
                 extrasdata={extrasdata}
                 perosnaldata={personaldata}
                 educationdata={eductainvalues}
-                customStyles={alll.resumeMeta.customStyles}
+                customStyles={resumeMeta.customStyles}
                 experiencedata={experiencedata}
               />
             )}
