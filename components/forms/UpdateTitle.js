@@ -6,13 +6,14 @@ import { Formik } from 'formik';
 import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
+import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
 import { useResumeStore } from '../../zustand/zustand';
 
 const UpdateTitle = ({ closeDrawer }) => {
   const { getToken } = useAuth();
-  const { title, resumeId } = useResumeStore(state => state.data.resumeMeta);
-  const updateTitel = useResumeStore(state => state.updatetitel);
+  const { title, resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
+  const updateTitel = useResumeStore(useShallow(state => state.updatetitel));
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
     title: Yup.string().required('Please provide the title.').min(3, 'Too Short'),

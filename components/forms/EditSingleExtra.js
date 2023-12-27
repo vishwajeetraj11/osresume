@@ -6,6 +6,7 @@ import ChipInput from 'material-ui-chip-input';
 import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
+import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
 import { useResumeStore } from '../../zustand/zustand';
 const useStyles = makeStyles(theme => ({
@@ -18,8 +19,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
-  const { resumeId } = useResumeStore(state => state.data.resumeMeta);
-  const extrasCollection = useResumeStore(state => state.data.extras);
+  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
+  const extrasCollection = useResumeStore(useShallow(state => state.data.extras));
   const addExtrasdata = useResumeStore(state => state.addextrasdata);
 
   const { getToken } = useAuth();

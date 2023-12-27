@@ -6,6 +6,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
 import items from '../../shared/googleFonts.json';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 import { useResumeStore } from '../../zustand/zustand';
@@ -18,7 +19,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [fontsAdded, setFontsAdded] = useState([]);
   const { getToken } = useAuth();
 
-  const { resumeId } = useResumeStore(state => state.data.resumeMeta);
+  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
 
   const updateFont = useResumeStore(state => state.updatefont);
 

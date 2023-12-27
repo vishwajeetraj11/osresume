@@ -7,11 +7,12 @@ import { Formik } from 'formik';
 import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
+import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
 import { useResumeStore } from '../../zustand/zustand';
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
-  const { resumeId } = useResumeStore(state => state.data.resumeMeta);
-  const experienceCollection = useResumeStore(state => state.data.experience);
+  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
+  const experienceCollection = useResumeStore(useShallow(state => state.data.experience));
   const addExperiencedata = useResumeStore(state => state.addexperiencedata);
 
   const { getToken } = useAuth();

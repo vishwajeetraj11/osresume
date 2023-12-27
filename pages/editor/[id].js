@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
+import { useShallow } from 'zustand/react/shallow';
 import LeftSideBar from '../../components/LeftSideBar';
 import Loader from '../../components/Loader';
 import RightSideBar from '../../components/RightSideBar';
@@ -22,23 +23,23 @@ const Editor = () => {
 
   const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');
-  const alll = useResumeStore(state => state.data);
+  const alll = useResumeStore(useShallow(state => state.data));
 
   const resumeRef = useRef();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { title } = useResumeStore(state => state.data.resumeMeta);
-  const { username } = useResumeStore(state => state.data.personal);
+  const { title } = useResumeStore(useShallow(state => state.data.resumeMeta));
+  const { username } = useResumeStore(useShallow(state => state.data.personal));
   const addexperiencedata = useResumeStore(state => state.addexperiencedata);
   const addextradata = useResumeStore(state => state.addextrasdata);
 
   const addpersonaldata = useResumeStore(state => state.addpersonaldata);
-  const personaldata = useResumeStore(state => state.data.personal);
+  const personaldata = useResumeStore(useShallow(state => state.data.personal));
   const educationdata = useResumeStore(state => state.addeducationdata);
-  const eductainvalues = useResumeStore(state => state.data.education);
-  const experiencedata = useResumeStore(state => state.data.experience);
-  const extrasdata = useResumeStore(state => state.data.extras);
+  const eductainvalues = useResumeStore(useShallow(state => state.data.education));
+  const experiencedata = useResumeStore(useShallow(state => state.data.experience));
+  const extrasdata = useResumeStore(useShallow(state => state.data.extras));
   const addmetadata = useResumeStore(state => state.addresumemetadata);
 
   const handlePrint = useReactToPrint({
