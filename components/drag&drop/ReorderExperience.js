@@ -182,7 +182,6 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
       deleteSingleExperience(id);
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Experience'), 'success');
     } catch (error) {
-      // console.log(error);
       showSnack(toastMessages.DELETE_RESOURCE_ERROR('Experience'), 'error');
     }
   };
@@ -211,13 +210,11 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(data.resume.experience);
       addExperiencedata(data.resume.experience);
       // dispatch(addExperienceData(data.resume.experience));
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Experience'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
-      // console.log(error);
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_ERROR('Experience'), 'error');
     }
   };

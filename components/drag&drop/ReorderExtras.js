@@ -218,7 +218,6 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Extras'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
-      // console.log(error);
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_ERROR('Extras'), 'error');
     }
   };

@@ -35,7 +35,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
   });
 
   const showSnack = (message, variant) => {
-    if (variant == 'success') {
+    if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {
       toast.error(message);

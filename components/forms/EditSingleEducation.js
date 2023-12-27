@@ -17,7 +17,7 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
   const addEducation = useResumeStore(state => state.addEducation);
 
   const showSnack = (message, variant) => {
-    if (variant == 'success') {
+    if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {
       toast.error(message);
@@ -105,7 +105,6 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
             });
             setEdit(true);
           } catch (error) {
-            // console.log(error);
             showSnack(
               education._id ? toastMessages.UPDATE_RESOURCE_ERROR('Education') : toastMessages.CREATE_RESOURCE_ERROR('Education'),
               'error',

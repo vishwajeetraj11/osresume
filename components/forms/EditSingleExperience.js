@@ -18,7 +18,7 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
   const { getToken } = useAuth();
 
   const showSnack = (message, variant) => {
-    if (variant == 'success') {
+    if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {
       toast.error(message);

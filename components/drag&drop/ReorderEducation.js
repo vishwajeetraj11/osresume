@@ -186,7 +186,6 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
 
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Education'), 'success');
     } catch (error) {
-      console.log(error);
       showSnack(toastMessages.DELETE_RESOURCE_ERROR('Education'), 'error');
     }
   };
@@ -221,7 +220,6 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Education'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
-      console.log('error', error);
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_ERROR('Education'), 'error');
     }
   };
