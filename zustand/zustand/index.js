@@ -14,115 +14,98 @@ export const useResumeStore = create(
       extras: [],
       education: [],
     },
-    addPersonal: personal =>
-      set(state => ({
-        data: {
-          ...state.data,
-          personal: personal,
-        },
-      })),
-    addResumemeta: meta =>
-      set(state => ({
-        data: {
-          ...state.data,
-          resumeMeta: meta,
-        },
-      })),
+    addPersonal: personal => set(state => ({
+      data: {
+        ...state.data,
+        personal,
+      },
+    })),
+    addResumemeta: meta => set(state => ({
+      data: {
+        ...state.data,
+        resumeMeta: meta,
+      },
+    })),
 
-    addExperience: experience =>
-      set(state => ({
-        data: {
-          ...state.data,
-          experience: experience,
-        },
-      })),
-    addExtras: extras =>
-      set(state => ({
-        data: {
-          ...state.data,
-          extras: extras,
-        },
-      })),
+    addExperience: experience => set(state => ({
+      data: {
+        ...state.data,
+        experience,
+      },
+    })),
+    addExtras: extras => set(state => ({
+      data: {
+        ...state.data,
+        extras,
+      },
+    })),
 
-    deleteSingleExtra: id =>
-      set(state => ({
-        data: {
-          ...state.data,
-          extras: state.data.extras.filter(e => e.id !== id),
-        },
-      })),
+    deleteSingleExtra: id => set(state => ({
+      data: {
+        ...state.data,
+        extras: state.data.extras.filter(e => e.id !== id),
+      },
+    })),
 
-    addSampleExtra: extras =>
-      set(state => ({
-        data: {
-          ...state.data,
-          extras: [...state.data.extras, extras],
-        },
-      })),
+    addSampleExtra: extras => set(state => ({
+      data: {
+        ...state.data,
+        extras: [...state.data.extras, extras],
+      },
+    })),
 
-    addEducation: education =>
-      set(state => ({
-        data: {
-          ...state.data,
-          education,
-        },
-      })),
+    addEducation: education => set(state => ({
+      data: {
+        ...state.data,
+        education,
+      },
+    })),
 
-    deleteSingleExperience: id =>
-      set(state => ({
-        data: {
-          ...state.data,
-          experience: state.data.experience.filter(a => {
-            return a.id !== id;
-          }),
-        },
-      })),
-    deleteSingleEducation: id =>
-      set(state => ({
-        data: {
-          ...state.data,
-          education: state.data.education.filter(a => {
-            return a.id !== id;
-          }),
-        },
-      })),
+    deleteSingleExperience: id => set(state => ({
+      data: {
+        ...state.data,
+        experience: state.data.experience.filter(a => a.id !== id),
+      },
+    })),
+    deleteSingleEducation: id => set(state => ({
+      data: {
+        ...state.data,
+        education: state.data.education.filter(a => a.id !== id),
+      },
+    })),
 
-    addSampleExperience: experience =>
-      set(state => ({
-        data: {
-          ...state.data,
-          experience: [...state.data.experience, experience],
+    addSampleExperience: experience => set(state => ({
+      data: {
+        ...state.data,
+        experience: [...state.data.experience, experience],
+      },
+    })),
+    addSampleEducation: education => set(state => ({
+      data: {
+        ...state.data,
+        education: [...state.data.education, education],
+      },
+    })),
+    updateTitel: titel => set(state => ({
+      data: {
+        ...state.data,
+        resumeMeta: {
+          ...state.data.resumeMeta,
+          title: titel, /// edit
         },
-      })),
-    addSampleEducation: education =>
-      set(state => ({
-        data: {
-          ...state.data,
-          education: [...state.data.education, education],
-        },
-      })),
-    updateTitel: titel =>
-      set(state => ({
-        data: {
-          ...state.data,
-          resumeMeta: {
-            ...state.data.resumeMeta,
-            title: titel, ///edit
+      },
+    })),
+    updateFont: font => set(state => ({
+      data: {
+        ...state.data,
+        resumeMeta: {
+          ...state.data.resumeMeta,
+          customStyles: {
+            font,
           },
         },
-      })),
-    updateFont: font =>
-      set(state => ({
-        data: {
-          ...state.data,
-          resumeMeta: {
-            ...state.data.resumeMeta,
-            customStyles: {
-              font: font,
-            },
-          },
-        },
-      })),
+      },
+    })),
   })),
 );
 

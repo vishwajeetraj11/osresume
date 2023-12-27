@@ -20,7 +20,6 @@ const Editor = () => {
   const { getToken } = useAuth();
   const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');
-  const {} = useResumeStore(state => state.data);
 
   const resumeRef = useRef();
   const [loading, setLoading] = useState(false);
@@ -130,12 +129,21 @@ const Editor = () => {
         <div className="flex flex-col lg:flex-row bg-gray-50">
           <LeftSideBar />
           <div className="order-2 mx-auto my-10">
-            {resumeMeta.templateName === 'Onyx' && <Onyx data={{}} ref={resumeRef} customStyles={alll.resumeMeta.customStyles} />}
+            {resumeMeta.templateName === 'Onyx' && (
+            <Onyx
+              extrasData={extrasdata}
+              personalData={personaldata}
+              educationData={eductainvalues}
+              customStyles={resumeMeta.customStyles}
+              experienceData={experiencedata}
+              ref={resumeRef}
+            />
+            )}
             {resumeMeta.templateName === 'Trical' && (
               <Trical
                 ref={resumeRef}
                 extrasData={extrasdata}
-                perosnalData={personaldata}
+                personalData={personaldata}
                 educationData={eductainvalues}
                 customStyles={resumeMeta.customStyles}
                 experienceData={experiencedata}
