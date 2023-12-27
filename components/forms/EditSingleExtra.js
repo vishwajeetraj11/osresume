@@ -109,7 +109,6 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
             );
             setEdit(true);
           } catch (error) {
-            // console.log(error);
             showSnack(extra._id ? toastMessages.UPDATE_RESOURCE_ERROR('Extras') : toastMessages.CREATE_RESOURCE_ERROR('Extras'), 'error');
           } finally {
             setSubmitting(false);

@@ -127,7 +127,6 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
             });
             setEdit(true);
           } catch (error) {
-            // console.log(error.response);
             showSnack(
               experience._id ? toastMessages.UPDATE_RESOURCE_ERROR('Experience') : toastMessages.CREATE_RESOURCE_ERROR('Experience'),
               'error',

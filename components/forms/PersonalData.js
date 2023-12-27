@@ -117,7 +117,6 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
               setSubmitting(false);
               closeDrawer();
             } catch (error) {
-              // console.log(error.response.data);
               showSnack(
                 personalData._id
                   ? toastMessages.UPDATE_RESOURCE_ERROR('Personal data')

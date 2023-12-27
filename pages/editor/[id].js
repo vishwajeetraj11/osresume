@@ -84,7 +84,6 @@ const Editor = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        // console.log(data);
         const personalData = data.resume.personal
           ? data.resume.personal
           : { name: '', email: '', phoneNumber: '', designation: '', country: '', objective: '' };
@@ -104,7 +103,6 @@ const Editor = () => {
         const fontID = data.resume.customStyles.font.replace(/ /g, '+');
         addFontInHeadTag(fontID);
       } catch (error) {
-        // console.log(error);
         setError(true);
       } finally {
         setLoading(false);

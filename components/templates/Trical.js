@@ -16,9 +16,6 @@ class Trical extends React.Component {
       customStyles,
     } = this.props;
 
-    // console.log(perosnaldata, 'hellooo');
-    console.log(customStyles);
-
     return (
       <div id="t1" className="resume-a4 bg-white flex justify-between overflow-hidden" style={{ fontFamily: customStyles.font }}>
         <div className="w-full">

@@ -54,7 +54,6 @@ const Dashboard = () => {
         setLoading(false);
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          console.log(error.response.data);
         }
         setLoading(false);
         setNoResume(true);
@@ -91,8 +90,6 @@ const Dashboard = () => {
       setResumes(resumes => resumes.filter(resume => resume._id !== selectedResume._id));
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Resume'), 'success');
     } catch (error) {
-      // console.log('Error ', error);
-      // console.log('Error Response: ', error.response);
       showSnack(toastMessages.DELETE_RESOURCE_ERROR('Resume'), 'error');
     }
   };
@@ -103,9 +100,7 @@ const Dashboard = () => {
 
   const render = () => {
     if (loading) {
-      return Array.from(Array(4).keys()).map(loader => (
-        <div key={loader} className="h-[462px] animate-pulse bg-[#e0e5ebd6] rounded-lg" />
-      ));
+      return Array.from(Array(4).keys()).map(loader => <div key={loader} className="h-[462px] animate-pulse bg-[#e0e5ebd6] rounded-lg" />);
     }
     if (error) {
       return <p className="text-rose-600 text-xs">{error}</p>;
@@ -135,16 +130,11 @@ const Dashboard = () => {
           <div className="mt-6 lg:mt-0">
             {selectedResume && (
               <>
-                <Button
-                  className="mr-6 text-white hover:bg-[#12836d]  bg-primary"
-                  variant="contained"
-                  onClick={onUpdate}
-                >
+                <Button className="mr-6 text-white hover:bg-[#12836d]  bg-primary" variant="contained" onClick={onUpdate}>
                   Update
                 </Button>
                 <Button
                   style={{
-
                     border: '2px solid #e74c3c',
                     padding: '6px 16px',
                   }}

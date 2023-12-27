@@ -77,7 +77,6 @@ const Templates = () => {
           setNoTemplate(true);
         }
       } catch (e) {
-        console.log(e);
         setNoTemplate(true);
         setError('An error occurred. Please try again later!');
       } finally {
@@ -88,9 +87,7 @@ const Templates = () => {
 
   const render = () => {
     if (loading) {
-      return Array.from(Array(4).keys()).map(loader => (
-        <div key={loader} className="h-[462px] animate-pulse bg-[#e0e5ebd6] rounded-lg" />
-      ));
+      return Array.from(Array(4).keys()).map(loader => <div key={loader} className="h-[462px] animate-pulse bg-[#e0e5ebd6] rounded-lg" />);
     }
     if (error) {
       return (

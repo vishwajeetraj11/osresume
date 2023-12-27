@@ -6,12 +6,13 @@ import { Formik } from 'formik';
 import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
+import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
 import { useResumeStore } from '../../zustand/zustand';
 
 const UpdateTitle = ({ closeDrawer }) => {
   const { getToken } = useAuth();
-  const { title, resumeId } = useResumeStore(state => state.data.resumeMeta);
+  const { title, resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
   const updateTitel = useResumeStore(state => state.updateTitel);
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
@@ -73,7 +74,6 @@ const UpdateTitle = ({ closeDrawer }) => {
               setSubmitting(false);
               closeDrawer();
             } catch (error) {
-              // console.log(error.response.data);
               showSnack(toastMessages.UPDATE_RESOURCE_REQUEST('Resume Title'), 'error');
               setSubmitting(false);
             }
