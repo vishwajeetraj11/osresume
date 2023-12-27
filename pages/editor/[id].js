@@ -134,11 +134,11 @@ const Editor = () => {
             {resumeMeta.templateName === 'Trical' && (
               <Trical
                 ref={resumeRef}
-                extrasdata={extrasdata}
-                perosnaldata={personaldata}
-                educationdata={eductainvalues}
+                extrasData={extrasdata}
+                perosnalData={personaldata}
+                educationData={eductainvalues}
                 customStyles={resumeMeta.customStyles}
-                experiencedata={experiencedata}
+                experienceData={experiencedata}
               />
             )}
           </div>
