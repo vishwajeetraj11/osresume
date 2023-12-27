@@ -6,14 +6,15 @@ import { Formik } from 'formik';
 import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
+import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
 import { useResumeStore } from '../../zustand/zustand';
 
 const PersonalDataForm = ({ closeDrawer, anchor }) => {
   const { getToken } = useAuth();
 
-  let personalData = useResumeStore(state => state.data.personal);
-  const { resumeId } = useResumeStore(state => state.data.resumeMeta);
+  let personalData = useResumeStore(useShallow(state => state.data.personal));
+  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
   // Remove +91 from phoneNumber
   let phoneNumber = personalData?.phoneNumber;
   phoneNumber = phoneNumber?.replace('+91', '');

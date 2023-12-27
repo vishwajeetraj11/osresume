@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
+import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
 import { useResumeStore } from '../../zustand/zustand';
 import { EmptyFileSVG } from '../SVGs';
@@ -31,13 +32,14 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
 
   const { getToken } = useAuth();
 
-  const { resumeId } = useResumeStore(state => state.data.resumeMeta);
+  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
 
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
 
   // Fetch Global State
-  const experiences = useResumeStore(state => state.data.experience);
+  const experiences = useResumeStore(useShallow(state => state.data.experience));
+
   const addExperiencedata = useResumeStore(state => state.addExperience);
   const addSampleExperience = useResumeStore(state => state.addSampleExperience);
   const deleteSingleExperience = useResumeStore(state => state.deleteSingleExperience);
