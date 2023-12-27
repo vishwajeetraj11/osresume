@@ -10,9 +10,8 @@ class Trical extends React.Component {
     const {
       extrasData,
       educationData,
-      perosnalData,
+      personalData,
       experienceData,
-
       customStyles,
     } = this.props;
 
@@ -21,24 +20,24 @@ class Trical extends React.Component {
         <div className="w-full">
           <div className="flex justify-center flex-col relative pt-12">
             <h1 className="pl-20 font-semibold text-t2-xl tracking-widest text-t1-black uppercase" style={{ letterSpacing: '7px' }}>
-              {perosnalData?.name && perosnalData?.name?.split(' ')[0]}
+              {personalData?.name && personalData?.name?.split(' ')[0]}
             </h1>
             <h1 className="pl-20 z-10 font-bold text-t2-2xl text-t2-primary uppercase" style={{ letterSpacing: '12px' }}>
-              {perosnalData?.name && perosnalData?.name?.split(' ')[1]}
+              {personalData?.name && personalData?.name?.split(' ')[1]}
             </h1>
             <h3
               className="pr-20 top-5 font-medium text-t2-md text-t2-primary uppercase absolute w-full bg-t2-secondary text-right"
               style={{ letterSpacing: '5px', top: '6.2rem' }}
             >
-              {perosnalData?.designation}
+              {personalData?.designation}
             </h3>
           </div>
           <div className="flex flex-row justify-between p-20 pt-14">
             <div className="w-8/12">
-              {perosnalData?.objective && (
+              {personalData?.objective && (
                 <>
                   <Title>Career Objective</Title>
-                  <p className="mb-12 text-t2-md">{perosnalData?.objective}</p>
+                  <p className="mb-12 text-t2-md">{personalData?.objective}</p>
                 </>
               )}
               {!!educationData.length && <Title>my education</Title>}
@@ -70,9 +69,9 @@ class Trical extends React.Component {
               </div>
             </div>
             <div className="w-3/12">
-              {(perosnalData?.email || perosnalData?.phoneNumber) && <Title>contact</Title>}
-              <Paragraph classes="word-keep-all">{perosnalData?.email}</Paragraph>
-              <Paragraph>{perosnalData?.phoneNumber}</Paragraph>
+              {(personalData?.email || personalData?.phoneNumber) && <Title>contact</Title>}
+              <Paragraph classes="word-keep-all">{personalData?.email}</Paragraph>
+              <Paragraph>{personalData?.phoneNumber}</Paragraph>
               {extrasData.map(item => (
                 <div key={item.id}>
                   <Paragraph classes="text-t2-sub-heading font-semibold mt-6 mb-3">{item.title}</Paragraph>
