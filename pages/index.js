@@ -9,6 +9,7 @@ import { features } from '../shared/contants';
 
 export default function Home() {
   // const desktop = useMediaQuery('(min-width:1024px)');
+  const date = new Date();
   return (
     <>
       <Head>
@@ -141,7 +142,7 @@ export default function Home() {
 
       {/* Footer */}
       <div className="footer  sm:p-3 md:p-4 lg:-5 mx-10 flex flex-row justify-between">
-        <p className="">&copy; OS Resume 2021</p>
+        <p className="">&copy; OS Resume {date.getFullYear()}</p>
         <p className="">Next.js + Clerk </p>
       </div>
     </>
