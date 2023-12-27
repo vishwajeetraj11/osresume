@@ -44,7 +44,6 @@ export default withAuth(async (req, res) => {
         experience.remove();
         res.status(200).json({ success: true });
       } catch (error) {
-        // console.log(error);
         res.status(400).json({ success: false, error });
       }
       break;

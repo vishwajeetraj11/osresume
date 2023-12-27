@@ -8,20 +8,23 @@ import axios from 'axios';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
-import { addExtrasData, addSampleExtraData, deleteSingleExtraData } from '../../redux/actions/resumeActions';
+import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
+import { useResumeStore } from '../../zustand/zustand';
 import { EmptyFileSVG } from '../SVGs';
 import ExtrasCard from '../cards/ExtrasCard';
 import EditSingleExtra from '../forms/EditSingleExtra';
 
 const ReorderExtras = ({ closeDrawer, anchor }) => {
-  const { resumeId } = useSelector(state => state.resume.metadata);
+  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
+  const addExtrasData = useResumeStore(state => state.addExtras);
+  const addSampleExtraData = useResumeStore(state => state.addSampleExtra);
+  const deleteSingleExtra = useResumeStore(state => state.deleteSingleExtra);
+
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
-  const dispatch = useDispatch();
   const { getToken } = useAuth();
 
   const showSnack = (message, variant) => {
@@ -36,7 +39,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
     }
   };
   // Fetch Global State
-  const extras = useSelector(state => state.resume.data.extras);
+  const extras = useResumeStore(useShallow(state => state.data.extras));
 
   // Local Extras State for drag and drop
   const [ext, setExt] = useState(extras);
@@ -162,7 +165,8 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
 
   const onDelete = async ({ id }) => {
     if (id.includes('-')) {
-      dispatch(deleteSingleExtraData(id));
+      deleteSingleExtra(id);
+
       return;
     }
     try {
@@ -176,7 +180,8 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      dispatch(deleteSingleExtraData(id));
+
+      deleteSingleExtra(id);
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Extras'), 'success');
     } catch (error) {
       showSnack(toastMessages.DELETE_RESOURCE_ERROR('Extras'), 'error');
@@ -208,24 +213,22 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      dispatch(addExtrasData(data.resume.extras));
+
+      addExtrasData(data.resume.extras);
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Extras'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
-      // console.log(error);
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_ERROR('Extras'), 'error');
     }
   };
 
   const onAdd = () => {
-    dispatch(
-      addSampleExtraData({
-        id: uuidv4(),
-        title: 'Sample Title',
-        type: 'COMMA',
-        items: ['Sample Item 1', 'Sample Item 2'],
-      }),
-    );
+    addSampleExtraData({
+      id: uuidv4(),
+      title: 'Sample Title',
+      type: 'COMMA',
+      items: ['Sample Item 1', 'Sample Item 2'],
+    });
     showSnack(toastMessages.SAMPLE_DATA('Extras'), 'success');
   };
 

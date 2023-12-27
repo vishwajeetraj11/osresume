@@ -4,8 +4,8 @@ import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useReactToPrint } from 'react-to-print';
+import { useShallow } from 'zustand/react/shallow';
 import LeftSideBar from '../../components/LeftSideBar';
 import Loader from '../../components/Loader';
 import RightSideBar from '../../components/RightSideBar';
@@ -13,28 +13,36 @@ import { ResumeNotFoundSVG } from '../../components/SVGs';
 import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
 
-import {
-  addEducationData,
-  addExperienceData,
-  addExtrasData,
-  addPersonalDataState,
-  addResumeMetaData,
-} from '../../redux/actions/resumeActions';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
+import { useResumeStore } from '../../zustand/zustand';
 
 const Editor = () => {
   const { getToken } = useAuth();
-  const dispatch = useDispatch();
   const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');
-  const resume = useSelector(state => state.resume);
-  const { data: resumeData, metadata } = resume;
+  const {} = useResumeStore(state => state.data);
+
   const resumeRef = useRef();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { title } = metadata;
-  const { username } = resumeData?.personalData;
+  const { title, username, personaldata, eductainvalues, experiencedata, extrasdata, resumeMeta } = useResumeStore(
+    useShallow(state => ({
+      title: state.data.resumeMeta.title,
+      username: state.data.personal.username,
+      personaldata: state.data.personal,
+      eductainvalues: state.data.education,
+      experiencedata: state.data.experience,
+      extrasdata: state.data.extras,
+      resumeMeta: state.data.resumeMeta,
+    })),
+  );
+
+  const addExperienceData = useResumeStore(state => state.addExperience);
+  const addExtraData = useResumeStore(state => state.addExtras);
+  const addPersonalData = useResumeStore(state => state.addPersonal);
+  const addEducationData = useResumeStore(state => state.addEducation);
+  const addMetaData = useResumeStore(state => state.addResumemeta);
 
   const handlePrint = useReactToPrint({
     documentTitle: title || 'Your Resume',
@@ -76,35 +84,31 @@ const Editor = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        // console.log(data);
         const personalData = data.resume.personal
           ? data.resume.personal
           : { name: '', email: '', phoneNumber: '', designation: '', country: '', objective: '' };
-        dispatch(
-          addResumeMetaData({
-            title: data.resume.title,
-            createdAt: data.resume.createdAt,
-            resumeId: data.resume._id,
-            userId: data.resume.userId,
-            templateName: data.resume.templateName,
-            customStyles: data.resume.customStyles,
-          }),
-        );
-        dispatch(addExperienceData(data.resume.experience));
-        dispatch(addExtrasData(data.resume.extras));
-        dispatch(addPersonalDataState(personalData));
-        dispatch(addEducationData(data.resume.education));
+        addMetaData({
+          title: data.resume.title,
+          createdAt: data.resume.createdAt,
+          resumeId: data.resume._id,
+          userId: data.resume.userId,
+          templateName: data.resume.templateName,
+          customStyles: data.resume.customStyles,
+        });
+        addEducationData(data.resume.education);
+        addExperienceData(data.resume.experience);
+        addPersonalData(personalData);
+        addExtraData(data.resume.extras);
 
         const fontID = data.resume.customStyles.font.replace(/ /g, '+');
         addFontInHeadTag(fontID);
       } catch (error) {
-        // console.log(error);
         setError(true);
       } finally {
         setLoading(false);
       }
     })();
-  }, [router.query.id, dispatch]);
+  }, [router.query.id]);
 
   const render = () => {
     if (loading) {
@@ -126,8 +130,17 @@ const Editor = () => {
         <div className="flex flex-col lg:flex-row bg-gray-50">
           <LeftSideBar />
           <div className="order-2 mx-auto my-10">
-            {metadata.templateName === 'Onyx' && <Onyx ref={resumeRef} data={resumeData} customStyles={metadata.customStyles} />}
-            {metadata.templateName === 'Trical' && <Trical ref={resumeRef} data={resumeData} customStyles={metadata.customStyles} />}
+            {resumeMeta.templateName === 'Onyx' && <Onyx data={{}} ref={resumeRef} customStyles={alll.resumeMeta.customStyles} />}
+            {resumeMeta.templateName === 'Trical' && (
+              <Trical
+                ref={resumeRef}
+                extrasData={extrasdata}
+                perosnalData={personaldata}
+                educationData={eductainvalues}
+                customStyles={resumeMeta.customStyles}
+                experienceData={experiencedata}
+              />
+            )}
           </div>
           <RightSideBar handlePrint={handlePrint} />
         </div>

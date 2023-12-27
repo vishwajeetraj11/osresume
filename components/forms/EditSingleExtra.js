@@ -4,11 +4,11 @@ import axios from 'axios';
 import { Formik } from 'formik';
 import ChipInput from 'material-ui-chip-input';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
-import { ADD_EXTRAS_DATA } from '../../redux/actionTypes/resumeActionTypes';
+import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
+import { useResumeStore } from '../../zustand/zustand';
 const useStyles = makeStyles(theme => ({
   formControl: {
     minWidth: 120,
@@ -19,32 +19,23 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
-  const { resumeId } = useSelector(state => state.resume.metadata);
-  const extrasCollection = useSelector(state => state.resume.data.extras);
+  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
+  const extrasCollection = useResumeStore(useShallow(state => state.data.extras));
+  const addExtrasdata = useResumeStore(state => state.addExtras);
+
   const { getToken } = useAuth();
 
-
   const showSnack = (message, variant) => {
-
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
+    if (variant == 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
     }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-    
-  // Dispatch
-  const dispatch = useDispatch();
+  };
 
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
@@ -74,7 +65,6 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
       validationSchema={ValidationSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(async () => {
-          // dispatch(editSingleExtraData(values));
           try {
             const token = await getToken();
 
@@ -101,16 +91,10 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
 
             if (extraExists) {
               const extras = extrasCollection.map(ext => (ext._id === data.extras._id ? data.extras : ext));
-              dispatch({
-                type: ADD_EXTRAS_DATA,
-                payload: extras,
-              });
+              addExtrasdata(extras);
             } else {
               const results = extrasCollection.map(ext => (ext.id === extra.id ? data.extras : ext));
-              dispatch({
-                type: ADD_EXTRAS_DATA,
-                payload: results,
-              });
+              addExtrasdata(results);
             }
 
             resetForm({
@@ -125,7 +109,6 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
             );
             setEdit(true);
           } catch (error) {
-            // console.log(error);
             showSnack(extra._id ? toastMessages.UPDATE_RESOURCE_ERROR('Extras') : toastMessages.CREATE_RESOURCE_ERROR('Extras'), 'error');
           } finally {
             setSubmitting(false);
@@ -216,7 +199,13 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
             </FormControl>
           </div>
           <Divider className="mt-8 -ml-10" />
-          <Button className="mt-6  text-white hover:bg-[#12836d]  bg-primary" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
+          <Button
+            className="mt-6  text-white hover:bg-[#12836d]  bg-primary"
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={isSubmitting}
+          >
             Submit
           </Button>
         </form>

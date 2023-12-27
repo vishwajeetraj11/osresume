@@ -5,36 +5,30 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
-import { ADD_EXPERIENCE_DATA } from '../../redux/actionTypes/resumeActionTypes';
+import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
+import { useResumeStore } from '../../zustand/zustand';
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
-  const { resumeId } = useSelector(state => state.resume.metadata);
-  const experienceCollection = useSelector(state => state.resume.data.experiences);
+  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
+  const experienceCollection = useResumeStore(useShallow(state => state.data.experience));
+  const addExperiencedata = useResumeStore(state => state.addExperience);
 
   const { getToken } = useAuth();
 
   const showSnack = (message, variant) => {
+    if (variant === 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
+    }
+  };
 
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
-    }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-    
   const experience = experienceProp || {
     designation: '',
     company: '',
@@ -44,9 +38,6 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
     years: '',
     country: '',
   };
-
-  // Dispatch
-  const dispatch = useDispatch();
 
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
@@ -85,7 +76,6 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
       validationSchema={ValidationSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(async () => {
-          // dispatch(editSingleExperienceData(values));
           showSnack(
             experience._id ? toastMessages.UPDATE_RESOURCE_REQUEST('Experience') : toastMessages.CREATE_RESOURCE_REQUEST('Experience'),
             'default',
@@ -116,16 +106,10 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
 
             if (experienceExists) {
               const experience = experienceCollection.map(exp => (exp._id === data.experience._id ? data.experience : exp));
-              dispatch({
-                type: ADD_EXPERIENCE_DATA,
-                payload: experience,
-              });
+              addExperiencedata(experience);
             } else {
               const results = experienceCollection.map(exp => (exp.id === experience.id ? data.experience : exp));
-              dispatch({
-                type: ADD_EXPERIENCE_DATA,
-                payload: results,
-              });
+              addExperiencedata(results);
             }
             showSnack(
               experience._id ? toastMessages.UPDATE_RESOURCE_SUCCESS('Experience') : toastMessages.CREATE_RESOURCE_SUCCESS('Experience'),
@@ -143,7 +127,6 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
             });
             setEdit(true);
           } catch (error) {
-            // console.log(error.response);
             showSnack(
               experience._id ? toastMessages.UPDATE_RESOURCE_ERROR('Experience') : toastMessages.CREATE_RESOURCE_ERROR('Experience'),
               'error',
@@ -278,7 +261,13 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
             </MuiPickersUtilsProvider>
           </div>
           <Divider className="mt-8 -ml-10" />
-          <Button className="mt-6  text-white hover:bg-[#12836d]  bg-primary" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
+          <Button
+            className="mt-6  text-white hover:bg-[#12836d]  bg-primary"
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={isSubmitting}
+          >
             Submit
           </Button>
         </form>

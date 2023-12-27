@@ -8,17 +8,21 @@ import axios from 'axios';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
-import { addEducationData, addSampleEducationData, deleteSingleEducationData } from '../../redux/actions/resumeActions';
+import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
+import { useResumeStore } from '../../zustand/zustand';
 import { EmptyFileSVG } from '../SVGs';
 import EducationCard from '../cards/EducationCard';
 import EditSingleEducation from '../forms/EditSingleEducation';
 
 const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const { getToken } = useAuth();
+
+  const addEducationData = useResumeStore(state => state.addEducation);
+  const addSampleEducationdata = useResumeStore(state => state.addSampleEducation);
+  const deletSinglEducationdata = useResumeStore(state => state.deleteSingleEducation);
 
   const showSnack = (message, variant) => {
     if (variant === 'success') {
@@ -32,14 +36,12 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
     }
   };
 
-  const { resumeId } = useSelector(state => state.resume.metadata);
-
+  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
-  const dispatch = useDispatch();
 
   // Fetch Global State
-  const education = useSelector(state => state.resume.data.education);
+  const education = useResumeStore(useShallow(state => state.data.education));
 
   // Local Education State for drag and drop
   const [edu, setEdu] = useState(education);
@@ -167,7 +169,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
 
   const onDelete = async ({ id }) => {
     if (id.includes('-')) {
-      dispatch(deleteSingleEducationData(id));
+      deletSinglEducationdata(id);
       return;
     }
     try {
@@ -180,7 +182,8 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      dispatch(deleteSingleEducationData(id));
+      deletSinglEducationdata(id);
+
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Education'), 'success');
     } catch (error) {
       showSnack(toastMessages.DELETE_RESOURCE_ERROR('Education'), 'error');
@@ -211,7 +214,9 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      dispatch(addEducationData(data.resume.education));
+
+      addEducationData(data.resume.education);
+
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Education'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
@@ -220,17 +225,17 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   };
 
   const onAdd = () => {
-    dispatch(
-      addSampleEducationData({
-        id: uuidv4(),
-        institution: 'Sample Institution',
-        major: 'Sample Major',
-        startedAt: 'June 2012',
-        endedAt: 'July 2013',
-        years: '1',
-        country: 'Sample Country',
-      }),
-    );
+    //zustand
+    addSampleEducationdata({
+      id: uuidv4(),
+      institution: 'Sample Institution',
+      major: 'Sample Major',
+      startedAt: 'June 2012',
+      endedAt: 'July 2013',
+      years: '1',
+      country: 'Sample Country',
+    });
+
     showSnack(toastMessages.SAMPLE_DATA('Education'), 'success');
   };
 
@@ -248,7 +253,12 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
           <AddIcon />
           <p className="ml-2 capitalize">Add Education</p>
         </Button>
-        <Button className="lg:px-4 lg:py-2 mr-6    text-white hover:bg-[#12836d]  bg-primary" onClick={save} color="primary" variant="contained">
+        <Button
+          className="lg:px-4 lg:py-2 mr-6    text-white hover:bg-[#12836d]  bg-primary"
+          onClick={save}
+          color="primary"
+          variant="contained"
+        >
           <SaveIcon />
           <p className="ml-2 capitalize">Save Order</p>
         </Button>

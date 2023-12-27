@@ -8,11 +8,11 @@ import axios from 'axios';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
-import { addExperienceData, addSampleExperienceData, deleteSingleExperienceData } from '../../redux/actions/resumeActions';
+import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
+import { useResumeStore } from '../../zustand/zustand';
 import { EmptyFileSVG } from '../SVGs';
 import ExperienceCard from '../cards/ExperienceCard';
 import EditSingleExperience from '../forms/EditSingleExperience';
@@ -32,14 +32,17 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
 
   const { getToken } = useAuth();
 
-  const { resumeId } = useSelector(state => state.resume.metadata);
+  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
 
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
-  const dispatch = useDispatch();
 
   // Fetch Global State
-  const experiences = useSelector(state => state.resume.data.experiences);
+  const experiences = useResumeStore(useShallow(state => state.data.experience));
+
+  const addExperiencedata = useResumeStore(state => state.addExperience);
+  const addSampleExperience = useResumeStore(state => state.addSampleExperience);
+  const deleteSingleExperience = useResumeStore(state => state.deleteSingleExperience);
 
   // Local Experiences State for drag and drop
   const [exp, setExp] = useState(experiences);
@@ -163,7 +166,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
 
   const onDelete = async ({ id }) => {
     if (id.includes('-')) {
-      dispatch(deleteSingleExperienceData(id));
+      deleteSingleExperience(id);
       return;
     }
     try {
@@ -176,11 +179,9 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      dispatch(deleteSingleExperienceData(id));
+      deleteSingleExperience(id);
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Experience'), 'success');
     } catch (error) {
-      // console.log(error);
       showSnack(toastMessages.DELETE_RESOURCE_ERROR('Experience'), 'error');
     }
   };
@@ -209,28 +210,27 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      dispatch(addExperienceData(data.resume.experience));
+      addExperiencedata(data.resume.experience);
+      // dispatch(addExperienceData(data.resume.experience));
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Experience'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
-      // console.log(error);
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_ERROR('Experience'), 'error');
     }
   };
 
   const onAdd = () => {
-    dispatch(
-      addSampleExperienceData({
-        id: uuidv4(),
-        designation: 'Sample Designation',
-        company: 'Company Description',
-        description: 'Sample Description',
-        startedAt: 'June 2012',
-        endedAt: 'July 2013',
-        years: '1',
-        country: 'Sample Country',
-      }),
-    );
+    addSampleExperience({
+      id: uuidv4(),
+      designation: 'Sample Designation',
+      company: 'Company Description',
+      description: 'Sample Description',
+      startedAt: 'June 2012',
+      endedAt: 'July 2013',
+      years: '1',
+      country: 'Sample Country',
+    });
+
     showSnack(toastMessages.SAMPLE_DATA('Experience'), 'success');
   };
 

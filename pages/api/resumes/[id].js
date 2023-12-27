@@ -31,7 +31,6 @@ export default withAuth(async (req, res) => {
         }
         res.status(200).json({ success: true, resume });
       } catch (error) {
-        // console.log(error);
         res.status(400).json({ success: false, error });
       }
       break;
@@ -50,7 +49,6 @@ export default withAuth(async (req, res) => {
         }
         res.status(200).json({ success: true, resume });
       } catch (error) {
-        // console.log(error);
         res.status(400).json({ success: false, error });
       }
       break;
@@ -77,7 +75,6 @@ export default withAuth(async (req, res) => {
 
         res.status(200).json({ success: true });
       } catch (error) {
-        // console.log(error);
         res.status(400).json({ success: false, error });
       }
       break;

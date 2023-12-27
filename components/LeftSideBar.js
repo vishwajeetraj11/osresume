@@ -5,19 +5,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import clsx from 'clsx';
 import React from 'react';
-import { useSelector } from 'react-redux';
-// import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-// import EditSingleExperience from "./forms/EditSingleExperience"
+import { useShallow } from 'zustand/react/shallow';
+import { sidebarContent } from '../zustand/zustand/index';
 import ReorderEducation from './drag&drop/ReorderEducation';
 import ReorderExperience from './drag&drop/ReorderExperience';
 import ReorderExtras from './drag&drop/ReorderExtras';
-// import Divider from '@material-ui/core/Divider';
 import PersonalDataForm from './forms/PersonalData';
 
 const LeftSideBar = () => {
   const matches = useMediaQuery('(min-width:1024px)');
-  const sections = useSelector(state => state.sections);
-  const sectionTitles = sections.data.map(e => e.label);
+  const sections = sidebarContent(useShallow(state => state.data.LeftSidebar));
+
+  const sectionTitles = sections.map(e => e.label);
   const sectionDrawerStates = {};
   sectionTitles.map(section => (sectionDrawerStates[section] = false));
 
@@ -56,7 +55,7 @@ const LeftSideBar = () => {
   return (
     <div className="bg-primary lg:pt-16 lg:px-4 flex lg:block fixed lg:static bottom-0 w-screen lg:w-auto justify-center left-sidebar order-3 lg:order-1">
       {/* add overflow-scroll ||^^ if section are needed to scroll */}
-      {sections.data.map(({ title, Icon, id, label }) => (
+      {sections.map(({ title, Icon, id, label }) => (
         <div key={id} className="inline-block lg:block my-4 lg:my-8">
           <Tooltip title={title} placement={matches ? 'right' : 'bottom'} arrow>
             <Button onClick={toggleLeftDrawer(label, true)}>

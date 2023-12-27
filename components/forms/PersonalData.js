@@ -4,26 +4,23 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
-import { ADD_PERSONAL_DATA_STATE } from '../../redux/actionTypes/resumeActionTypes';
+import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
-
+import { useResumeStore } from '../../zustand/zustand';
 
 const PersonalDataForm = ({ closeDrawer, anchor }) => {
-  // Dispatch
-  const dispatch = useDispatch();
   const { getToken } = useAuth();
 
-  // Get personalData State from globalState
-  let personalData = useSelector(state => state.resume.data.personalData);
-  const { resumeId } = useSelector(state => state.resume.metadata);
-
+  let personalData = useResumeStore(useShallow(state => state.data.personal));
+  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
   // Remove +91 from phoneNumber
   let phoneNumber = personalData?.phoneNumber;
   phoneNumber = phoneNumber?.replace('+91', '');
   personalData = { ...personalData, phoneNumber };
+  //zustand
+  const addPersonalData = useResumeStore(state => state.addPersonal);
 
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
@@ -38,24 +35,17 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
   });
 
   const showSnack = (message, variant) => {
-
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
+    if (variant === 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
     }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-      return (
+  };
+  return (
     <>
       <Button className="px-4 py-2 mr-4 self-start" onClick={() => closeDrawer(anchor, false)} color="default" variant="text">
         {' '}
@@ -115,10 +105,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
                 objective: '',
               });
 
-              dispatch({
-                type: ADD_PERSONAL_DATA_STATE,
-                payload: data.personal,
-              });
+              addPersonalData(data.personal);
 
               showSnack(
                 personalData._id
@@ -130,7 +117,6 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
               setSubmitting(false);
               closeDrawer();
             } catch (error) {
-              // console.log(error.response.data);
               showSnack(
                 personalData._id
                   ? toastMessages.UPDATE_RESOURCE_ERROR('Personal data')
@@ -237,7 +223,13 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
               <FormHelperText className="Mui-error">{errors.phoneNumber}</FormHelperText>
             </FormControl>
 
-            <Button variant="contained" className="mr-6 mt-6   text-white hover:bg-[#12836d]  bg-primary" color="primary" type="submit" disabled={isSubmitting}>
+            <Button
+              variant="contained"
+              className="mr-6 mt-6   text-white hover:bg-[#12836d]  bg-primary"
+              color="primary"
+              type="submit"
+              disabled={isSubmitting}
+            >
               Submit
             </Button>
           </form>

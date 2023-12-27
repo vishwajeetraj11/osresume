@@ -5,11 +5,11 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
-import { UPDATE_FONT } from '../../redux/actionTypes/resumeActionTypes';
+import { useShallow } from 'zustand/react/shallow';
 import items from '../../shared/googleFonts.json';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
+import { useResumeStore } from '../../zustand/zustand';
 const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [googleFonts, setGoogleFonts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,34 +17,27 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [totalPages, setTotalPages] = useState(10);
   const [bound, setBound] = useState(20);
   const [fontsAdded, setFontsAdded] = useState([]);
-  const dispatch = useDispatch();
   const { getToken } = useAuth();
 
-  const { resumeId } = useSelector(state => state.resume.metadata);
+  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
+
+  const updateFont = useResumeStore(state => state.updateFont);
 
   // Search
   const [search, setSearch] = useState('');
 
-
   const showSnack = (message, variant) => {
+    if (variant === 'success') {
+      toast.success(message);
+    } else if (variant === 'error') {
+      toast.error(message);
+    } else if (variant === 'default') {
+      toast.message(message);
+    } else if (variant === 'info') {
+      toast.info(message);
+    }
+  };
 
-
-    if(variant=='success')  {
-      toast.success(message)    
-    }    
-    
-    else if(variant==="error"){
-      toast.error(message)    
-    }
-    
-    else if (variant=== "default"){
-      toast.message(message)
-    }
-    else if (variant=== "info"){
-      toast.info(message)
-    }
-     };
-    
   useEffect(() => {
     (async () => {
       // eslint-disable-next-line global-require
@@ -184,10 +177,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
                       },
                     });
 
-                    dispatch({
-                      type: UPDATE_FONT,
-                      payload: data.resume.customStyles.font,
-                    });
+                    updateFont(data.resume.customStyles.font);
                     showSnack('Successfully updated font.', 'success');
                   } catch (e) {
                     showSnack('Unable to update font, please try again later.', 'error');
