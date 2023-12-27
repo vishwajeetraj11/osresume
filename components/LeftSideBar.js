@@ -5,8 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import clsx from 'clsx';
 import React from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { sidebarContent } from '../zustand/zustand/index';
-
 import ReorderEducation from './drag&drop/ReorderEducation';
 import ReorderExperience from './drag&drop/ReorderExperience';
 import ReorderExtras from './drag&drop/ReorderExtras';
@@ -14,7 +14,7 @@ import PersonalDataForm from './forms/PersonalData';
 
 const LeftSideBar = () => {
   const matches = useMediaQuery('(min-width:1024px)');
-  const sections = sidebarContent(state => state.data.LeftSidebar);
+  const sections = sidebarContent(useShallow(state => state.data.LeftSidebar));
 
   const sectionTitles = sections.map(e => e.label);
   const sectionDrawerStates = {};
