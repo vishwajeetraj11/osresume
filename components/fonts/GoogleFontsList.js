@@ -10,6 +10,7 @@ import { useShallow } from 'zustand/react/shallow';
 import items from '../../shared/googleFonts.json';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 import { useResumeStore } from '../../zustand/zustand';
+
 const GoogleFontsList = ({ anchor, closeDrawer }) => {
   const [googleFonts, setGoogleFonts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -176,7 +177,6 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
                         Authorization: `Bearer ${token}`,
                       },
                     });
-
                     updateFont(data.resume.customStyles.font);
                     showSnack('Successfully updated font.', 'success');
                   } catch (e) {
@@ -184,9 +184,10 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
                   }
 
                   // Check if the font is already available in users system to avoid fetching
-                  if (fontAvailable || fontsAdded.includes(fontID)) resume.style.fontFamily = fontFamily;
-                  // Fetch fonts
-                  else {
+                  if (fontsAdded.includes(fontID)) {
+                    resume.style.fontFamily = fontFamily;
+                  } else {
+                    // Fetch fonts
                     addFontInHeadTag(fontID);
                     setFontsAdded(p => p.concat(fontID));
                     resume.style.fontFamily = fontFamily;
