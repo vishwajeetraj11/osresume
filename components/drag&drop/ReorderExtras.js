@@ -19,9 +19,9 @@ import EditSingleExtra from '../forms/EditSingleExtra';
 
 const ReorderExtras = ({ closeDrawer, anchor }) => {
   const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
-  const addextrasdata = useResumeStore(state => state.addExtras);
-  const addsampleextradata = useResumeStore(state => state.addSampleExtra);
-  const deletesingleextra = useResumeStore(state => state.deleteSingleExtra);
+  const addExtrasData = useResumeStore(state => state.addExtras);
+  const addSampleExtraData = useResumeStore(state => state.addSampleExtra);
+  const deleteSingleExtra = useResumeStore(state => state.deleteSingleExtra);
 
   // media Query
   const matches = useMediaQuery('(min-width:1024px)');
@@ -165,7 +165,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
 
   const onDelete = async ({ id }) => {
     if (id.includes('-')) {
-      deletesingleextra(id);
+      deleteSingleExtra(id);
 
       return;
     }
@@ -181,7 +181,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
         },
       });
 
-      deletesingleextra(id);
+      deleteSingleExtra(id);
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Extras'), 'success');
     } catch (error) {
       showSnack(toastMessages.DELETE_RESOURCE_ERROR('Extras'), 'error');
@@ -214,7 +214,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
         },
       });
 
-      addextrasdata(data.resume.extras);
+      addExtrasData(data.resume.extras);
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Extras'), 'success');
       closeDrawer(anchor, false);
     } catch (error) {
@@ -223,7 +223,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
   };
 
   const onAdd = () => {
-    addsampleextradata({
+    addSampleExtraData({
       id: uuidv4(),
       title: 'Sample Title',
       type: 'COMMA',

@@ -20,7 +20,7 @@ import EditSingleEducation from '../forms/EditSingleEducation';
 const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const { getToken } = useAuth();
 
-  const addeducationdata = useResumeStore(state => state.addEducation);
+  const addEducationData = useResumeStore(state => state.addEducation);
   const addSampleEducationdata = useResumeStore(state => state.addSampleEducation);
   const deletSinglEducationdata = useResumeStore(state => state.deleteSingleEducation);
 
@@ -215,7 +215,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
         },
       });
 
-      addeducationdata(data.resume.education);
+      addEducationData(data.resume.education);
 
       showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Education'), 'success');
       closeDrawer(anchor, false);

@@ -38,11 +38,11 @@ const Editor = () => {
     })),
   );
 
-  const addexperiencedata = useResumeStore(state => state.addExperience);
-  const addextradata = useResumeStore(state => state.addExtras);
-  const addpersonaldata = useResumeStore(state => state.addPersonal);
-  const addeducationdata = useResumeStore(state => state.addEducation);
-  const addmetadata = useResumeStore(state => state.addResumemeta);
+  const addExperienceData = useResumeStore(state => state.addExperience);
+  const addExtraData = useResumeStore(state => state.addExtras);
+  const addPersonalData = useResumeStore(state => state.addPersonal);
+  const addEducationData = useResumeStore(state => state.addEducation);
+  const addMetaData = useResumeStore(state => state.addResumemeta);
 
   const handlePrint = useReactToPrint({
     documentTitle: title || 'Your Resume',
@@ -87,7 +87,7 @@ const Editor = () => {
         const personalData = data.resume.personal
           ? data.resume.personal
           : { name: '', email: '', phoneNumber: '', designation: '', country: '', objective: '' };
-        addmetadata({
+        addMetaData({
           title: data.resume.title,
           createdAt: data.resume.createdAt,
           resumeId: data.resume._id,
@@ -95,10 +95,10 @@ const Editor = () => {
           templateName: data.resume.templateName,
           customStyles: data.resume.customStyles,
         });
-        addeducationdata(data.resume.education);
-        addexperiencedata(data.resume.experience);
-        addpersonaldata(personalData);
-        addextradata(data.resume.extras);
+        addEducationData(data.resume.education);
+        addExperienceData(data.resume.experience);
+        addPersonalData(personalData);
+        addExtraData(data.resume.extras);
 
         const fontID = data.resume.customStyles.font.replace(/ /g, '+');
         addFontInHeadTag(fontID);

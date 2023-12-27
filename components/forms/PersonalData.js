@@ -20,7 +20,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
   phoneNumber = phoneNumber?.replace('+91', '');
   personalData = { ...personalData, phoneNumber };
   //zustand
-  const addpersonaldata = useResumeStore(state => state.addPersonal);
+  const addPersonalData = useResumeStore(state => state.addPersonal);
 
   // Validation Schema for PersonalData form
   const ValidationSchema = Yup.object().shape({
@@ -105,7 +105,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
                 objective: '',
               });
 
-              addpersonaldata(data.personal);
+              addPersonalData(data.personal);
 
               showSnack(
                 personalData._id
