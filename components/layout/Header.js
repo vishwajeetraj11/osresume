@@ -35,10 +35,10 @@ const Header = ({ route }) => {
           </SignedOut>
           <SignedIn className="ml-4">
             <Link href="/templates">
-              <p className="text-default text-xs md:text-sm cursor-pointer lg:px-4">Templates</p>
+              <p className="text-default text-xs md:text-sm cursor-pointer pr-3 lg:px-4">Templates</p>
             </Link>
             <Link href="/dashboard">
-              <p className="text-default text-xs md:text-sm cursor-pointer lg:px-4">Dashboard</p>
+              <p className="text-default text-xs md:text-sm cursor-pointer pr-3  lg:px-4">Dashboard</p>
             </Link>
             <UserButton />
           </SignedIn>
