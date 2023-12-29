@@ -1,4 +1,4 @@
-import { RedirectToSignIn, SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
+import { RedirectToSignIn, SignedIn, SignedOut, useAuth, useUser } from '@clerk/nextjs';
 import { useMediaQuery } from '@material-ui/core';
 import axios from 'axios';
 import Head from 'next/head';
@@ -24,6 +24,10 @@ const Editor = () => {
   const resumeRef = useRef();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const User = useUser();
+  const firstName = User.user.firstName;
+  const userEmail = User.user.emailAddresses[0].emailAddress;
 
   const { title, username, personaldata, eductainvalues, experiencedata, extrasdata, resumeMeta } = useResumeStore(
     useShallow(state => ({
@@ -85,7 +89,7 @@ const Editor = () => {
         });
         const personalData = data.resume.personal
           ? data.resume.personal
-          : { name: '', email: '', phoneNumber: '', designation: '', country: '', objective: '' };
+          : { name: firstName, email: userEmail, phoneNumber: '', designation: '', country: '', objective: '' };
         addMetaData({
           title: data.resume.title,
           createdAt: data.resume.createdAt,
@@ -130,14 +134,14 @@ const Editor = () => {
           <LeftSideBar />
           <div className="order-2 mx-auto my-10">
             {resumeMeta.templateName === 'Onyx' && (
-            <Onyx
-              extrasData={extrasdata}
-              personalData={personaldata}
-              educationData={eductainvalues}
-              customStyles={resumeMeta.customStyles}
-              experienceData={experiencedata}
-              ref={resumeRef}
-            />
+              <Onyx
+                extrasData={extrasdata}
+                personalData={personaldata}
+                educationData={eductainvalues}
+                customStyles={resumeMeta.customStyles}
+                experienceData={experiencedata}
+                ref={resumeRef}
+              />
             )}
             {resumeMeta.templateName === 'Trical' && (
               <Trical
