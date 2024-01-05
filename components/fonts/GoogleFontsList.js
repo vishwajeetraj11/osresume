@@ -63,14 +63,14 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
     if (googleFonts.length !== 0) {
       if (page === 0) {
         setGoogleFonts(
-          items.slice(page, bound).map(e => ({
+          items.items.slice(page, bound).map(e => ({
             fontFamily: e.family,
             fontID: e.family.replace(/ /g, '+'),
           })),
         );
       } else if (page > 0) {
         setGoogleFonts(
-          items.slice(page * bound, page * bound + bound).map(e => ({
+          items.items.slice(page * bound, page * bound + bound).map(e => ({
             fontFamily: e.family,
             fontID: e.family.replace(/ /g, '+'),
           })),
