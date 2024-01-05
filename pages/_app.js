@@ -53,7 +53,7 @@ function MyApp({ Component, pageProps }) {
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
 
-        <Toaster richColors position="bottom-left" />
+        <Toaster closeButton richColors position="bottom-left" />
         <Head>
           <title>OS Resume</title>
         </Head>
