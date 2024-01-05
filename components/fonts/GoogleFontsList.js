@@ -3,12 +3,12 @@ import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
 import items from '../../shared/googleFonts.json';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
+import { updateFont } from '../../shared/utils/api';
 import { useResumeStore } from '../../zustand/zustand';
 
 const GoogleFontsList = ({ anchor, closeDrawer }) => {
@@ -22,7 +22,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
 
   const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
 
-  const updateFont = useResumeStore(state => state.updateFont);
+  const updateStateFont = useResumeStore(state => state.updateFont);
 
   // Search
   const [search, setSearch] = useState('');
@@ -161,27 +161,14 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
                     const fontNode = document.getElementById(fontID);
                     fontNode.remove();
                   }
-
-                  try {
-                    const token = await getToken();
-                    showSnack('Updating font...', 'default');
-                    const { data } = await axios({
-                      url: `/api/resumes/${resumeId}`,
-                      method: 'PATCH',
-                      data: {
-                        customStyles: {
-                          font: fontFamily,
-                        },
-                      },
-                      headers: {
-                        Authorization: `Bearer ${token}`,
-                      },
-                    });
-                    updateFont(data.resume.customStyles.font);
-                    showSnack('Successfully updated font.', 'success');
-                  } catch (e) {
-                    showSnack('Unable to update font, please try again later.', 'error');
-                  }
+                  toast.promise(updateFont(getToken, resumeId, fontFamily), {
+                    loading: 'Updating font...',
+                    success: data => {
+                      updateStateFont(data);
+                      return 'Successfully updated font.';
+                    },
+                    error: 'Unable to update font, please try again later.',
+                  });
 
                   // Check if the font is already available in users system to avoid fetching
                   if (fontsAdded.includes(fontID)) {
