@@ -2,21 +2,32 @@ import { useAuth } from '@clerk/nextjs';
 import DateFnsUtils from '@date-io/date-fns';
 import { Button, Divider, TextField } from '@material-ui/core';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+
 import axios from 'axios';
 import { Formik } from 'formik';
-import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
 import { useResumeStore } from '../../zustand/zustand';
-const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
+import { EducationType } from '../cards/EducationCard';
+
+interface EditSingleEducationtype {
+  closeDrawer: (id: string, value: boolean) => void;
+  anchor: string;
+  education: any;
+  setEdit: React.Dispatch<React.SetStateAction<boolean>>; ///ask Vishwajeeth
+}
+
+const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }: EditSingleEducationtype) => {
   const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
   const educationCollection = useResumeStore(useShallow(state => state.data.education));
+  console.log(educationCollection);
   const { getToken } = useAuth();
   const addEducation = useResumeStore(state => state.addEducation);
 
-  const showSnack = (message, variant) => {
+  const showSnack = (message: string, variant: string) => {
     if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {
@@ -83,13 +94,13 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
               },
             });
 
-            const educationExists = educationCollection.find(edu => edu._id === data.education._id);
+            const educationExists = educationCollection.find((edu: EducationType) => edu.id === data.education._id);
 
             if (educationExists) {
-              const education = educationCollection.map(edu => (edu._id === data.education._id ? data.education : edu));
+              const education = educationCollection.map((edu: EducationType) => (edu.id === data.education._id ? data.education : edu));
               addEducation(education);
             } else {
-              const results = educationCollection.map(edu => (edu.id === education.id ? data.education : edu));
+              const results = educationCollection.map((edu: EducationType) => (edu.id === education.id ? data.education : edu));
               addEducation(results);
             }
             showSnack(
@@ -174,9 +185,9 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
                   label="Enter Start Date"
                   views={['year', 'month']}
                   // format='/MM/yyyy'
-                  onChange={date => {
-                    const month = date.toLocaleString('default', { month: 'long' });
-                    const year = date.getFullYear();
+                  onChange={(date: MaterialUiPickersDate) => {
+                    const month = date?.toLocaleString('default', { month: 'long' });
+                    const year = date?.getFullYear();
                     setFieldValue('startedAt', `${month} ${year}`);
                   }}
                   value={values.startedAt}
@@ -194,9 +205,10 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
                   label="Enter End Date"
                   views={['year', 'month']}
                   // format='MM/yyyy'
+                  /// askvishwajeet
                   onChange={date => {
-                    const month = date.toLocaleString('default', { month: 'long' });
-                    const year = date.getFullYear();
+                    const month = date?.toLocaleString('default', { month: 'long' });
+                    const year = date?.getFullYear();
                     setFieldValue('endedAt', `${month} ${year}`);
                   }}
                   KeyboardButtonProps={{

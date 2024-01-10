@@ -1,9 +1,30 @@
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import React from 'react';
 
-const EducationCard = ({ institution, startedAt, endedAt, major, onDelete, openEditEduForm, country, educationActive, id }) => (
+export interface EducationType {
+  institution: string;
+  startedAt: string;
+  endedAt: string;
+  major: string;
+  onDelete: (data: { id: string }) => Promise<void>;
+  openEditEduForm: (event: any) => void;
+  country: number;
+  educationActive: { [id: string]: boolean };
+  id: string;
+}
+
+const EducationCard = ({
+  institution,
+  startedAt,
+  endedAt,
+  major,
+  onDelete,
+  openEditEduForm,
+  country,
+  educationActive,
+  id,
+}: EducationType) => (
   <>
     <div className="flex justify-between items-center">
       <p className="font-light text-lg">{institution}</p>
@@ -22,7 +43,7 @@ const EducationCard = ({ institution, startedAt, endedAt, major, onDelete, openE
       className="mt-3 -mb-2"
       style={{ maxHeight: `${educationActive[id] ? '60px' : '0px'}`, transition: 'all 0.5s', overflow: 'hidden' }}
     >
-      <Button onClick={() => openEditEduForm()} className="mr-4" variant="text">
+      <Button onClick={e => openEditEduForm(e)} className="mr-4" variant="text">
         <div className="flex items-center justify-center">
           <EditIcon style={{ color: '#fff' }} />
           <p className="ml-2 text-white capitalize">Edit</p>

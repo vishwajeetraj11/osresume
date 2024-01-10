@@ -7,7 +7,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import axios from 'axios';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable, DropResult, Droppable } from 'react-beautiful-dnd';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { useShallow } from 'zustand/react/shallow';
@@ -17,8 +17,32 @@ import { EmptyFileSVG } from '../SVGs';
 import ExperienceCard from '../cards/ExperienceCard';
 import EditSingleExperience from '../forms/EditSingleExperience';
 
-const ReorderExperience = ({ closeDrawer, anchor }) => {
-  const showSnack = (message, variant) => {
+interface ReorderExperience {
+  closeDrawer: (anchor: string, type: boolean) => void;
+  anchor: string;
+}
+company: 'Company Description';
+country: 'Sample Country';
+description: 'Sample Description';
+designation: 'Sample Designation';
+endedAt: 'July 2013';
+id: 'c5d68371-34a2-4e51-817e-94e7edb1342b';
+startedAt: 'June 2012';
+years: '1';
+
+interface Experience {
+  company: string;
+  country: string;
+  description: string;
+  designation: string;
+  endedAt: string;
+  id: string;
+  startedAt: string;
+  years: string;
+}
+
+const ReorderExperience = ({ closeDrawer, anchor }: ReorderExperience) => {
+  const showSnack = (message: string, variant: string) => {
     if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {
@@ -45,16 +69,18 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
   const deleteSingleExperience = useResumeStore(state => state.deleteSingleExperience);
 
   // Local Experiences State for drag and drop
-  const [exp, setExp] = useState(experiences);
-  const experienceStates = {};
+  const [exp, setExp] = useState<[Experience]>(experiences);
+
+  //ask vishwajeet
+  const experienceStates: Record<string, boolean> = {};
   exp.forEach(exp => (experienceStates[exp.id] = false));
   //
-  const [experienceActive, setExperienceActive] = useState({ ...experienceStates });
+  const [experienceActive, setExperienceActive] = useState<Record<string, boolean>>({ ...experienceStates });
 
   // This to keep track of localState if one of the experiences have been updated to update state in useEffect
   const [edit, setEdit] = useState(false);
 
-  const expDrawerStatesObj = {};
+  const expDrawerStatesObj: Record<string, boolean> = {};
   exp.map(exp => (expDrawerStatesObj[exp.id] = false));
 
   useEffect(() => {
@@ -81,19 +107,22 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
 
   // Nested Drawer States
   const [expDrawerStates, setExpDrawerStates] = React.useState({ ...expDrawerStatesObj });
-  const toggleExpDrawerStates = (id, open) => event => {
+  const toggleExpDrawerStates = (id: string, open: boolean) => () => {
     setExpDrawerStates({ ...expDrawerStates, [id]: open });
   };
-  const onDragEnd = result => {
+  const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
+
     const items = Array.from(exp);
+
     const [reorderItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderItem);
+    console.log(items);
     setExp(items);
   };
 
   const grid = 10;
-  const getItemStyle = (isDragging, draggableStyle) => ({
+  const getItemStyle = (isDragging: boolean, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: 'none',
     padding: grid * 2,
@@ -120,7 +149,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
     // create an object that will be passed as in state
     // which we will use to disable the rest state (false)
     // this will ensure at one time only one is active
-    const fakeState = {};
+    const fakeState: Record<string, boolean> = {};
 
     // assign each state false
     ids.forEach(id => {
@@ -131,7 +160,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
     setExperienceActive(fakeState);
   };
 
-  const onClickExp = ({ id }) => {
+  const onClickExp = ({ id }: { id: string }) => {
     // CLone the activeExperiences State
     const clone = Object.create(experienceActive);
 
@@ -150,7 +179,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
     // create an object that will be passed as in state
     // which we will use to disable the rest state (false)
     // this will ensure at one time only one is active
-    const fakeState = {};
+    const fakeState: Record<string, boolean> = {};
 
     // assign each state false
     ids.forEach(id => {
@@ -164,7 +193,7 @@ const ReorderExperience = ({ closeDrawer, anchor }) => {
     }));
   };
 
-  const onDelete = async ({ id }) => {
+  const onDelete = async ({ id }: { id: string }) => {
     if (id.includes('-')) {
       deleteSingleExperience(id);
       return;

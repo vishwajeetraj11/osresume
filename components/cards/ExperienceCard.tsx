@@ -1,7 +1,19 @@
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import React from 'react';
+
+interface ExperienceType {
+  designation: number;
+  startedAt: Date;
+  endedAt: Date;
+  company: string;
+  description: string;
+  onDelete: (data: { id: string }) => Promise<void>;
+  id: string;
+  openEditExpForm: () => void;
+  country: string;
+  experienceActive: { [id: string]: boolean };
+}
 
 const ExperienceCard = ({
   designation,
@@ -14,7 +26,7 @@ const ExperienceCard = ({
   country,
   experienceActive,
   id,
-}) => (
+}: ExperienceType) => (
   <>
     <div className="flex justify-between items-center">
       <p className="font-light text-lg">{designation}</p>

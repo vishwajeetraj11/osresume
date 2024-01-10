@@ -14,17 +14,22 @@ import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
 import { useResumeStore } from '../../zustand/zustand';
 import { EmptyFileSVG } from '../SVGs';
-import EducationCard from '../cards/EducationCard';
+import EducationCard, { EducationType } from '../cards/EducationCard';
 import EditSingleEducation from '../forms/EditSingleEducation';
 
-const ReorderEducation = ({ closeDrawer, anchor, type }) => {
+interface RecordEducation {
+  closeDrawer: (anchor: string, type: boolean) => void;
+  anchor: string;
+}
+
+const ReorderEducation = ({ closeDrawer, anchor }: RecordEducation) => {
   const { getToken } = useAuth();
 
   const addEducationData = useResumeStore(state => state.addEducation);
   const addSampleEducationdata = useResumeStore(state => state.addSampleEducation);
   const deletSinglEducationdata = useResumeStore(state => state.deleteSingleEducation);
 
-  const showSnack = (message, variant) => {
+  const showSnack = (message: string, variant: string) => {
     if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {
@@ -45,8 +50,8 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
 
   // Local Education State for drag and drop
   const [edu, setEdu] = useState(education);
-  const educationStates = {};
-  edu.forEach(edu => (educationStates[edu.id] = false));
+  const educationStates: any = {};
+  edu.forEach((edu: any) => (educationStates[edu.id] = false));
   //
   const [educationActive, setEducationActive] = useState({
     ...educationStates,
@@ -55,8 +60,8 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   // This to keep track of localState if one of the education have been updated to update state in useEffect
   const [edit, setEdit] = useState(false);
 
-  const eduDrawerStatesObj = {};
-  edu.map(edu => (eduDrawerStatesObj[edu.id] = false));
+  const eduDrawerStatesObj: any = {};
+  edu.map((edu: any) => (eduDrawerStatesObj[edu.id] = false));
 
   useEffect(() => {
     if (!(education.length === edu.length)) {
@@ -84,10 +89,10 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   const [eduDrawerStates, setEduDrawerStates] = React.useState({
     ...eduDrawerStatesObj,
   });
-  const toggleEduDrawerStates = (id, open) => event => {
+  const toggleEduDrawerStates = (id: any, open: any) => (event: any) => {
     setEduDrawerStates({ ...eduDrawerStates, [id]: open });
   };
-  const onDragEnd = result => {
+  const onDragEnd = (result: any) => {
     if (!result.destination) return;
     const items = Array.from(edu);
     const [reorderItem] = items.splice(result.source.index, 1);
@@ -96,7 +101,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   };
 
   const grid = 10;
-  const getItemStyle = (isDragging, draggableStyle) => ({
+  const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: 'none',
     padding: grid * 2,
@@ -111,7 +116,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
     ...draggableStyle,
   });
 
-  const getListStyle = isDraggingOver => ({
+  const getListStyle = (isDraggingOver: any) => ({
     // background: isDraggingOver ? '#ffffff' : '#16a085',
   });
 
@@ -123,7 +128,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
     // create an object that will be passed as in state
     // which we will use to disable the rest state (false)
     // this will ensure at one time only one is active
-    const fakeState = {};
+    const fakeState: any = {};
 
     // assign each state false
     ids.forEach(id => {
@@ -134,13 +139,14 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
     setEducationActive(fakeState);
   };
 
-  const onClickEdu = ({ id }) => {
+  const onClickEdu = ({ id }: { id: string }) => {
     // CLone the activeEducation State
     const clone = Object.create(educationActive);
 
     // check if the clicked education is already active then disable it and return
+    console.log(educationActive);
     if (clone[id]) {
-      setEducationActive(p => ({
+      setEducationActive((p: any) => ({
         ...p,
         [id]: false,
       }));
@@ -153,7 +159,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
     // create an object that will be passed as in state
     // which we will use to disable the rest state (false)
     // this will ensure at one time only one is active
-    const fakeState = {};
+    const fakeState: any = {};
 
     // assign each state false
     ids.forEach(id => {
@@ -161,13 +167,13 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
     });
 
     // setActive only the one that gets clicked
-    setEducationActive(p => ({
+    setEducationActive(() => ({
       ...ids,
       [id]: true,
     }));
   };
 
-  const onDelete = async ({ id }) => {
+  const onDelete = async ({ id }: { id: string }) => {
     if (id.includes('-')) {
       deletSinglEducationdata(id);
       return;
@@ -192,7 +198,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
 
   const save = async () => {
     let flag = false;
-    edu.forEach(e => {
+    edu.forEach((e: any) => {
       if (e.id.includes('-')) {
         flag = true;
       }
@@ -286,7 +292,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
                   </div>
                 </div>
               ) : (
-                edu.map((e, index) => (
+                edu.map((e: EducationType, index: number) => (
                   <Draggable key={e.id} draggableId={e.id} index={index}>
                     {(provided, snapshot) => (
                       // eslint-disable-next-line
@@ -317,7 +323,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
         </Droppable>
       </DragDropContext>
 
-      {edu.map(edu => (
+      {edu.map((edu: any) => (
         <div key={edu.id}>
           <Drawer anchor="left" open={eduDrawerStates[edu.id]} onClose={toggleEduDrawerStates(edu.id, false)}>
             <div className={clsx(classes.list)} role="presentation">
