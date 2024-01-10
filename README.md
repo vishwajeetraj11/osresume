@@ -1,6 +1,8 @@
 # OS Resume: Oversimplified Resume Builder
 ### Create a professional resume in 15 minutes.
 
+The resume builder features include a user-friendly interface built with Material UI, intuitive drag-and-drop functionality to rearrange information easily, and robust form handling capabilities powered by Formik and Yup. Additionally, users can customize their resumes with any Google Font, giving them the ability to personalize the appearance of their information even further.  
+
 [![OS Resume Editor DEMO](https://img.youtube.com/vi/plFUCIFGOVc/0.jpg)](https://www.youtube.com/watch?v=plFUCIFGOVc)
 
 ## 💻 Screens
