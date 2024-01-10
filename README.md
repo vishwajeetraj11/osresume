@@ -41,10 +41,10 @@ npm install -g yarn
 3. Create a `.env` file in the root folder.
     Add these env configs...
 
-    NEXT_PUBLIC_CLERK_SIGN_IN=`<CLERK SIGN IN>`
-    NEXT_PUBLIC_MONOGO_URI=`<MongoDB URI>`
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=`<CLERK PUBLISHABLE KEY>`
-    CLERK_SECRET_KEY=`<CLERK SECRET KEY>`
+    NEXT_PUBLIC_CLERK_SIGN_IN=`<CLERK SIGN IN>`  
+    NEXT_PUBLIC_MONOGO_URI=`<MongoDB URI>`  
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=`<CLERK PUBLISHABLE KEY>`  
+    CLERK_SECRET_KEY=`<CLERK SECRET KEY>`  
 
 4. Seeder Script (Optional)
   To seed
