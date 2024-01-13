@@ -1,7 +1,6 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import Header from './Header';
-
-const Layout = ({ children, route }) => {
+const Layout = ({ children, route }: { children: ReactNode; route: string }) => {
   const showHeader = route === '/sign-up/[[...index]]' || route === '/sign-in/[[...index]]';
   return (
     <div className="bg-white min-h-screen">

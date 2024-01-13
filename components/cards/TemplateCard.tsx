@@ -1,7 +1,21 @@
 import Image from 'next/image';
-import React from 'react';
 
-const TemplateCard = ({ template, selected, onSelect, type }) => (
+interface Templatetype {
+  title: string;
+  templateName: string;
+}
+
+const TemplateCard = ({
+  template,
+  selected,
+  onSelect,
+  type,
+}: {
+  template: Templatetype;
+  selected: boolean;
+  onSelect: (data: Templatetype) => void;
+  type: string;
+}) => (
   <div
     onClick={() => onSelect(template)}
     onKeyUp={() => onSelect(template)}

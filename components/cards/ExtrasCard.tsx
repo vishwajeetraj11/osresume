@@ -1,9 +1,18 @@
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import React from 'react';
 
-const ExtrasCard = ({ title, type, items, onDelete, openEditExtForm, extraActive, id }) => (
+interface ExtrasCardTypes {
+  title: string;
+  type: string;
+  items: string[];
+  onDelete: (data: { id: string }) => void;
+  openEditExtForm: () => void;
+  extraActive: Record<string, boolean>;
+  id: string;
+}
+
+const ExtrasCard = ({ title, type, items, onDelete, openEditExtForm, extraActive, id }: ExtrasCardTypes) => (
   <>
     <div className="flex justify-between items-center">
       <p className="font-light text-lg">{title}</p>

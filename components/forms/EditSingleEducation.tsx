@@ -20,6 +20,10 @@ interface EditSingleEducationtype {
   setEdit: React.Dispatch<React.SetStateAction<boolean>>; ///ask Vishwajeeth
 }
 
+interface Resetform2 {
+  (params: { institution: string; major: string; startedAt: string; endedAt: string; country: string }): void;
+}
+
 const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }: EditSingleEducationtype) => {
   const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
   const educationCollection = useResumeStore(useShallow(state => state.data.education));
@@ -68,7 +72,7 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }: EditSi
       validateOnBlur={false}
       validateOnMount={false}
       validationSchema={ValidationSchema}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
+      onSubmit={(values, { setSubmitting, resetForm }: { setSubmitting: (data: boolean) => void; resetForm: Resetform2 }) => {
         setTimeout(async () => {
           showSnack(
             education._id ? toastMessages.UPDATE_RESOURCE_REQUEST('Education') : toastMessages.CREATE_RESOURCE_REQUEST('Education'),

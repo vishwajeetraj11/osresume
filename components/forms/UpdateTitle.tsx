@@ -3,12 +3,13 @@ import { Button, TextField } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 import { Formik } from 'formik';
-import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
 import { useResumeStore } from '../../zustand/zustand';
+
+type ResetForms = ({ title }: { title: string }) => void;
 
 const UpdateTitle = ({ closeDrawer }) => {
   const { getToken } = useAuth();
@@ -19,7 +20,7 @@ const UpdateTitle = ({ closeDrawer }) => {
     title: Yup.string().required('Please provide the title.').min(3, 'Too Short'),
   });
 
-  const showSnack = (message, variant) => {
+  const showSnack = (message: string, variant: string) => {
     if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {
@@ -45,7 +46,7 @@ const UpdateTitle = ({ closeDrawer }) => {
         validateOnBlur={false}
         validateOnMount={false}
         validationSchema={ValidationSchema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
+        onSubmit={(values, { setSubmitting, resetForm }: { resetForm: ResetForms; setSubmitting: (data: boolean) => void }) => {
           setTimeout(async () => {
             try {
               const token = await getToken();

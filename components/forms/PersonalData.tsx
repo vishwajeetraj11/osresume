@@ -3,18 +3,33 @@ import { Button, FormControl, FormHelperText, InputAdornment, InputLabel, Outlin
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 import { Formik } from 'formik';
-import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
 import { useResumeStore } from '../../zustand/zustand';
 
+type ResetFormFunction = ({
+  name,
+  email,
+  phoneNumber,
+  designation,
+  country,
+  objective,
+}: {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  designation: string;
+  country: string;
+  objective: string;
+}) => void;
+
 const PersonalDataForm = ({ closeDrawer, anchor }) => {
   const { getToken } = useAuth();
 
   let personalData = useResumeStore(useShallow(state => state.data.personal));
-  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
+  const { resumeId }: { resumeId: string } = useResumeStore(useShallow(state => state.data.resumeMeta));
   // Remove +91 from phoneNumber
   let phoneNumber = personalData?.phoneNumber;
   phoneNumber = phoneNumber?.replace('+91', '');
@@ -34,7 +49,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
     objective: Yup.string().nullable(),
   });
 
-  const showSnack = (message, variant) => {
+  const showSnack = (message: string, variant: string) => {
     if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {
@@ -60,7 +75,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
         validateOnBlur={false}
         validateOnMount={false}
         validationSchema={ValidationSchema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
+        onSubmit={(values, { setSubmitting, resetForm }: { resetForm: ResetFormFunction; setSubmitting: (data: boolean) => void }) => {
           if (values.phoneNumber) {
             if (!values.phoneNumber.startsWith('+91')) {
               // eslint-disable-next-line no-param-reassign

@@ -69,12 +69,13 @@ const ReorderExperience = ({ closeDrawer, anchor }: ReorderExperience) => {
   const deleteSingleExperience = useResumeStore(state => state.deleteSingleExperience);
 
   // Local Experiences State for drag and drop
-  const [exp, setExp] = useState<[Experience]>(experiences);
+  const [exp, setExp] = useState<Experience[]>(experiences);
 
   //ask vishwajeet
   const experienceStates: Record<string, boolean> = {};
   exp.forEach(exp => (experienceStates[exp.id] = false));
   //
+  console.log(experienceStates, 'these are experience states');
   const [experienceActive, setExperienceActive] = useState<Record<string, boolean>>({ ...experienceStates });
 
   // This to keep track of localState if one of the experiences have been updated to update state in useEffect

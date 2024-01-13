@@ -3,17 +3,27 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 interface ExperienceType {
-  designation: number;
-  startedAt: Date;
-  endedAt: Date;
+  designation: string;
+  startedAt: string;
+  endedAt: string;
   company: string;
   description: string;
-  onDelete: (data: { id: string }) => Promise<void>;
+  onDelete: (data: { id: string }) => void;
   id: string;
   openEditExpForm: () => void;
   country: string;
   experienceActive: { [id: string]: boolean };
 }
+type ExperienceCardProps = {
+  onDelete: ({ id }: { id: string }) => Promise<void>;
+  openEditExpForm: () => void;
+  experienceActive: Record<string, boolean>;
+  company: string;
+  country: string;
+  description: string;
+  // ... other properties
+  years: string;
+};
 
 const ExperienceCard = ({
   designation,

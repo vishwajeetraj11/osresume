@@ -3,12 +3,14 @@ import { Button, Divider, FormControl, InputLabel, makeStyles, MenuItem, Select,
 import axios from 'axios';
 import { Formik } from 'formik';
 import ChipInput from 'material-ui-chip-input';
-import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
 import { useResumeStore } from '../../zustand/zustand';
+
+type Resetform = ({ title, type, items }: { title: string; type: string; items: string[] }) => void;
+
 const useStyles = makeStyles(theme => ({
   formControl: {
     minWidth: 120,
@@ -21,11 +23,13 @@ const useStyles = makeStyles(theme => ({
 const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
   const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
   const extrasCollection = useResumeStore(useShallow(state => state.data.extras));
+
+  console.log(extrasCollection, 'Extras collection');
   const addExtrasdata = useResumeStore(state => state.addExtras);
 
   const { getToken } = useAuth();
 
-  const showSnack = (message, variant) => {
+  const showSnack = (message: string, variant: string) => {
     if (variant == 'success') {
       toast.success(message);
     } else if (variant === 'error') {
@@ -63,7 +67,7 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
       validateOnBlur={false}
       validateOnMount={false}
       validationSchema={ValidationSchema}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
+      onSubmit={(values, { setSubmitting, resetForm }: { resetForm: Resetform; setSubmitting: (data: boolean) => void }) => {
         setTimeout(async () => {
           try {
             const token = await getToken();
@@ -168,7 +172,7 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
                       setFieldValue('items', values.items.concat(chip));
                     }}
                     onDelete={(chip, indexChip) => {
-                      const items = values.items.filter((_, i) => i !== indexChip);
+                      const items = values.items.filter((_, i: number) => i !== indexChip);
                       setFieldValue('items', items);
                     }}
                   />
@@ -189,7 +193,7 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
                       setFieldValue('.items', values.items.push(chip));
                     }}
                     onDelete={(chip, indexChip) => {
-                      const items = values.items.filter((_, i) => i !== indexChip);
+                      const items = values.items.filter((_, i: number) => i !== indexChip);
                       setFieldValue('items', items);
                     }}
                   />

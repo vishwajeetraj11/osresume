@@ -2,7 +2,6 @@ import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { useMediaQuery } from '@material-ui/core';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 
 // Header component using <SignedIn> & <SignedOut>.
 //
@@ -11,7 +10,7 @@ import React from 'react';
 //
 // https://docs.clerk.dev/frontend/react/signedin-and-signedout
 
-const Header = ({ route }) => {
+const Header = ({ route }: { route: string }) => {
   const mobile = useMediaQuery('(max-width:400px)');
   return (
     <header className={`shadow-sm ${route === '/' ? 'bg-transparent' : ''}`}>
@@ -33,7 +32,7 @@ const Header = ({ route }) => {
               </p>
             </Link>
           </SignedOut>
-          <SignedIn className="ml-4">
+          <SignedIn>
             <Link href="/templates">
               <p className="text-default text-xs md:text-sm cursor-pointer pr-3 lg:px-4">Templates</p>
             </Link>

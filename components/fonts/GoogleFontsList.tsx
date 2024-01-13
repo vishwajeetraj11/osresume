@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
 import items from '../../shared/googleFonts.json';
@@ -27,7 +27,7 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
   // Search
   const [search, setSearch] = useState('');
 
-  const showSnack = (message, variant) => {
+  const showSnack = (message: string, variant: string) => {
     if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {

@@ -17,6 +17,19 @@ import { EmptyFileSVG } from '../SVGs';
 import ExtrasCard from '../cards/ExtrasCard';
 import EditSingleExtra from '../forms/EditSingleExtra';
 
+// interface ReorderExtrasType {
+
+//   closeDrawer:,
+//   anchor:
+
+// }
+interface RecordExtra {
+  title: string;
+  type: string;
+  items: string[];
+  id: string;
+}
+
 const ReorderExtras = ({ closeDrawer, anchor }) => {
   const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
   const addExtrasData = useResumeStore(state => state.addExtras);
@@ -27,7 +40,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
   const matches = useMediaQuery('(min-width:1024px)');
   const { getToken } = useAuth();
 
-  const showSnack = (message, variant) => {
+  const showSnack = (message: string, variant: string) => {
     if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {
@@ -41,20 +54,24 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
   // Fetch Global State
   const extras = useResumeStore(useShallow(state => state.data.extras));
 
+  console.log(extras, 'hithesh');
+
   // Local Extras State for drag and drop
-  const [ext, setExt] = useState(extras);
-  const extrasStates = {};
+  const [ext, setExt] = useState<RecordExtra[]>(extras);
+  const extrasStates: Record<string, boolean> = {};
   ext.forEach(ext => {
+    console.log(ext);
     extrasStates[ext.id] = false;
   });
   //
-  const [extraActive, setExtraActive] = useState({ ...extrasStates });
+  const [extraActive, setExtraActive] = useState<Record<string, boolean>>({ ...extrasStates });
 
   // This to keep track of localState if one of the extras have been updated to update state in useEffect
   const [edit, setEdit] = useState(false);
 
-  const extDrawerStatesObj = {};
+  const extDrawerStatesObj: Record<string, boolean> = {};
   ext.map(ext => (extDrawerStatesObj[ext.id] = false));
+  console.log(extDrawerStatesObj);
 
   useEffect(() => {
     if (!(extras.length === ext.length)) {
@@ -80,7 +97,8 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
 
   // Nested Drawer States
   const [extDrawerStates, setExtDrawerStates] = React.useState({ ...extDrawerStatesObj });
-  const toggleExtDrawerStates = (id, open) => () => {
+  console.log(extDrawerStates);
+  const toggleExtDrawerStates = (id: string, open: boolean) => () => {
     setExtDrawerStates({ ...extDrawerStates, [id]: open });
   };
   const onDragEnd = result => {
@@ -119,7 +137,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
     // create an object that will be passed as in state
     // which we will use to disable the rest state (false)
     // this will ensure at one time only one is active
-    const fakeState = {};
+    const fakeState: Record<string, boolean> = {};
 
     // assign each state false
     ids.forEach(id => {
@@ -130,7 +148,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
     setExtraActive(fakeState);
   };
 
-  const onClickExt = ({ id }) => {
+  const onClickExt = (id: string) => {
     // CLone the activeExtra State
     const clone = Object.create(extraActive);
 
@@ -149,7 +167,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
     // create an object that will be passed as in state
     // which we will use to disable the rest state (false)
     // this will ensure at one time only one is active
-    const fakeState = {};
+    const fakeState: Record<string, boolean> = {};
 
     // assign each state false
     ids.forEach(id => {
@@ -163,7 +181,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
     }));
   };
 
-  const onDelete = async ({ id }) => {
+  const onDelete = async ({ id }: { id: string }) => {
     if (id.includes('-')) {
       deleteSingleExtra(id);
 
@@ -279,7 +297,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
                     {(provided, snapshot) => (
                       // eslint-disable-next-line
                       <div
-                        onClick={() => onClickExt({ id: e.id })}
+                        onClick={() => onClickExt(e.id)}
                         className="p-6 text-white text-lg bg-primary rounded"
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}

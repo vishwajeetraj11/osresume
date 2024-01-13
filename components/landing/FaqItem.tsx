@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
-export const Item = ({ title, children }) => {
+export const Item = ({ title, children }: { title: string; children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="border-b">
