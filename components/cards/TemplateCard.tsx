@@ -31,11 +31,12 @@ const TemplateCard = ({
 }: {
   template: ResumeTemplate;
   selected: boolean;
-  onSelect: (data: Templatetype) => void;
+  onSelect: (data: ResumeTemplate) => void;
   type: string;
 }) => (
   <div
     onClick={() => {
+      console.log(template);
       onSelect(template);
       console.log(template);
     }}

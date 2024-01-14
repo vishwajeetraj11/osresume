@@ -4,7 +4,7 @@ import axios from 'axios';
 // import { ErrorMessage } from 'formik';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import NoDocumentFound from '../components/NoDocumentFound';
 import TemplateCard from '../components/cards/TemplateCard';
@@ -48,7 +48,7 @@ const Dashboard = () => {
           },
         });
         setResumes(data.data);
-        console.log(resumes);
+        console.log(resumes, 'These are resumes');
         if (!data.data.length) {
           setNoResume(true);
         }

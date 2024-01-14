@@ -23,8 +23,10 @@ export default withAuth(
           if (user) filterObj.userId = userId;
           const resume = await Resume.find(filterObj);
           if (!resume) {
+            console.log('here');
             return res.status(400).json({ success: false });
           }
+          console.log(resume);
           res.status(200).json({ success: true, data: resume });
         } catch (error) {
           res.status(400).json({ success: false });

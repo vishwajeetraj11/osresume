@@ -9,26 +9,44 @@ import { ErrorSVG, NoFilesFoundSVG } from '../components/SVGs';
 import TemplateCard from '../components/cards/TemplateCard';
 import { toastMessages } from '../shared/contants';
 
+interface ResumeTemplate {
+  customStyles: {
+    font: string;
+    // You can add more style properties here if needed
+  };
+  template: boolean;
+  experience: string[];
+  education: string[];
+  extras: string[];
+  _id: string;
+  userId: string;
+  title: string;
+  templateName: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  personal: string;
+  id: string;
+}
+
 const Templates = () => {
   const router = useRouter();
-  const [templates, setTemplates] = useState([]);
+  const [templates, setTemplates] = useState<ResumeTemplate[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
-  const [selectedTemplate, setSelectedTemplate] = useState<string>('');
+  const [selectedTemplate, setSelectedTemplate] = useState<ResumeTemplate | undefined>();
   const [noTemplate, setNoTemplate] = useState<boolean>(false);
   const [Selected, setSelected] = useState<boolean>();
   const { getToken } = useAuth();
 
-  const onSelect = (id: string) => {
+  const onSelect = (id: ResumeTemplate) => {
     setSelected(false);
 
-    console.log(id);
     setSelectedTemplate(id);
   };
 
   const onCancel = () => {
-    setSelected(false);
-    setSelectedTemplate('');
+    setSelectedTemplate(undefined);
   };
 
   const showSnack = (message: string, variant: string) => {
@@ -54,7 +72,7 @@ const Templates = () => {
           Authorization: `Bearer ${token}`,
         },
         data: {
-          templateName: selectedTemplate.templateName,
+          templateName: selectedTemplate?.templateName,
           title: 'Your Resume',
         },
       });
@@ -78,6 +96,7 @@ const Templates = () => {
           },
         });
         setTemplates(res.data);
+        console.log(res.data);
         if (!res.data.length) {
           setNoTemplate(true);
         }
@@ -114,7 +133,7 @@ const Templates = () => {
       <TemplateCard
         template={template}
         type="TEMPLATE"
-        selected={template._id === selectedTemplate._id}
+        selected={template._id === selectedTemplate?._id}
         onSelect={onSelect}
         key={template._id}
       />
