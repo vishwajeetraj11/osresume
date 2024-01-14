@@ -1,5 +1,23 @@
 import Image from 'next/image';
-
+interface ResumeTemplate {
+  customStyles: {
+    font: string;
+    // You can add more style properties here if needed
+  };
+  template: boolean;
+  experience: string[];
+  education: string[];
+  extras: string[];
+  _id: string;
+  userId: string;
+  title: string;
+  templateName: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  personal: string;
+  id: string;
+}
 interface Templatetype {
   title: string;
   templateName: string;
@@ -11,13 +29,16 @@ const TemplateCard = ({
   onSelect,
   type,
 }: {
-  template: Templatetype;
+  template: ResumeTemplate;
   selected: boolean;
   onSelect: (data: Templatetype) => void;
   type: string;
 }) => (
   <div
-    onClick={() => onSelect(template)}
+    onClick={() => {
+      onSelect(template);
+      console.log(template);
+    }}
     onKeyUp={() => onSelect(template)}
     role="button"
     tabIndex={0}

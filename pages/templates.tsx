@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { ErrorSVG, NoFilesFoundSVG } from '../components/SVGs';
 import TemplateCard from '../components/cards/TemplateCard';
@@ -12,21 +12,26 @@ import { toastMessages } from '../shared/contants';
 const Templates = () => {
   const router = useRouter();
   const [templates, setTemplates] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [selectedTemplate, setSelectedTemplate] = useState('');
-  const [noTemplate, setNoTemplate] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const [selectedTemplate, setSelectedTemplate] = useState<string>('');
+  const [noTemplate, setNoTemplate] = useState<boolean>(false);
+  const [Selected, setSelected] = useState<boolean>();
   const { getToken } = useAuth();
 
-  const onSelect = id => {
+  const onSelect = (id: string) => {
+    setSelected(false);
+
+    console.log(id);
     setSelectedTemplate(id);
   };
 
   const onCancel = () => {
+    setSelected(false);
     setSelectedTemplate('');
   };
 
-  const showSnack = (message, variant) => {
+  const showSnack = (message: string, variant: string) => {
     if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {
@@ -134,7 +139,7 @@ const Templates = () => {
                 <Button className="mr-10" variant="outlined" color="primary" onClick={onCancel}>
                   Cancel
                 </Button>
-                <Button variant="outlined " className=" text-white hover:bg-[#12836d]  bg-primary" color="primary" onClick={onCreate}>
+                <Button className=" text-white hover:bg-[#12836d]  bg-primary" variant="outlined" color="primary" onClick={onCreate}>
                   Create
                 </Button>
               </>
