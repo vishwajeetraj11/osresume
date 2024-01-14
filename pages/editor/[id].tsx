@@ -3,7 +3,7 @@ import { useMediaQuery } from '@material-ui/core';
 import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { useShallow } from 'zustand/react/shallow';
 import LeftSideBar from '../../components/LeftSideBar';
@@ -12,7 +12,6 @@ import RightSideBar from '../../components/RightSideBar';
 import { ResumeNotFoundSVG } from '../../components/SVGs';
 import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
-
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 import { useResumeStore } from '../../zustand/zustand';
 
@@ -21,16 +20,16 @@ const Editor = () => {
   const router = useRouter();
   const desktop = useMediaQuery('(min-width:1024px)');
 
-  const resumeRef = useRef();
+  const resumeRef = useRef<HTMLDivElement>(null!);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<boolean | string>('');
 
   const User = useUser();
-  const firstName = User.user.firstName;
-  const userEmail = User.user.emailAddresses[0].emailAddress;
+  const firstName = User?.user?.firstName;
+  const userEmail = User?.user?.emailAddresses[0].emailAddress;
 
   const { title, username, personaldata, eductainvalues, experiencedata, extrasdata, resumeMeta } = useResumeStore(
-    useShallow(state => ({
+    useShallow((state: any) => ({
       title: state.data.resumeMeta.title,
       username: state.data.personal.username,
       personaldata: state.data.personal,

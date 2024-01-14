@@ -21,7 +21,7 @@ const Dashboard = () => {
   const [error, setError] = useState('');
   const [noResume, setNoResume] = useState(false);
 
-  const [selectedResume, setSelectedResume] = useState('');
+  const [selectedResume, setSelectedResume] = useState(''); //only string will be acepted
 
   const showSnack = (message, variant) => {
     if (variant === 'success') {
@@ -48,6 +48,7 @@ const Dashboard = () => {
           },
         });
         setResumes(data.data);
+        console.log(resumes);
         if (!data.data.length) {
           setNoResume(true);
         }

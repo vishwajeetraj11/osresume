@@ -2,29 +2,31 @@ import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs';
 import CssBaseline from '@material-ui/core/CssBaseline';
 // MUI Setup
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Toaster } from 'sonner';
 import Loader from '../components/Loader';
 import Layout from '../components/layout/Layout';
 import { theme } from '../shared/theme';
 import '../styles/global.css';
-// Clerk Env
-const clerkSignInURL = process.env.NEXT_PUBLIC_CLERK_SIGN_IN;
-const publicPages = ['/', '/sign-in/[[...index]]', '/sign-up/[[...index]]'];
 
-function MyApp({ Component, pageProps }) {
+// Clerk Env
+const clerkSignInURL: string | undefined = process.env.NEXT_PUBLIC_CLERK_SIGN_IN;
+const publicPages: string[] = ['/', '/sign-in/[[...index]]', '/sign-up/[[...index]]'];
+
+function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const handleStart = url => {
+    const handleStart = () => {
       setLoading(true);
     };
-    const handleComplete = url => {
+    const handleComplete = () => {
       setLoading(false);
     };
 
@@ -42,7 +44,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
+    if (jssStyles && jssStyles!.parentElement) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
@@ -84,7 +86,9 @@ function MyApp({ Component, pageProps }) {
 
 function RedirectToSignIn() {
   useEffect(() => {
-    window.location = clerkSignInURL;
+    if (clerkSignInURL) {
+      window.location.href = clerkSignInURL;
+    }
   });
   return null;
 }

@@ -123,7 +123,7 @@ const ReorderExperience = ({ closeDrawer, anchor }: ReorderExperience) => {
   };
 
   const grid = 10;
-  const getItemStyle = (isDragging: boolean, draggableStyle) => ({
+  const getItemStyle = (isDragging: boolean, draggableStyle?: React.CSSProperties) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: 'none',
     padding: grid * 2,
@@ -138,7 +138,7 @@ const ReorderExperience = ({ closeDrawer, anchor }: ReorderExperience) => {
     ...draggableStyle,
   });
 
-  const getListStyle = isDraggingOver => ({
+  const getListStyle = (isDraggingOver: boolean) => ({
     // background: isDraggingOver ? '#ffffff' : '#16a085',
   });
 
@@ -175,7 +175,7 @@ const ReorderExperience = ({ closeDrawer, anchor }: ReorderExperience) => {
     }
 
     // Get All Ids from state in an Array
-    const ids = Object.keys(clone);
+    const ids: string[] = Object.keys(clone);
 
     // create an object that will be passed as in state
     // which we will use to disable the rest state (false)
