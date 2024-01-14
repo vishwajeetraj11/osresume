@@ -32,10 +32,10 @@ const sections = [
   },
 ];
 
-const RightSideBar = ({ handlePrint }) => {
+const RightSideBar = ({ handlePrint }: { handlePrint: () => void }) => {
   const matches = useMediaQuery('(min-width:1024px)');
   const sectionTitles = sections.map(e => e.label);
-  const sectionDrawerStates = {};
+  const sectionDrawerStates: Record<string, boolean> = {};
   sectionTitles.map(section => (sectionDrawerStates[section] = false));
 
   const useStyles = makeStyles({
@@ -56,11 +56,11 @@ const RightSideBar = ({ handlePrint }) => {
     ...sectionDrawerStates,
   });
 
-  const toggleRightDrawer = (anchor, open) => () => {
+  const toggleRightDrawer = (anchor: string, open: boolean) => () => {
     setRightDrawerState({ ...rightDrawerState, [anchor]: open });
   };
 
-  const rightList = anchor => (
+  const rightList = (anchor: string) => (
     <div className={matches ? clsx(classes.list) : clsx(classes.fullList)} role="presentation">
       {anchor === 'font-face' && <GoogleFontsList closeDrawer={toggleRightDrawer(anchor, false)} anchor={anchor} />}
       {anchor === 'update-title' && <UpdateTitle closeDrawer={toggleRightDrawer(anchor, false)} anchor={anchor} />}
@@ -73,7 +73,7 @@ const RightSideBar = ({ handlePrint }) => {
         <div key={id} className="inline-block lg:block my-4 lg:my-8">
           <Tooltip title={title} placement={matches ? 'right' : 'bottom'} arrow>
             <Button onClick={toggleRightDrawer(label, true)}>
-              <Icon style={{ color: 'white' }} size="100px" />
+              <Icon style={{ color: 'white', fontSize: '30px' }} />
             </Button>
           </Tooltip>
           <Drawer anchor="right" open={rightDrawerState[label]} onClose={toggleRightDrawer(label, false)}>
@@ -83,7 +83,7 @@ const RightSideBar = ({ handlePrint }) => {
       ))}
       <Tooltip title="Print Resume" placement={matches ? 'right' : 'bottom'} arrow>
         <Button onClick={handlePrint}>
-          <PrintIcon style={{ color: 'white' }} size="100px" />
+          <PrintIcon style={{ color: 'white', fontSize: '30px' }} />
         </Button>
       </Tooltip>
     </div>

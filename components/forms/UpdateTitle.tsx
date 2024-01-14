@@ -11,7 +11,7 @@ import { useResumeStore } from '../../zustand/zustand';
 
 type ResetForms = ({ title }: { title: string }) => void;
 
-const UpdateTitle = ({ closeDrawer }) => {
+const UpdateTitle = ({ closeDrawer, anchor }: { closeDrawer: () => void; anchor: string }) => {
   const { getToken } = useAuth();
   const { title, resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
   const updateTitel = useResumeStore(state => state.updateTitel);

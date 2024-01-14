@@ -1,6 +1,4 @@
-import React from 'react';
-
-export const ResumeNotFoundSVG = props => (
+export const ResumeNotFoundSVG = (props: Record<string, string>) => (
   <svg width={257} height={299} viewBox="0 0 257 299" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <g opacity={0.5}>
       <path
@@ -175,7 +173,7 @@ export const ResumeNotFoundSVG = props => (
   </svg>
 );
 
-export const NoFilesFoundSVG = props => (
+export const NoFilesFoundSVG = (props: Record<string, string>) => (
   <svg viewBox="0 0 326 343" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <ellipse cx={204.376} cy={287.933} rx={112.5} ry={36.2} fill="url(#prefix__paint0_linear)" />
     <path
@@ -299,7 +297,7 @@ export const NoFilesFoundSVG = props => (
   </svg>
 );
 
-export const ErrorSVG = props => (
+export const ErrorSVG = (props: Record<string, string>) => (
   <svg width={375} height={159} viewBox="0 0 375 159" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
       fillRule="evenodd"
@@ -453,7 +451,7 @@ export const ErrorSVG = props => (
   </svg>
 );
 
-export const EmptyFileSVG = props => (
+export const EmptyFileSVG = (props: Record<string, string>) => (
   <svg width={203} height={140} viewBox="0 0 203 140" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
       d="M199.217 38.647c1.95-9.319-5.162-18.073-14.682-18.073H95.297a10 10 0 01-9.973-9.273l-.148-2.028A10 10 0 0075.202 0H61.785a10 10 0 00-9.826 8.14l-22.714 120C28.079 134.299 32.802 140 39.07 140H178l21.217-101.353z"
@@ -473,7 +471,7 @@ export const EmptyFileSVG = props => (
   </svg>
 );
 
-export const BuyMeACoffee = props => (
+export const BuyMeACoffee = (props: Record<string, string>) => (
   <svg width={545} height={153} viewBox="0 0 545 153" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
       d="M0 24.48C0 10.96 10.96 0 24.48 0H520.2c13.52 0 24.48 10.96 24.48 24.48v104.04c0 13.52-10.96 24.48-24.48 24.48H24.48C10.96 153 0 142.04 0 128.52V24.48z"

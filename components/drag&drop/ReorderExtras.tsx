@@ -110,7 +110,7 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
   };
 
   const grid = 10;
-  const getItemStyle = (isDragging, draggableStyle) => ({
+  const getItemStyle = (isDragging: boolean, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: 'none',
     padding: grid * 2,
