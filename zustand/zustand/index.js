@@ -14,98 +14,111 @@ export const useResumeStore = create(
       extras: [],
       education: [],
     },
-    addPersonal: personal => set(state => ({
-      data: {
-        ...state.data,
-        personal,
-      },
-    })),
-    addResumemeta: meta => set(state => ({
-      data: {
-        ...state.data,
-        resumeMeta: meta,
-      },
-    })),
-
-    addExperience: experience => set(state => ({
-      data: {
-        ...state.data,
-        experience,
-      },
-    })),
-    addExtras: extras => set(state => ({
-      data: {
-        ...state.data,
-        extras,
-      },
-    })),
-
-    deleteSingleExtra: id => set(state => ({
-      data: {
-        ...state.data,
-        extras: state.data.extras.filter(e => e.id !== id),
-      },
-    })),
-
-    addSampleExtra: extras => set(state => ({
-      data: {
-        ...state.data,
-        extras: [...state.data.extras, extras],
-      },
-    })),
-
-    addEducation: education => set(state => ({
-      data: {
-        ...state.data,
-        education,
-      },
-    })),
-
-    deleteSingleExperience: id => set(state => ({
-      data: {
-        ...state.data,
-        experience: state.data.experience.filter(a => a.id !== id),
-      },
-    })),
-    deleteSingleEducation: id => set(state => ({
-      data: {
-        ...state.data,
-        education: state.data.education.filter(a => a.id !== id),
-      },
-    })),
-
-    addSampleExperience: experience => set(state => ({
-      data: {
-        ...state.data,
-        experience: [...state.data.experience, experience],
-      },
-    })),
-    addSampleEducation: education => set(state => ({
-      data: {
-        ...state.data,
-        education: [...state.data.education, education],
-      },
-    })),
-    updateTitel: titel => set(state => ({
-      data: {
-        ...state.data,
-        resumeMeta: {
-          ...state.data.resumeMeta,
-          title: titel, /// edit
+    addPersonal: personal =>
+      set(state => ({
+        data: {
+          ...state.data,
+          personal,
         },
-      },
-    })),
-    updateFont: font => set(state => ({
-      data: {
-        ...state.data,
-        resumeMeta: {
-          ...state.data.resumeMeta,
-          customStyles: {
-            font,
+      })),
+    addResumemeta: meta =>
+      set(state => ({
+        data: {
+          ...state.data,
+          resumeMeta: meta,
+        },
+      })),
+
+    addExperience: experience =>
+      set(state => ({
+        data: {
+          ...state.data,
+          experience,
+        },
+      })),
+    addExtras: extras =>
+      set(state => ({
+        data: {
+          ...state.data,
+          extras,
+        },
+      })),
+
+    deleteSingleExtra: id =>
+      set(state => ({
+        data: {
+          ...state.data,
+          extras: state.data.extras.filter(e => e.id !== id),
+        },
+      })),
+
+    addSampleExtra: extras =>
+      set(state => ({
+        data: {
+          ...state.data,
+          extras: [...state.data.extras, extras],
+        },
+      })),
+
+    addEducation: education =>
+      set(state => ({
+        data: {
+          ...state.data,
+          education,
+        },
+      })),
+
+    deleteSingleExperience: id =>
+      set(state => ({
+        data: {
+          ...state.data,
+          experience: state.data.experience.filter(a => a.id !== id),
+        },
+      })),
+    deleteSingleEducation: id =>
+      set(state => ({
+        data: {
+          ...state.data,
+          education: state.data.education.filter(a => a.id !== id),
+        },
+      })),
+
+    addSampleExperience: experience =>
+      set(state => ({
+        data: {
+          ...state.data,
+          experience: [...state.data.experience, experience],
+        },
+      })),
+    addSampleEducation: education =>
+      set(state => ({
+        data: {
+          ...state.data,
+          education: [...state.data.education, education],
+        },
+      })),
+    updateTitel: titel =>
+      set(state => ({
+        data: {
+          ...state.data,
+          resumeMeta: {
+            ...state.data.resumeMeta,
+            title: titel, /// edit
           },
         },
-      },
-    })),
+      })),
+    updateFont: font =>
+      set(state => ({
+        data: {
+          ...state.data,
+          resumeMeta: {
+            ...state.data.resumeMeta,
+            customStyles: {
+              font,
+            },
+          },
+        },
+      })),
   })),
 );
 
