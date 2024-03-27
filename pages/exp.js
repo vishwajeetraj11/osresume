@@ -43,6 +43,29 @@ export const demoData = {
       type: 'NEW_LINE',
       items: ['Hashnode x Appwrite', 'Hashnode x Clerk', 'Hashnode x Netlify'],
     },
+    {
+      id: 4,
+      title: 'Languages',
+      type: 'SAME_LINE',
+      items: ['JavaScript', 'Node', 'Typescript', 'HTML', 'CSS'],
+    },
+    {
+      id: 5,
+      title: 'COMMUNITY',
+      type: 'SAME_LINE',
+      items: ['GDG Kolkata', 'DSC NSEC (2021) (Core Member)',
+        'Winter of Code 2020 (Organiser and Mentor)'],
+    },
+  ],
+  education: [
+    {
+      id: '39',
+      institution: 'Netaji Subhash Engineering College',
+      country: 'India',
+      major: 'Bachelor of Technology - Information Technology',
+      startedAt: 'July 2013',
+      endedAt: 'July 2012',
+    },
   ],
 };
 
