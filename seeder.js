@@ -33,48 +33,83 @@ const importData = async () => {
     await Personal.deleteMany();
     await Resume.deleteMany();
 
-    const resume = await Resume.create({
+    const resumeTrical = await Resume.create({
       userId: 'template_user',
       template: true,
       title: 'Trical',
       templateName: 'Trical',
     });
 
-    const exps = await Experience.insertMany(
+    const resumeJakePaul = await Resume.create({
+      userId: 'template_user',
+      template: true,
+      title: 'Jake',
+      templateName: 'Jake',
+    });
+
+    const expsTrical = await Experience.insertMany(
       experience.map(exp => ({
         ...exp,
-        resumeId: resume._id,
+        resumeId: resumeTrical._id,
       })),
     );
 
-    const edus = await Education.insertMany(
+    const edusTrical = await Education.insertMany(
       education.map(edu => ({
         ...edu,
-        resumeId: resume._id,
+        resumeId: resumeTrical._id,
       })),
     );
 
-    const exts = await Extras.insertMany(
+    const extsTrical = await Extras.insertMany(
       extras.map(ext => ({
         ...ext,
-        resumeId: resume._id,
+        resumeId: resumeTrical._id,
       })),
     );
 
-    const personalData = await Personal.create({ ...personal, resumeId: resume._id });
-
-    // const exps = await Experience.find({});
-    // const edus = await Education.find({});
-    // const exts = await Extras.find({});
-    // const [personalData] = await Personal.find({});
+    const personalDataTrical = await Personal.create({ ...personal, resumeId: resumeTrical._id });
 
     await Resume.findOneAndUpdate(
-      { _id: resume.id },
+      { _id: resumeTrical.id },
       {
-        experience: exps.map(exp => exp._id),
-        extras: exts.map(ext => ext._id),
-        education: edus.map(edu => edu._id),
-        personal: personalData,
+        experience: expsTrical.map(exp => exp._id),
+        extras: extsTrical.map(ext => ext._id),
+        education: edusTrical.map(edu => edu._id),
+        personal: personalDataTrical,
+      },
+    );
+
+    const expsJakePaul = await Experience.insertMany(
+      experience.map(exp => ({
+        ...exp,
+        resumeId: resumeJakePaul._id,
+      })),
+    );
+
+    const edusJakePaul = await Education.insertMany(
+      education.map(edu => ({
+        ...edu,
+        resumeId: resumeJakePaul._id,
+      })),
+    );
+
+    const extsJakePaul = await Extras.insertMany(
+      extras.map(ext => ({
+        ...ext,
+        resumeId: resumeJakePaul._id,
+      })),
+    );
+
+    const personalDataJakePaul = await Personal.create({ ...personal, resumeId: resumeJakePaul._id });
+
+    await Resume.findOneAndUpdate(
+      { _id: resumeJakePaul.id },
+      {
+        experience: expsJakePaul.map(exp => exp._id),
+        extras: extsJakePaul.map(ext => ext._id),
+        education: edusJakePaul.map(edu => edu._id),
+        personal: personalDataJakePaul,
       },
     );
 

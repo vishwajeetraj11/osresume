@@ -12,6 +12,7 @@ import RightSideBar from '../../components/RightSideBar';
 import { ResumeNotFoundSVG } from '../../components/SVGs';
 import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
+import Jake from '../../components/templates/Jake';
 
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 import { useResumeStore } from '../../zustand/zustand';
@@ -135,6 +136,16 @@ const Editor = () => {
           <div className="order-2 mx-auto my-10">
             {resumeMeta.templateName === 'Onyx' && (
               <Onyx
+                extrasData={extrasdata}
+                personalData={personaldata}
+                educationData={eductainvalues}
+                customStyles={resumeMeta.customStyles}
+                experienceData={experiencedata}
+                ref={resumeRef}
+              />
+            )}
+            {resumeMeta.templateName === 'Jake' && (
+              <Jake
                 extrasData={extrasdata}
                 personalData={personaldata}
                 educationData={eductainvalues}
