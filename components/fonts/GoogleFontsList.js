@@ -1,8 +1,8 @@
 import { useAuth } from '@clerk/nextjs';
-import { TextField } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { TextField } from '@mui/material';
+import Button from '@mui/material/Button';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';

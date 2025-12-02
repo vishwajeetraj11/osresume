@@ -1,22 +1,13 @@
 import { useAuth } from '@clerk/nextjs';
-import { Button, Divider, FormControl, InputLabel, makeStyles, MenuItem, Select, TextField } from '@material-ui/core';
+import { Box, Button, Chip, Divider, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import axios from 'axios';
 import { Formik } from 'formik';
-import ChipInput from 'material-ui-chip-input';
 import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
 import { useResumeStore } from '../../zustand/zustand';
-const useStyles = makeStyles(theme => ({
-  formControl: {
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
 
 const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
   const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
@@ -26,7 +17,7 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
   const { getToken } = useAuth();
 
   const showSnack = (message, variant) => {
-    if (variant == 'success') {
+    if (variant === 'success') {
       toast.success(message);
     } else if (variant === 'error') {
       toast.error(message);
@@ -52,12 +43,11 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
 
     */
 
-  const classes = useStyles();
-
   return (
     <Formik
       initialValues={{
         ...extra,
+        inputChip: '',
       }}
       validateOnChange={false}
       validateOnBlur={false}
@@ -101,6 +91,7 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
               title: '',
               type: '',
               items: [],
+              inputChip: '',
             });
 
             showSnack(
@@ -137,7 +128,7 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
               helperText={errors.title}
             />
 
-            <FormControl variant="outlined" className={`${classes.formControl} mr-10 mt-10`} fullWidth>
+            <FormControl variant="outlined" sx={{ minWidth: 120, marginTop: 10 }} fullWidth>
               <InputLabel id="demo-simple-select-outlined-label">Type of Extra Item</InputLabel>
               <Select
                 labelId="demo-simple-select-outlined-label"
@@ -154,47 +145,38 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
                 <MenuItem value="NEW_LINE">Every Item in new Line</MenuItem>
                 <MenuItem value="COMMA">Every Item in the same line</MenuItem>
               </Select>
-              {values.type === 'NEW_LINE' && (
-                <>
-                  <ChipInput
-                    label="Items"
+              {['NEW_LINE', 'COMMA'].includes(values.type) && (
+                <Box sx={{ mt: values.type === 'NEW_LINE' ? 2 : 1, mr: 2 }}>
+                  <TextField
+                    label="Add Item"
+                    value={values.inputChip || ''}
+                    onChange={e => setFieldValue('inputChip', e.target.value)}
+                    onKeyDown={e => {
+                      if ((e.key === 'Enter' || (values.type === 'COMMA' && e.key === ',')) && values.inputChip) {
+                        e.preventDefault();
+                        if (!values.items.includes(values.inputChip.trim())) {
+                          setFieldValue('items', [...values.items, values.inputChip.trim()]);
+                        }
+                        setFieldValue('inputChip', '');
+                      }
+                    }}
                     fullWidth
-                    className="mt-6 mr-10"
+                    className={values.type === 'NEW_LINE' ? 'mt-6 mr-10' : 'mt-4 mr-10'}
+                    variant="outlined"
                     placeholder="Enter items and hit ENTER"
-                    allowDuplicates={false}
-                    alwaysShowPlaceholder={!!values.items.length}
-                    value={values.items}
-                    onAdd={chip => {
-                      setFieldValue('items', values.items.concat(chip));
-                    }}
-                    onDelete={(chip, indexChip) => {
-                      const items = values.items.filter((_, i) => i !== indexChip);
-                      setFieldValue('items', items);
-                    }}
                   />
-                  {/* <Button className='mt-4' onClick={() => console.log()} variant='contained' color='primary'>Add</Button> */}
-                </>
-              )}
-              {values.type === 'COMMA' && (
-                <>
-                  <ChipInput
-                    label="Items"
-                    fullWidth
-                    className="mt-4 mr-10"
-                    placeholder="Enter items and hit ENTER"
-                    allowDuplicates={false}
-                    alwaysShowPlaceholder={!!values.items.length}
-                    value={values.items}
-                    onAdd={chip => {
-                      setFieldValue('.items', values.items.push(chip));
-                    }}
-                    onDelete={(chip, indexChip) => {
-                      const items = values.items.filter((_, i) => i !== indexChip);
-                      setFieldValue('items', items);
-                    }}
-                  />
-                  {/* <Button className='mt-4' onClick={() => console.log()} variant='contained' color='primary'>Add</Button> */}
-                </>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2 }}>
+                    {values.items.map((chip, idx) => (
+                      <Chip
+                        key={idx}
+                        label={chip}
+                        onDelete={() => {
+                          setFieldValue('items', values.items.filter((_, i) => i !== idx));
+                        }}
+                      />
+                    ))}
+                  </Box>
+                </Box>
               )}
             </FormControl>
           </div>

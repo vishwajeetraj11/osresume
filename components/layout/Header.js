@@ -1,5 +1,5 @@
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
-import { useMediaQuery } from '@material-ui/core';
+import { useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';

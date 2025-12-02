@@ -1,5 +1,5 @@
 import { useAuth } from '@clerk/nextjs';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';

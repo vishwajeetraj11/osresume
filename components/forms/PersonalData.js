@@ -1,6 +1,6 @@
 import { useAuth } from '@clerk/nextjs';
-import { Button, FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput, TextField } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Button, FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
@@ -19,7 +19,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
   let phoneNumber = personalData?.phoneNumber;
   phoneNumber = phoneNumber?.replace('+91', '');
   personalData = { ...personalData, phoneNumber };
-  //zustand
+  // zustand
   const addPersonalData = useResumeStore(state => state.addPersonal);
 
   // Validation Schema for PersonalData form

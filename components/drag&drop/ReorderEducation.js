@@ -1,11 +1,7 @@
 import { useAuth } from '@clerk/nextjs';
-import { Drawer, makeStyles, useMediaQuery } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import SaveIcon from '@material-ui/icons/Save';
+import { Add as AddIcon, ArrowBack as ArrowBackIcon, Save as SaveIcon } from '@mui/icons-material';
+import { Button, Drawer, useMediaQuery } from '@mui/material';
 import axios from 'axios';
-import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { toast } from 'sonner';
@@ -67,18 +63,6 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
       setEdit(false);
     }
   }, [education, edu, edit]);
-
-  const useStyles = makeStyles({
-    list: {
-      width: matches ? '50vw' : '100vw',
-      // width: '50vw',
-      minHeight: matches ? '0' : '100vh',
-    },
-    fullList: {
-      width: 'auto',
-    },
-  });
-  const classes = useStyles();
 
   // Nested Drawer States
   const [eduDrawerStates, setEduDrawerStates] = React.useState({
@@ -225,7 +209,7 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
   };
 
   const onAdd = () => {
-    //zustand
+    // zustand
     addSampleEducationdata({
       id: uuidv4(),
       institution: 'Sample Institution',
@@ -318,22 +302,18 @@ const ReorderEducation = ({ closeDrawer, anchor, type }) => {
       </DragDropContext>
 
       {edu.map(edu => (
-        <div key={edu.id}>
-          <Drawer anchor="left" open={eduDrawerStates[edu.id]} onClose={toggleEduDrawerStates(edu.id, false)}>
-            <div className={clsx(classes.list)} role="presentation">
-              <div className="pt-10 pl-10">
-                <div className="flex align-center">
-                  <Button className="px-4 py-2" onClick={toggleEduDrawerStates(edu.id, false)} color="default" variant="outlined">
-                    <ArrowBackIcon />
-                    <p className="ml-2 capitalize">Back</p>
-                  </Button>
-                </div>
-                <EditSingleEducation anchor={anchor} education={edu} setEdit={setEdit} closeDrawer={toggleEduDrawerStates(edu.id, false)} />
-              </div>
-              {/* <Divider /> */}
+        <Drawer anchor="left" open={eduDrawerStates[edu.id]} onClose={toggleEduDrawerStates(edu.id, false)} key={edu.id}>
+          <div className="pt-10 pl-10" role="presentation">
+            <div className="flex align-center">
+              <Button className="px-4 py-2" onClick={toggleEduDrawerStates(edu.id, false)} color="default" variant="outlined">
+                <ArrowBackIcon />
+                <p className="ml-2 capitalize">Back</p>
+              </Button>
             </div>
-          </Drawer>
-        </div>
+            <EditSingleEducation anchor={anchor} education={edu} setEdit={setEdit} closeDrawer={toggleEduDrawerStates(edu.id, false)} />
+          </div>
+          {/* <Divider /> */}
+        </Drawer>
       ))}
     </>
   );

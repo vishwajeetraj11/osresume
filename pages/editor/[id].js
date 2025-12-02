@@ -1,5 +1,5 @@
 import { RedirectToSignIn, SignedIn, SignedOut, useAuth, useUser } from '@clerk/nextjs';
-import { useMediaQuery } from '@material-ui/core';
+import { useMediaQuery } from '@mui/material';
 import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -10,9 +10,9 @@ import LeftSideBar from '../../components/LeftSideBar';
 import Loader from '../../components/Loader';
 import RightSideBar from '../../components/RightSideBar';
 import { ResumeNotFoundSVG } from '../../components/SVGs';
+import Jake from '../../components/templates/Jake';
 import Onyx from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
-import Jake from '../../components/templates/Jake';
 
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
 import { useResumeStore } from '../../zustand/zustand';
@@ -27,7 +27,7 @@ const Editor = () => {
   const [error, setError] = useState('');
 
   const User = useUser();
-  const firstName = User.user.firstName;
+  const { firstName } = User.user;
   const userEmail = User.user.emailAddresses[0].emailAddress;
 
   const { title, username, personaldata, eductainvalues, experiencedata, extrasdata, resumeMeta } = useResumeStore(

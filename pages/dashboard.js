@@ -1,5 +1,5 @@
 import { useAuth, useUser } from '@clerk/nextjs';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import axios from 'axios';
 // import { ErrorMessage } from 'formik';
 import Head from 'next/head';

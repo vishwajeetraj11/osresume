@@ -1,7 +1,7 @@
 import { useAuth } from '@clerk/nextjs';
-import DateFnsUtils from '@date-io/date-fns';
-import { Button, Divider, TextField } from '@material-ui/core';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { Button, Divider, TextField } from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
@@ -164,9 +164,9 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
               helperText={errors.country}
             />
 
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
               <div className="flex justify-between pr-10 mt-6 flex-wrap">
-                <KeyboardDatePicker
+                <DatePicker
                   className="w-full lg:w-auto"
                   InputProps={{ readOnly: true }}
                   margin="normal"
@@ -186,7 +186,7 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
                     'aria-label': 'change date',
                   }}
                 />
-                <KeyboardDatePicker
+                <DatePicker
                   className="w-full lg:w-auto"
                   margin="normal"
                   id="endedAt"
@@ -207,7 +207,7 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
                   helperText={errors.endedAt}
                 />
               </div>
-            </MuiPickersUtilsProvider>
+            </LocalizationProvider>
           </div>
           <Divider className="mt-8 -ml-10" />
           <Button

@@ -1,7 +1,6 @@
 import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs';
-import CssBaseline from '@material-ui/core/CssBaseline';
-// MUI Setup
-import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -51,37 +50,34 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <StylesProvider injectFirst>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-
-        <Toaster closeButton richColors position="bottom-left" />
-        <Head>
-          <title>OS Resume</title>
-        </Head>
-        <ClerkProvider {...pageProps}>
-          {loading ? (
-            <Loader fullScreen />
-          ) : (
-            <Layout route={router.pathname}>
-              {publicPages.includes(router.pathname) ? (
-                <Component {...pageProps} />
-              ) : (
-                <>
-                  <SignedIn>
-                    <Component {...pageProps} />
-                  </SignedIn>
-                  <SignedOut>
-                    <RedirectToSignIn />
-                  </SignedOut>
-                </>
-              )}
-            </Layout>
-          )}
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
-          <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER} />
-        </ClerkProvider>
-      </StylesProvider>
+      <CssBaseline />
+      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+      <Toaster closeButton richColors position="bottom-left" />
+      <Head>
+        <title>OS Resume</title>
+      </Head>
+      <ClerkProvider {...pageProps}>
+        {loading ? (
+          <Loader fullScreen />
+        ) : (
+          <Layout route={router.pathname}>
+            {publicPages.includes(router.pathname) ? (
+              <Component {...pageProps} />
+            ) : (
+              <>
+                <SignedIn>
+                  <Component {...pageProps} />
+                </SignedIn>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+              </>
+            )}
+          </Layout>
+        )}
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER} />
+      </ClerkProvider>
     </ThemeProvider>
   );
 }

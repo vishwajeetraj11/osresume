@@ -1,5 +1,5 @@
-import { Button } from '@material-ui/core';
-import GitHubIcon from '@material-ui/icons/GitHub';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import { Button } from '@mui/material';
 import Head from 'next/head';
 import Link from 'next/link';
 import Script from 'next/script';

@@ -1,6 +1,6 @@
 import { useAuth } from '@clerk/nextjs';
-import { Button, TextField } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Button, TextField } from '@mui/material';
+import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';

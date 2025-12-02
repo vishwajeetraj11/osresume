@@ -1,13 +1,6 @@
 import { useUser } from '@clerk/nextjs';
-import { Tooltip } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Drawer from '@material-ui/core/Drawer';
-import { makeStyles } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import FormatColorTextIcon from '@material-ui/icons/FormatColorText';
-import PrintIcon from '@material-ui/icons/Print';
-import SaveIcon from '@material-ui/icons/Save';
-import { sendGTMEvent } from '@next/third-parties/google';
+import { FormatColorText as FormatColorTextIcon, Print as PrintIcon, Save as SaveIcon } from '@mui/icons-material';
+import { Button, Drawer, Tooltip, useMediaQuery } from '@mui/material';
 import clsx from 'clsx';
 import React from 'react';
 import GoogleFontsList from './fonts/GoogleFontsList';
@@ -41,19 +34,6 @@ const RightSideBar = ({ handlePrint }) => {
   const sectionDrawerStates = {};
   sectionTitles.map(section => (sectionDrawerStates[section] = false));
 
-  const useStyles = makeStyles({
-    list: {
-      // width: !matches ? '50vw' : '100vw',
-      width: '50vw',
-      minHeight: matches ? '0' : '100vh',
-    },
-    fullList: {
-      width: '100vw',
-    },
-  });
-
-  const classes = useStyles();
-
   // Right Drawer States
   const [rightDrawerState, setRightDrawerState] = React.useState({
     ...sectionDrawerStates,
@@ -64,7 +44,7 @@ const RightSideBar = ({ handlePrint }) => {
   };
 
   const rightList = anchor => (
-    <div className={matches ? clsx(classes.list) : clsx(classes.fullList)} role="presentation">
+    <div className={matches ? clsx('w-full') : clsx('w-full')} role="presentation">
       {anchor === 'font-face' && <GoogleFontsList closeDrawer={toggleRightDrawer(anchor, false)} anchor={anchor} />}
       {anchor === 'update-title' && <UpdateTitle closeDrawer={toggleRightDrawer(anchor, false)} anchor={anchor} />}
     </div>
@@ -89,11 +69,13 @@ const RightSideBar = ({ handlePrint }) => {
           handlePrint();
           sendGTMEvent({
             event: 'print_button',
-            value: { user: {
-              fullName: user.fullName,
-              email: user.primaryEmailAddress[0],
-              id: user.id,
-            } },
+            value: {
+              user: {
+                fullName: user.fullName,
+                email: user.primaryEmailAddress[0],
+                id: user.id,
+              },
+            },
           });
         }}
         >

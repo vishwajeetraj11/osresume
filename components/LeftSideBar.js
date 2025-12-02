@@ -1,9 +1,4 @@
-import { Tooltip } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Drawer from '@material-ui/core/Drawer';
-import { makeStyles } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import clsx from 'clsx';
+import { Button, Drawer, Tooltip, useMediaQuery } from '@mui/material';
 import React from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { sidebarContent } from '../zustand/zustand/index';
@@ -20,19 +15,6 @@ const LeftSideBar = () => {
   const sectionDrawerStates = {};
   sectionTitles.map(section => (sectionDrawerStates[section] = false));
 
-  const useStyles = makeStyles({
-    list: {
-      // width: !matches ? '50vw' : '100vw',
-      width: '50vw',
-      minHeight: matches ? '0' : '100vh',
-    },
-    fullList: {
-      width: 'auto',
-    },
-  });
-
-  const classes = useStyles();
-
   // Left Drawer States
   const [leftDrawerState, setLeftDrawerState] = React.useState({ ...sectionDrawerStates });
 
@@ -41,7 +23,7 @@ const LeftSideBar = () => {
   };
 
   const leftList = anchor => (
-    <div className={`${matches ? clsx(classes.list) : clsx(classes.fullList)} h-full flex flex-col flex-1`} role="presentation">
+    <div style={{ width: matches ? '50vw' : 'auto', minHeight: matches ? '0' : '100vh' }} role="presentation">
       <div className="pt-10 pr-6 pl-6 lg:pt-10 lg:pl-10 lg:pr-10 flex-1 flex flex-col">
         {anchor === 'personal-data' && <PersonalDataForm closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
         {anchor === 'work-experience' && <ReorderExperience closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}

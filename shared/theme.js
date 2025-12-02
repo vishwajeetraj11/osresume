@@ -1,11 +1,11 @@
-import { createTheme } from '@material-ui/core';
+import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
-  overrides: {
+  components: {
     MuiCssBaseline: {
-      '@global': {
+      styleOverrides: {
         '*': {
-          'scrollbar-width': 'thin',
+          scrollbarWidth: 'thin',
         },
         '*::-webkit-scrollbar': {
           width: '15px',

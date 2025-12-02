@@ -1,7 +1,7 @@
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import PersonIcon from '@material-ui/icons/Person';
-import SchoolIcon from '@material-ui/icons/School';
-import WorkIcon from '@material-ui/icons/Work';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import PersonIcon from '@mui/icons-material/Person';
+import SchoolIcon from '@mui/icons-material/School';
+import WorkIcon from '@mui/icons-material/Work';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
