@@ -1,7 +1,4 @@
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import PersonIcon from '@mui/icons-material/Person';
-import SchoolIcon from '@mui/icons-material/School';
-import WorkIcon from '@mui/icons-material/Work';
+import { Briefcase, FileText, GraduationCap, User } from 'lucide-react';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -116,25 +113,25 @@ export const sidebarContent = create(set => ({
         id: '1',
         title: 'Personal Data',
         label: 'personal-data',
-        Icon: PersonIcon,
+        Icon: User,
       },
       {
         id: '3',
         title: 'Work Experience',
         label: 'work-experience',
-        Icon: WorkIcon,
+        Icon: Briefcase,
       },
       {
         id: '4',
         title: 'Education',
         label: 'education',
-        Icon: SchoolIcon,
+        Icon: GraduationCap,
       },
       {
         id: '5',
         title: 'Extras',
         label: 'extras',
-        Icon: AssignmentIcon,
+        Icon: FileText,
       },
     ],
   },

@@ -1,6 +1,4 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import { Button } from '@mui/material';
+import { Pencil, Trash2 } from 'lucide-react';
 import React from 'react';
 
 const ExtrasCard = ({ title, type, items, onDelete, openEditExtForm, extraActive, id }) => (
@@ -18,18 +16,14 @@ const ExtrasCard = ({ title, type, items, onDelete, openEditExtForm, extraActive
     ))}
     {/* </p> */}
     <div className="mt-3 -mb-2" style={{ maxHeight: `${extraActive[id] ? '60px' : '0px'}`, transition: 'all 0.5s', overflow: 'hidden' }}>
-      <Button onClick={() => openEditExtForm()} className="mr-4" variant="text">
-        <div className="flex items-center justify-center">
-          <EditIcon style={{ color: '#fff' }} />
-          <p className="ml-2 text-white capitalize">Edit</p>
-        </div>
-      </Button>
-      <Button onClick={() => onDelete({ id })} variant="text">
-        <div className="flex items-center justify-center">
-          <DeleteIcon style={{ color: '#fff' }} />
-          <p className="ml-2 text-white capitalize">Delete</p>
-        </div>
-      </Button>
+      <button type="button" onClick={() => openEditExtForm()} className="mr-4 inline-flex items-center text-sm text-white">
+        <Pencil className="h-4 w-4 text-white" />
+        <span className="ml-2 capitalize">Edit</span>
+      </button>
+      <button type="button" onClick={() => onDelete({ id })} className="inline-flex items-center text-sm text-white">
+        <Trash2 className="h-4 w-4 text-white" />
+        <span className="ml-2 capitalize">Delete</span>
+      </button>
     </div>
   </>
 );

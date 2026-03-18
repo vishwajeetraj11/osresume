@@ -1,17 +1,19 @@
 import { useUser } from '@clerk/nextjs';
-import { FormatColorText as FormatColorTextIcon, Print as PrintIcon, Save as SaveIcon } from '@mui/icons-material';
-import { Button, Drawer, Tooltip, useMediaQuery } from '@mui/material';
 import clsx from 'clsx';
+import { Printer, Save, Type } from 'lucide-react';
 import React from 'react';
+import useMediaQuery from '../shared/utils/useMediaQuery';
 import GoogleFontsList from './fonts/GoogleFontsList';
 import UpdateTitle from './forms/UpdateTitle';
+import Drawer from './ui/Drawer';
+import Tooltip from './ui/Tooltip';
 
 const sections = [
   {
     id: '1',
     title: 'Font Face',
     label: 'font-face',
-    Icon: FormatColorTextIcon,
+    Icon: Type,
   },
   // {
   //   id: '2',
@@ -23,7 +25,7 @@ const sections = [
     id: '3',
     title: 'Update Title',
     label: 'update-title',
-    Icon: SaveIcon,
+    Icon: Save,
   },
 ];
 
@@ -54,18 +56,21 @@ const RightSideBar = ({ handlePrint }) => {
     <div className="bg-primary lg:pt-16 px-4 w-full lg:w-auto flex lg:block justify-center left-sidebar order-1 lg:order-3">
       {sections.map(({ title, Icon, id, label }) => (
         <div key={id} className="inline-block lg:block my-4 lg:my-8">
-          <Tooltip title={title} placement={matches ? 'right' : 'bottom'} arrow>
-            <Button onClick={toggleRightDrawer(label, true)}>
-              <Icon style={{ color: 'white' }} size="100px" />
-            </Button>
+          <Tooltip label={title} placement={matches ? 'right' : 'bottom'}>
+            <button type="button" onClick={toggleRightDrawer(label, true)} className="p-2 rounded hover:bg-white/10">
+              <Icon className="h-6 w-6 text-white" />
+            </button>
           </Tooltip>
           <Drawer anchor="right" open={rightDrawerState[label]} onClose={toggleRightDrawer(label, false)}>
             {rightList(label)}
           </Drawer>
         </div>
       ))}
-      <Tooltip title="Print Resume" placement={matches ? 'right' : 'bottom'} arrow>
-        <Button onClick={e => {
+      <Tooltip label="Print Resume" placement={matches ? 'right' : 'bottom'}>
+        <button
+          type="button"
+          className="p-2 rounded hover:bg-white/10"
+          onClick={e => {
           handlePrint();
           sendGTMEvent({
             event: 'print_button',
@@ -77,10 +82,10 @@ const RightSideBar = ({ handlePrint }) => {
               },
             },
           });
-        }}
+          }}
         >
-          <PrintIcon style={{ color: 'white' }} size="100px" />
-        </Button>
+          <Printer className="h-6 w-6 text-white" />
+        </button>
       </Tooltip>
     </div>
   );

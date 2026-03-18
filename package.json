@@ -37,7 +37,8 @@
     "tailwindcss": "^3.3.6",
     "uuid": "^8.3.2",
     "yup": "^0.32.9",
-    "zustand": "^4.4.7"
+    "zustand": "^4.4.7",
+    "lucide-react": "^0.359.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.19",

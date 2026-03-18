@@ -1,8 +1,7 @@
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
-import { useMediaQuery } from '@mui/material';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import useMediaQuery from '../../shared/utils/useMediaQuery';
 
 // Header component using <SignedIn> & <SignedOut>.
 //
@@ -18,7 +17,7 @@ const Header = ({ route }) => {
       <div className="max-w-screen-xl mx-auto flex justify-between py-4 px-2 sm:p-4">
         <div className="flex align-center items-center">
           <Link href="/" className="flex items-center">
-            {!mobile && <Image src="/icon-192x192.png" className="h-8 w-8" width={32} height={32} alt="Logo" />}
+            {!mobile && <img src="/icon-192x192.png" className="h-8 w-8" width={32} height={32} alt="Logo" />}
             <span className="text-default font-semibold text-sm lg:text-base ml-3">OS Resume</span>
           </Link>
         </div>

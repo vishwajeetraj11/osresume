@@ -1,11 +1,13 @@
-import { Button, Drawer, Tooltip, useMediaQuery } from '@mui/material';
 import React from 'react';
 import { useShallow } from 'zustand/react/shallow';
+import useMediaQuery from '../shared/utils/useMediaQuery';
 import { sidebarContent } from '../zustand/zustand/index';
 import ReorderEducation from './drag&drop/ReorderEducation';
 import ReorderExperience from './drag&drop/ReorderExperience';
 import ReorderExtras from './drag&drop/ReorderExtras';
 import PersonalDataForm from './forms/PersonalData';
+import Drawer from './ui/Drawer';
+import Tooltip from './ui/Tooltip';
 
 const LeftSideBar = () => {
   const matches = useMediaQuery('(min-width:1024px)');
@@ -39,10 +41,10 @@ const LeftSideBar = () => {
       {/* add overflow-scroll ||^^ if section are needed to scroll */}
       {sections.map(({ title, Icon, id, label }) => (
         <div key={id} className="inline-block lg:block my-4 lg:my-8">
-          <Tooltip title={title} placement={matches ? 'right' : 'bottom'} arrow>
-            <Button onClick={toggleLeftDrawer(label, true)}>
-              <Icon style={{ color: 'white' }} size="100px" />
-            </Button>
+          <Tooltip label={title} placement={matches ? 'right' : 'bottom'}>
+            <button type="button" onClick={toggleLeftDrawer(label, true)} className="p-2 rounded hover:bg-white/10">
+              <Icon className="h-6 w-6 text-white" />
+            </button>
           </Tooltip>
           <Drawer anchor="left" open={leftDrawerState[label]} onClose={toggleLeftDrawer(label, false)}>
             {leftList(label)}
