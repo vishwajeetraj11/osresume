@@ -1,10 +1,8 @@
 import mongoose from 'mongoose';
+import getMongoUri from './getMongoUri';
 
-const MONGO_URI = process.env.NEXT_PUBLIC_MONOGO_URI;
-
-if (!MONGO_URI) {
-  throw new Error('Please define the MONGO_URI environment variable inside .env');
-}
+const MONGO_URI = getMongoUri();
+const EXPECTED_DB_NAME = MONGO_URI.match(/\/\/[^/]+\/([^?]+)/)?.[1];
 
 /**
  * Global is used here to maintain a cached connection across hot reloads
@@ -14,7 +12,8 @@ if (!MONGO_URI) {
 let cached = global.mongoose;
 
 if (!cached) {
-  cached = { conn: null, promise: null };
+  cached = { conn: null, promise: null, uri: null };
+  global.mongoose = cached;
 }
 
 async function dbConnect() {
@@ -22,7 +21,23 @@ async function dbConnect() {
     return cached.conn;
   }
 
-  if (!cached.promise) {
+  // In dev, Next.js can reload this module while Mongoose is still connected.
+  // Reuse the active connection instead of calling openUri again.
+  if (mongoose.connection.readyState === 1) {
+    const activeDbName = mongoose.connection?.db?.databaseName;
+    if (!EXPECTED_DB_NAME || !activeDbName || activeDbName === EXPECTED_DB_NAME) {
+      cached.conn = mongoose;
+      cached.uri = MONGO_URI;
+      return cached.conn;
+    }
+
+    await mongoose.disconnect();
+    cached.conn = null;
+    cached.promise = null;
+    cached.uri = null;
+  }
+
+  if (!cached.promise || cached.uri !== MONGO_URI) {
     const opts = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -32,7 +47,12 @@ async function dbConnect() {
       useCreateIndex: true,
     };
 
-    cached.promise = mongoose.connect(MONGO_URI, opts).then(mongoose => mongoose);
+    cached.uri = MONGO_URI;
+    cached.promise = mongoose.connect(MONGO_URI, opts).then(mongoose => mongoose).catch(error => {
+      cached.promise = null;
+      cached.uri = null;
+      throw error;
+    });
   }
   cached.conn = await cached.promise;
   return cached.conn;

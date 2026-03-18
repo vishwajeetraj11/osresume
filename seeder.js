@@ -7,6 +7,7 @@ import Extras from './models/Extras.js';
 import Personal from './models/Personal.js';
 import Resume from './models/Resume.js';
 import { education, experience, extras, personal } from './shared/utils/demoData.js';
+import getMongoUri from './shared/utils/getMongoUri.js';
 
 dotenv.config({
   path: './.env',
@@ -21,7 +22,7 @@ RUN!
 
 const importData = async () => {
   try {
-    await mongoose.connect(process.env.NEXT_PUBLIC_MONOGO_URI, {
+    await mongoose.connect(getMongoUri(), {
       useFindAndModify: false,
       useNewUrlParser: true,
       useUnifiedTopology: true,
