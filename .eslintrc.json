@@ -10,7 +10,8 @@
       "plugin:jsx-a11y/recommended",
       "plugin:react-hooks/recommended",
       "airbnb",
-      "next"
+      "next",
+      "prettier"
     ],
     "env": {
       "browser": true,
