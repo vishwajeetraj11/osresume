@@ -11,7 +11,7 @@
   "dependencies": {
     "@clerk/clerk-react": "^1.13.1",
     "@clerk/clerk-sdk-node": "^0.5.0",
-    "@clerk/nextjs": "^4.23.3",
+    "@clerk/nextjs": "^4.29.3",
     "@date-io/date-fns": "^3.2.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
