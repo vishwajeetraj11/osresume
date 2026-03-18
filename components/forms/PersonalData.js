@@ -1,8 +1,7 @@
 import { useAuth } from '@clerk/nextjs';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Button, FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import axios from 'axios';
 import { Formik } from 'formik';
+import { ArrowLeft } from 'lucide-react';
 import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
@@ -47,11 +46,14 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
   };
   return (
     <>
-      <Button className="px-4 py-2 mr-4 self-start" onClick={() => closeDrawer(anchor, false)} color="default" variant="text">
-        {' '}
-        <ArrowBackIcon />
-        <p className="ml-2 capitalize">Back</p>
-      </Button>
+      <button
+        type="button"
+        className="px-4 py-2 mr-4 self-start inline-flex items-center text-sm text-gray-700 hover:text-gray-900"
+        onClick={() => closeDrawer(anchor, false)}
+      >
+        <ArrowLeft className="h-4 w-4" />
+        <span className="ml-2 capitalize">Back</span>
+      </button>
       <Formik
         initialValues={{
           ...personalData,
@@ -130,108 +132,117 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
       >
         {({ values, errors, handleChange, handleBlur, handleSubmit, setFieldValue, isSubmitting }) => (
           <form className="pb-10" onSubmit={handleSubmit}>
-            <TextField
-              id="name"
-              className="mt-6"
-              rows={1}
-              variant="outlined"
-              fullWidth
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.name}
-              label="Enter Name"
-              error={!!errors.name}
-              helperText={errors.name}
-            />
-
-            <TextField
-              id="email"
-              className="mt-8"
-              rows={1}
-              variant="outlined"
-              fullWidth
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.email}
-              label="Enter Email"
-              error={!!errors.email}
-              helperText={errors.email}
-            />
-            <TextField
-              id="designation"
-              className="mt-8"
-              rows={1}
-              variant="outlined"
-              fullWidth
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.designation}
-              label="Enter Designation"
-              error={!!errors.designation}
-              helperText={errors.designation}
-            />
-
-            <TextField
-              id="objective"
-              className="mt-8"
-              rows={3}
-              multiline
-              variant="outlined"
-              fullWidth
-              onBlur={handleBlur}
-              onChange={handleChange}
-              label="Enter Career Objective"
-              value={values.objective}
-              error={!!errors.objective}
-              helperText={errors.objective}
-            />
-
-            <TextField
-              id="country"
-              className="mt-8"
-              rows={1}
-              variant="outlined"
-              fullWidth
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.country}
-              label="Enter Country"
-              error={!!errors.country}
-              helperText={errors.country}
-            />
-
-            <FormControl fullWidth className="mt-8" variant="outlined" margin="normal">
-              <InputLabel htmlFor="phone-number-input">Your Phone Number</InputLabel>
-              <OutlinedInput
-                onChange={e => {
-                  if (e.target.value === '') {
-                    setFieldValue('phoneNumber', e.target.value);
-                    return;
-                  }
-                  if (e.target.value.match(/^[0-9]+$/)) {
-                    setFieldValue('phoneNumber', e.target.value);
-                  }
-                }}
-                value={values.phoneNumber}
-                placeholder="1234567890"
-                id="phone-number-input"
-                startAdornment={<InputAdornment position="start">+91</InputAdornment>}
-                fullWidth
-                label="Your Phone Number"
-                error={!!errors.phoneNumber}
+            <div className="mt-6">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                Enter Name
+              </label>
+              <input
+                id="name"
+                name="name"
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.name}
               />
-              <FormHelperText className="Mui-error">{errors.phoneNumber}</FormHelperText>
-            </FormControl>
+              {errors.name && <p className="mt-1 text-xs text-rose-600">{errors.name}</p>}
+            </div>
 
-            <Button
-              variant="contained"
-              className="mr-6 mt-6   text-white hover:bg-[#12836d]  bg-primary"
-              color="primary"
+            <div className="mt-8">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                Enter Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.email}
+              />
+              {errors.email && <p className="mt-1 text-xs text-rose-600">{errors.email}</p>}
+            </div>
+
+            <div className="mt-8">
+              <label htmlFor="designation" className="block text-sm font-medium text-gray-700">
+                Enter Designation
+              </label>
+              <input
+                id="designation"
+                name="designation"
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.designation}
+              />
+              {errors.designation && <p className="mt-1 text-xs text-rose-600">{errors.designation}</p>}
+            </div>
+
+            <div className="mt-8">
+              <label htmlFor="objective" className="block text-sm font-medium text-gray-700">
+                Enter Career Objective
+              </label>
+              <textarea
+                id="objective"
+                name="objective"
+                rows={3}
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.objective}
+              />
+              {errors.objective && <p className="mt-1 text-xs text-rose-600">{errors.objective}</p>}
+            </div>
+
+            <div className="mt-8">
+              <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+                Enter Country
+              </label>
+              <input
+                id="country"
+                name="country"
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.country}
+              />
+              {errors.country && <p className="mt-1 text-xs text-rose-600">{errors.country}</p>}
+            </div>
+
+            <div className="mt-8">
+              <label htmlFor="phone-number-input" className="block text-sm font-medium text-gray-700">
+                Your Phone Number
+              </label>
+              <div className="mt-1 flex rounded-md shadow-sm">
+                <span className="inline-flex items-center rounded-l-md border border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">
+                  +91
+                </span>
+                <input
+                  id="phone-number-input"
+                  name="phoneNumber"
+                  className="block w-full rounded-none rounded-r-md border border-gray-300 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  onChange={e => {
+                    if (e.target.value === '') {
+                      setFieldValue('phoneNumber', e.target.value);
+                      return;
+                    }
+                    if (e.target.value.match(/^[0-9]+$/)) {
+                      setFieldValue('phoneNumber', e.target.value);
+                    }
+                  }}
+                  value={values.phoneNumber}
+                  placeholder="1234567890"
+                />
+              </div>
+              {errors.phoneNumber && <p className="mt-1 text-xs text-rose-600">{errors.phoneNumber}</p>}
+            </div>
+
+            <button
               type="submit"
+              className="mr-6 mt-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d] disabled:opacity-60"
               disabled={isSubmitting}
             >
               Submit
-            </Button>
+            </button>
           </form>
         )}
       </Formik>

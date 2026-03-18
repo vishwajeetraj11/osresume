@@ -1,8 +1,7 @@
 import { useAuth } from '@clerk/nextjs';
-import { Button, TextField } from '@mui/material';
-import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 import axios from 'axios';
 import { Formik } from 'formik';
+import { ArrowLeft } from 'lucide-react';
 import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
@@ -32,11 +31,14 @@ const UpdateTitle = ({ closeDrawer }) => {
   };
   return (
     <div className="p-10">
-      <Button className="px-4 py-2" onClick={() => closeDrawer()} color="default" variant="text">
-        {' '}
-        <ArrowBackIcon />
-        <p className="ml-2">Back</p>
-      </Button>
+      <button
+        type="button"
+        className="px-4 py-2 inline-flex items-center text-sm text-gray-700 hover:text-gray-900"
+        onClick={() => closeDrawer()}
+      >
+        <ArrowLeft className="h-4 w-4" />
+        <span className="ml-2">Back</span>
+      </button>
       <Formik
         initialValues={{
           title,
@@ -82,28 +84,27 @@ const UpdateTitle = ({ closeDrawer }) => {
       >
         {({ values, errors, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
           <form className="pb-10" onSubmit={handleSubmit}>
-            <TextField
-              id="title"
-              className="mt-6"
-              rows={1}
-              variant="outlined"
-              fullWidth
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.title}
-              label="Enter Title"
-              error={!!errors.title}
-              helperText={errors.title}
-            />
-            <Button
-              className="mt-6  text-white hover:bg-[#12836d]  bg-primary"
-              variant="contained"
-              color="primary"
+            <div className="mt-6">
+              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+                Enter Title
+              </label>
+              <input
+                id="title"
+                name="title"
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.title}
+              />
+              {errors.title && <p className="mt-1 text-xs text-rose-600">{errors.title}</p>}
+            </div>
+            <button
               type="submit"
+              className="mt-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d] disabled:opacity-60"
               disabled={isSubmitting}
             >
               Submit
-            </Button>
+            </button>
           </form>
         )}
       </Formik>

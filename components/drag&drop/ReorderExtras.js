@@ -1,17 +1,18 @@
 import { useAuth } from '@clerk/nextjs';
-import { Add as AddIcon, ArrowBack as ArrowBackIcon, Save as SaveIcon } from '@mui/icons-material';
-import { Button, Drawer, useMediaQuery } from '@mui/material';
 import axios from 'axios';
+import { ArrowLeft, Plus, Save } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
+import useMediaQuery from '../../shared/utils/useMediaQuery';
 import { useResumeStore } from '../../zustand/zustand';
 import { EmptyFileSVG } from '../SVGs';
 import ExtrasCard from '../cards/ExtrasCard';
 import EditSingleExtra from '../forms/EditSingleExtra';
+import Drawer from '../ui/Drawer';
 
 const ReorderExtras = ({ closeDrawer, anchor }) => {
   const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
@@ -220,20 +221,31 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
     <>
       <div className="flex items-center justify-start flex-wrap lg:flex-nowrap">
         <div className="w-full md:w-auto mb-4 md:mb-0">
-          <Button className="lg:px-4 lg:py-2 mr-4" onClick={() => closeDrawer(anchor, false)} color="default" variant="text">
-            {' '}
-            <ArrowBackIcon />
-            <p className="ml-2 capitalize">Back</p>
-          </Button>
+          <button
+            type="button"
+            className="lg:px-4 lg:py-2 mr-4 inline-flex items-center text-sm text-gray-700 hover:text-gray-900"
+            onClick={() => closeDrawer(anchor, false)}
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span className="ml-2 capitalize">Back</span>
+          </button>
         </div>
-        <Button className="lg:px-4 lg:py-2 mr-4" onClick={onAdd} color="primary" variant="outlined">
-          <AddIcon />
-          <p className="ml-2 capitalize">Add Extra</p>
-        </Button>
-        <Button className="lg:px-4 lg:py-2   text-white hover:bg-[#12836d]  bg-primary" onClick={save} color="primary" variant="contained">
-          <SaveIcon />
-          <p className="ml-2 capitalize mr-6   ">Save Order</p>
-        </Button>
+        <button
+          type="button"
+          className="lg:px-4 lg:py-2 mr-4 inline-flex items-center rounded border border-primary text-primary px-4 py-2 text-sm hover:bg-primary/10"
+          onClick={onAdd}
+        >
+          <Plus className="h-4 w-4" />
+          <span className="ml-2 capitalize">Add Extra</span>
+        </button>
+        <button
+          type="button"
+          className="lg:px-4 lg:py-2 inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d]"
+          onClick={save}
+        >
+          <Save className="h-4 w-4" />
+          <span className="ml-2 capitalize mr-6">Save Order</span>
+        </button>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="extras">
@@ -292,10 +304,14 @@ const ReorderExtras = ({ closeDrawer, anchor }) => {
           <Drawer anchor="left" open={extDrawerStates[ext.id]} onClose={toggleExtDrawerStates(ext.id, false)}>
             <div className="pt-10 pl-10 pr-10" role="presentation" style={{ width: matches ? '50vw' : '100vw', minHeight: matches ? '0' : '100vh' }}>
               <div className="flex align-center">
-                <Button className="px-4 py-2" onClick={toggleExtDrawerStates(ext.id, false)} color="default" variant="outlined">
-                  <ArrowBackIcon />
-                  <p className="ml-2 capitalize">Back</p>
-                </Button>
+                <button
+                  type="button"
+                  className="px-4 py-2 inline-flex items-center rounded border border-gray-300 text-sm text-gray-700 hover:bg-gray-50"
+                  onClick={toggleExtDrawerStates(ext.id, false)}
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  <span className="ml-2 capitalize">Back</span>
+                </button>
               </div>
               <EditSingleExtra anchor={anchor} extra={ext} setEdit={setEdit} closeDrawer={toggleExtDrawerStates(ext.id, false)} />
             </div>

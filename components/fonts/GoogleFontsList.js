@@ -1,8 +1,5 @@
 import { useAuth } from '@clerk/nextjs';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { TextField } from '@mui/material';
-import Button from '@mui/material/Button';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
@@ -94,43 +91,49 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
         className="pl-10 pt-6 pb-4 flex items-center fixed bottom-0 lg:bottom-auto lg:top-0 bg-white z-10 w-full flex-wrap"
         style={{ boxShadow: '10px 0 20px rgb(0 0 0 / 7%)' }}
       >
-        <Button className="px-4 py-2" onClick={() => closeDrawer()} color="default" variant="text">
-          {' '}
-          <ArrowBackIcon />
-          <p className="ml-2">Back</p>
-        </Button>
-        <Button className="px-4 py-2 ml-4" disabled={page === 0} onClick={() => handlePage('PREV')} color="primary" variant="outlined">
-          {' '}
-          <ArrowBackIosIcon />
-          <p className="ml-4">Previous</p>
-        </Button>
+        <button
+          type="button"
+          className="px-4 py-2 inline-flex items-center text-sm text-gray-700 hover:text-gray-900"
+          onClick={() => closeDrawer()}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          <span className="ml-2">Back</span>
+        </button>
+        <button
+          type="button"
+          className="px-4 py-2 ml-4 inline-flex items-center rounded border border-primary text-primary text-sm hover:bg-primary/10 disabled:opacity-50"
+          disabled={page === 0}
+          onClick={() => handlePage('PREV')}
+        >
+          <ChevronLeft className="h-4 w-4" />
+          <span className="ml-2">Previous</span>
+        </button>
 
         {/* {!!totalPages && <p className="ml-4">{`${totalPages} / ${page + 1}`}</p>} */}
 
-        <Button
-          className="px-4 py-2 ml-4"
+        <button
+          type="button"
+          className="px-4 py-2 ml-4 inline-flex items-center rounded border border-primary text-primary text-sm hover:bg-primary/10 disabled:opacity-50"
           disabled={totalPages === page + 1}
           onClick={() => handlePage('NEXT')}
-          color="primary"
-          variant="outlined"
         >
-          {' '}
-          <p className="mr-2">Next</p>
-          <div style={{ transform: 'rotate(-180deg)' }}>
-            <ArrowBackIosIcon />
-          </div>
-        </Button>
+          <span className="mr-2">Next</span>
+          <ChevronRight className="h-4 w-4" />
+        </button>
 
-        <TextField
-          id="search"
-          className="ml-4 self-end mt-4 lg:mt-0 w-full lg:w-max pr-10 lg:pr-0"
-          size="small"
-          rows={1}
-          variant="outlined"
-          onChange={e => setSearch(e.target.value)}
-          label="Search Fonts"
-          value={search}
-        />
+        <div className="ml-4 self-end mt-4 lg:mt-0 w-full lg:w-max pr-10 lg:pr-0">
+          <label htmlFor="search" className="sr-only">
+            Search Fonts
+          </label>
+          <input
+            id="search"
+            name="search"
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Search Fonts"
+            value={search}
+          />
+        </div>
       </div>
       <div className="mt-12 lg:mt-24 pl-10">
         {googleFonts.length === 0 ? (
@@ -185,9 +188,13 @@ const GoogleFontsList = ({ anchor, closeDrawer }) => {
             return (
               // eslint-disable-next-line react/no-array-index-key
               <div key={index} className="max-w-max">
-                <Button variant="outlined" className="mt-6" onClick={() => onClick(font.fontFamily, font.fontID)}>
-                  <p className="capitalize">{font.fontFamily}</p>
-                </Button>
+                <button
+                  type="button"
+                  className="mt-6 inline-flex items-center rounded border border-primary px-4 py-2 text-sm text-primary hover:bg-primary/10"
+                  onClick={() => onClick(font.fontFamily, font.fontID)}
+                >
+                  <span className="capitalize">{font.fontFamily}</span>
+                </button>
               </div>
             );
           })

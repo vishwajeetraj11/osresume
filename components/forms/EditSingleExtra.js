@@ -1,7 +1,7 @@
 import { useAuth } from '@clerk/nextjs';
-import { Box, Button, Chip, Divider, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import axios from 'axios';
 import { Formik } from 'formik';
+import { X } from 'lucide-react';
 import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
@@ -114,82 +114,90 @@ const EditSingleExtra = ({ closeDrawer, anchor, extra, setEdit }) => {
             <div className="flex align-center justify-between">
               <h3 className="text-t1-lg font-medium mt-6">Extra Block</h3>
             </div>
-            <TextField
-              id="title"
-              className="mt-6"
-              rows={1}
-              variant="outlined"
-              fullWidth
-              onBlur={handleBlur}
-              onChange={handleChange}
-              label="Enter Title"
-              value={values.title}
-              error={!!errors.title}
-              helperText={errors.title}
-            />
+            <div className="mt-6">
+              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+                Enter Title
+              </label>
+              <input
+                id="title"
+                name="title"
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.title}
+              />
+              {errors.title && <p className="mt-1 text-xs text-rose-600">{errors.title}</p>}
+            </div>
 
-            <FormControl variant="outlined" sx={{ minWidth: 120, marginTop: 10 }} fullWidth>
-              <InputLabel id="demo-simple-select-outlined-label">Type of Extra Item</InputLabel>
-              <Select
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
+            <div className="mt-10">
+              <label htmlFor="extra-type" className="block text-sm font-medium text-gray-700">
+                Type of Extra Item
+              </label>
+              <select
+                id="extra-type"
+                name="type"
                 value={values.type}
                 onChange={e => {
                   setFieldValue('type', e.target.value);
                 }}
-                label="Type of Extra Item"
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value="NEW_LINE">Every Item in new Line</MenuItem>
-                <MenuItem value="COMMA">Every Item in the same line</MenuItem>
-              </Select>
-              {['NEW_LINE', 'COMMA'].includes(values.type) && (
-                <Box sx={{ mt: values.type === 'NEW_LINE' ? 2 : 1, mr: 2 }}>
-                  <TextField
-                    label="Add Item"
-                    value={values.inputChip || ''}
-                    onChange={e => setFieldValue('inputChip', e.target.value)}
-                    onKeyDown={e => {
-                      if ((e.key === 'Enter' || (values.type === 'COMMA' && e.key === ',')) && values.inputChip) {
-                        e.preventDefault();
-                        if (!values.items.includes(values.inputChip.trim())) {
-                          setFieldValue('items', [...values.items, values.inputChip.trim()]);
-                        }
-                        setFieldValue('inputChip', '');
+                <option value="">None</option>
+                <option value="NEW_LINE">Every Item in new Line</option>
+                <option value="COMMA">Every Item in the same line</option>
+              </select>
+              {errors.type && <p className="mt-1 text-xs text-rose-600">{errors.type}</p>}
+            </div>
+
+            {['NEW_LINE', 'COMMA'].includes(values.type) && (
+              <div className={values.type === 'NEW_LINE' ? 'mt-6 mr-10' : 'mt-4 mr-10'}>
+                <label htmlFor="extra-item" className="block text-sm font-medium text-gray-700">
+                  Add Item
+                </label>
+                <input
+                  id="extra-item"
+                  name="inputChip"
+                  value={values.inputChip || ''}
+                  onChange={e => setFieldValue('inputChip', e.target.value)}
+                  onKeyDown={e => {
+                    if ((e.key === 'Enter' || (values.type === 'COMMA' && e.key === ',')) && values.inputChip) {
+                      e.preventDefault();
+                      if (!values.items.includes(values.inputChip.trim())) {
+                        setFieldValue('items', [...values.items, values.inputChip.trim()]);
                       }
-                    }}
-                    fullWidth
-                    className={values.type === 'NEW_LINE' ? 'mt-6 mr-10' : 'mt-4 mr-10'}
-                    variant="outlined"
-                    placeholder="Enter items and hit ENTER"
-                  />
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2 }}>
-                    {values.items.map((chip, idx) => (
-                      <Chip
-                        key={idx}
-                        label={chip}
-                        onDelete={() => {
+                      setFieldValue('inputChip', '');
+                    }
+                  }}
+                  className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  placeholder="Enter items and hit ENTER"
+                />
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {values.items.map((chip, idx) => (
+                    <span key={idx} className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700">
+                      {chip}
+                      <button
+                        type="button"
+                        className="ml-1 inline-flex items-center text-gray-500 hover:text-gray-700"
+                        onClick={() => {
                           setFieldValue('items', values.items.filter((_, i) => i !== idx));
                         }}
-                      />
-                    ))}
-                  </Box>
-                </Box>
-              )}
-            </FormControl>
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-          <Divider className="mt-8 -ml-10" />
-          <Button
-            className="mt-6  text-white hover:bg-[#12836d]  bg-primary"
-            variant="contained"
-            color="primary"
+          <div className="mt-8 -ml-10 h-px bg-gray-200" />
+          <button
+            className="mt-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d] disabled:opacity-60"
             type="submit"
             disabled={isSubmitting}
           >
             Submit
-          </Button>
+          </button>
         </form>
       )}
     </Formik>

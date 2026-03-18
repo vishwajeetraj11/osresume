@@ -1,10 +1,8 @@
 import { useAuth } from '@clerk/nextjs';
-import { Button, Divider, TextField } from '@mui/material';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
+import Datepicker from 'react-tailwindcss-datepicker';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { useShallow } from 'zustand/react/shallow';
@@ -36,6 +34,19 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
     endedAt: Yup.date().required('Please enter end date.'),
     country: Yup.string().required('Please enter country name.'),
   });
+
+  const toDateValue = value => {
+    if (!value) return null;
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
+  };
+
+  const formatMonthYear = value => {
+    if (!value) return '';
+    const date = value instanceof Date ? value : new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+    return date.toLocaleString('default', { month: 'long', year: 'numeric' });
+  };
 
   /*
                    {
@@ -122,103 +133,106 @@ const EditSingleEducation = ({ closeDrawer, anchor, education, setEdit }) => {
             <div className="flex align-center justify-between">
               <h3 className="text-t1-lg font-medium mt-6">Education Block</h3>
             </div>
-            <TextField
-              id="institution"
-              className="mt-6 pr-10"
-              rows={1}
-              variant="outlined"
-              fullWidth
-              onBlur={handleBlur}
-              onChange={handleChange}
-              label="Enter Institution"
-              value={values.institution}
-              error={!!errors.institution}
-              helperText={errors.institution}
-            />
+            <div className="mt-6 pr-10">
+              <label htmlFor="institution" className="block text-sm font-medium text-gray-700">
+                Enter Institution
+              </label>
+              <input
+                id="institution"
+                name="institution"
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.institution}
+              />
+              {errors.institution && <p className="mt-1 text-xs text-rose-600">{errors.institution}</p>}
+            </div>
 
-            <TextField
-              id="major"
-              className="mt-10 pr-10"
-              rows={1}
-              variant="outlined"
-              fullWidth
-              onBlur={handleBlur}
-              onChange={handleChange}
-              label="Enter Major"
-              value={values.major}
-              error={!!errors.major}
-              helperText={errors.major}
-            />
+            <div className="mt-10 pr-10">
+              <label htmlFor="major" className="block text-sm font-medium text-gray-700">
+                Enter Major
+              </label>
+              <input
+                id="major"
+                name="major"
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.major}
+              />
+              {errors.major && <p className="mt-1 text-xs text-rose-600">{errors.major}</p>}
+            </div>
 
-            <TextField
-              id="country"
-              className="mt-10 pr-10"
-              rows={1}
-              variant="outlined"
-              fullWidth
-              onBlur={handleBlur}
-              onChange={handleChange}
-              label="Enter Country"
-              value={values.country}
-              error={!!errors.country}
-              helperText={errors.country}
-            />
+            <div className="mt-10 pr-10">
+              <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+                Enter Country
+              </label>
+              <input
+                id="country"
+                name="country"
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.country}
+              />
+              {errors.country && <p className="mt-1 text-xs text-rose-600">{errors.country}</p>}
+            </div>
 
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <div className="flex justify-between pr-10 mt-6 flex-wrap">
-                <DatePicker
-                  className="w-full lg:w-auto"
-                  InputProps={{ readOnly: true }}
-                  margin="normal"
-                  id="startedAt"
-                  label="Enter Start Date"
-                  views={['year', 'month']}
-                  // format='/MM/yyyy'
+            <div className="flex justify-between pr-10 mt-6 flex-wrap gap-4">
+              <div className="w-full lg:w-auto">
+                <label htmlFor="startedAt" className="block text-sm font-medium text-gray-700">
+                  Enter Start Date
+                </label>
+                <Datepicker
+                  asSingle
+                  useRange={false}
+                  readOnly
+                  inputId="startedAt"
+                  inputName="startedAt"
+                  value={{
+                    startDate: toDateValue(values.startedAt),
+                    endDate: toDateValue(values.startedAt),
+                  }}
                   onChange={date => {
-                    const month = date.toLocaleString('default', { month: 'long' });
-                    const year = date.getFullYear();
-                    setFieldValue('startedAt', `${month} ${year}`);
+                    setFieldValue('startedAt', formatMonthYear(date?.startDate));
                   }}
-                  value={values.startedAt}
-                  error={!!errors.startedAt}
-                  helperText={errors.startedAt}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
+                  displayFormat="MMM YYYY"
+                  inputClassName="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                 />
-                <DatePicker
-                  className="w-full lg:w-auto"
-                  margin="normal"
-                  id="endedAt"
-                  InputProps={{ readOnly: true }}
-                  label="Enter End Date"
-                  views={['year', 'month']}
-                  // format='MM/yyyy'
-                  onChange={date => {
-                    const month = date.toLocaleString('default', { month: 'long' });
-                    const year = date.getFullYear();
-                    setFieldValue('endedAt', `${month} ${year}`);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                  value={values.endedAt}
-                  error={!!errors.endedAt}
-                  helperText={errors.endedAt}
-                />
+                {errors.startedAt && <p className="mt-1 text-xs text-rose-600">{errors.startedAt}</p>}
               </div>
-            </LocalizationProvider>
+              <div className="w-full lg:w-auto">
+                <label htmlFor="endedAt" className="block text-sm font-medium text-gray-700">
+                  Enter End Date
+                </label>
+                <Datepicker
+                  asSingle
+                  useRange={false}
+                  readOnly
+                  inputId="endedAt"
+                  inputName="endedAt"
+                  value={{
+                    startDate: toDateValue(values.endedAt),
+                    endDate: toDateValue(values.endedAt),
+                  }}
+                  onChange={date => {
+                    setFieldValue('endedAt', formatMonthYear(date?.startDate));
+                  }}
+                  displayFormat="MMM YYYY"
+                  inputClassName="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                />
+                {errors.endedAt && <p className="mt-1 text-xs text-rose-600">{errors.endedAt}</p>}
+              </div>
+            </div>
           </div>
-          <Divider className="mt-8 -ml-10" />
-          <Button
-            className="mt-6     text-white hover:bg-[#12836d]  bg-primary"
-            variant="contained"
-            color="primary"
+          <div className="mt-8 -ml-10 h-px bg-gray-200" />
+          <button
+            className="mt-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d] disabled:opacity-60"
             type="submit"
             disabled={isSubmitting}
           >
             Submit
-          </Button>
+          </button>
         </form>
       )}
     </Formik>
