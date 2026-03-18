@@ -34,6 +34,15 @@ const PersonalSchema = new mongoose.Schema(
     phoneNumber: {
       type: String,
     },
+    address: {
+      type: String,
+    },
+    linkedinUrl: {
+      type: String,
+    },
+    githubUrl: {
+      type: String,
+    },
   },
   {
     toJSON: { virtuals: true },
