@@ -32,16 +32,19 @@ export default withAuth(async (req, res) => {
 
     case 'DELETE':
       try {
-        const education = await Education.findById(id);
+        const education = await Education.findOne({ _id: id, userId });
+        if (!education) {
+          return res.status(404).json({ success: false, error: 'Unable to find educational data.' });
+        }
         await Resume.findOneAndUpdate(
-          { resumeId: education.resumeId, userId },
+          { _id: education.resumeId, userId },
           {
             $pull: {
-              education: education.id,
+              education: education._id,
             },
           },
         );
-        education.remove();
+        await education.remove();
         res.status(200).json({ success: true });
       } catch (error) {
         res.status(400).json({ success: false, error });

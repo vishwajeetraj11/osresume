@@ -2,12 +2,13 @@ import { useAuth } from '@clerk/nextjs';
 import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
-import Datepicker from 'react-tailwindcss-datepicker';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
+import { fromMonthInputValue, toMonthInputValue } from '../../shared/utils/monthYear';
 import { useResumeStore } from '../../zustand/zustand';
+
 const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp, setEdit }) => {
   const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
   const experienceCollection = useResumeStore(useShallow(state => state.data.experience));
@@ -31,8 +32,8 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
     designation: '',
     company: '',
     description: '',
-    startedAt: undefined,
-    endedAt: undefined,
+    startedAt: '',
+    endedAt: '',
     years: '',
     country: '',
   };
@@ -45,23 +46,10 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
       .min(1, 'Minimum 1 character in needed')
       .max(2, 'Maximum 2 character Allowed')
       .required('Please enter years of experience'),
-    startedAt: Yup.date().required('Please enter start date'),
-    country: Yup.string().required('Please enter country name'),
-    endedAt: Yup.date().required('Please enter end date'),
+    startedAt: Yup.string().required('Please enter start date'),
+    country: Yup.string().required('Please enter location'),
+    endedAt: Yup.string().required('Please enter end date'),
   });
-
-  const toDateValue = value => {
-    if (!value) return null;
-    const date = new Date(value);
-    return Number.isNaN(date.getTime()) ? null : date;
-  };
-
-  const formatMonthYear = value => {
-    if (!value) return '';
-    const date = value instanceof Date ? value : new Date(value);
-    if (Number.isNaN(date.getTime())) return '';
-    return date.toLocaleString('default', { month: 'long', year: 'numeric' });
-  };
 
   /*
                     {
@@ -131,8 +119,8 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
               designation: '',
               company: '',
               description: '',
-              startedAt: undefined,
-              endedAt: undefined,
+              startedAt: '',
+              endedAt: '',
               years: '',
               country: '',
             });
@@ -218,7 +206,7 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
 
             <div className="mt-10 pr-10">
               <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                Enter Country
+                Enter Location
               </label>
               <input
                 id="country"
@@ -236,21 +224,16 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
                 <label htmlFor="startedAt" className="block text-sm font-medium text-gray-700">
                   Enter Start Date
                 </label>
-                <Datepicker
-                  asSingle
-                  useRange={false}
-                  readOnly
-                  inputId="startedAt"
-                  inputName="startedAt"
-                  value={{
-                    startDate: toDateValue(values.startedAt),
-                    endDate: toDateValue(values.startedAt),
+                <input
+                  id="startedAt"
+                  name="startedAt"
+                  type="month"
+                  className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  onBlur={handleBlur}
+                  onChange={event => {
+                    setFieldValue('startedAt', fromMonthInputValue(event.target.value));
                   }}
-                  onChange={date => {
-                    setFieldValue('startedAt', formatMonthYear(date?.startDate));
-                  }}
-                  displayFormat="MMM YYYY"
-                  inputClassName="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  value={toMonthInputValue(values.startedAt)}
                 />
                 {errors.startedAt && <p className="mt-1 text-xs text-rose-600">{errors.startedAt}</p>}
               </div>
@@ -258,21 +241,16 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
                 <label htmlFor="endedAt" className="block text-sm font-medium text-gray-700">
                   Enter End Date
                 </label>
-                <Datepicker
-                  asSingle
-                  useRange={false}
-                  readOnly
-                  inputId="endedAt"
-                  inputName="endedAt"
-                  value={{
-                    startDate: toDateValue(values.endedAt),
-                    endDate: toDateValue(values.endedAt),
+                <input
+                  id="endedAt"
+                  name="endedAt"
+                  type="month"
+                  className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  onBlur={handleBlur}
+                  onChange={event => {
+                    setFieldValue('endedAt', fromMonthInputValue(event.target.value));
                   }}
-                  onChange={date => {
-                    setFieldValue('endedAt', formatMonthYear(date?.startDate));
-                  }}
-                  displayFormat="MMM YYYY"
-                  inputClassName="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  value={toMonthInputValue(values.endedAt)}
                 />
                 {errors.endedAt && <p className="mt-1 text-xs text-rose-600">{errors.endedAt}</p>}
               </div>

@@ -30,15 +30,18 @@ export default withAuth(async (req, res) => {
     case 'DELETE':
       try {
         const extras = await Extras.findOne({ _id: id, userId });
+        if (!extras) {
+          return res.status(404).json({ success: false, error: 'Unable to find extras data.' });
+        }
         await Resume.findOneAndUpdate(
-          { resumeId: extras.resumeId, userId },
+          { _id: extras.resumeId, userId },
           {
             $pull: {
-              extras: extras.id,
+              extras: extras._id,
             },
           },
         );
-        extras.remove();
+        await extras.remove();
         res.status(200).json({ success: true });
       } catch (error) {
         res.status(400).json({ success: false, error });

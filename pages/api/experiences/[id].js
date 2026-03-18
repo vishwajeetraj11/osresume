@@ -32,16 +32,19 @@ export default withAuth(async (req, res) => {
 
     case 'DELETE':
       try {
-        const experience = await Experience.findById(id);
+        const experience = await Experience.findOne({ _id: id, userId });
+        if (!experience) {
+          return res.status(404).json({ success: false, error: 'Unable to find experience data.' });
+        }
         await Resume.findOneAndUpdate(
-          { resumeId: experience.resumeId, userId },
+          { _id: experience.resumeId, userId },
           {
             $pull: {
-              experience: experience.id,
+              experience: experience._id,
             },
           },
         );
-        experience.remove();
+        await experience.remove();
         res.status(200).json({ success: true });
       } catch (error) {
         res.status(400).json({ success: false, error });
