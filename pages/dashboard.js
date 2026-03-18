@@ -1,5 +1,4 @@
 import { useAuth, useUser } from '@clerk/nextjs';
-import { Button } from '@mui/material';
 import axios from 'axios';
 // import { ErrorMessage } from 'formik';
 import Head from 'next/head';
@@ -53,8 +52,6 @@ const Dashboard = () => {
         }
         setLoading(false);
       } catch (error) {
-        if (axios.isAxiosError(error)) {
-        }
         setLoading(false);
         setNoResume(true);
         setError('An error occurred. Please try again later!');
@@ -130,20 +127,20 @@ const Dashboard = () => {
           <div className="mt-6 lg:mt-0">
             {selectedResume && (
               <>
-                <Button className="mr-6 text-white hover:bg-[#12836d]  bg-primary" variant="contained" onClick={onUpdate}>
+                <button
+                  type="button"
+                  className="mr-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d]"
+                  onClick={onUpdate}
+                >
                   Update
-                </Button>
-                <Button
-                  style={{
-                    border: '2px solid #e74c3c',
-                    padding: '6px 16px',
-                  }}
-                  className="   text-red-700"
-                  variant="contained"
+                </button>
+                <button
+                  type="button"
+                  className="inline-flex items-center rounded border-2 border-red-500 px-4 py-2 text-sm text-red-700 hover:bg-red-50"
                   onClick={onDelete}
                 >
                   Delete
-                </Button>
+                </button>
               </>
             )}
           </div>

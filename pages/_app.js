@@ -1,6 +1,4 @@
 import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -9,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import { Toaster } from 'sonner';
 import Loader from '../components/Loader';
 import Layout from '../components/layout/Layout';
-import { theme } from '../shared/theme';
 import '../styles/global.css';
 
 // Clerk Env
@@ -40,18 +37,8 @@ function MyApp({ Component, pageProps }) {
     };
   }, [loading]);
 
-  useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
-  }, []);
-
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+    <>
       <Toaster closeButton richColors position="bottom-left" />
       <Head>
         <title>OS Resume</title>
@@ -78,7 +65,7 @@ function MyApp({ Component, pageProps }) {
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
         <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER} />
       </ClerkProvider>
-    </ThemeProvider>
+    </>
   );
 }
 

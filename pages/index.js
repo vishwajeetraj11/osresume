@@ -1,8 +1,7 @@
-import GitHubIcon from '@mui/icons-material/GitHub';
-import { Button } from '@mui/material';
 import Head from 'next/head';
 import Link from 'next/link';
 import Script from 'next/script';
+import { Github } from 'lucide-react';
 import React from 'react';
 import { BuyMeACoffee } from '../components/SVGs';
 import { Faq } from '../components/landing/Faq';
@@ -162,16 +161,25 @@ fbq('track', 'PageView');
         </div>
         <div className="mt-8 sm:w-full sm:max-w-md xl:mt-0 xl:ml-8">
           <div className="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-            <a onClick={() => onClick('github')} target="_blank" href="https://github.com/vishwajeetraj11/osresume" rel="noreferrer">
-              <Button className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white  transition duration-150 ease-in-out mb-4">
-                <GitHubIcon /> <p className="ml-4">Github</p>
-              </Button>
+            <a
+              onClick={() => onClick('github')}
+              target="_blank"
+              href="https://github.com/vishwajeetraj11/osresume"
+              rel="noreferrer"
+              className="mb-4 w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white transition duration-150 ease-in-out"
+            >
+              <Github className="h-5 w-5" />
+              <span className="ml-4">Github</span>
             </a>
 
-            <a onClick={() => onClick('buy-me-a-coffee')} target="_blank" href="https://www.buymeacoffee.com/vishwajeetraj11" rel="noreferrer">
-              <Button className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white  transition duration-150 ease-in-out">
-                <BuyMeACoffee height={50} />
-              </Button>
+            <a
+              onClick={() => onClick('buy-me-a-coffee')}
+              target="_blank"
+              href="https://www.buymeacoffee.com/vishwajeetraj11"
+              rel="noreferrer"
+              className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white transition duration-150 ease-in-out"
+            >
+              <BuyMeACoffee height={50} />
             </a>
           </div>
         </div>

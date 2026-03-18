@@ -1,5 +1,4 @@
 import { useAuth } from '@clerk/nextjs';
-import { Button } from '@mui/material';
 import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -173,12 +172,20 @@ fbq('track', 'PageView');
           <div className="mt-6 lg:mt-0">
             {selectedTemplate && (
               <>
-                <Button className="mr-10" variant="outlined" color="primary" onClick={onCancel}>
+                <button
+                  type="button"
+                  className="mr-10 inline-flex items-center rounded border border-primary px-4 py-2 text-sm text-primary hover:bg-primary/10"
+                  onClick={onCancel}
+                >
                   Cancel
-                </Button>
-                <Button variant="outlined " className=" text-white hover:bg-[#12836d]  bg-primary" color="primary" onClick={onCreate}>
+                </button>
+                <button
+                  type="button"
+                  className="inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d]"
+                  onClick={onCreate}
+                >
                   Create
-                </Button>
+                </button>
               </>
             )}
           </div>

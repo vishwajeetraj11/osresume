@@ -15,6 +15,24 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f4f4f4;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #16a085;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #1abc9c90;
 }
 
 div {
@@ -53,14 +71,6 @@ img {
   height: 100%;
   width: 100%;
   object-fit: cover;
-}
-
-.MuiDrawer-paperAnchorTop {
-  width: 100vw;
-  height: 100vh;
-  @media only screen and (min-width: 1024px) {
-    width: 50vw;
-  }
 }
 
 .landing-container {
