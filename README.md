@@ -42,9 +42,15 @@ npm install -g yarn
     Add these env configs...
 
     NEXT_PUBLIC_CLERK_SIGN_IN=`<CLERK SIGN IN>`  
-    NEXT_PUBLIC_MONOGO_URI=`<MongoDB URI>`  
+    MONGODB_URI=`<MongoDB URI ending in /osresume>`  
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=`<CLERK PUBLISHABLE KEY>`  
     CLERK_SECRET_KEY=`<CLERK SECRET KEY>`  
+
+    Example:
+    `mongodb+srv://<user>:<password>@cluster0.b4w0r.mongodb.net/osresume?appName=Cluster0`
+
+    Note:
+    The repo still supports the legacy `NEXT_PUBLIC_MONOGO_URI` variable for backward compatibility, but `MONGODB_URI` is the recommended name.
 
 4. Seeder Script (Optional)
   To seed
