@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import NoDocumentFound from '../components/NoDocumentFound';
 import TemplateCard from '../components/cards/TemplateCard';
 import { toastMessages } from '../shared/contants';
+import { getTemplateDisplayName } from '../shared/utils/templateCatalog';
 
 const Dashboard = () => {
   const { id: userId } = useUser();
@@ -122,7 +123,7 @@ const Dashboard = () => {
             {`${selectedResume ? `Selected Resume : ${selectedResume.title}` : 'Select a Resume'}`}
           </h2>
           <h2 className="text-regular text-lg font-medium text-default">
-            {`${selectedResume && `Template : ${selectedResume.templateName}`}`}
+            {`${selectedResume && `Template : ${getTemplateDisplayName(selectedResume.templateName)}`}`}
           </h2>
           <div className="mt-6 lg:mt-0">
             {selectedResume && (

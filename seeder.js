@@ -4,10 +4,12 @@ import mongoose from 'mongoose';
 import Education from './models/Education.js';
 import Experience from './models/Experience.js';
 import Extras from './models/Extras.js';
+import Leadership from './models/Leadership.js';
 import Personal from './models/Personal.js';
+import Project from './models/Project.js';
 import Resume from './models/Resume.js';
-import { education, experience, extras, personal } from './shared/utils/demoData.js';
 import getMongoUri from './shared/utils/getMongoUri.js';
+import { syncBuiltInTemplates } from './shared/utils/templateCatalog.js';
 
 dotenv.config({
   path: './.env',
@@ -31,88 +33,20 @@ const importData = async () => {
     await Education.deleteMany();
     await Experience.deleteMany();
     await Extras.deleteMany();
+    await Leadership.deleteMany();
     await Personal.deleteMany();
+    await Project.deleteMany();
     await Resume.deleteMany();
 
-    const resumeTrical = await Resume.create({
-      userId: 'template_user',
-      template: true,
-      title: 'Trical',
-      templateName: 'Trical',
-    });
-
-    const resumeJakePaul = await Resume.create({
-      userId: 'template_user',
-      template: true,
-      title: 'Jake',
-      templateName: 'Jake',
-    });
-
-    const expsTrical = await Experience.insertMany(
-      experience.map(exp => ({
-        ...exp,
-        resumeId: resumeTrical._id,
-      })),
-    );
-
-    const edusTrical = await Education.insertMany(
-      education.map(edu => ({
-        ...edu,
-        resumeId: resumeTrical._id,
-      })),
-    );
-
-    const extsTrical = await Extras.insertMany(
-      extras.map(ext => ({
-        ...ext,
-        resumeId: resumeTrical._id,
-      })),
-    );
-
-    const personalDataTrical = await Personal.create({ ...personal, resumeId: resumeTrical._id });
-
-    await Resume.findOneAndUpdate(
-      { _id: resumeTrical.id },
-      {
-        experience: expsTrical.map(exp => exp._id),
-        extras: extsTrical.map(ext => ext._id),
-        education: edusTrical.map(edu => edu._id),
-        personal: personalDataTrical,
-      },
-    );
-
-    const expsJakePaul = await Experience.insertMany(
-      experience.map(exp => ({
-        ...exp,
-        resumeId: resumeJakePaul._id,
-      })),
-    );
-
-    const edusJakePaul = await Education.insertMany(
-      education.map(edu => ({
-        ...edu,
-        resumeId: resumeJakePaul._id,
-      })),
-    );
-
-    const extsJakePaul = await Extras.insertMany(
-      extras.map(ext => ({
-        ...ext,
-        resumeId: resumeJakePaul._id,
-      })),
-    );
-
-    const personalDataJakePaul = await Personal.create({ ...personal, resumeId: resumeJakePaul._id });
-
-    await Resume.findOneAndUpdate(
-      { _id: resumeJakePaul.id },
-      {
-        experience: expsJakePaul.map(exp => exp._id),
-        extras: extsJakePaul.map(ext => ext._id),
-        education: edusJakePaul.map(edu => edu._id),
-        personal: personalDataJakePaul,
-      },
-    );
+    await syncBuiltInTemplates({
+      Resume,
+      Personal,
+      Experience,
+      Education,
+      Extras,
+      Project,
+      Leadership,
+    }, { force: true });
 
     console.log('Data Imported!');
     process.exit();
@@ -127,7 +61,9 @@ const destroyData = async () => {
     await Education.deleteMany();
     await Experience.deleteMany();
     await Extras.deleteMany();
+    await Leadership.deleteMany();
     await Personal.deleteMany();
+    await Project.deleteMany();
     await Resume.deleteMany();
     console.log('Data Destroyed');
     process.exit();

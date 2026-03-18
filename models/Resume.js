@@ -14,6 +14,10 @@ const ResumeSchema = new mongoose.Schema(
     templateName: {
       type: String,
     },
+    templateVersion: {
+      type: Number,
+      default: 0,
+    },
     userId: {
       type: String,
       required: [true, "Please enter the resume's owner id."],
@@ -38,6 +42,18 @@ const ResumeSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Extras',
+      },
+    ],
+    projects: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project',
+      },
+    ],
+    leadership: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Leadership',
       },
     ],
     customStyles: {

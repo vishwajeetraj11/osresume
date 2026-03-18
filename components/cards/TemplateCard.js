@@ -1,28 +1,23 @@
-import Image from 'next/image';
 import React from 'react';
 
-const TemplateCard = ({ template, selected, onSelect, type }) => (
-  <div
-    onClick={() => onSelect(template)}
-    onKeyUp={() => onSelect(template)}
-    role="button"
-    tabIndex={0}
-    className={`shadow-xl hover:shadow-lg transform translate-y-0 hover:-translate-y-2 transition-all delay-200 relative ${
-      selected ? 'border-solid border-4 border-primary' : ''
-    }`}
-  >
-    <Image
-      src={`/templates/${type === 'TEMPLATE' ? template.title : template.templateName}.jpg`}
-      draggable={false}
-      alt={`Template ${template.title} Preview`}
-      layout="responsive"
-      width={300}
-      height={450}
-    />
-    <div className="absolute bottom-0 w-full bg-gray-50">
-      <h2 className="text-lg py-1 font-regular text-default text-center">{template.title}</h2>
+const TemplateCard = ({ template, selected, onSelect }) => {
+  const previewSrc = template.templateName === 'ClassicAts' ? '/templates/ClassicAts.svg' : `/templates/${template.templateName}.jpg`;
+
+  return (
+    <div
+      onClick={() => onSelect(template)}
+      onKeyUp={() => onSelect(template)}
+      role="button"
+      tabIndex={0}
+      className={`shadow-xl hover:shadow-lg transform translate-y-0 hover:-translate-y-2 transition-all delay-200 relative ${selected ? 'border-solid border-4 border-primary' : ''
+        }`}
+    >
+      <img src={previewSrc} draggable={false} alt={`Template ${template.title} Preview`} className="w-full aspect-[2/3] object-contain bg-white" />
+      <div className="absolute bottom-0 w-full bg-gray-50">
+        <h2 className="text-lg py-1 font-regular text-default text-center">{template.title}</h2>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default TemplateCard;

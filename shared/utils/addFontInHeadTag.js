@@ -1,5 +1,11 @@
 export default function addFontInHeadTag(fontID) {
+  if (!fontID || fontID === 'Computer+Modern+Serif') {
+    return;
+  }
   const head = document.getElementsByTagName('head')[0];
+  if (document.getElementById(fontID)) {
+    return;
+  }
   const link = document.createElement('link');
   link.id = fontID;
   link.rel = 'stylesheet';

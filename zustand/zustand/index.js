@@ -1,4 +1,4 @@
-import { Briefcase, FileText, GraduationCap, User } from 'lucide-react';
+import { Briefcase, FileText, FolderOpen, GraduationCap, Trophy, User } from 'lucide-react';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -10,6 +10,8 @@ export const useResumeStore = create(
       experience: [],
       extras: [],
       education: [],
+      projects: [],
+      leadership: [],
     },
     addPersonal: personal => set(state => ({
       data: {
@@ -57,6 +59,18 @@ export const useResumeStore = create(
         education,
       },
     })),
+    addProjects: projects => set(state => ({
+      data: {
+        ...state.data,
+        projects,
+      },
+    })),
+    addLeadership: leadership => set(state => ({
+      data: {
+        ...state.data,
+        leadership,
+      },
+    })),
 
     deleteSingleExperience: id => set(state => ({
       data: {
@@ -70,6 +84,18 @@ export const useResumeStore = create(
         education: state.data.education.filter(a => a.id !== id),
       },
     })),
+    deleteSingleProject: id => set(state => ({
+      data: {
+        ...state.data,
+        projects: state.data.projects.filter(a => a.id !== id),
+      },
+    })),
+    deleteSingleLeadership: id => set(state => ({
+      data: {
+        ...state.data,
+        leadership: state.data.leadership.filter(a => a.id !== id),
+      },
+    })),
 
     addSampleExperience: experience => set(state => ({
       data: {
@@ -81,6 +107,18 @@ export const useResumeStore = create(
       data: {
         ...state.data,
         education: [...state.data.education, education],
+      },
+    })),
+    addSampleProject: project => set(state => ({
+      data: {
+        ...state.data,
+        projects: [...state.data.projects, project],
+      },
+    })),
+    addSampleLeadership: leadership => set(state => ({
+      data: {
+        ...state.data,
+        leadership: [...state.data.leadership, leadership],
       },
     })),
     updateTitel: titel => set(state => ({
@@ -129,6 +167,18 @@ export const sidebarContent = create(set => ({
       },
       {
         id: '5',
+        title: 'Projects',
+        label: 'projects',
+        Icon: FolderOpen,
+      },
+      {
+        id: '6',
+        title: 'Leadership',
+        label: 'leadership',
+        Icon: Trophy,
+      },
+      {
+        id: '7',
         title: 'Extras',
         label: 'extras',
         Icon: FileText,

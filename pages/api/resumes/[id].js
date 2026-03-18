@@ -2,7 +2,9 @@ import { withAuth } from '@clerk/nextjs/api';
 import Education from '../../../models/Education';
 import Experience from '../../../models/Experience';
 import Extras from '../../../models/Extras';
+import Leadership from '../../../models/Leadership';
 import Personal from '../../../models/Personal';
+import Project from '../../../models/Project';
 import Resume from '../../../models/Resume';
 import dbConnect from '../../../shared/utils/dbConnect';
 
@@ -22,29 +24,22 @@ export default withAuth(async (req, res) => {
   switch (method) {
     case 'GET':
       try {
-        const resume = await Resume.findOne({ _id: id, userId }).populate({
-          path: 'experience education extras personal',
-          Model: [Experience, Education, Extras, Personal],
-        });
+        const resume = await Resume.findOne({ _id: id, userId }).populate('experience education extras personal projects leadership');
         if (!resume) {
           return res.status(404).json({ success: false, error: 'No such resume exist!' });
         }
         res.status(200).json({ success: true, resume });
       } catch (error) {
-        res.status(400).json({ success: false, error });
+        res.status(400).json({ success: false, error: error.message });
       }
       break;
 
     case 'PATCH':
       try {
-        console.log(body);
         const resume = await Resume.findOneAndUpdate({ _id: id, userId }, body, {
           new: true,
           runValidators: true,
-        }).populate({
-          path: 'experience education extras personal',
-          Model: [Experience, Education, Extras, Personal],
-        });
+        }).populate('experience education extras personal projects leadership');
 
         if (!resume) {
           return res.status(404).json({ success: false, error: 'No such resume exists!' });
@@ -63,23 +58,20 @@ export default withAuth(async (req, res) => {
         if (!resume) {
           return res.status(404).json({ success: false, error: 'No such resume exist!' });
         }
-        const experience = await Experience.find({ resumeId: resume._id, userId });
-        experience.forEach(exp => exp.remove());
+        await Promise.all([
+          Experience.deleteMany({ resumeId: resume._id, userId }),
+          Education.deleteMany({ resumeId: resume._id, userId }),
+          Extras.deleteMany({ resumeId: resume._id, userId }),
+          Project.deleteMany({ resumeId: resume._id, userId }),
+          Leadership.deleteMany({ resumeId: resume._id, userId }),
+          Personal.deleteMany({ resumeId: resume._id, userId }),
+        ]);
 
-        const education = await Education.find({ resumeId: resume._id, userId });
-        education.forEach(exp => exp.remove());
-
-        const extras = await Extras.find({ resumeId: resume._id, userId });
-        extras.forEach(exp => exp.remove());
-
-        const personal = await Personal.find({ resumeId: resume._id, userId });
-        personal.forEach(exp => exp.remove());
-
-        resume.remove();
+        await resume.remove();
 
         res.status(200).json({ success: true });
       } catch (error) {
-        res.status(400).json({ success: false, error });
+        res.status(400).json({ success: false, error: error.message });
       }
       break;
 

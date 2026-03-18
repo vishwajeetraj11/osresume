@@ -9,6 +9,7 @@ import LeftSideBar from '../../components/LeftSideBar';
 import Loader from '../../components/Loader';
 import RightSideBar from '../../components/RightSideBar';
 import { ResumeNotFoundSVG } from '../../components/SVGs';
+import ClassicAts from '../../components/templates/ClassicAts';
 import Jake from '../../components/templates/Jake';
 import { Onyx } from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
@@ -26,11 +27,11 @@ const Editor = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const User = useUser();
-  const { firstName } = User.user;
-  const userEmail = User.user.emailAddresses[0].emailAddress;
+  const { user } = useUser();
+  const firstName = user?.firstName || '';
+  const userEmail = user?.emailAddresses?.[0]?.emailAddress || '';
 
-  const { title, username, personaldata, eductainvalues, experiencedata, extrasdata, resumeMeta } = useResumeStore(
+  const { title, username, personaldata, eductainvalues, experiencedata, extrasdata, projectsdata, leadershipdata, resumeMeta } = useResumeStore(
     useShallow(state => ({
       title: state.data.resumeMeta.title,
       username: state.data.personal.username,
@@ -38,12 +39,16 @@ const Editor = () => {
       eductainvalues: state.data.education,
       experiencedata: state.data.experience,
       extrasdata: state.data.extras,
+      projectsdata: state.data.projects,
+      leadershipdata: state.data.leadership,
       resumeMeta: state.data.resumeMeta,
     })),
   );
 
   const addExperienceData = useResumeStore(state => state.addExperience);
   const addExtraData = useResumeStore(state => state.addExtras);
+  const addProjectData = useResumeStore(state => state.addProjects);
+  const addLeadershipData = useResumeStore(state => state.addLeadership);
   const addPersonalData = useResumeStore(state => state.addPersonal);
   const addEducationData = useResumeStore(state => state.addEducation);
   const addMetaData = useResumeStore(state => state.addResumemeta);
@@ -90,21 +95,37 @@ const Editor = () => {
         });
         const personalData = data.resume.personal
           ? data.resume.personal
-          : { name: firstName, email: userEmail, phoneNumber: '', designation: '', country: '', objective: '' };
+          : {
+            name: firstName,
+            email: userEmail,
+            phoneNumber: '',
+            designation: '',
+            country: '',
+            address: '',
+            linkedinUrl: '',
+              githubUrl: '',
+              objective: '',
+            };
+        const fallbackFont = data.resume.templateName === 'ClassicAts' ? 'Computer Modern Serif' : 'Poppins';
+        const customStyles = {
+          font: data.resume.customStyles?.font || fallbackFont,
+        };
         addMetaData({
           title: data.resume.title,
           createdAt: data.resume.createdAt,
           resumeId: data.resume._id,
           userId: data.resume.userId,
           templateName: data.resume.templateName,
-          customStyles: data.resume.customStyles,
+          customStyles,
         });
         addEducationData(data.resume.education);
         addExperienceData(data.resume.experience);
         addPersonalData(personalData);
         addExtraData(data.resume.extras);
+        addProjectData(data.resume.projects || []);
+        addLeadershipData(data.resume.leadership || []);
 
-        const fontID = data.resume.customStyles.font.replace(/ /g, '+');
+        const fontID = customStyles.font.replace(/ /g, '+');
         addFontInHeadTag(fontID);
       } catch (error) {
         setError(true);
@@ -162,6 +183,18 @@ const Editor = () => {
                 educationData={eductainvalues}
                 customStyles={resumeMeta.customStyles}
                 experienceData={experiencedata}
+              />
+            )}
+            {resumeMeta.templateName === 'ClassicAts' && (
+              <ClassicAts
+                ref={resumeRef}
+                customStyles={resumeMeta.customStyles}
+                extrasData={extrasdata}
+                personalData={personaldata}
+                educationData={eductainvalues}
+                experienceData={experiencedata}
+                projectsData={projectsdata}
+                leadershipData={leadershipdata}
               />
             )}
           </div>

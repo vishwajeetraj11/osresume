@@ -5,6 +5,8 @@ import { sidebarContent } from '../zustand/zustand/index';
 import ReorderEducation from './drag&drop/ReorderEducation';
 import ReorderExperience from './drag&drop/ReorderExperience';
 import ReorderExtras from './drag&drop/ReorderExtras';
+import ReorderLeadership from './drag&drop/ReorderLeadership';
+import ReorderProjects from './drag&drop/ReorderProjects';
 import PersonalDataForm from './forms/PersonalData';
 import Drawer from './ui/Drawer';
 import Tooltip from './ui/Tooltip';
@@ -25,11 +27,13 @@ const LeftSideBar = () => {
   };
 
   const leftList = anchor => (
-    <div style={{ width: matches ? '50vw' : 'auto', minHeight: matches ? '0' : '100vh' }} role="presentation">
-      <div className="pt-10 pr-6 pl-6 lg:pt-10 lg:pl-10 lg:pr-10 flex-1 flex flex-col">
+    <div style={{ width: matches ? '50vw' : 'auto', minHeight: matches ? '0' : '100vh' }} className="h-full min-h-0" role="presentation">
+      <div className={anchor === 'personal-data' ? 'h-full min-h-0' : 'pt-10 pr-6 pl-6 lg:pt-10 lg:pl-10 lg:pr-10 flex-1 flex flex-col'}>
         {anchor === 'personal-data' && <PersonalDataForm closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
         {anchor === 'work-experience' && <ReorderExperience closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
         {anchor === 'education' && <ReorderEducation closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
+        {anchor === 'projects' && <ReorderProjects closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
+        {anchor === 'leadership' && <ReorderLeadership closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
         {anchor === 'extras' && <ReorderExtras closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
       </div>
       {/* <Divider /> */}

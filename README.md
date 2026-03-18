@@ -1,7 +1,7 @@
 # OS Resume: Oversimplified Resume Builder
 ### Create a professional resume in 15 minutes.
 
-The resume builder features include a user-friendly interface built with Material UI, intuitive drag-and-drop functionality to rearrange information easily, and robust form handling capabilities powered by Formik and Yup. Additionally, users can customize their resumes with any Google Font, giving them the ability to personalize the appearance of their information even further.  
+The resume builder features include a Tailwind CSS-based interface, intuitive drag-and-drop functionality to rearrange information easily, and robust form handling powered by Formik and Yup. Users can also customize their resumes with different fonts and template styles.  
 
 [![OS Resume Editor DEMO](https://img.youtube.com/vi/plFUCIFGOVc/0.jpg)](https://www.youtube.com/watch?v=plFUCIFGOVc)
 
@@ -53,10 +53,61 @@ npm install -g yarn
     The repo still supports the legacy `NEXT_PUBLIC_MONOGO_URI` variable for backward compatibility, but `MONGODB_URI` is the recommended name.
 
 4. Seeder Script (Optional)
-  To seed
-  Set `"type":"module"` in `package.json`,
-  Modify acc. to you needs
-  RUN!
+  Seed template/sample data with:
+
+```bash
+npm run seed
+```
+
+  This inserts demo template content into MongoDB. It is optional for local development.
+
+## Template Development
+
+Templates are defined in code and can also be synced into MongoDB as template records.
+
+### Add a New Template
+
+1. Create the template component in `components/templates/`
+2. Add a preview image or svg in `public/templates/`
+3. Register the template in `shared/utils/templateCatalog.js`
+4. Render the template in `pages/editor/[id].js`
+
+Each built-in template entry in `shared/utils/templateCatalog.js` should include:
+
+- `title`
+- `templateName`
+- `customStyles`
+
+Example:
+
+```js
+{
+  title: 'Classic ATS',
+  templateName: 'ClassicAts',
+  customStyles: {
+    font: 'Computer Modern Serif',
+  },
+}
+```
+
+### Template Records in MongoDB
+
+Built-in templates are automatically upserted into the `resumes` collection when the app requests:
+
+```text
+/api/resumes?template=true
+```
+
+That means adding a template to `shared/utils/templateCatalog.js` is enough to make it appear in the app and create a template metadata row in MongoDB if it does not already exist.
+
+### Sample Template Content
+
+Template metadata sync only creates the template resume record itself. If you want seeded sample content for a template, you must also update:
+
+- `shared/utils/demoData.js`
+- `seeder.js`
+
+This is where demo `personal`, `education`, `experience`, `extras`, `projects`, and `leadership` data should be defined.
 
     Enjoy
 
