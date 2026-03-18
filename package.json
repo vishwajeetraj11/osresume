@@ -8,6 +8,9 @@
     "start": "next start",
     "seed": "node seeder.js"
   },
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
     "@clerk/clerk-react": "^1.13.1",
     "@clerk/clerk-sdk-node": "^0.5.0",
