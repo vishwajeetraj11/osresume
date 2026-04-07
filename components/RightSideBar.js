@@ -1,4 +1,5 @@
 import { useUser } from '@clerk/nextjs';
+import { sendGTMEvent } from '@next/third-parties/google';
 import clsx from 'clsx';
 import { Printer, Save, Type } from 'lucide-react';
 import React from 'react';
@@ -15,12 +16,6 @@ const sections = [
     label: 'font-face',
     Icon: Type,
   },
-  // {
-  //   id: '2',
-  //   title: 'Font Color',
-  //   label: 'font-color',
-  //   Icon: FormatColorFillIcon,
-  // },
   {
     id: '3',
     title: 'Update Title',
@@ -56,7 +51,7 @@ const RightSideBar = ({ handlePrint }) => {
     <div className="bg-primary lg:pt-16 px-4 w-full lg:w-auto flex lg:block justify-center left-sidebar order-1 lg:order-3">
       {sections.map(({ title, Icon, id, label }) => (
         <div key={id} className="inline-block lg:block my-4 lg:my-8">
-          <Tooltip label={title} placement={matches ? 'right' : 'bottom'}>
+          <Tooltip label={title} placement={matches ? 'left' : 'bottom'}>
             <button type="button" onClick={toggleRightDrawer(label, true)} className="p-2 rounded hover:bg-white/10">
               <Icon className="h-6 w-6 text-white" />
             </button>

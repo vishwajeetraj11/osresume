@@ -1,5 +1,4 @@
 import { useAuth } from '@clerk/nextjs';
-import axios from 'axios';
 import { Formik } from 'formik';
 import { ArrowLeft } from 'lucide-react';
 import React from 'react';
@@ -7,6 +6,7 @@ import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
+import { apiRequest } from '../../shared/utils/apiClient';
 import { useResumeStore } from '../../zustand/zustand';
 
 const PersonalDataForm = ({ closeDrawer, anchor }) => {
@@ -85,26 +85,22 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
                 'default',
               );
 
-              const { data } = await axios({
-                url: `${personalData._id ? `/api/personals/${personalData._id}` : '/api/personals'}`,
-                method: `${personalData._id ? 'PUT' : 'POST'}`,
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${token}`,
-                },
-                data: {
-                  name: values.name,
-                  email: values.email,
-                  designation: values.designation,
+	              const data = await apiRequest(`${personalData._id ? `/api/personals/${personalData._id}` : '/api/personals'}`, {
+	                method: `${personalData._id ? 'PUT' : 'POST'}`,
+	                token,
+	                body: {
+	                  name: values.name,
+	                  email: values.email,
+	                  designation: values.designation,
                   country: values.country,
                   address: values.address || '',
                   linkedinUrl: values.linkedinUrl || '',
                   githubUrl: values.githubUrl || '',
                   objective: values.objective || '',
-                  phoneNumber: values.phoneNumber || '',
-                  resumeId,
-                },
-              });
+	                  phoneNumber: values.phoneNumber || '',
+	                  resumeId,
+	                },
+	              });
 
               resetForm({
                 name: '',
@@ -247,7 +243,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
                   id="objective"
                   name="objective"
                   rows={3}
-                  className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.objective}
@@ -301,7 +297,7 @@ const PersonalDataForm = ({ closeDrawer, anchor }) => {
             <div className="shrink-0 border-t border-gray-100 bg-white px-6 py-4 lg:px-10">
               <button
                 type="submit"
-                className="inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d] disabled:opacity-60"
+                className="inline-flex items-center rounded bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-[#12836d] disabled:opacity-60"
                 disabled={isSubmitting}
               >
                 Submit

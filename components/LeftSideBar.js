@@ -27,7 +27,7 @@ const LeftSideBar = () => {
   };
 
   const leftList = anchor => (
-    <div style={{ width: matches ? '50vw' : 'auto', minHeight: matches ? '0' : '100vh' }} className="h-full min-h-0" role="presentation">
+    <div style={{ width: matches ? '50vw' : 'auto', minHeight: matches ? '0' : '100vh' }} className="h-full min-h-0 flex flex-col" role="presentation">
       <div className={anchor === 'personal-data' ? 'h-full min-h-0' : 'pt-10 pr-6 pl-6 lg:pt-10 lg:pl-10 lg:pr-10 flex-1 flex flex-col'}>
         {anchor === 'personal-data' && <PersonalDataForm closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}
         {anchor === 'work-experience' && <ReorderExperience closeDrawer={toggleLeftDrawer(anchor, false)} anchor={anchor} />}

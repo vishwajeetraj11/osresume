@@ -1,328 +1,42 @@
-import { useAuth } from '@clerk/nextjs';
-import axios from 'axios';
-import { ArrowLeft, Plus, Save } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { toast } from 'sonner';
-import { v4 as uuidv4 } from 'uuid';
 import { useShallow } from 'zustand/react/shallow';
-import { toastMessages } from '../../shared/contants';
-import { useResumeStore } from '../../zustand/zustand';
-import { EmptyFileSVG } from '../SVGs';
 import EducationCard from '../cards/EducationCard';
 import EditSingleEducation from '../forms/EditSingleEducation';
-import Drawer from '../ui/Drawer';
+import ReorderSection from './ReorderSection';
 
-const ReorderEducation = ({ closeDrawer, anchor, type }) => {
-  const { getToken } = useAuth();
+const SAMPLE_EDUCATION = {
+  institution: 'Sample Institution',
+  major: 'Sample Major',
+  startedAt: 'June 2012',
+  endedAt: 'July 2013',
+  years: '1',
+  country: 'Sample Country',
+};
 
-  const addEducationData = useResumeStore(state => state.addEducation);
-  const addSampleEducationdata = useResumeStore(state => state.addSampleEducation);
-  const deletSinglEducationdata = useResumeStore(state => state.deleteSingleEducation);
-
-  const showSnack = (message, variant) => {
-    if (variant === 'success') {
-      toast.success(message);
-    } else if (variant === 'error') {
-      toast.error(message);
-    } else if (variant === 'default') {
-      toast.message(message);
-    } else if (variant === 'info') {
-      toast.info(message);
-    }
-  };
-
-  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
-  // Fetch Global State
-  const education = useResumeStore(useShallow(state => state.data.education));
-
-  // Local Education State for drag and drop
-  const [edu, setEdu] = useState(education);
-  const educationStates = {};
-  edu.forEach(edu => (educationStates[edu.id] = false));
-  //
-  const [educationActive, setEducationActive] = useState({
-    ...educationStates,
-  });
-
-  // This to keep track of localState if one of the education have been updated to update state in useEffect
-  const [edit, setEdit] = useState(false);
-
-  const eduDrawerStatesObj = {};
-  edu.map(edu => (eduDrawerStatesObj[edu.id] = false));
-
-  useEffect(() => {
-    if (!(education.length === edu.length)) {
-      setEdu(education);
-    }
-    if (edit) {
-      setEdu(education);
-      setEdit(false);
-    }
-  }, [education, edu, edit]);
-
-  // Nested Drawer States
-  const [eduDrawerStates, setEduDrawerStates] = React.useState({
-    ...eduDrawerStatesObj,
-  });
-  const toggleEduDrawerStates = (id, open) => event => {
-    setEduDrawerStates({ ...eduDrawerStates, [id]: open });
-  };
-  const onDragEnd = result => {
-    if (!result.destination) return;
-    const items = Array.from(edu);
-    const [reorderItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderItem);
-    setEdu(items);
-  };
-
-  const grid = 10;
-  const getItemStyle = (isDragging, draggableStyle) => ({
-    // some basic styles to make the items look a bit nicer
-    userSelect: 'none',
-    padding: grid * 2,
-    margin: `0 0 ${grid}px 0`,
-    transition: 'height 0.2s',
-    overflow: 'hidden',
-
-    // change background colour if dragging
-    background: isDragging ? '#1abc9c95' : '#1abc9c',
-
-    // styles we need to apply on draggables
-    ...draggableStyle,
-  });
-
-  const getListStyle = isDraggingOver => ({
-    // background: isDraggingOver ? '#ffffff' : '#16a085',
-  });
-
-  const disableActiveEdu = () => {
-    const clone = Object.create(educationActive);
-
-    const ids = Object.keys(clone);
-
-    // create an object that will be passed as in state
-    // which we will use to disable the rest state (false)
-    // this will ensure at one time only one is active
-    const fakeState = {};
-
-    // assign each state false
-    ids.forEach(id => {
-      fakeState[id] = false;
-    });
-
-    // setActive only the one that gets clicked
-    setEducationActive(fakeState);
-  };
-
-  const onClickEdu = ({ id }) => {
-    // CLone the activeEducation State
-    const clone = Object.create(educationActive);
-
-    // check if the clicked education is already active then disable it and return
-    if (clone[id]) {
-      setEducationActive(p => ({
-        ...p,
-        [id]: false,
-      }));
-      return;
-    }
-
-    // Get All Ids from state in an Array
-    const ids = Object.keys(clone);
-
-    // create an object that will be passed as in state
-    // which we will use to disable the rest state (false)
-    // this will ensure at one time only one is active
-    const fakeState = {};
-
-    // assign each state false
-    ids.forEach(id => {
-      fakeState[id] = false;
-    });
-
-    // setActive only the one that gets clicked
-    setEducationActive(p => ({
-      ...ids,
-      [id]: true,
-    }));
-  };
-
-  const onDelete = async ({ id }) => {
-    if (id.includes('-')) {
-      deletSinglEducationdata(id);
-      return;
-    }
-    try {
-      showSnack(toastMessages.DELETE_RESOURCE_REQUEST('Education'), 'default');
-      const token = await getToken();
-      await axios({
-        url: `/api/educations/${id}`,
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      deletSinglEducationdata(id);
-
-      showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Education'), 'success');
-    } catch (error) {
-      showSnack(toastMessages.DELETE_RESOURCE_ERROR('Education'), 'error');
-    }
-  };
-
-  const save = async () => {
-    let flag = false;
-    edu.forEach(e => {
-      if (e.id.includes('-')) {
-        flag = true;
-      }
-    });
-    if (flag) {
-      showSnack(toastMessages.WARN_BEFORE_SAVE('Education'), 'info');
-      return;
-    }
-    try {
-      showSnack(toastMessages.SAVE_ORDER_RESOURCE_REQUEST('Education'), 'default');
-      const token = await getToken();
-      const { data } = await axios({
-        url: `/api/resumes/${resumeId}`,
-        method: 'PATCH',
-        data: {
-          education: edu,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      addEducationData(data.resume.education);
-
-      showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Education'), 'success');
-      closeDrawer(anchor, false);
-    } catch (error) {
-      showSnack(toastMessages.SAVE_ORDER_RESOURCE_ERROR('Education'), 'error');
-    }
-  };
-
-  const onAdd = () => {
-    // zustand
-    addSampleEducationdata({
-      id: uuidv4(),
-      institution: 'Sample Institution',
-      major: 'Sample Major',
-      startedAt: 'June 2012',
-      endedAt: 'July 2013',
-      years: '1',
-      country: 'Sample Country',
-    });
-
-    showSnack(toastMessages.SAMPLE_DATA('Education'), 'success');
-  };
+const ReorderEducation = ({ closeDrawer, anchor }) => {
+  const storeSelector = useShallow(state => state.data.education);
+  const addItemsAction = state => state.addEducation;
+  const addSampleItemAction = state => state.addSampleEducation;
+  const deleteSingleItemAction = state => state.deleteSingleEducation;
 
   return (
-    <>
-      <div className="flex items-center justify-start flex-wrap lg:flex-nowrap">
-        <div className="w-full md:w-auto mb-4 md:mb-0">
-          <button
-            type="button"
-            className="lg:px-4 lg:py-2 mr-4 inline-flex items-center text-sm text-gray-700 hover:text-gray-900"
-            onClick={() => closeDrawer(anchor, false)}
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="ml-2 capitalize">Back</span>
-          </button>
-        </div>
-        <button
-          type="button"
-          className="lg:px-4 lg:py-2 mr-4 inline-flex items-center rounded border border-primary text-primary px-4 py-2 text-sm hover:bg-primary/10"
-          onClick={onAdd}
-        >
-          <Plus className="h-4 w-4" />
-          <span className="ml-2 capitalize">Add Education</span>
-        </button>
-        <button
-          type="button"
-          className="lg:px-4 lg:py-2 mr-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d]"
-          onClick={save}
-        >
-          <Save className="h-4 w-4" />
-          <span className="ml-2 capitalize">Save Order</span>
-        </button>
-      </div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="education">
-          {(provided, snapshot) => (
-            // eslint-disable-next-line
-            <div
-              style={getListStyle(snapshot.isDraggingOver)}
-              className="pb-10 pt-8 rounded flex-1 flex flex-col"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              onClick={() => {
-                if (snapshot.isDraggingOver) {
-                  disableActiveEdu();
-                }
-              }}
-            >
-              {edu.length === 0 ? (
-                <div className="flex items-center justify-center flex-1">
-                  <div className="bg-gray-50 rounded-full h-96 w-96 flex flex-col items-center justify-center">
-                    <EmptyFileSVG />
-                    <h5 className="text-default font-normal my-5">No Education Yet!</h5>
-                  </div>
-                </div>
-              ) : (
-                edu.map((e, index) => (
-                  <Draggable key={e.id} draggableId={e.id} index={index}>
-                    {(provided, snapshot) => (
-                      // eslint-disable-next-line
-                      <div
-                        onClick={() => onClickEdu({ id: e.id })}
-                        className="p-6 text-white text-lg bg-primary rounded"
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}
-                        style={{
-                          ...getItemStyle(snapshot.isDragging, provided.draggableProps.style),
-                        }}
-                      >
-                        <EducationCard
-                          {...e}
-                          onDelete={onDelete}
-                          openEditEduForm={toggleEduDrawerStates(e.id, true)}
-                          educationActive={educationActive}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                ))
-              )}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-
-      {edu.map(edu => (
-        <Drawer anchor="left" open={eduDrawerStates[edu.id]} onClose={toggleEduDrawerStates(edu.id, false)} key={edu.id}>
-          <div className="pt-10 pl-10" role="presentation">
-            <div className="flex align-center">
-              <button
-                type="button"
-                className="px-4 py-2 inline-flex items-center rounded border border-gray-300 text-sm text-gray-700 hover:bg-gray-50"
-                onClick={toggleEduDrawerStates(edu.id, false)}
-              >
-                <ArrowLeft className="h-4 w-4" />
-                <span className="ml-2 capitalize">Back</span>
-              </button>
-            </div>
-            <EditSingleEducation anchor={anchor} education={edu} setEdit={setEdit} closeDrawer={toggleEduDrawerStates(edu.id, false)} />
-          </div>
-          {/* <Divider /> */}
-        </Drawer>
-      ))}
-    </>
+    <ReorderSection
+      closeDrawer={closeDrawer}
+      anchor={anchor}
+      sectionName="Education"
+      droppableId="education"
+      storeSelector={storeSelector}
+      addItemsAction={addItemsAction}
+      addSampleItemAction={addSampleItemAction}
+      deleteSingleItemAction={deleteSingleItemAction}
+      deleteApiPath={id => `/api/educations/${id}`}
+      resumeBodyKey="education"
+      sampleData={SAMPLE_EDUCATION}
+      CardComponent={EducationCard}
+      activeStatePropName="educationActive"
+      openEditPropName="openEditEduForm"
+      EditFormComponent={EditSingleEducation}
+      editFormItemPropName="education"
+    />
   );
 };
 

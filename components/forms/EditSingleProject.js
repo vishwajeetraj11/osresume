@@ -1,11 +1,11 @@
 import { useAuth } from '@clerk/nextjs';
-import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
+import { apiRequest } from '../../shared/utils/apiClient';
 import { useResumeStore } from '../../zustand/zustand';
 
 const EditSingleProject = ({ closeDrawer, anchor, project: projectProp, setEdit }) => {
@@ -56,22 +56,18 @@ const EditSingleProject = ({ closeDrawer, anchor, project: projectProp, setEdit 
           showSnack(project._id ? toastMessages.UPDATE_RESOURCE_REQUEST('Project') : toastMessages.CREATE_RESOURCE_REQUEST('Project'), 'default');
           try {
             const token = await getToken();
-            const { data } = await axios({
-              url: `${project._id ? `/api/projects/${project._id}` : '/api/projects'}`,
-              method: `${project._id ? 'PUT' : 'POST'}`,
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-              },
-              data: {
-                title: values.title,
-                techStack: values.techStack || '',
-                startedAt: values.startedAt,
+	            const data = await apiRequest(`${project._id ? `/api/projects/${project._id}` : '/api/projects'}`, {
+	              method: `${project._id ? 'PUT' : 'POST'}`,
+	              token,
+	              body: {
+	                title: values.title,
+	                techStack: values.techStack || '',
+	                startedAt: values.startedAt,
                 endedAt: values.endedAt || '',
-                description: values.description,
-                resumeId,
-              },
-            });
+	                description: values.description,
+	                resumeId,
+	              },
+	            });
 
             const projectExists = projectsCollection.find(entry => entry._id === data.project._id);
             if (projectExists) {
@@ -177,7 +173,7 @@ const EditSingleProject = ({ closeDrawer, anchor, project: projectProp, setEdit 
                 id="description"
                 name="description"
                 rows={5}
-                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.description}
@@ -188,7 +184,7 @@ const EditSingleProject = ({ closeDrawer, anchor, project: projectProp, setEdit 
           </div>
           <div className="mt-8 -ml-10 h-px bg-gray-200" />
           <button
-            className="mt-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d] disabled:opacity-60"
+            className="mt-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-[#12836d] disabled:opacity-60"
             type="submit"
             disabled={isSubmitting}
           >

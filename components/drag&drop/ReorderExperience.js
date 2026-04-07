@@ -1,328 +1,43 @@
-import { useAuth } from '@clerk/nextjs';
-import axios from 'axios';
-import { ArrowLeft, Plus, Save } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { toast } from 'sonner';
-import { v4 as uuidv4 } from 'uuid';
 import { useShallow } from 'zustand/react/shallow';
-import { toastMessages } from '../../shared/contants';
-import { useResumeStore } from '../../zustand/zustand';
-import { EmptyFileSVG } from '../SVGs';
 import ExperienceCard from '../cards/ExperienceCard';
 import EditSingleExperience from '../forms/EditSingleExperience';
-import Drawer from '../ui/Drawer';
+import ReorderSection from './ReorderSection';
+
+const SAMPLE_EXPERIENCE = {
+  designation: 'Sample Designation',
+  company: 'Company Description',
+  description: 'Sample Description',
+  startedAt: 'June 2012',
+  endedAt: 'July 2013',
+  years: '1',
+  country: 'Sample Country',
+};
 
 const ReorderExperience = ({ closeDrawer, anchor }) => {
-  const showSnack = (message, variant) => {
-    if (variant === 'success') {
-      toast.success(message);
-    } else if (variant === 'error') {
-      toast.error(message);
-    } else if (variant === 'default') {
-      toast.message(message);
-    } else if (variant === 'info') {
-      toast.info(message);
-    }
-  };
-
-  const { getToken } = useAuth();
-
-  const { resumeId } = useResumeStore(useShallow(state => state.data.resumeMeta));
-
-  // Fetch Global State
-  const experiences = useResumeStore(useShallow(state => state.data.experience));
-
-  const addExperiencedata = useResumeStore(state => state.addExperience);
-  const addSampleExperience = useResumeStore(state => state.addSampleExperience);
-  const deleteSingleExperience = useResumeStore(state => state.deleteSingleExperience);
-
-  // Local Experiences State for drag and drop
-  const [exp, setExp] = useState(experiences);
-  const experienceStates = {};
-  exp.forEach(exp => (experienceStates[exp.id] = false));
-  //
-  const [experienceActive, setExperienceActive] = useState({ ...experienceStates });
-
-  // This to keep track of localState if one of the experiences have been updated to update state in useEffect
-  const [edit, setEdit] = useState(false);
-
-  const expDrawerStatesObj = {};
-  exp.map(exp => (expDrawerStatesObj[exp.id] = false));
-
-  useEffect(() => {
-    if (!(experiences.length === exp.length)) {
-      setExp(experiences);
-    }
-    if (edit) {
-      setExp(experiences);
-      setEdit(false);
-    }
-  }, [experiences, exp, edit]);
-
-  // Nested Drawer States
-  const [expDrawerStates, setExpDrawerStates] = React.useState({ ...expDrawerStatesObj });
-  const toggleExpDrawerStates = (id, open) => event => {
-    setExpDrawerStates({ ...expDrawerStates, [id]: open });
-  };
-  const onDragEnd = result => {
-    if (!result.destination) return;
-    const items = Array.from(exp);
-    const [reorderItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderItem);
-    setExp(items);
-  };
-
-  const grid = 10;
-  const getItemStyle = (isDragging, draggableStyle) => ({
-    // some basic styles to make the items look a bit nicer
-    userSelect: 'none',
-    padding: grid * 2,
-    margin: `0 0 ${grid}px 0`,
-    transition: 'height 0.2s',
-    overflow: 'hidden',
-
-    // change background colour if dragging
-    background: isDragging ? '#1abc9c95' : '#1abc9c',
-
-    // styles we need to apply on draggables
-    ...draggableStyle,
-  });
-
-  const getListStyle = isDraggingOver => ({
-    // background: isDraggingOver ? '#ffffff' : '#16a085',
-  });
-
-  const disableActiveExp = () => {
-    const clone = Object.create(experienceActive);
-
-    const ids = Object.keys(clone);
-
-    // create an object that will be passed as in state
-    // which we will use to disable the rest state (false)
-    // this will ensure at one time only one is active
-    const fakeState = {};
-
-    // assign each state false
-    ids.forEach(id => {
-      fakeState[id] = false;
-    });
-
-    // setActive only the one that gets clicked
-    setExperienceActive(fakeState);
-  };
-
-  const onClickExp = ({ id }) => {
-    // CLone the activeExperiences State
-    const clone = Object.create(experienceActive);
-
-    // check if the clicked experience is already active then disable it and return
-    if (clone[id]) {
-      setExperienceActive(p => ({
-        ...p,
-        [id]: false,
-      }));
-      return;
-    }
-
-    // Get All Ids from state in an Array
-    const ids = Object.keys(clone);
-
-    // create an object that will be passed as in state
-    // which we will use to disable the rest state (false)
-    // this will ensure at one time only one is active
-    const fakeState = {};
-
-    // assign each state false
-    ids.forEach(id => {
-      fakeState[id] = false;
-    });
-
-    // setActive only the one that gets clicked
-    setExperienceActive(p => ({
-      ...ids,
-      [id]: true,
-    }));
-  };
-
-  const onDelete = async ({ id }) => {
-    if (id.includes('-')) {
-      deleteSingleExperience(id);
-      return;
-    }
-    try {
-      showSnack(toastMessages.DELETE_RESOURCE_REQUEST('Experience'), 'default');
-      const token = await getToken();
-      await axios({
-        url: `/api/experiences/${id}`,
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      deleteSingleExperience(id);
-      showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Experience'), 'success');
-    } catch (error) {
-      showSnack(toastMessages.DELETE_RESOURCE_ERROR('Experience'), 'error');
-    }
-  };
-
-  const save = async () => {
-    let flag = false;
-    exp.forEach(e => {
-      if (e.id.includes('-')) {
-        flag = true;
-      }
-    });
-    if (flag) {
-      showSnack(toastMessages.WARN_BEFORE_SAVE('Experience'), 'info');
-      return;
-    }
-    try {
-      showSnack(toastMessages.SAVE_ORDER_RESOURCE_REQUEST('Experience'), 'default');
-      const token = await getToken();
-      const { data } = await axios({
-        url: `/api/resumes/${resumeId}`,
-        method: 'PATCH',
-        data: {
-          experience: exp,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      addExperiencedata(data.resume.experience);
-      // dispatch(addExperienceData(data.resume.experience));
-      showSnack(toastMessages.SAVE_ORDER_RESOURCE_SUCCESS('Experience'), 'success');
-      closeDrawer(anchor, false);
-    } catch (error) {
-      showSnack(toastMessages.SAVE_ORDER_RESOURCE_ERROR('Experience'), 'error');
-    }
-  };
-
-  const onAdd = () => {
-    addSampleExperience({
-      id: uuidv4(),
-      designation: 'Sample Designation',
-      company: 'Company Description',
-      description: 'Sample Description',
-      startedAt: 'June 2012',
-      endedAt: 'July 2013',
-      years: '1',
-      country: 'Sample Country',
-    });
-
-    showSnack(toastMessages.SAMPLE_DATA('Experience'), 'success');
-  };
+  const storeSelector = useShallow(state => state.data.experience);
+  const addItemsAction = state => state.addExperience;
+  const addSampleItemAction = state => state.addSampleExperience;
+  const deleteSingleItemAction = state => state.deleteSingleExperience;
 
   return (
-    <>
-      <div className="flex items-center justify-start flex-wrap lg:flex-nowrap">
-        <div className="w-full md:w-auto mb-4 md:mb-0">
-          <button
-            type="button"
-            className="lg:px-4 lg:py-2 mr-4 inline-flex items-center text-sm text-gray-700 hover:text-gray-900"
-            onClick={() => closeDrawer(anchor, false)}
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="ml-2 capitalize">Back</span>
-          </button>
-        </div>
-        <button
-          type="button"
-          className="lg:px-4 lg:py-2 mr-4 inline-flex items-center rounded border border-primary text-primary px-4 py-2 text-sm hover:bg-primary/10"
-          onClick={onAdd}
-        >
-          <Plus className="h-4 w-4" />
-          <span className="ml-2 capitalize">Add Experience</span>
-        </button>
-        <button
-          type="button"
-          className="lg:px-4 lg:py-2 inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d]"
-          onClick={save}
-        >
-          <Save className="h-4 w-4" />
-          <span className="ml-2 capitalize mr-6">Save Order</span>
-        </button>
-      </div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="experiences">
-          {(provided, snapshot) => (
-            // eslint-disable-next-line
-            <div
-              style={getListStyle(snapshot.isDraggingOver)}
-              className="pb-10 pt-8 rounded flex-1 flex flex-col"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              onClick={() => {
-                if (snapshot.isDraggingOver) {
-                  disableActiveExp();
-                }
-              }}
-            >
-              {exp.length === 0 ? (
-                <div className="flex items-center justify-center flex-1">
-                  <div className="bg-gray-50 rounded-full h-96 w-96 flex flex-col items-center justify-center">
-                    <EmptyFileSVG />
-                    <h5 className="text-default font-normal my-5">No Experience Yet!</h5>
-                  </div>
-                </div>
-              ) : (
-                exp.map((e, index) => (
-                  <Draggable key={e.id} draggableId={e.id} index={index}>
-                    {(provided, snapshot) => (
-                      // eslint-disable-next-line
-                      <div
-                        onClick={() => onClickExp({ id: e.id })}
-                        className="p-6 text-white text-lg bg-primary rounded"
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}
-                        style={{ ...getItemStyle(snapshot.isDragging, provided.draggableProps.style) }}
-                      >
-                        <ExperienceCard
-                          {...e}
-                          onDelete={onDelete}
-                          openEditExpForm={toggleExpDrawerStates(e.id, true)}
-                          experienceActive={experienceActive}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                ))
-              )}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-
-      {exp.map(exp => (
-        <div key={exp.id}>
-          <Drawer anchor="left" open={expDrawerStates[exp.id]} onClose={toggleExpDrawerStates(exp.id, false)}>
-            <div className="pt-10 pl-10" role="presentation">
-              <div className="flex align-center">
-                <button
-                  type="button"
-                  className="px-4 py-2 inline-flex items-center rounded border border-gray-300 text-sm text-gray-700 hover:bg-gray-50"
-                  onClick={toggleExpDrawerStates(exp.id, false)}
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                  <span className="ml-2 capitalize">Back</span>
-                </button>
-              </div>
-              <EditSingleExperience
-                anchor={anchor}
-                experience={exp}
-                setEdit={setEdit}
-                closeDrawer={toggleExpDrawerStates(exp.id, false)}
-              />
-            </div>
-            {/* <Divider /> */}
-          </Drawer>
-        </div>
-      ))}
-    </>
+    <ReorderSection
+      closeDrawer={closeDrawer}
+      anchor={anchor}
+      sectionName="Experience"
+      droppableId="experiences"
+      storeSelector={storeSelector}
+      addItemsAction={addItemsAction}
+      addSampleItemAction={addSampleItemAction}
+      deleteSingleItemAction={deleteSingleItemAction}
+      deleteApiPath={id => `/api/experiences/${id}`}
+      resumeBodyKey="experience"
+      sampleData={SAMPLE_EXPERIENCE}
+      CardComponent={ExperienceCard}
+      activeStatePropName="experienceActive"
+      openEditPropName="openEditExpForm"
+      EditFormComponent={EditSingleExperience}
+      editFormItemPropName="experience"
+    />
   );
 };
 

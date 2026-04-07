@@ -1,11 +1,11 @@
 import { useAuth } from '@clerk/nextjs';
-import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
+import { apiRequest } from '../../shared/utils/apiClient';
 import { useResumeStore } from '../../zustand/zustand';
 
 const EditSingleLeadership = ({ closeDrawer, anchor, leadership: leadershipProp, setEdit }) => {
@@ -61,23 +61,19 @@ const EditSingleLeadership = ({ closeDrawer, anchor, leadership: leadershipProp,
           );
           try {
             const token = await getToken();
-            const { data } = await axios({
-              url: `${leadership._id ? `/api/leadership/${leadership._id}` : '/api/leadership'}`,
-              method: `${leadership._id ? 'PUT' : 'POST'}`,
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-              },
-              data: {
-                organization: values.organization,
-                role: values.role,
-                startedAt: values.startedAt,
+	            const data = await apiRequest(`${leadership._id ? `/api/leadership/${leadership._id}` : '/api/leadership'}`, {
+	              method: `${leadership._id ? 'PUT' : 'POST'}`,
+	              token,
+	              body: {
+	                organization: values.organization,
+	                role: values.role,
+	                startedAt: values.startedAt,
                 endedAt: values.endedAt || '',
                 location: values.location || '',
-                description: values.description,
-                resumeId,
-              },
-            });
+	                description: values.description,
+	                resumeId,
+	              },
+	            });
 
             const leadershipExists = leadershipCollection.find(entry => entry._id === data.leadership._id);
             if (leadershipExists) {
@@ -202,7 +198,7 @@ const EditSingleLeadership = ({ closeDrawer, anchor, leadership: leadershipProp,
                 id="description"
                 name="description"
                 rows={5}
-                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.description}
@@ -213,7 +209,7 @@ const EditSingleLeadership = ({ closeDrawer, anchor, leadership: leadershipProp,
           </div>
           <div className="mt-8 -ml-10 h-px bg-gray-200" />
           <button
-            className="mt-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d] disabled:opacity-60"
+            className="mt-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-[#12836d] disabled:opacity-60"
             type="submit"
             disabled={isSubmitting}
           >

@@ -1,5 +1,4 @@
 import { useAuth } from '@clerk/nextjs';
-import axios from 'axios';
 import { Formik } from 'formik';
 import { ArrowLeft } from 'lucide-react';
 import React from 'react';
@@ -7,6 +6,7 @@ import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
+import { apiRequest } from '../../shared/utils/apiClient';
 import { useResumeStore } from '../../zustand/zustand';
 
 const UpdateTitle = ({ closeDrawer }) => {
@@ -54,18 +54,14 @@ const UpdateTitle = ({ closeDrawer }) => {
 
               showSnack(toastMessages.UPDATE_RESOURCE_REQUEST('Resume Title'), 'default');
 
-              const { data } = await axios({
-                url: `/api/resumes/${resumeId}`,
-                method: 'PATCH',
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${token}`,
-                },
-                data: {
-                  title: values.title,
-                  resumeId,
-                },
-              });
+	              const data = await apiRequest(`/api/resumes/${resumeId}`, {
+	                method: 'PATCH',
+	                token,
+	                body: {
+	                  title: values.title,
+	                  resumeId,
+	                },
+	              });
               resetForm({
                 title: '',
               });
@@ -100,7 +96,7 @@ const UpdateTitle = ({ closeDrawer }) => {
             </div>
             <button
               type="submit"
-              className="mt-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d] disabled:opacity-60"
+              className="mt-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-[#12836d] disabled:opacity-60"
               disabled={isSubmitting}
             >
               Submit

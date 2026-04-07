@@ -1,11 +1,11 @@
 import { useAuth } from '@clerk/nextjs';
-import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
 import { toast } from 'sonner';
 import * as Yup from 'yup';
 import { useShallow } from 'zustand/react/shallow';
 import { toastMessages } from '../../shared/contants';
+import { apiRequest } from '../../shared/utils/apiClient';
 import { fromMonthInputValue, toMonthInputValue } from '../../shared/utils/monthYear';
 import { useResumeStore } from '../../zustand/zustand';
 
@@ -82,24 +82,20 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
           try {
             const token = await getToken();
 
-            const { data } = await axios({
-              url: `${experience._id ? `/api/experiences/${experience._id}` : '/api/experiences'}`,
-              method: `${experience._id ? 'PUT' : 'POST'}`,
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-              },
-              data: {
-                designation: values.designation,
-                description: values.description,
-                startedAt: values.startedAt,
+	            const data = await apiRequest(`${experience._id ? `/api/experiences/${experience._id}` : '/api/experiences'}`, {
+	              method: `${experience._id ? 'PUT' : 'POST'}`,
+	              token,
+	              body: {
+	                designation: values.designation,
+	                description: values.description,
+	                startedAt: values.startedAt,
                 endedAt: values.endedAt,
                 country: values.country,
                 company: values.company,
-                years: values.years,
-                resumeId,
-              },
-            });
+	                years: values.years,
+	                resumeId,
+	              },
+	            });
 
             const experienceExists = experienceCollection.find(exp => exp._id === data.experience._id);
 
@@ -181,7 +177,7 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
                 id="description"
                 name="description"
                 rows={3}
-                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.description}
@@ -258,7 +254,7 @@ const EditSingleExperience = ({ closeDrawer, anchor, experience: experienceProp,
           </div>
           <div className="mt-8 -ml-10 h-px bg-gray-200" />
           <button
-            className="mt-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm text-white hover:bg-[#12836d] disabled:opacity-60"
+            className="mt-6 inline-flex items-center rounded bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-[#12836d] disabled:opacity-60"
             type="submit"
             disabled={isSubmitting}
           >
