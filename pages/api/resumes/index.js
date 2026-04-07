@@ -1,4 +1,4 @@
-import { withAuth } from '@clerk/nextjs/api';
+import withApiAuth from '../../../shared/utils/withApiAuth';
 import Education from '../../../models/Education';
 import Experience from '../../../models/Experience';
 import Extras from '../../../models/Extras';
@@ -9,7 +9,7 @@ import Resume from '../../../models/Resume';
 import dbConnect from '../../../shared/utils/dbConnect';
 import { mergeBuiltInTemplates, syncBuiltInTemplates } from '../../../shared/utils/templateCatalog';
 
-export default withAuth(
+export default withApiAuth(
   // eslint-disable-next-line consistent-return
   async (req, res) => {
     const { body, method } = req;

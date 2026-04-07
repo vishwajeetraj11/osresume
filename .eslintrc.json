@@ -1,7 +1,6 @@
 
 {
     "root": true,
-    "parser": "babel-eslint",
     "extends": [
       "eslint:recommended",
       "plugin:react/recommended",
@@ -9,8 +8,7 @@
       "plugin:import/warnings",
       "plugin:jsx-a11y/recommended",
       "plugin:react-hooks/recommended",
-      "airbnb",
-      "next",
+      "next/core-web-vitals",
       "prettier"
     ],
     "env": {

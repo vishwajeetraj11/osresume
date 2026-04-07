@@ -1,10 +1,10 @@
-import { withAuth } from '@clerk/nextjs/api';
+import withApiAuth from '../../../shared/utils/withApiAuth';
 import Personal from '../../../models/Personal';
 import Resume from '../../../models/Resume';
 import dbConnect from '../../../shared/utils/dbConnect';
 
 // eslint-disable-next-line consistent-return
-export default withAuth(async (req, res) => {
+export default withApiAuth(async (req, res) => {
   const { body, method } = req;
 
   await dbConnect();

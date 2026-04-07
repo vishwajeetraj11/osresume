@@ -1,4 +1,4 @@
-import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs';
+import { ClerkProvider, RedirectToSignIn, Show } from '@clerk/nextjs';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -9,8 +9,6 @@ import Loader from '../components/Loader';
 import Layout from '../components/layout/Layout';
 import '../styles/global.css';
 
-// Clerk Env
-const clerkSignInURL = process.env.NEXT_PUBLIC_CLERK_SIGN_IN;
 const publicPages = ['/', '/sign-in/[[...index]]', '/sign-up/[[...index]]'];
 
 function MyApp({ Component, pageProps }) {
@@ -39,7 +37,13 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <Toaster closeButton richColors position="bottom-left" />
+      <Toaster
+        closeButton
+        position="bottom-left"
+        toastOptions={{
+          style: { fontFamily: "'Space Grotesk', sans-serif" },
+        }}
+      />
       <Head>
         <title>OS Resume</title>
       </Head>
@@ -52,12 +56,12 @@ function MyApp({ Component, pageProps }) {
               <Component {...pageProps} />
             ) : (
               <>
-                <SignedIn>
+                <Show when="signed-in">
                   <Component {...pageProps} />
-                </SignedIn>
-                <SignedOut>
+                </Show>
+                <Show when="signed-out">
                   <RedirectToSignIn />
-                </SignedOut>
+                </Show>
               </>
             )}
           </Layout>
@@ -67,13 +71,6 @@ function MyApp({ Component, pageProps }) {
       </ClerkProvider>
     </>
   );
-}
-
-function RedirectToSignIn() {
-  useEffect(() => {
-    window.location = clerkSignInURL;
-  });
-  return null;
 }
 
 MyApp.propTypes = {

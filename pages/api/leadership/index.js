@@ -1,9 +1,9 @@
-import { withAuth } from '@clerk/nextjs/api';
+import withApiAuth from '../../../shared/utils/withApiAuth';
 import Leadership from '../../../models/Leadership';
 import Resume from '../../../models/Resume';
 import dbConnect from '../../../shared/utils/dbConnect';
 
-export default withAuth(async (req, res) => {
+export default withApiAuth(async (req, res) => {
   const { body, method } = req;
   const { userId } = req.auth;
 

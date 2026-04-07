@@ -11,23 +11,23 @@
   "engines": {
     "node": "20.x"
   },
+  "overrides": {
+    "path-to-regexp": "6.3.0"
+  },
   "dependencies": {
-    "@clerk/clerk-react": "^1.13.1",
-    "@clerk/clerk-sdk-node": "^0.5.0",
-    "@clerk/nextjs": "^4.29.3",
-    "@next/third-parties": "^14.1.4",
-    "axios": "^0.21.1",
+    "@clerk/nextjs": "^7.0.11",
+    "@next/third-parties": "^16.2.2",
     "clsx": "^1.1.1",
     "dayjs": "^1.11.11",
     "dotenv": "^10.0.0",
     "formik": "^2.2.6",
     "lucide-react": "^0.359.0",
     "mongoose": "^5.13.2",
-    "next": "^13.4.19",
+    "next": "^16.2.2",
     "prop-types": "^15.7.2",
-    "react": "^18.2.0",
-    "react-beautiful-dnd": "^13.1.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "@hello-pangea/dnd": "^18.0.1",
+    "react-dom": "^18.3.1",
     "react-tailwindcss-datepicker": "^1.7.3",
     "react-to-print": "^2.12.4",
     "sass": "^1.72.0",
@@ -39,26 +39,18 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^13.4.19",
     "@tailwindcss/forms": "^0.5.7",
     "autoprefixer": "^10.4.16",
-    "babel-eslint": "^10.1.0",
     "baseline-browser-mapping": "^2.9.19",
-    "eslint": "^7.30.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-next": "^13.4.19",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.2.2",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "html-webpack-plugin": "^5.3.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "postcss": "^8.4.32",
-    "prettier": "^3.8.1",
-    "webpack": "^5.37.0",
-    "webpack-cli": "^4.7.0",
-    "webpack-dev-middleware": "^4.2.0",
-    "webpack-dev-server": "^3.11.2"
+    "prettier": "^3.8.1"
   }
 }

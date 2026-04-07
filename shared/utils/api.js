@@ -1,18 +1,15 @@
-import axios from 'axios';
+import { apiRequest } from './apiClient';
 
 export const updateFont = async (getToken, resumeId, fontFamily) => {
   try {
     const token = await getToken();
-    const { data } = await axios({
-      url: `/api/resumes/${resumeId}`,
+    const data = await apiRequest(`/api/resumes/${resumeId}`, {
       method: 'PATCH',
-      data: {
+      token,
+      body: {
         customStyles: {
           font: fontFamily,
         },
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
       },
     });
     return data.resume.customStyles.font;
