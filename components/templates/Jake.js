@@ -9,9 +9,9 @@ const JakePaulTemplate = forwardRef(({ extrasData, personalData, educationData, 
   >
     <div className="w-full">
       <div className="flex justify-center mb-4  flex-col text-center  pt-12 bg-top-color">
-        <h1 className="text-4xl font-bold" style={{ letterSpacing: '0px' }}>
+        <p className="text-4xl font-bold" style={{ letterSpacing: '0px' }}>
           {personalData?.name}
-        </h1>
+        </p>
         <p className="font-bold" style={{ letterSpacing: '0px' }}>
           {personalData?.designation}
         </p>

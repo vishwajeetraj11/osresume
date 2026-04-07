@@ -215,6 +215,7 @@ const Editor = () => {
       <Head>
         <title>{username ? `${username} | OS Resume` : 'Resume Editor | OS Resume'}</title>
       </Head>
+      <h1 className="sr-only">Resume Editor</h1>
       <Show when="signed-in">{render()}</Show>
       <Show when="signed-out">
         <RedirectToSignIn />

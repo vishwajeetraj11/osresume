@@ -5,14 +5,8 @@ import Script from 'next/script';
 import React from 'react';
 import { BuyMeACoffee } from '../components/SVGs';
 import { Faq } from '../components/landing/Faq';
-import { features } from '../shared/contants';
-
-const stats = [
-  { num: '4', label: 'ATS-friendly templates' },
-  { num: '100%', label: 'Free, forever' },
-  { num: '0', label: 'Watermarks' },
-  { num: 'Open', label: 'Source on GitHub' },
-];
+import { faqs, features } from '../shared/contants';
+import { getSiteUrl, getSocialImageUrl } from '../shared/utils/siteMeta';
 
 const templates = [
   { name: 'Onyx', src: '/templates/Onyx.jpg' },
@@ -22,7 +16,39 @@ const templates = [
 ];
 
 export default function Home() {
-  const date = new Date();
+  const siteUrl = getSiteUrl();
+  const homeDescription = 'Create an ATS-friendly resume for free with OS Resume. Choose from clean templates, edit your content quickly, and export a polished resume in minutes.';
+  const socialImageUrl = getSocialImageUrl('/og-image.jpg');
+  const currentYear = new Date().getFullYear();
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        name: 'OS Resume',
+        url: siteUrl,
+        logo: `${siteUrl}/icon-512x512.png`,
+        sameAs: ['https://github.com/vishwajeetraj11/osresume'],
+      },
+      {
+        '@type': 'WebSite',
+        name: 'OS Resume',
+        url: siteUrl,
+        description: homeDescription,
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: faqs.map(({ question, ans }) => ({
+          '@type': 'Question',
+          name: question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: ans,
+          },
+        })),
+      },
+    ],
+  };
 
   const onClick = event => {
     try {
@@ -35,15 +61,38 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>OS Resume | Oversimplifying Resume building experience.</title>
-        <meta property="og:title" content="OS Resume: Oversimplified Resume Builder" />
+        <title key="title">OS Resume | Oversimplifying Resume building experience.</title>
         <meta
+          key="description"
+          name="description"
+          content={homeDescription}
+        />
+        <meta key="og:title" property="og:title" content="OS Resume: Free ATS-Friendly Resume Builder" />
+        <meta
+          key="og:description"
           property="og:description"
           content="The best free online resume builder that'll land you interviews. Create a professional resume in minutes. Download or print your resume for free."
         />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="OS Resume" />
-        <meta property="og:url" content="https://osresume.vercel.com/" />
+        <meta key="og:type" property="og:type" content="website" />
+        <meta key="og:site_name" property="og:site_name" content="OS Resume" />
+        <meta key="og:url" property="og:url" content={`${siteUrl}/`} />
+        <meta key="og:image" property="og:image" content={socialImageUrl} />
+        <meta key="og:image:width" property="og:image:width" content="1200" />
+        <meta key="og:image:height" property="og:image:height" content="630" />
+        <meta key="og:image:alt" property="og:image:alt" content="OS Resume landing page preview" />
+        <meta key="twitter:card" name="twitter:card" content="summary_large_image" />
+        <meta key="twitter:title" name="twitter:title" content="OS Resume: Free ATS-Friendly Resume Builder" />
+        <meta
+          key="twitter:description"
+          name="twitter:description"
+          content="The best free online resume builder that'll land you interviews. Create a professional resume in minutes. Download or print your resume for free."
+        />
+        <meta key="twitter:image" name="twitter:image" content={socialImageUrl} />
+        <script
+          key="structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
       </Head>
 
       <Script
@@ -117,24 +166,6 @@ fbq('track', 'PageView');
         </div>
       </section>
 
-      {/* Stats strip */}
-      <section className="bg-[#101214] py-14">
-        <div className="max-w-screen-xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-0 lg:divide-x lg:divide-white/10">
-            {stats.map(({ num, label }, index) => (
-              <div
-                key={label}
-                className="animate-fade-up text-center lg:px-8"
-                style={{ animationDelay: `${(index + 1) * 100}ms` }}
-              >
-                <div className="text-4xl lg:text-5xl font-bold text-primary">{num}</div>
-                <div className="mt-2 text-sm text-white/50 tracking-wide">{label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* How it works */}
       <section className="py-28 bg-[#f9fafb]">
         <div className="max-w-screen-xl mx-auto px-6 lg:px-8">
@@ -146,8 +177,8 @@ fbq('track', 'PageView');
             {features.map((feature, index) => (
               <div key={feature.id}>
                 <span
-                  className="text-8xl font-bold select-none leading-none block"
-                  style={{ color: '#0d9e84', opacity: 0.18 }}
+                  className="text-8xl font-extrabold select-none leading-none block tracking-[-0.02em]"
+                  style={{ color: '#0d9e84', opacity: 0.42 }}
                 >
                   0{index + 1}
                 </span>
@@ -254,15 +285,15 @@ fbq('track', 'PageView');
 
       {/* Footer */}
       <footer className="bg-[#101214] border-t border-white/5 px-6 lg:px-8 py-8">
-        <div className="max-w-screen-xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-[#73808D]">© OS Resume {date.getFullYear()}</p>
-          <div className="flex items-center gap-8">
+        <div className="max-w-screen-xl mx-auto grid w-full gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
+          <p className="text-sm text-[#73808D]">© OS Resume {currentYear}</p>
+          <div className="flex flex-wrap items-center justify-start gap-5 sm:justify-end sm:gap-6">
             <a
               href="https://github.com/vishwajeetraj11/osresume"
               target="_blank"
               rel="noreferrer"
               onClick={() => onClick('github')}
-              className="flex items-center gap-2 text-sm text-[#73808D] hover:text-white transition-colors duration-150"
+              className="inline-flex items-center gap-2 text-sm text-[#73808D] hover:text-white transition-colors duration-150 whitespace-nowrap"
             >
               <Github className="h-4 w-4" />
               GitHub
@@ -272,9 +303,10 @@ fbq('track', 'PageView');
               target="_blank"
               rel="noreferrer"
               onClick={() => onClick('buy-me-a-coffee')}
-              className="text-[#73808D] hover:text-white transition-colors duration-150"
+              aria-label="Buy me a coffee"
+              className="inline-flex items-center text-[#73808D] hover:text-white transition-colors duration-150"
             >
-              <BuyMeACoffee height={32} />
+              <BuyMeACoffee width={114} height={32} className="block" />
             </a>
           </div>
         </div>

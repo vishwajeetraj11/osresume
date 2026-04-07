@@ -10,7 +10,7 @@ export const Onyx = forwardRef(({ customStyles, extrasData, educationData, perso
     <div className="left w-8/12 bg-yellow-4000">
       <div className="header-left">
         <div className="h-32 flex justify-center flex-col">
-          <h1 className="font-semibold text-t1-xl text-t1-black capitalize">{personalData?.name}</h1>
+          <p className="font-semibold text-t1-xl text-t1-black capitalize">{personalData?.name}</p>
           <h2 className="font-normal text-t1-lg text-t1-black capitalize">{personalData?.designation}</h2>
         </div>
       </div>

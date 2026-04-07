@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-@import url('https://www.resume.lol/fonts/cm/fonts.css');
+@import url('https://www.resume.lol/fonts/cm/font/Serif/cmun-serif.css');
 
 @tailwind base;
 @tailwind components;
@@ -176,4 +175,3 @@ img {
 @media (prefers-reduced-motion: reduce) {
   .animate-float { animation: none; }
 }
-

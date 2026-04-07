@@ -68,7 +68,7 @@ const ClassicAts = forwardRef(({ customStyles, extrasData, personalData, educati
     >
       <div className="h-full border-t-[6px] border-gray-200">
         <header className="pt-5 text-center">
-          <h1 className="text-[34px] font-medium uppercase tracking-[0.08em] leading-none">{personalData?.name}</h1>
+          <p className="text-[34px] font-medium uppercase tracking-[0.08em] leading-none">{personalData?.name}</p>
           {!!personalData?.address && <p className="mt-1 text-[10.5px]">{personalData.address}</p>}
           {!!headerItems.length && (
             <div className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[10px]">

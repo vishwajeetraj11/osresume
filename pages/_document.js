@@ -10,8 +10,9 @@ export default class MyDocument extends Document {
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
           <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-          <meta name="description" content="Description" />
-          <meta name="keywords" content="Keywords" />
+          <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="apple-touch-icon" href="/icon-192x192.png" />
+          <link rel="manifest" href="/site.webmanifest" />
           <meta name="theme-color" content="#1abc9c" />
           <meta name="msapplication-navbutton-color" content="#1abc9c" />
           <meta name="apple-mobile-web-app-status-bar-style" content="#1abc9c" />

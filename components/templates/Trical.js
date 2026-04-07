@@ -5,12 +5,12 @@ const Trical = forwardRef(({ extrasData, educationData, personalData, experience
     <div id="t1" className="resume-a4 bg-white flex justify-between overflow-hidden" ref={ref} style={{ fontFamily: customStyles.font }}>
       <div className="w-full">
         <div className="flex justify-center flex-col relative pt-12">
-          <h1 className="pl-20 font-semibold text-t2-xl tracking-widest text-t1-black uppercase" style={{ letterSpacing: '7px' }}>
+          <p className="pl-20 font-semibold text-t2-xl tracking-widest text-t1-black uppercase" style={{ letterSpacing: '7px' }}>
             {personalData?.name && personalData?.name?.split(' ')[0]}
-          </h1>
-          <h1 className="pl-20 z-10 font-bold text-t2-2xl text-t2-primary uppercase" style={{ letterSpacing: '12px' }}>
+          </p>
+          <p className="pl-20 z-10 font-bold text-t2-2xl text-t2-primary uppercase" style={{ letterSpacing: '12px' }}>
             {personalData?.name && personalData?.name?.split(' ')[1]}
-          </h1>
+          </p>
           <h3
             className="pr-20 top-5 font-medium text-t2-md text-t2-primary uppercase absolute w-full bg-t2-secondary text-right"
             style={{ letterSpacing: '5px', top: '6.2rem' }}

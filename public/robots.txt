@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /api/
+Disallow: /dashboard
+Disallow: /editor/
+Disallow: /user/
+Disallow: /sign-in/
+Disallow: /sign-up/
+
+Sitemap: https://www.osresume.co.in/sitemap.xml
