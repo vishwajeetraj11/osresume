@@ -12,7 +12,7 @@ module.exports = {
         't1-gray': '#73808D',
         default: '#808080',
         't1-black': '#101214',
-        primary: '#1abc9c',
+        primary: '#0d9e84',
         't2-primary': '#5B6784',
         't2-secondary': '#F3F7F8',
         't2-paragraph': '#7F7F7F',

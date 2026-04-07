@@ -13,7 +13,7 @@ const Tooltip = ({ label, placement = 'top', children }) => (
     {children}
     <span
       className={clsx(
-        'pointer-events-none absolute z-50 w-max max-w-[220px] whitespace-nowrap rounded bg-gray-900 px-3 py-1.5 text-xs text-white shadow-lg opacity-0 transition-opacity duration-150 group-hover:opacity-100',
+        'pointer-events-none absolute z-50 w-max max-w-[220px] whitespace-nowrap rounded bg-gray-900 px-3 py-1.5 text-xs font-medium tracking-wide text-white shadow-lg opacity-0 transition-opacity duration-150 group-hover:opacity-100',
         placementClasses[placement] || placementClasses.top,
       )}
     >

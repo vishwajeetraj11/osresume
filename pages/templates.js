@@ -1,13 +1,14 @@
 import { useAuth } from '@clerk/nextjs';
-import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { ErrorSVG, NoFilesFoundSVG } from '../components/SVGs';
+import SkeletonCard from '../components/cards/SkeletonCard';
 import TemplateCard from '../components/cards/TemplateCard';
 import { toastMessages } from '../shared/contants';
+import { apiRequest } from '../shared/utils/apiClient';
 
 const Templates = () => {
   const router = useRouter();
@@ -55,14 +56,10 @@ const Templates = () => {
     try {
       showSnack(toastMessages.CREATE_RESOURCE_REQUEST('Resume'), 'default');
       const token = await getToken();
-      const { data } = await axios({
-        url: '/api/resumes',
+      const data = await apiRequest('/api/resumes', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        data: {
+        token,
+        body: {
           templateName: selectedTemplate.templateName,
           title: 'Your Resume',
         },
@@ -79,12 +76,9 @@ const Templates = () => {
       try {
         setLoading(true);
         const token = await getToken();
-        const { data: res } = await axios({
-          url: '/api/resumes?template=true',
+        const res = await apiRequest('/api/resumes?template=true', {
           method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          token,
         });
         setTemplates(res.data);
         if (!res.data.length) {
@@ -101,7 +95,14 @@ const Templates = () => {
 
   const render = () => {
     if (loading) {
-      return Array.from(Array(4).keys()).map(loader => <div key={loader} className="h-[462px] animate-pulse bg-[#e0e5ebd6] rounded-lg" />);
+      return Array.from(Array(4).keys()).map(loader => (
+        <div key={loader} className="shadow-md overflow-hidden">
+          <div className="w-full aspect-[210/297] animate-shimmer" />
+          <div className="bg-gray-50 py-3 flex justify-center">
+            <div className="h-3 w-20 rounded animate-shimmer" />
+          </div>
+        </div>
+      ));
     }
     if (error) {
       return (
@@ -162,11 +163,11 @@ fbq('track', 'PageView');
           src="https://www.facebook.com/tr?id=253902167786104&ev=PageView&noscript=1"
         />
       </noscript>
-      <h1 className="text-3xl lg:text-5xl font-extralight text-center pb-10">Browse All Templates</h1>
+      <h1 className="text-3xl lg:text-5xl font-semibold text-center pb-10">Browse All Templates</h1>
 
       {!noTemplate && (
         <div className="bg-gray-50 rounded px-8 py-6 transition-all flex flex-col lg:flex-row items-center justify-between">
-          <h2 className="text-regular text-lg font-medium text-default">
+          <h2 className="text-lg font-medium text-default">
             {`${selectedTemplate ? `Selected Template : ${selectedTemplate.title}` : 'Select a Template'}`}
           </h2>
           <div className="mt-6 lg:mt-0">

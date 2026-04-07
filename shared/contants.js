@@ -60,7 +60,7 @@ export const features = [
     ),
     title: 'Fill the Template',
     description:
-      'Choose one of the templates. Add your personal info and choose and edit the necessary sections. You will find the relevent forms in the Sidebars. Every Sidebar will open a drawer where you will have options to create/update/delete/rearrange information.',
+      'Choose one of the templates. Add your personal info and choose and edit the necessary sections. You will find the relevant forms in the Sidebars. Every Sidebar will open a drawer where you will have options to create/update/delete/rearrange information.',
   },
   {
     id: '3',
@@ -97,6 +97,6 @@ export const faqs = [
   {
     id: '3',
     question: 'I can’t finish my resume right now. Will you save what I’ve done?',
-    ans: 'Yes, if you can’t finish your resume right now, we’ll save what you’ve done so can you finish later. If for any reason you need to close your browser tab or navigate away from the page, as long as you’ve clicked Submti after filling out a given section, OS Resume will have automatically saved your work so you can pick up where you left off.',
+    ans: 'Yes, if you can’t finish your resume right now, we’ll save what you’ve done so you can finish later. If for any reason you need to close your browser tab or navigate away from the page, as long as you’ve clicked Submit after filling out a given section, OS Resume will have automatically saved your work so you can pick up where you left off.',
   },
 ];

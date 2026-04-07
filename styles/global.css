@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import url('https://www.resume.lol/fonts/cm/fonts.css');
 
 @tailwind base;
@@ -19,8 +19,8 @@ html {
 }
 
 *::-webkit-scrollbar {
-  width: 15px;
-  height: 15px;
+  width: 8px;
+  height: 8px;
 }
 
 *::-webkit-scrollbar-track {
@@ -28,11 +28,11 @@ html {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #16a085;
+  background: #0d9e84;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: #1abc9c90;
+  background: #0d9e8490;
 }
 
 div {
@@ -43,8 +43,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400;
   background-color: #f9fafb;
   position: relative;
   backface-visibility: hidden;
@@ -74,7 +74,7 @@ img {
 }
 
 .landing-container {
-  background: #1abc9c url('/images/landing-resume-1.jpg');
+  background: #0d9e84 url('/images/landing-resume-1.jpg');
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
@@ -106,6 +106,74 @@ img {
   word-break: keep-all;
 }
 
-.nackbarItem-variantSuccess-99 {
-  background-color: #1abc9c !important;
+/* Animation easing */
+:root {
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Keyframes */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Animation utility classes */
+.animate-fade-up {
+  animation: fadeUp 0.6s var(--ease-out-quint) both;
+}
+.animate-fade-in {
+  animation: fadeIn 0.5s var(--ease-out-quart) both;
+}
+
+/* Stagger delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* Reduced motion: disable all custom animations */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-fade-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Shimmer skeleton */
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, #e8ecef 25%, #f4f6f8 50%, #e8ecef 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-shimmer {
+    animation: none;
+    background: #e8ecef;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+.animate-float {
+  animation: float 3.5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-float { animation: none; }
+}
+

@@ -454,20 +454,20 @@ export const ErrorSVG = props => (
 );
 
 export const EmptyFileSVG = props => (
-  <svg width={203} height={140} viewBox="0 0 203 140" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg width={203} height={140} viewBox="0 0 203 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-float" {...props}>
     <path
       d="M199.217 38.647c1.95-9.319-5.162-18.073-14.682-18.073H95.297a10 10 0 01-9.973-9.273l-.148-2.028A10 10 0 0075.202 0H61.785a10 10 0 00-9.826 8.14l-22.714 120C28.079 134.299 32.802 140 39.07 140H178l21.217-101.353z"
       fill="url(#prefix__paint0_linear)"
     />
     <path
       d="M3.615 59.398c-1.813-6.385 2.983-12.731 9.62-12.731h130.209a10 10 0 019.62 7.268L177.5 140H34.056a10 10 0 01-9.62-7.269L3.615 59.398z"
-      fill="#F3F4F4"
+      fill="#e4f3f1"
     />
-    <path d="M24 63.728h44M28 75.77h20" stroke="#DCDEE4" strokeWidth={6} strokeLinecap="round" />
+    <path d="M24 63.728h44M28 75.77h20" stroke="#6bbdb5" strokeWidth={6} strokeLinecap="round" />
     <defs>
       <linearGradient id="prefix__paint0_linear" x1={115.75} y1={0} x2={115.75} y2={140} gradientUnits="userSpaceOnUse">
-        <stop stopColor="#E4E7ED" />
-        <stop offset={1} stopColor="#D8DBE2" />
+        <stop stopColor="#c8e6e2" />
+        <stop offset={1} stopColor="#a8d5cf" />
       </linearGradient>
     </defs>
   </svg>

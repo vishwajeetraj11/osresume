@@ -1,5 +1,4 @@
-import { RedirectToSignIn, SignedIn, SignedOut, useAuth, useUser } from '@clerk/nextjs';
-import axios from 'axios';
+import { RedirectToSignIn, Show, useAuth, useUser } from '@clerk/nextjs';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
@@ -14,7 +13,9 @@ import Jake from '../../components/templates/Jake';
 import { Onyx } from '../../components/templates/Onyx';
 import Trical from '../../components/templates/Trical';
 
+import EditorOnboardingHint from '../../components/EditorOnboardingHint';
 import addFontInHeadTag from '../../shared/utils/addFontInHeadTag';
+import { apiRequest } from '../../shared/utils/apiClient';
 import useMediaQuery from '../../shared/utils/useMediaQuery';
 import { useResumeStore } from '../../zustand/zustand';
 
@@ -86,12 +87,9 @@ const Editor = () => {
       try {
         setLoading(true);
         const token = await getToken();
-        const { data } = await axios({
-          url: `/api/resumes/${router.query.id}`,
+        const data = await apiRequest(`/api/resumes/${router.query.id}`, {
           method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          token,
         });
         const personalData = data.resume.personal
           ? data.resume.personal
@@ -154,49 +152,52 @@ const Editor = () => {
       return (
         <div className="flex flex-col lg:flex-row bg-gray-50">
           <LeftSideBar />
-          <div className="order-2 mx-auto my-10">
-            {resumeMeta.templateName === 'Onyx' && (
-              <Onyx
-                extrasData={extrasdata}
-                personalData={personaldata}
-                educationData={eductainvalues}
-                customStyles={resumeMeta.customStyles}
-                experienceData={experiencedata}
-                ref={resumeRef}
-              />
-            )}
-            {resumeMeta.templateName === 'Jake' && (
-              <Jake
-                extrasData={extrasdata}
-                personalData={personaldata}
-                educationData={eductainvalues}
-                customStyles={resumeMeta.customStyles}
-                experienceData={experiencedata}
-                ref={resumeRef}
-              />
-            )}
-            {resumeMeta.templateName === 'Trical' && (
-              <Trical
-                ref={resumeRef}
-                extrasData={extrasdata}
-                personalData={personaldata}
-                educationData={eductainvalues}
-                customStyles={resumeMeta.customStyles}
-                experienceData={experiencedata}
-              />
-            )}
-            {resumeMeta.templateName === 'ClassicAts' && (
-              <ClassicAts
-                ref={resumeRef}
-                customStyles={resumeMeta.customStyles}
-                extrasData={extrasdata}
-                personalData={personaldata}
-                educationData={eductainvalues}
-                experienceData={experiencedata}
-                projectsData={projectsdata}
-                leadershipData={leadershipdata}
-              />
-            )}
+          <div className="order-2 mx-auto my-10 flex flex-col items-center">
+            <EditorOnboardingHint />
+            <div className="overflow-x-auto">
+              {resumeMeta.templateName === 'Onyx' && (
+                <Onyx
+                  extrasData={extrasdata}
+                  personalData={personaldata}
+                  educationData={eductainvalues}
+                  customStyles={resumeMeta.customStyles}
+                  experienceData={experiencedata}
+                  ref={resumeRef}
+                />
+              )}
+              {resumeMeta.templateName === 'Jake' && (
+                <Jake
+                  extrasData={extrasdata}
+                  personalData={personaldata}
+                  educationData={eductainvalues}
+                  customStyles={resumeMeta.customStyles}
+                  experienceData={experiencedata}
+                  ref={resumeRef}
+                />
+              )}
+              {resumeMeta.templateName === 'Trical' && (
+                <Trical
+                  ref={resumeRef}
+                  extrasData={extrasdata}
+                  personalData={personaldata}
+                  educationData={eductainvalues}
+                  customStyles={resumeMeta.customStyles}
+                  experienceData={experiencedata}
+                />
+              )}
+              {resumeMeta.templateName === 'ClassicAts' && (
+                <ClassicAts
+                  ref={resumeRef}
+                  customStyles={resumeMeta.customStyles}
+                  extrasData={extrasdata}
+                  personalData={personaldata}
+                  educationData={eductainvalues}
+                  experienceData={experiencedata}
+                  projectsData={projectsdata}
+                  leadershipData={leadershipdata}
+                />
+              )}
+            </div>
           </div>
           <RightSideBar handlePrint={handlePrint} />
         </div>
@@ -214,10 +215,10 @@ const Editor = () => {
       <Head>
         <title>{username ? `${username} | OS Resume` : 'Resume Editor | OS Resume'}</title>
       </Head>
-      <SignedIn>{render()}</SignedIn>
-      <SignedOut>
+      <Show when="signed-in">{render()}</Show>
+      <Show when="signed-out">
         <RedirectToSignIn />
-      </SignedOut>
+      </Show>
     </>
   );
 };

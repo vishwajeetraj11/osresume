@@ -1,13 +1,15 @@
 import { useAuth, useUser } from '@clerk/nextjs';
-import axios from 'axios';
 // import { ErrorMessage } from 'formik';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import DashboardEmptyState from '../components/DashboardEmptyState';
 import NoDocumentFound from '../components/NoDocumentFound';
+import SkeletonCard from '../components/cards/SkeletonCard';
 import TemplateCard from '../components/cards/TemplateCard';
 import { toastMessages } from '../shared/contants';
+import { apiRequest } from '../shared/utils/apiClient';
 import { getTemplateDisplayName } from '../shared/utils/templateCatalog';
 
 const Dashboard = () => {
@@ -40,12 +42,9 @@ const Dashboard = () => {
       try {
         setLoading(true);
         const token = await getToken();
-        const { data } = await axios({
-          url: '/api/resumes?user=true',
+        const data = await apiRequest('/api/resumes?user=true', {
           method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          token,
         });
         setResumes(data.data);
         if (!data.data.length) {
@@ -78,12 +77,9 @@ const Dashboard = () => {
     try {
       const token = await getToken();
       showSnack(toastMessages.DELETE_RESOURCE_REQUEST('Resume'), 'default');
-      await axios({
-        url: `/api/resumes/${selectedResume._id}`,
+      await apiRequest(`/api/resumes/${selectedResume._id}`, {
         method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        token,
       });
       setResumes(resumes => resumes.filter(resume => resume._id !== selectedResume._id));
       showSnack(toastMessages.DELETE_RESOURCE_SUCCESS('Resume'), 'success');
@@ -98,13 +94,20 @@ const Dashboard = () => {
 
   const render = () => {
     if (loading) {
-      return Array.from(Array(4).keys()).map(loader => <div key={loader} className="h-[462px] animate-pulse bg-[#e0e5ebd6] rounded-lg" />);
+      return Array.from(Array(4).keys()).map(loader => (
+        <div key={loader} className="shadow-md overflow-hidden">
+          <div className="w-full aspect-[210/297] animate-shimmer" />
+          <div className="bg-gray-50 py-3 flex justify-center">
+            <div className="h-3 w-20 rounded animate-shimmer" />
+          </div>
+        </div>
+      ));
     }
     if (error) {
       return <p className="text-rose-600 text-xs">{error}</p>;
     }
     if (!resumes.length) {
-      return <NoDocumentFound text="No Resumes Found." />;
+      return <DashboardEmptyState />;
     }
     return resumes.map(resume => (
       <TemplateCard template={resume} type="RESUME" selected={resume._id === selectedResume._id} onSelect={onSelect} key={resume._id} />
@@ -116,13 +119,13 @@ const Dashboard = () => {
       <Head>
         <title>Dashboard | OS Resume</title>
       </Head>
-      <h1 className="text-3xl lg:text-5xl font-extralight text-center pb-10">Your Resumes</h1>
+      <h1 className="text-3xl lg:text-5xl font-semibold text-center pb-10">Your Resumes</h1>
       {!noResume && (
         <div className="bg-gray-50 rounded px-8 py-6 transition-all flex flex-col lg:flex-row items-center justify-between">
-          <h2 className="text-regular text-lg font-medium text-default">
+          <h2 className="text-lg font-medium text-default">
             {`${selectedResume ? `Selected Resume : ${selectedResume.title}` : 'Select a Resume'}`}
           </h2>
-          <h2 className="text-regular text-lg font-medium text-default">
+          <h2 className="text-lg font-medium text-default">
             {`${selectedResume && `Template : ${getTemplateDisplayName(selectedResume.templateName)}`}`}
           </h2>
           <div className="mt-6 lg:mt-0">
