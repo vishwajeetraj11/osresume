@@ -38,13 +38,9 @@ async function dbConnect() {
   }
 
   if (!cached.promise || cached.uri !== MONGO_URI) {
+    mongoose.set('strictQuery', true);
     const opts = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
       bufferCommands: false,
-      bufferMaxEntries: 0,
-      useFindAndModify: false,
-      useCreateIndex: true,
     };
 
     cached.uri = MONGO_URI;

@@ -12,18 +12,19 @@
     "node": "20.x"
   },
   "overrides": {
-    "path-to-regexp": "6.3.0"
+    "path-to-regexp": "6.3.0",
+    "postcss": "^8.5.10"
   },
   "dependencies": {
-    "@clerk/nextjs": "^7.0.11",
-    "@next/third-parties": "^16.2.2",
+    "@clerk/nextjs": "^7.2.4",
+    "@next/third-parties": "^16.2.6",
     "clsx": "^1.1.1",
     "dayjs": "^1.11.11",
     "dotenv": "^10.0.0",
     "formik": "^2.2.6",
     "lucide-react": "^0.359.0",
-    "mongoose": "^5.13.2",
-    "next": "^16.2.2",
+    "mongoose": "^6.13.9",
+    "next": "^16.2.6",
     "prop-types": "^15.7.2",
     "react": "^18.3.1",
     "@hello-pangea/dnd": "^18.0.1",
@@ -43,14 +44,14 @@
     "autoprefixer": "^10.4.16",
     "baseline-browser-mapping": "^2.9.19",
     "eslint": "^9.0.0",
-    "eslint-config-next": "^16.2.2",
+    "eslint-config-next": "^16.2.6",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "postcss": "^8.4.32",
+    "postcss": "^8.5.10",
     "prettier": "^3.8.1"
   }
 }
